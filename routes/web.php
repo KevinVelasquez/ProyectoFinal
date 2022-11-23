@@ -16,7 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('auth');
+
+Route::resource('compra', App\Http\Controllers\CompraController::class)->middleware('auth');
+Route::resource('/login', App\Http\Controllers\CompraController::class)->middleware('auth');
+
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
