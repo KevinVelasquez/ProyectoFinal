@@ -20,14 +20,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->midd
 
 Route::resource('compra', App\Http\Controllers\CompraController::class)->middleware('auth');
 Route::resource('/login', App\Http\Controllers\CompraController::class)->middleware('auth');
-
-<<<<<<< HEAD
-
-Auth::routes();
-=======
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('clientes', App\Http\Controllers\ClienteController::class);
 Route::resource('Proveedor', App\Http\Controllers\ProveedorController::class);
-
-
->>>>>>> origin/Kely
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::resource('insumos', App\Http\Controllers\InsumoController::class);
+Auth::routes();
