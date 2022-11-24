@@ -20,8 +20,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->midd
 
 Route::resource('compra', App\Http\Controllers\CompraController::class)->middleware('auth');
 Route::resource('/login', App\Http\Controllers\CompraController::class)->middleware('auth');
-Route::resource('clientes', App\Http\Controllers\ClienteController::class);
-Route::resource('Proveedor', App\Http\Controllers\ProveedorController::class);
+Route::resource('clientes', App\Http\Controllers\ClienteController::class)->middleware('auth');
+Route::resource('proveedor', App\Http\Controllers\ProveedorController::class)->middleware('auth');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('insumos', App\Http\Controllers\InsumoController::class);
+Route::resource('insumos', App\Http\Controllers\InsumoController::class)->middleware('auth');
 Auth::routes();

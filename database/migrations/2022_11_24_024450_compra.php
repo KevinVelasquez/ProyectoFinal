@@ -21,8 +21,8 @@ return new class extends Migration
             $table->integer('estado')->default(1);
             $table->bigInteger('id_proveedor')->unsigned();
             $table->bigInteger('id_insumo')->unsigned();
-            $table->foreign('id_insumo')->references('id')->on('insumos');
-            $table->foreign('id_proveedor')->references('id')->on('proveedores');
+            $table->foreign('id_insumo')->references('id')->on('insumos')->onDelete("cascade");
+            $table->foreign('id_proveedor')->references('id')->on('proveedors')->onDelete("cascade");
         });
     }
 
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('compras');
+        //
     }
 };
