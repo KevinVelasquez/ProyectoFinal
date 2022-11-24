@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('metodo_pagos', function (Blueprint $table) {
+        Schema::create('municipios', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
+            $table->bigInteger('id_departamentos')->unsigned();
 
+            $table->foreign('id_departamentos')->references('id')->on('departamentos')->onDelete('cascade');
         });
     }
 

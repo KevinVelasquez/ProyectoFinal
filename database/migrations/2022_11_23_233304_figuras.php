@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('metodo_pagos', function (Blueprint $table) {
+        Schema::create('figuras', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
+            $table->string('etiqueta');
+            $table->binary('imagen');
+            $table->integer('estado');
+            $table->bigInteger('id_cliente')->unsigned();
 
         });
     }
