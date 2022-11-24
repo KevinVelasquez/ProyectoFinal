@@ -22,11 +22,9 @@ return new class extends Migration
             $table->integer('precio');
             $table->binary('imagen');
             $table->string('descripcion');
-
+            $table->timestamps();
 
             $table->foreign('id_pedido')->references('id')->on('pedidos')->onDelete("cascade");
-
-
         });
     }
 

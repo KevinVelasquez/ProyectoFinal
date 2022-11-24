@@ -19,7 +19,7 @@ return new class extends Migration
             $table->binary('imagen');
             $table->integer('estado');
             $table->bigInteger('id_cliente')->unsigned();
-
+            $table->timestamps();
         });
     }
 

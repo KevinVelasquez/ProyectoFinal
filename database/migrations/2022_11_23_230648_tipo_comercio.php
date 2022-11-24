@@ -13,18 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('abonos', function (Blueprint $table) {
+        Schema::create('tipo_comercio', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha');
-            $table->integer('abono');
-            $table->bigInteger('id_medio_pago')->unsigned();
-
-            $table->foreign('id_medio_pago')->references('id')->on('medio_pagos')->onDelete("cascade");
-            $table->timestamps();
+            $table->string('nombre');
 
         });
     }
-    
 
     /**
      * Reverse the migrations.
