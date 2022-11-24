@@ -1,5 +1,29 @@
-@extends('layouts.app')
-@section('content')
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FERRUM</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{asset('assets/lib/bootstrap/dist/css/bootstrap.min.css')}" />
+  <link rel="stylesheet" href="{asset('assets/css/style.css')}" />
+  <link rel="shortcut icon" href="/../assets/img/favicon.png" />
+  <link rel="stylesheet" href="{asset('assets/vendors/typicons.font/font/typicons.css')}">
+  <link rel="stylesheet" href="{asset('assets/vendors/css/vendor.bundle.base.css')}">
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <link rel="stylesheet" href="/../assets/vendors/mdi/css/materialdesignicons.min.css">
+
+</head>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -27,7 +51,7 @@
                             <label for="cedula" class="col-md-4 col-form-label text-md-end">{{ __('Cedula') }}</label>
 
                             <div class="col-md-6">
-                                <input id="cedula" type="text" class="form-control @error('cedula') is-invalid @enderror" name="cedula" value="{{ old('cedula') }}" required autocomplete="cedula" autofocus>
+                                <input id="cedula" type="number" class="form-control @error('cedula') is-invalid @enderror" name="cedula" value="{{ old('cedula') }}" required autocomplete="cedula" autofocus>
 
                                 @error('cedula')
                                     <span class="invalid-feedback" role="alert">
@@ -88,4 +112,3 @@
         </div>
     </div>
 </div>
-@endsection

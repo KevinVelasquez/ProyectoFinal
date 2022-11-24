@@ -27,7 +27,13 @@ class Compra extends Model
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'n_orden',
+        'fecha_compra',
+        'total',
+        'id_proveedor',
+        'id_insumo'
+    ];
 
 
 

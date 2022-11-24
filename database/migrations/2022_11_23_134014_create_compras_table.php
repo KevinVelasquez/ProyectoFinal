@@ -15,11 +15,14 @@ return new class extends Migration
     {
         Schema::create('compras', function (Blueprint $table) {
             $table->id();
-            $table->noOrden();
-            $table->fechaCompra();
-            $table->total();
-            $table->abono();
-            $table->estado();
+            $table->string('n_orden');
+            $table->date('fecha_compra');
+            $table->integer('total');
+            $table->integer('estado')->default(1);
+            $table->bigInteger('id_proveedor')->unsigned();
+            $table->bigInteger('id_insumo')->unsigned();
+            $table->foreign('id_insumo')->references('id')->on('insumos');
+            $table->foreign('id_proveedor')->references('id')->on('proveedores');
         });
     }
 
