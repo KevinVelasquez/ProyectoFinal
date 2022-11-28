@@ -13,16 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('compras', function (Blueprint $table) {
-            $table->id();
+        Schema::create('compra', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->string('n_orden');
             $table->date('fecha_compra');
+            $table->integer('cantidad');
+            $table->integer('precio_unitario');
             $table->integer('total');
             $table->integer('estado')->default(1);
             $table->bigInteger('id_proveedor')->unsigned();
             $table->bigInteger('id_insumo')->unsigned();
-            $table->foreign('id_insumo')->references('id')->on('insumos')->onDelete("cascade");
-            $table->foreign('id_proveedor')->references('id')->on('proveedors')->onDelete("cascade");
+            $table->bigInteger('id_metodo_pago')->unsigned();
+            $table->foreign('id_insumo')->references('id')->on('insumos');
+            $table->foreign('id_proveedor')->references('id')->on('proveedors');
+            $table->foreign('id_metodo_pago')->references('id')->on('metodo_pagos');
         });
     }
 

@@ -239,6 +239,8 @@
   <!-- End plugin js for this page -->
   <!-- Custom js for this page-->
   <script src="/assets/js/dashboard.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
   <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>

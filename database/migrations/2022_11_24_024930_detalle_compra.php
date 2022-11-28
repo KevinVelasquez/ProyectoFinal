@@ -20,8 +20,8 @@ return new class extends Migration
             $table->integer('valor_total');
             $table->bigInteger('id_orden_compra')->unsigned();
             $table->bigInteger('id_insumo')->unsigned();
-            $table->foreign('id_insumo')->references('id')->on('insumos')->onDelete("cascade");
-            $table->foreign('id_orden_compra')->references('id')->on('compras')->onDelete("cascade");
+            $table->foreign('id_insumo')->references('id')->on('insumos');
+            $table->foreign('id_orden_compra')->references('id')->on('compra');
         });
     }
 

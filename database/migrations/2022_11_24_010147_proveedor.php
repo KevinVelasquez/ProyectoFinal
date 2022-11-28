@@ -28,9 +28,9 @@ return new class extends Migration
             $table->bigInteger('regimen')->unsigned();
             $table->bigInteger('tipo_comercio')->unsigned();
             $table->timestamps();
-            $table->foreign('tipo_persona')->references('id')->on('tipo_persona')->onDelete("cascade");
-            $table->foreign('regimen')->references('id')->on('regimen')->onDelete("cascade");
-            $table->foreign('tipo_comercio')->references('id')->on('tipo_comercio')->onDelete("cascade");
+            $table->foreign('tipo_persona')->references('id')->on('tipo_persona');
+            $table->foreign('regimen')->references('id')->on('regimen');
+            $table->foreign('tipo_comercio')->references('id')->on('tipo_comercio');
 
         });
     }

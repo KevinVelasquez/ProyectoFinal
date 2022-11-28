@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Compra;
+use App\Models\Proveedor;
+use App\Models\insumo;
 use Illuminate\Http\Request;
 
 /**
@@ -32,7 +34,9 @@ class CompraController extends Controller
     public function create()
     {
         $compra = new Compra();
-        return view('compra.create', compact('compra'));
+        $proveedor = Proveedor::pluck('id', 'nombre');
+        $insumo = insumo::pluck( 'nombre','id');
+        return view('compra.create', compact('compra','proveedor','insumo'));
     }
 
     /**
