@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FERRUM</title>
 <<<<<<< HEAD
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -21,13 +21,12 @@
   <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
->>>>>>> origin/Kely
 
   <!-- endinject -->
   <!-- plugin css for this page -->
   <!-- End plugin css for this page -->
   <!-- inject:css -->
-  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/style.css">
   <!-- endinject -->
   <!-- plugin css for this page -->
   <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
@@ -35,7 +34,9 @@
 </head>
 <body>
     <header>
-      <div class="container-scroller">
+     
+        <!-- partial -->
+        <div class="container-scroller">
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
           <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
@@ -58,11 +59,7 @@
               </li>
               <li class="nav-item nav-profile dropdown">
                 <a class="nav-link dropdown-toggle  pl-0 pr-0" href="#" data-toggle="dropdown" id="profileDropdown">
-<<<<<<< HEAD
-                 <span class="nav-profile-name"> {{-- {{ Auth::user()->nombre }}--}}Nombre Usuario</span> 
-=======
-                  <span class="nav-profile-name"></span>
->>>>>>> origin/Kely
+                  <span class="nav-profile-name">{{-- {{ Auth::user()->nombre }}--}}</span> 
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                   <a class="dropdown-item" href="#">
@@ -84,8 +81,7 @@
             </button>
           </div>
         </nav>
-        <!-- partial -->
-        <div class="container-fluid page-body-wrapper">
+<div class="container-fluid page-body-wrapper">
           <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
               <li class="nav-item">
@@ -116,7 +112,7 @@
                 <div class="collapse" id="ui-basic">
                   <ul class="nav flex-column ">
                     <li class="nav-item"> <a class="nav-link" href="#">Proveedores</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#">Insumos</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('insumos.index')}}">Insumos</a></li>
                     <li class="nav-item"> <a class="nav-link" href="#">Ordenes de
                         Compra</a></li>
                   </ul>
@@ -153,23 +149,22 @@
           </nav>
 <<<<<<< HEAD
 =======
-
-{{-- <!doctype html>
+<!-- {{-- <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
+     CSRF Token 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
+    <!-- Fonts 
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
-    <!-- Scripts -->
+    <!-- Scripts 
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
@@ -184,14 +179,14 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
+                    <!-- Left Side Of Navbar 
                     <ul class="navbar-nav me-auto">
 
                     </ul>
 
-                    <!-- Right Side Of Navbar -->
+                    <!-- Right Side Of Navbar 
                     <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
+                        <!-- Authentication Links 
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
@@ -226,10 +221,10 @@
                     </ul>
                 </div>
             </div>
-        </nav> --}}
+        </nav> --}} -->
 
 >>>>>>> origin/Kely
-        <main class="py-4" style="width:100%">
+        <main class="py-4" style="width:100%" style="width:100%">
             @yield('content')
         </main>
     </div>
