@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pais;
+use App\Models\Departamento;
+use App\Models\Municipio;
 use App\Models\Proveedore;
 use Illuminate\Http\Request;
 
@@ -31,8 +34,11 @@ class ProveedoreController extends Controller
      */
     public function create()
     {
+        $paises = Pais::all();
+        $departamentos = Departamento::all();
+        $municipios = Municipio::all();
         $proveedore = new Proveedore();
-        return view('proveedore.create', compact('proveedore'));
+        return view('proveedore.create', compact('proveedore', 'paises', 'departamentos', 'municipios'));
     }
 
     /**

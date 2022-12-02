@@ -36,8 +36,8 @@ class Cliente extends Model
 		'cedula' => 'required',
 		'nombre' => 'required',
 		'telefono' => 'required',
-		'pais' => 'required',
-		'departamento' => 'required',
+		// 'pais' => 'required',
+		// 'departamento' => 'required',
 		'municipio' => 'required',
 		'direccion' => 'required',
 		'email' => 'required',
@@ -54,7 +54,7 @@ class Cliente extends Model
      *
      * @var array
      */
-    protected $fillable = ['cedula','nombre','telefono','pais','departamento','municipio','direccion','email','estado','tipo_persona','regimen','tipo_comercio'];
+    protected $fillable = ['cedula','nombre','telefono','municipio','direccion','email','estado','tipo_persona','regimen','tipo_comercio'];
 
 
     /**
@@ -79,6 +79,14 @@ class Cliente extends Model
     public function tipoPersona()
     {
         return $this->hasOne('App\Models\TipoPersona', 'id', 'tipo_persona');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function municipio()
+    {
+        return $this->hasOne('App\Models\Municipio', 'id', 'id_municipio');
     }
     
 

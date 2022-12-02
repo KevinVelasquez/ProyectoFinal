@@ -41,7 +41,13 @@
             <label class="control-label">Tipo Persona</label>
             <div class="col-sm-7">
                 <select id="tipo_persona" class="form-control">
-
+                    <!-- <option value="0">Selecciones</option>
+                                         @forelse($tipo_persona  as $tipo_personas)
+                                         <option value="{{$tipo_persona->id}}">
+                                        {{ $tipo_personas->tipo_persona}}
+                                        </option>
+                                         @empty <option>No existen</option>
+                                        @endforelse -->
                 </select>
             </div>
         </div>
@@ -69,33 +75,48 @@
     </div>
 
 
-
-    <div class="col-md-4">
+    <div class="col-md-2">
         <div class="form-group row">
-            <label class="control-label">País</label>
+            <label class="control-label">Pais</label>
             <div class="col-sm-9">
-                <select id="pais" class="form-control">
-
+                <select class="form-control" name="pais" id="pais">
+                    @forelse($paises as $pais)
+                    <option value="{{$pais->id}}">
+                        {{ $pais->nombre}}
+                    </option>
+                    @empty <option>No existen</option>
+                    @endforelse
                 </select>
+                {!! $errors->first('pais', '<div class="invalid-feedback">:message</div>') !!}
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-2">
         <div class="form-group row">
             <label class="control-label">Departamento</label>
-            <div class="col-sm-8">
-                <select id="departamento" class="form-control">
-
+            <div class="col-sm-7">
+                <select class="form-control" name="departamento" id="departamento">
+                    @forelse($departamentos as $departamento)
+                    <option value="{{$departamento->id}}">
+                        {{ $departamento->nombre}}
+                    </option>
+                    @empty <option>No existen</option>
+                    @endforelse
                 </select>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-2">
         <div class="form-group row">
             <label class="control-label">Municipio</label>
             <div class="col-sm-8">
-                <select id="municipio" class="form-control">
-
+                <select class="form-control" name="id_municipio" id="id_municipio">
+                    @forelse($municipios as $municipio)
+                    <option value="{{$municipio->id}}">
+                        {{ $municipio->nombre}}
+                    </option>
+                    @empty <option>No existen</option>
+                    @endforelse
                 </select>
             </div>
         </div>
@@ -104,43 +125,12 @@
         <div class="form-group row">
             <label class="control-label">Dirección</label>
             <div class="col-sm-9">
-                <input id="direccion" class="form-control" />
-            </div>
-        </div>
-
-    </div>
-
-    <div class="col-md-6">
-        <div class="form-group row">
-            <div class="botonMas ">
-                <a data-toggle="modal" data-target="#AggDirec"><button class="mdi mdi-plus-circle"></button></a>
+                <input id="direccion" name="direccion" class="form-control" />
             </div>
         </div>
     </div>
+</div>
 
-    <div class="modal fade" id="AggDirec" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ¡Ingrese la dirección que desea añadir!
-                    <div class="form-group w-80">
-                        <label for="exampleFormControlInput1"></label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <a href="./RegistrarCliente.html" class="btn btn-primary btn-lg active" role="button" aria-hidden="true">Agregar</a>
-                    <a href="./RegistrarCliente.html" class="btn btn-primary btn-lg active" role="button" data-dismiss="modal">Cancelar</a>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 
@@ -157,74 +147,72 @@
 <!-- scripts -->
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <script>
-   
+    //    <div class="box box-info padding-1">
+    //     <div class="box-body">
 
-//    <div class="box box-info padding-1">
-//     <div class="box-body">
-        
-//         <div class="form-group">
-//             {{ Form::label('cedula') }}
-//             {{ Form::text('cedula', $cliente->cedula, ['class' => 'form-control' . ($errors->has('cedula') ? ' is-invalid' : ''), 'placeholder' => 'Cedula']) }}
-//             {!! $errors->first('cedula', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
-//         <div class="form-group">
-//             {{ Form::label('nombre') }}
-//             {{ Form::text('nombre', $cliente->nombre, ['class' => 'form-control' . ($errors->has('nombre') ? ' is-invalid' : ''), 'placeholder' => 'Nombre']) }}
-//             {!! $errors->first('nombre', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
-//         <div class="form-group">
-//             {{ Form::label('telefono') }}
-//             {{ Form::text('telefono', $cliente->telefono, ['class' => 'form-control' . ($errors->has('telefono') ? ' is-invalid' : ''), 'placeholder' => 'Telefono']) }}
-//             {!! $errors->first('telefono', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
-//         <div class="form-group">
-//             {{ Form::label('pais') }}
-//             {{ Form::text('pais', $cliente->pais, ['class' => 'form-control' . ($errors->has('pais') ? ' is-invalid' : ''), 'placeholder' => 'Pais']) }}
-//             {!! $errors->first('pais', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
-//         <div class="form-group">
-//             {{ Form::label('departamento') }}
-//             {{ Form::text('departamento', $cliente->departamento, ['class' => 'form-control' . ($errors->has('departamento') ? ' is-invalid' : ''), 'placeholder' => 'Departamento']) }}
-//             {!! $errors->first('departamento', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
-//         <div class="form-group">
-//             {{ Form::label('municipio') }}
-//             {{ Form::text('municipio', $cliente->municipio, ['class' => 'form-control' . ($errors->has('municipio') ? ' is-invalid' : ''), 'placeholder' => 'Municipio']) }}
-//             {!! $errors->first('municipio', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
-//         <div class="form-group">
-//             {{ Form::label('direccion') }}
-//             {{ Form::text('direccion', $cliente->direccion, ['class' => 'form-control' . ($errors->has('direccion') ? ' is-invalid' : ''), 'placeholder' => 'Direccion']) }}
-//             {!! $errors->first('direccion', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
-//         <div class="form-group">
-//             {{ Form::label('email') }}
-//             {{ Form::text('email', $cliente->email, ['class' => 'form-control' . ($errors->has('email') ? ' is-invalid' : ''), 'placeholder' => 'Email']) }}
-//             {!! $errors->first('email', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
-//         <div class="form-group">
-//             {{ Form::label('estado') }}
-//             {{ Form::text('estado', $cliente->estado, ['class' => 'form-control' . ($errors->has('estado') ? ' is-invalid' : ''), 'placeholder' => 'Estado']) }}
-//             {!! $errors->first('estado', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
-//         <div class="form-group">
-//             {{ Form::label('tipo_persona') }}
-//             {{ Form::text('tipo_persona', $cliente->tipo_persona, ['class' => 'form-control' . ($errors->has('tipo_persona') ? ' is-invalid' : ''), 'placeholder' => 'Tipo Persona']) }}
-//             {!! $errors->first('tipo_persona', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
-//         <div class="form-group">
-//             {{ Form::label('regimen') }}
-//             {{ Form::text('regimen', $cliente->regimen, ['class' => 'form-control' . ($errors->has('regimen') ? ' is-invalid' : ''), 'placeholder' => 'Regimen']) }}
-//             {!! $errors->first('regimen', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
-//         <div class="form-group">
-//             {{ Form::label('tipo_comercio') }}
-//             {{ Form::text('tipo_comercio', $cliente->tipo_comercio, ['class' => 'form-control' . ($errors->has('tipo_comercio') ? ' is-invalid' : ''), 'placeholder' => 'Tipo Comercio']) }}
-//             {!! $errors->first('tipo_comercio', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
+    //         <div class="form-group">
+    //             {{ Form::label('cedula') }}
+    //             {{ Form::text('cedula', $cliente->cedula, ['class' => 'form-control' . ($errors->has('cedula') ? ' is-invalid' : ''), 'placeholder' => 'Cedula']) }}
+    //             {!! $errors->first('cedula', '<div class="invalid-feedback">:message</div>') !!}
+    //         </div>
+    //         <div class="form-group">
+    //             {{ Form::label('nombre') }}
+    //             {{ Form::text('nombre', $cliente->nombre, ['class' => 'form-control' . ($errors->has('nombre') ? ' is-invalid' : ''), 'placeholder' => 'Nombre']) }}
+    //             {!! $errors->first('nombre', '<div class="invalid-feedback">:message</div>') !!}
+    //         </div>
+    //         <div class="form-group">
+    //             {{ Form::label('telefono') }}
+    //             {{ Form::text('telefono', $cliente->telefono, ['class' => 'form-control' . ($errors->has('telefono') ? ' is-invalid' : ''), 'placeholder' => 'Telefono']) }}
+    //             {!! $errors->first('telefono', '<div class="invalid-feedback">:message</div>') !!}
+    //         </div>
+    //         <div class="form-group">
+    //             {{ Form::label('pais') }}
+    //             {{ Form::text('pais', $cliente->pais, ['class' => 'form-control' . ($errors->has('pais') ? ' is-invalid' : ''), 'placeholder' => 'Pais']) }}
+    //             {!! $errors->first('pais', '<div class="invalid-feedback">:message</div>') !!}
+    //         </div>
+    //         <div class="form-group">
+    //             {{ Form::label('departamento') }}
+    //             {{ Form::text('departamento', $cliente->departamento, ['class' => 'form-control' . ($errors->has('departamento') ? ' is-invalid' : ''), 'placeholder' => 'Departamento']) }}
+    //             {!! $errors->first('departamento', '<div class="invalid-feedback">:message</div>') !!}
+    //         </div>
+    //         <div class="form-group">
+    //             {{ Form::label('municipio') }}
+    //             {{ Form::text('municipio', $cliente->municipio, ['class' => 'form-control' . ($errors->has('municipio') ? ' is-invalid' : ''), 'placeholder' => 'Municipio']) }}
+    //             {!! $errors->first('municipio', '<div class="invalid-feedback">:message</div>') !!}
+    //         </div>
+    //         <div class="form-group">
+    //             {{ Form::label('direccion') }}
+    //             {{ Form::text('direccion', $cliente->direccion, ['class' => 'form-control' . ($errors->has('direccion') ? ' is-invalid' : ''), 'placeholder' => 'Direccion']) }}
+    //             {!! $errors->first('direccion', '<div class="invalid-feedback">:message</div>') !!}
+    //         </div>
+    //         <div class="form-group">
+    //             {{ Form::label('email') }}
+    //             {{ Form::text('email', $cliente->email, ['class' => 'form-control' . ($errors->has('email') ? ' is-invalid' : ''), 'placeholder' => 'Email']) }}
+    //             {!! $errors->first('email', '<div class="invalid-feedback">:message</div>') !!}
+    //         </div>
+    //         <div class="form-group">
+    //             {{ Form::label('estado') }}
+    //             {{ Form::text('estado', $cliente->estado, ['class' => 'form-control' . ($errors->has('estado') ? ' is-invalid' : ''), 'placeholder' => 'Estado']) }}
+    //             {!! $errors->first('estado', '<div class="invalid-feedback">:message</div>') !!}
+    //         </div>
+    //         <div class="form-group">
+    //             {{ Form::label('tipo_persona') }}
+    //             {{ Form::text('tipo_persona', $cliente->tipo_persona, ['class' => 'form-control' . ($errors->has('tipo_persona') ? ' is-invalid' : ''), 'placeholder' => 'Tipo Persona']) }}
+    //             {!! $errors->first('tipo_persona', '<div class="invalid-feedback">:message</div>') !!}
+    //         </div>
+    //         <div class="form-group">
+    //             {{ Form::label('regimen') }}
+    //             {{ Form::text('regimen', $cliente->regimen, ['class' => 'form-control' . ($errors->has('regimen') ? ' is-invalid' : ''), 'placeholder' => 'Regimen']) }}
+    //             {!! $errors->first('regimen', '<div class="invalid-feedback">:message</div>') !!}
+    //         </div>
+    //         <div class="form-group">
+    //             {{ Form::label('tipo_comercio') }}
+    //             {{ Form::text('tipo_comercio', $cliente->tipo_comercio, ['class' => 'form-control' . ($errors->has('tipo_comercio') ? ' is-invalid' : ''), 'placeholder' => 'Tipo Comercio']) }}
+    //             {!! $errors->first('tipo_comercio', '<div class="invalid-feedback">:message</div>') !!}
+    //         </div>
 
-//     </div>
-//     <div class="box-footer mt20">
-//         <button type="submit" class="btn btn-primary">Submit</button>
-//     </div>
-// </div>
+    //     </div>
+    //     <div class="box-footer mt20">
+    //         <button type="submit" class="btn btn-primary">Submit</button>
+    //     </div>
+    // </div>

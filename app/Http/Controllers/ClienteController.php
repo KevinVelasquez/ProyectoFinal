@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pais;
+use App\Models\Departamento;
+use App\Models\Municipio;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
 
@@ -31,8 +34,12 @@ class ClienteController extends Controller
      */
     public function create()
     {
+        $paises = Pais::all();
+        $departamentos = Departamento::all();
+        $municipios = Municipio::all();
         $cliente = new Cliente();
-        return view('cliente.create', compact('cliente'));
+    
+        return view('cliente.create', compact('cliente', 'paises', 'departamentos', 'municipios'));
     }
 
     /**
