@@ -1,25 +1,31 @@
-            
+
             <h4>Información Cliente</h4>
+            <input type="hidden" name="total" id="total"/>
             <div class="row">
                 <div class="col-md-3">
                     <div class="form-group row">
                         <label class="control-label">Nombre</label>
                         <div class="col-sm-9">
-                            {{Form::text('id_cliente', $pedido->id_cliente, ['class' => 'form-control' . ($errors->has('id_cliente') ? ' is-invalid' : '')])}}
-                            {!! $errors->first('id_cliente', '<div class="invalid-feedback">:message</div>') !!}
+                           <select class="form-control" name="id_cliente" id="id_cliente" onchange="info()">
+                                        <option value="0">Selecciones</option>
+                                         @forelse($cliente  as $clientes)
+                                         <option value="{{$clientes->id}}">
+                                        {{ $clientes->nombre}}
+                                        </option>
+                                         @empty <option>No existen</option>
+                                        @endforelse
+                            </select>
 
                         </div>
                     </div>
                 </div>
-                {{-- //         <div class="form-group">
-                    //             {{ Form::label('id_cliente') }}
-                    //             
-                    //         </div> --}}
+
                 <div class="col-md-3">
                     <div class="form-group row">
                         <label class="control-label">Cédula</label>
                         <div class="col-sm-9">
-                            <input id="cedula"class="form-control" />
+                            <input type="number" name="cedula" id="cedula" class="form-control" readonly/>
+
                         </div>
                     </div>
                 </div>
@@ -27,7 +33,7 @@
                     <div class="form-group row">
                         <label  class="control-label">Telefono</label>
                         <div class="col-sm-9">
-                            <input  id="telefono" class="form-control" />
+                            <input  id="telefono" name="telefono" class="form-control" readonly/>
                         </div>
                     </div>
                 </div>
@@ -35,7 +41,7 @@
                     <div class="form-group row">
                         <label class="control-label">Tipo Cliente</label>
                         <div class="col-sm-9">
-                            <input id="tipo_persona"class="form-control" />
+                            <input id="tipo_persona" name="tipo_persona" class="form-control" readonly/>
                         </div>
                     </div>
                 </div>
@@ -43,18 +49,29 @@
                     <div class="form-group row">
                         <label class="control-label">Pais</label>
                         <div class="col-sm-9">
-                            <select id="pais"class="form-control" >
-
+                            <select class="form-control" name="pais" id="pais">
+                                @forelse($paises  as $pais)
+                                <option value="{{$pais->id}}">
+                               {{ $pais->nombre}}
+                               </option>
+                                @empty <option>No existen</option>
+                               @endforelse
                             </select>
+                   {!! $errors->first('pais', '<div class="invalid-feedback">:message</div>') !!}
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="form-group row">
                         <label class="control-label">Departamento</label>
-                        <div class="col-sm-8">
-                            <select id="departamento"class="form-control">
-
+                        <div class="col-sm-7">
+                            <select class="form-control" name="departamento" id="departamento">
+                                @forelse($departamentos  as $departamento)
+                                <option value="{{$departamento->id}}">
+                               {{ $departamento->nombre}}
+                               </option>
+                                @empty <option>No existen</option>
+                               @endforelse
                             </select>
                         </div>
                     </div>
@@ -63,17 +80,22 @@
                     <div class="form-group row">
                         <label class="control-label">Municipio</label>
                         <div class="col-sm-8">
-                            <select id="municipio" class="form-control" >
-
+                            <select class="form-control" name="id_municipio" id="id_municipio">
+                                @forelse($municipios  as $municipio)
+                                <option value="{{$municipio->id}}">
+                               {{ $municipio->nombre}}
+                               </option>
+                                @empty <option>No existen</option>
+                               @endforelse
                             </select>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <div class="form-group row">
                         <label class="control-label">Dirección</label>
                         <div class="col-sm-9">
-                            <input id="direccion" class="form-control" />
+                            <input id="direccion" name="direccion" class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -85,7 +107,7 @@
                     <div class="form-group row">
                         <label class="control-label">Fecha de Registro</label>
                         <div class="col-sm-7">
-                            <input id="fecha_registro" class="form-control" />
+                            <input type="date" name="fecha_registro" id="fecha_registro" class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -93,7 +115,7 @@
                     <div class="form-group row">
                         <label  class="control-label"> Fecha de Entrega</label>
                         <div class="col-sm-7">
-                            <input  id="fecha_entrega" class="form-control" />
+                            <input type="date" name="fecha_entrega" id="fecha_entrega" class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -101,8 +123,13 @@
                     <div class="form-group row">
                         <label  class="control-label">Metodo de Entrega</label>
                         <div class="col-sm-7">
-                            <select id="metodo_entrega" class="form-control" >
-
+                            <select class="form-control" name="id_metodo_entrega" id="id_metodo_entrega">
+                                @forelse($metodo_entrega  as $metodo_entregas)
+                                <option value="{{$metodo_entregas->id}}">
+                               {{ $metodo_entregas->nombre}}
+                               </option>
+                                @empty <option>No existen</option>
+                               @endforelse
                             </select>
                         </div>
                     </div>
@@ -111,8 +138,13 @@
                     <div class="form-group row">
                         <label  class="control-label"> Medio de Pago</label>
                         <div class="col-sm-9">
-                            <select id="medio_pago" class="form-control" >
-
+                            <select class="form-control" name="medio_pago" id="medio_pago">
+                                @forelse($medio_pago  as $medio_pagos)
+                                <option value="{{$medio_pagos->id}}">
+                               {{ $medio_pagos->nombre}}
+                               </option>
+                                @empty <option>No existen</option>
+                               @endforelse
                             </select>
                         </div>
                     </div>
@@ -121,8 +153,13 @@
                     <div class="form-group row">
                         <label class="control-label">Metodo de Pago</label>
                         <div class="col-sm-9">
-                            <select id="metodo_pago" class="form-control" >
-
+                            <select class="form-control" name="id_metodo_pago" id="id_metodo_pago">
+                                @forelse($metodo_pago  as $metodo_pagos)
+                                <option value="{{$metodo_pagos->id}}">
+                               {{ $metodo_pagos->nombre}}
+                               </option>
+                                @empty <option>No existen</option>
+                               @endforelse
                             </select>
                         </div>
                     </div>
@@ -131,21 +168,26 @@
                     <div class="form-group row">
                         <label  class="control-label">Abono</label>
                         <div class="col-sm-9">
-                            <input id="abono" class="form-control" />
+                            <input type="number" id="abono" class="form-control" />
                         </div>
                     </div>
                 </div>
             </div>
             <hr>
-            <h4>Información Pedido</h4>
+            <h4>Información Productos</h4>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group row">
                         <label  class="control-label">Productos</label>
                         <div class="col-sm-9">
-                            <select  id="producto" class="form-control">
-
-                            </select>
+                            <select class="form-control" name="producto" id="producto">
+                                @forelse($producto  as $productos)
+                                <option value="{{$productos->id}}">
+                               {{ $productos->nombre}}
+                               </option>
+                                @empty <option>No existen</option>
+                               @endforelse
+                            </select> 
                         </div>
                     </div>
                 </div>
@@ -154,7 +196,7 @@
                     <div class="form-group row">
                         <label  class="control-label">Cantidad</label>
                         <div class="col-sm-9">
-                            <input id="cantidad" class="form-control" id="cantidad" />
+                            <input type="number" id="cantidad" class="form-control" />
 
                         </div>
                     </div>
@@ -163,7 +205,7 @@
                     <div class="form-group row">
                         <label class="control-label">Precio</label>
                         <div class="col-sm-9">
-                            <input id="precio_unitario" class="form-control" id="precio" />
+                            <input type="number" class="form-control" id="precio" />
                         </div>
                     </div>
                 </div>
@@ -186,14 +228,13 @@
                 </div>
             </div>
                 <div style="margin-top: 2%;">
-                    <a type="button" class="mdi mdi-check-circle" style="color:green;font-size:400%;margin-left:40%"
-                        onclick="agregarprodu()"></a>
+                    <a type="button" class="mdi mdi-check-circle" style="color:green;font-size:400%;margin-left:40%" id="agregarprodu"></a>
                     <a type="button" class="mdi mdi-close-circle" style="color:red;font-size:400%;margin-left:8%"></a>
                 </div>
 
                 <div style="margin-top: 3%;">
                     <table id="resumen" class="table table-striped dt-responsive nowrap"
-                        style="width:50%;margin-left:20%">
+                        style="width:70%;margin-left:15%">
                         <thead>
                             <tr>
                                 <th>Imagen</th>
@@ -212,7 +253,8 @@
                             <th></th>
                             <th></th>
                             <th>TOTAL</th>
-                            <th id="precio_total"></th>
+                            
+                            <th id="totalpedido" name="totalpedido"></th>
                         </tfoot>
                         <tbody id=datosresumen>
 
@@ -228,77 +270,99 @@
                 <input type="button" value="Cancelar" class="btn btn-primary" />
 
             </div>
-        </form>
 
 
 <!-- scripts -->
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"
-    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-<script>
-    function masinfo() {
+<script>    
+    $(document).ready(function(){
 
-        //let cedula = $("#cliente option:selected").attr();
-        let cedula = document.getElementById("cliente").value;
-        //$.ajax({
-        //    type:"POST",
-        //    url:"@Url.Action("cmdSelectedIndexChanged")",
-        //    data:{idCliente:cedula}         
-        //});
+        $('#agregarprodu').click(function(){ 
 
-        $("#dato").val(cedula);
+            let producto_id = document.getElementById("producto").value;
+            let producto = document.getElementById("producto");
+            let selected = producto.options[producto.selectedIndex].text;
+            let imagen = document.getElementById("figura").value;
+            let cantidad = document.getElementById("cantidad").value;
+            let precio = document.getElementById("precio").value;
+            let descripcion = document.getElementById("descripcion").value;
+            let figura = document.getElementById("figura").value;
 
-        console.log(cedula);
-    }
-
-
-    function agregarprodu() {
-        let producto_id = $("#productos option:selected").val();
-        let producto_text = $("#productos option:selected").text();
-        let cantidad = $("#cantidad").val();
-        let precio = $("#precio").val();
-        let descripcion = $("#descripcion").val()
-
-        if (cantidad > 0 && precio > 0) {
+            
+            if (cantidad > 0 && precio > 0) {
             $("#datosresumen").append(`
                                 
                                 <tr id="tr-${producto_id}">
-                                <td>imagen</td>
-                                <td>
+                                <td>${imagen}</td>
                                 <input type="hidden" name="producto_id[]" value="${producto_id}"/>
                                 <input type="hidden" name="cantidades[]" value="${cantidad}"/>
-                                ${producto_text}
+                                <input type="hidden" name="precios[]" value="${precio}"/>
+                                <input type="hidden" name="imagenes[]" value="${figura}"/>
+                                <input type="hidden" name="descripciones[]" value="${descripcion}"/>
+                                <td>
+                                ${selected}
                                 </td>
                                 <td>${cantidad}</td>
                                 <td>${precio}</td>
-                                <td ">${parseInt(cantidad) * parseInt(precio)}</td>
+                                <td>${parseInt(cantidad) * parseInt(precio)}</td>
                                 <td>${descripcion}</td>
-                                <td><button type="button" class="mdi mdi-close-circle" style="color:red;font-size:5%" onclick="eliminar(${producto_id},${parseInt(cantidad) * parseInt(precio)})">X</button></td>
-                                
+                                <td><a type="button" class="mdi mdi-close-circle" style="color:red;font-size:100%" id="eliminar" onclick="eliminarclick(${producto_id},
+                                    ${parseInt(cantidad)*parseInt(precio)})"></a></td>     
                                 </tr>
 
                                 `);
-
-            let preciototal = $("#precio_total").val() || 0;
-            $("#precio_total").val(parseInt(preciototal) + (parseInt(cantidad) * parseInt(precio)));
+            
+            let preciototal = $("#totalpedido").val() || 0;
+            $("#totalpedido").val(parseInt(preciototal) + (parseInt(cantidad) * parseInt(precio)));
             let todo = (parseInt(preciototal) + (parseInt(cantidad) * parseInt(precio)));
-            document.getElementById('precio_total').innerHTML = todo;
+            document.getElementById('totalpedido').innerHTML = todo;
+            document.getElementById('total').value = todo;
+            }
+            
+            document.getElementById("cantidad").value ="";
+            document.getElementById("precio").value ="";
+            document.getElementById("figura").value ="";
+            document.getElementById("descripcion").value ="";
+        })
 
-        }
 
-    }
+            
+    })
 
-    function eliminar(id, subtotal) {
+    function eliminarclick(id,subtotal){
         $("#tr-" + id).remove();
-        let preciototal = $("#precio_total").val() || 0;
-        console.log(preciototal);
-        $("#precio_total").val(parseInt(preciototal) - subtotal);
+        let preciototal = $("#totalpedido").val() || 0;
+        $("#totalpedido").val(parseInt(preciototal) - subtotal);
         let nuevototal = (parseInt(preciototal) - subtotal);
-        document.getElementById('precio_total').innerHTML = nuevototal;
+        $("#totalpedido").val(nuevototal);
+        document.getElementById('totalpedido').innerHTML = nuevototal;
     }
 
+    function info(){
+        let idseleccion = document.getElementById("id_cliente").value;
+        if(idseleccion != 0){
+            let usuarioseleccion = [];
+            let usuario = <?php echo  $cliente  ?>;
+                usuario.forEach(function(value, index) {
+                usuarioseleccion[index] = value;
 
+                if(usuarioseleccion[index].id==idseleccion){
+                    $("#cedula").val(usuarioseleccion[index].cedula);
+                    $("#telefono").val(usuarioseleccion[index].telefono);
+                    if(usuarioseleccion[index].tipo_comercio==1){
+                        $("#tipo_persona").val("Mayorista");
+                    }
+                    if(usuarioseleccion[index].tipo_comercio==2){
+                        $("#tipo_persona").val("Minorista");
+                    }
+                    $("#direccion").val(usuarioseleccion[index].direccion);                 
+                }
+            });
+        }
+        
+    }
 
-
+</script>
+{{-- 
 // <div class="box box-info padding-1">
 //     <div class="box-body">
         
@@ -363,4 +427,4 @@
 //     <div class="box-footer mt20">
 //         <button type="submit" class="btn btn-primary">Submit</button>
 //     </div>
-// </div> --}}
+// </div> --}} 

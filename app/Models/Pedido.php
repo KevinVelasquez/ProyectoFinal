@@ -36,14 +36,12 @@ class Pedido extends Model
 		'id_cliente' => 'required',
 		'id_municipio' => 'required',
 		'id_metodo_entrega' => 'required',
-		'id_medio_pago' => 'required',
 		'id_metodo_pago' => 'required',
 		'direccion' => 'required',
 		'fecha_registro' => 'required',
 		'fecha_entrega' => 'required',
-		'estado' => 'required',
-		'proceso' => 'required',
-		'abono' => 'required',
+		'estado',
+		'proceso',
 		'totalpedido' => 'required',
     ];
 
@@ -54,7 +52,7 @@ class Pedido extends Model
      *
      * @var array
      */
-    protected $fillable = ['id_cliente','id_municipio','id_metodo_entrega','id_medio_pago','id_metodo_pago','direccion','fecha_registro','fecha_entrega','estado','proceso','abono','totalpedido'];
+    protected $fillable = ['id_cliente','id_municipio','id_metodo_entrega','id_metodo_pago','direccion','fecha_registro','fecha_entrega','estado','proceso','totalpedido'];
 
 
     /**
@@ -68,10 +66,6 @@ class Pedido extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function medioPago()
-    {
-        return $this->hasOne('App\Models\MedioPago', 'id', 'id_medio_pago');
-    }
     
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
@@ -96,6 +90,9 @@ class Pedido extends Model
     {
         return $this->hasOne('App\Models\Municipio', 'id', 'id_municipio');
     }
-    
+    public function cliente()
+    {
+        return $this->hasOne('App\Models\Cliente', 'id', 'id_cliente');
+    }
 
 }
