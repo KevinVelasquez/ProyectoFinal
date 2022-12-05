@@ -39,8 +39,8 @@
 
 
                     <td>
-                        <button onclick="verDatos('{{$cliente->id}}')" class="mdi mdi-format-align-justify"+ data-toggle="modal" data-target="#verdetalle" value="{{$cliente->id}}"  ></button>
-                        <button class="mdi mdi-cash-usd" data-toggle="modal" data-target="#abonos"></button>
+                        <button onclick="verDatos('{{$cliente->id}}')" class="mdi mdi-format-align-justify"+ data-toggle="modal" data-target="#verdetalle"  ></button>
+                        <button onclick="verDatos('{{$cliente->id}}')" class="mdi mdi-cash-usd" data-toggle="modal" data-target="#abonos"></button>
                         <button class="mdi mdi-lead-pencil" data-toggle="modal" data-target="#editarmodal" action="{{ route('pedidos.edit', $cliente->id) }}"></button>
                         <button class="mdi mdi-block-helper" data-toggle="modal" data-target="#anularmodal"></button>
                     </td>
@@ -51,44 +51,6 @@
     </main>
 </div>
 
-<script>
-  function verDatos(id){
-
-    
-
-
-      let detallePedidos = [];
-      let pedidos = <?php echo  $detallepedido  ?>;
-          pedidos.forEach(function(value, index) {
-            detallePedidos[index] = value;
-      });
-
-      console.log(detallePedidos)
-      detallePedidos.forEach(function(value, index) {
-            if(detallePedidos[index].id_pedido == id){
-              let fila = `
-              <tr>
-                  <td>
-                    ${detallePedidos[index].id_pedido}
-                  </td>
-                  <td>
-                    ${detallePedidos[index].id_pedido}
-                  </td>
-                  <td>
-                    ${detallePedidos[index].id_pedido}
-                  </td>
-                  <td>
-                    ${detallePedidos[index].id_pedido}
-                  </td>
-                </tr>
-              `;
-
-              $("#tablaDetallePedidoSeleccionado tbody").append(fila)
-            }
-      })
-
-  }
-</script>
 <!-- modales -->
 <!-- modal editar -->
 <div class="modal fade" id="editarmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -96,7 +58,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document" id="modalactualizar" style="max-width: 63%;">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Actualizar Pedido</h5>
+          <h5 class="modal-title" id="exampleModalLongTitleeditar">Actualizar Pedido</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -173,16 +135,17 @@
                       </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">Medio Pago</label>
-                          <div class="col-sm-9">
-                            <select class="form-control">
-                              <option value="1">Efectivo</option>
-                              <option value="2">Transferencia</option>
-                          </select>
-                          </div>
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" >Estado</label>
+                        <div class="col-sm-9">
+                          <select class="form-control">
+                            <option value="0">Pendiente</option>
+                            <option value="1">Despachado</option>
+                            <option value="2">Entregado</option>
+                        </select>
                         </div>
                       </div>
+                    </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
@@ -197,29 +160,6 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">Abono</label>
-                          <div class="col-sm-9">
-                            <input type="text" class="form-control">
-                          </div>
-                        </div>
-                      </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label" >Estado</label>
-                          <div class="col-sm-9">
-                            <select class="form-control">
-                              <option value="0">Pendiente</option>
-                              <option value="1">Despachado</option>
-                              <option value="2">Entregado</option>
-                          </select>
-                          </div>
-                        </div>
-                      </div>
-                   
                   </div>
               </div>
             </div>
@@ -265,7 +205,7 @@ aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document" id="modalactualizar" style="max-width: 63%;">
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLongTitle">Pedido </h5>
+      <h5 class="modal-title" id="exampleModalLongTitledetalle"></h5>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -279,7 +219,7 @@ aria-hidden="true">
                 <div class="col-12">
                   <div class="text-center text-150">
                     <img src="/assets/img/LOGO LAS MARCAS TINTO-1.png" style="width:70px;">
-                    <span class="text-default-d3">LAS MARCAS PARA GANADO</span>
+                    <span class="text-default-d3"> <b>LAS MARCAS PARA GANADO </b></span>
                   </div>
                 </div>
               </div>
@@ -291,20 +231,18 @@ aria-hidden="true">
                 <div class="col-sm-6">
                   <div>
                     <span class="text-sm text-grey-m2 align-middle">Para:</span>
-                    <span class="text-600 text-110 text-blue align-middle">Kely Sanguino</span>
+                    <span class="text-600 text-110 text-blue align-middle" id="nombreclientedetalle"></span>
                   </div>
                   <div class="text-grey-m2">
-                    <div class="my-1">
-                      C.C 103667045
+                    <div class="my-1" id="cedulaclientedetalle">
                     </div>
-                    <div class="my-1">
-                      Calle 63 # 61 - 44, Medellín
+                    <div class="my-1" id="direccionclientedetalle">
                     </div>
                     <div class="my-1">
                       Antioquia, Colombia
                     </div>
                     <div class="my-1"><i class="fa fa-phone fa-flip-horizontal text-secondary"></i> <b
-                        class="text-600">31178318250</b></div>
+                        class="text-600" id="telefonoclientedetalle"></b></div>
                   </div>
                 </div>
                 <!-- /.col -->
@@ -317,17 +255,17 @@ aria-hidden="true">
                     </div>
 
                     <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span
-                        class="text-600 text-90">ID:</span> #010101</div>
+                        class="text-600 text-90" id="idpedidodetalle"></span></div>
 
                     <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span
-                        class="text-600 text-90">Fecha Registro:</span> Nov 19,2022</div>
+                        class="text-600 text-90" id="fecharegipedidodetalle"></span></div>
 
                     <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span
-                        class="text-600 text-90">Fecha Entrega:</span> Nov 28,2022</div>
+                        class="text-600 text-90" id="fechaentrepedidodetalle"></span></div>
 
 
                     <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span
-                        class="text-600 text-90">Estado:</span> <span>Pendiente</span></div>
+                        class="text-600 text-90" id="procesopedidodetalle"></span></div>
                   </div>
                 </div>
                 <!-- /.col -->
@@ -362,42 +300,19 @@ aria-hidden="true">
 
                 <div class="row mt-3">
                   <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
-                    <div class="my-1">
-                      Metodo de Entrega: Feria de Ganado
+                    <div class="my-1" id="metodoentregapedidodetalle">
                     </div>
-                    <div class="my-1">
-                      Metodo de Pago: Credito
-                    </div>
-                    <div class="my-1">
-                      Medio de Pago: Transferencia
+                    <div class="my-1" id="metodopagopedidodetalle">
                     </div>
                   </div>
 
                   <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
                     <div class="row my-2">
                       <div class="col-7 text-right">
-                        Total
+                        Total:
                       </div>
                       <div class="col-5">
-                        <span class="text-120 text-secondary-d1">600.000</span>
-                      </div>
-                    </div>
-
-                    <div class="row my-2">
-                      <div class="col-7 text-right">
-                        Abono
-                      </div>
-                      <div class="col-5">
-                        <span class="text-110 text-secondary-d1">200.000</span>
-                      </div>
-                    </div>
-
-                    <div class="row my-2 align-items-center bgc-primary-l3 p-2">
-                      <div class="col-7 text-right">
-                        Resta
-                      </div>
-                      <div class="col-5">
-                        <span class="text-150 text-success-d3 opacity-2">400.000</span>
+                        <span class="text-120 text-secondary-d1" id="totalpedidodetalle"></span>
                       </div>
                     </div>
                   </div>
@@ -532,6 +447,64 @@ aria-hidden="true">
                 }
             });
     });
+  
+    function datosDetalle(id){
+      let datos = <?php echo  $pedidocliente  ?>;
+      let detalledatos = datos.find(item => item.id == id)  
+      $('#exampleModalLongTitledetalle').text(`Pedido #${detalledatos.id}`)
+      $('#nombreclientedetalle').text(`${detalledatos.nombrecliente}`)
+      $('#cedulaclientedetalle').text(`C.C ${detalledatos.cedula}`)
+      $('#direccionclientedetalle').text(`${detalledatos.direccion}, ${detalledatos.nombremunicipio}`)
+      $('#telefonoclientedetalle').text(`${detalledatos.telefono}`)
+      $('#idpedidodetalle').text(`ID: ${detalledatos.id}`)
+      $('#fecharegipedidodetalle').text(`Fecha Registro: ${detalledatos.fecha_registro}`)
+      $('#fechaentrepedidodetalle').text(`Fecha Entrega: ${detalledatos.fecha_entrega}`)
+      if (detalledatos.proceso == 0){
+        $('#procesopedidodetalle').text(`Estado: Pendiente`)
+      }else if(detalledatos.proceso == 1){
+        $('#procesopedidodetalle').text(`Estado: Despachado`)
+      }else{
+        $('#procesopedidodetalle').text(`Estado: Entregado`)
+      }
+      $('#metodoentregapedidodetalle').text(`Metodo Entrega:  ${detalledatos.nombremetodoentrega}`)
+      $('#metodopagopedidodetalle').text(`Metodo Pago:  ${detalledatos.nombremetodopago}`)
+      $('#totalpedidodetalle').text(`${detalledatos.totalpedido}`)
 
+      
+      
+      // $('#procesopedidodetalle').text(`Proceso: ${detalledatos.proceso}`)
+      console.log(datos)
+    }
+
+  function verDatos(id){
+      datosDetalle(id)
+      let detallePedidos = [];
+      let pedidos = <?php echo  $detallepedido  ?>;
+          pedidos.forEach(function(value, index) {
+            detallePedidos[index] = value;
+      });
+      $("#tablaDetallePedidoSeleccionado tbody").children().remove();
+      detallePedidos.forEach(function(value, index) {
+            if(detallePedidos[index].id_pedido == id){
+              let fila = `
+              <tr>
+                  <td>
+                    ${detallePedidos[index].nombre}
+                  </td>
+                  <td>
+                    ${detallePedidos[index].cantidad}
+                  </td>
+                  <td>
+                    ${detallePedidos[index].precio}
+                  </td>
+                  <td>
+                   ${detallePedidos[index].cantidad * detallePedidos[index].precio}
+                  </td>
+                </tr>
+              `;
+              $("#tablaDetallePedidoSeleccionado tbody").append(fila)
+            }
+      })
+    }
 </script>
 @endsection

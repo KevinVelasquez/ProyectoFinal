@@ -50,6 +50,7 @@
                         <label class="control-label">Pais</label>
                         <div class="col-sm-9">
                             <select class="form-control" name="pais" id="pais">
+                                <option value="0">Selecciones</option>
                                 @forelse($paises  as $pais)
                                 <option value="{{$pais->id}}">
                                {{ $pais->nombre}}
@@ -66,6 +67,7 @@
                         <label class="control-label">Departamento</label>
                         <div class="col-sm-7">
                             <select class="form-control" name="departamento" id="departamento">
+                                <option value="0">Selecciones</option>
                                 @forelse($departamentos  as $departamento)
                                 <option value="{{$departamento->id}}">
                                {{ $departamento->nombre}}
@@ -81,6 +83,7 @@
                         <label class="control-label">Municipio</label>
                         <div class="col-sm-8">
                             <select class="form-control" name="id_municipio" id="id_municipio">
+                                <option value="0">Selecciones</option>
                                 @forelse($municipios  as $municipio)
                                 <option value="{{$municipio->id}}">
                                {{ $municipio->nombre}}
@@ -124,6 +127,7 @@
                         <label  class="control-label">Metodo de Entrega</label>
                         <div class="col-sm-7">
                             <select class="form-control" name="id_metodo_entrega" id="id_metodo_entrega">
+                                <option value="0">Selecciones</option>
                                 @forelse($metodo_entrega  as $metodo_entregas)
                                 <option value="{{$metodo_entregas->id}}">
                                {{ $metodo_entregas->nombre}}
@@ -138,7 +142,8 @@
                     <div class="form-group row">
                         <label  class="control-label"> Medio de Pago</label>
                         <div class="col-sm-9">
-                            <select class="form-control" name="medio_pago" id="medio_pago">
+                            <select class="form-control" name="id_medio_pago" id="id_medio_pago">
+                                <option value="0">Selecciones</option>
                                 @forelse($medio_pago  as $medio_pagos)
                                 <option value="{{$medio_pagos->id}}">
                                {{ $medio_pagos->nombre}}
@@ -154,6 +159,7 @@
                         <label class="control-label">Metodo de Pago</label>
                         <div class="col-sm-9">
                             <select class="form-control" name="id_metodo_pago" id="id_metodo_pago">
+                                <option value="0">Selecciones</option>
                                 @forelse($metodo_pago  as $metodo_pagos)
                                 <option value="{{$metodo_pagos->id}}">
                                {{ $metodo_pagos->nombre}}
@@ -168,7 +174,7 @@
                     <div class="form-group row">
                         <label  class="control-label">Abono</label>
                         <div class="col-sm-9">
-                            <input type="number" id="abono" class="form-control" />
+                            <input type="number" name="abono" id="abono" class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -181,6 +187,7 @@
                         <label  class="control-label">Productos</label>
                         <div class="col-sm-9">
                             <select class="form-control" name="producto" id="producto">
+                                <option value="0">Selecciones</option>
                                 @forelse($producto  as $productos)
                                 <option value="{{$productos->id}}">
                                {{ $productos->nombre}}

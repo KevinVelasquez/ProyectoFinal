@@ -12,6 +12,7 @@ use App\Models\Pais;
 use App\Models\Departamento;
 use App\Models\Municipio;
 use App\Models\DetallePedido;
+use App\Models\Pago_Clientes;
 use Illuminate\Http\Request;
 
 
@@ -34,8 +35,22 @@ class PedidoController extends Controller
             ->join("pedidos", "pedidos.id_cliente", "=", "clientes.id")
             ->get();
 
-        $detallepedido = DetallePedido::all();
-        return view('pedido.index', compact('pedidos', 'clientes', 'detallepedido'))
+        $detallepedido = DetallePedido::select('detalle_pedidos.cantidad', 'detalle_pedidos.precio', 'productos.nombre', 'detalle_pedidos.id_pedido')
+            ->join("productos", "detalle_pedidos.id_producto", "=", "productos.id")
+            ->get();
+
+        $pedidocliente = Pedido::select("pedidos.fecha_registro", "pedidos.fecha_entrega", "pedidos.estado", "pedidos.id_metodo_entrega","pedidos.id_metodo_pago","pedidos.direccion","pedidos.id","pedidos.totalpedido","pedidos.proceso","pedidos.id_municipio",
+        "clientes.id AS idcliente","clientes.nombre AS nombrecliente","clientes.cedula","clientes.telefono",
+        "metodo__pagos.id AS idmetodopago","metodo__pagos.nombre AS nombremetodopago",
+        "metodo__entregas.id AS idmetodoentrega","metodo__entregas.nombre AS nombremetodoentrega",
+        "municipios.id AS idmunicipio","municipios.nombre AS nombremunicipio")
+            ->join("clientes", "pedidos.id_cliente", "=", "clientes.id")
+            ->join("metodo__pagos","pedidos.id_metodo_pago","=","metodo__pagos.id")
+            ->join("metodo__entregas","pedidos.id_metodo_entrega","=","metodo__entregas.id")
+            ->join("municipios","pedidos.id_municipio","=","municipios.id")
+            ->get();
+
+        return view('pedido.index', compact('pedidos', 'clientes', 'detallepedido','pedidocliente'))
             ->with('i', (request()->input('page', 1) - 1) * $pedidos->perPage());
     }
 
@@ -56,7 +71,7 @@ class PedidoController extends Controller
         $metodo_pago = Metodo_Pago::all();
         $producto = producto::all();
         $pedido = new Pedido();
-        
+
         return view('pedido.create', compact('pedido', 'cliente', 'producto', 'paises', 'departamentos', 'municipios', 'metodo_entrega', 'medio_pago', 'metodo_pago'));
     }
 
@@ -81,6 +96,13 @@ class PedidoController extends Controller
             'totalpedido' => $input["total"],
         ]);
 
+        $pagoclientes = Pago_Clientes::create([
+            "id_pedido" => $pedido->id,
+            "fecha" => $input["fecha_registro"],
+            "abono" => $input["abono"],
+            'id_medio_pago' => $input["id_medio_pago"],
+        ]);
+
         foreach ($input["producto_id"] as $key => $value) {
             DetallePedido::create([
                 "id_pedido" => $pedido->id,
@@ -100,7 +122,12 @@ class PedidoController extends Controller
             ->join("pedidos", "pedidos.id_cliente", "=", "clientes.id")
             ->get();
 
-        return view('pedido.index', compact('pedidos', 'clientes'))
+        $detallepedido = DetallePedido::select('detalle_pedidos.cantidad', 'detalle_pedidos.precio', 'productos.nombre', 'detalle_pedidos.id_pedido')
+            ->join("productos", "detalle_pedidos.id_producto", "=", "productos.id")
+            ->get();
+
+
+        return view('pedido.index', compact('pedidos', 'clientes', 'detallepedido'))
             ->with('i', (request()->input('page', 1) - 1) * $pedidos->perPage());
 
 
@@ -164,20 +191,7 @@ class PedidoController extends Controller
             ->with('success', 'Pedido deleted successfully');
     }
 
-    public function detalle($id)
-    {
-        
-        // $detallepedido = DetallePedido::select('detalle_pedidos.cantidad','detalle_pedidos.precio','productos.nombre','detalle_pedidos.id_pedido')
-        // ->join("productos", "detalle_pedidos.id_producto", "=", "productos.id")
-        // ->Where ('detalle_pedidos.id_pedido', '=', $id)
-        // ->get();
-        //return response()->json($detallepedido);
-        // return view('pedido.index', compact('detallepedido'));
-        // $pedidos = Pedido::paginate();
-        // return view('pedido.index', compact('pedidos','detallepedido','clientes'))
-        // ->with('i', (request()->input('page', 1) - 1) * $pedidos->perPage());
-
-    }
+ 
 
 
 }
