@@ -65,12 +65,10 @@ Cliente
             </tbody>
         </table>
 </div>
-</div>
-</div>
+
+
 {!! $clientes->links() !!}
-</div>
-</div>
-</div>
+
 
 <!-- scripts -->
 
