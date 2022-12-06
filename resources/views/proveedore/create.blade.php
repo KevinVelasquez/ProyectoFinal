@@ -13,7 +13,7 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">Create Proveedore</span>
+                        <span class="card-title">Registrar Proveedor</span>
                     </div>
                     <div class="card-body">
                         <form method="POST" action="{{ route('proveedores.store') }}"  role="form" enctype="multipart/form-data">

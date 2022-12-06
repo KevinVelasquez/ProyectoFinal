@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Pais;
 use App\Models\Departamento;
 use App\Models\Municipio;
+use App\Models\Regimen;
+use App\Models\Tipo_comercio;
+use App\Models\Tipo_persona;
 use App\Models\Proveedore;
 use Illuminate\Http\Request;
 
@@ -37,8 +40,11 @@ class ProveedoreController extends Controller
         $paises = Pais::all();
         $departamentos = Departamento::all();
         $municipios = Municipio::all();
+        $tipo_comercio = Tipo_comercio::all();
+        $tipo_persona = Tipo_persona::all();
+        $regimen = Regimen::all();
         $proveedore = new Proveedore();
-        return view('proveedore.create', compact('proveedore', 'paises', 'departamentos', 'municipios'));
+        return view('proveedore.create', compact('proveedore','paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
     }
 
     /**
@@ -96,7 +102,7 @@ class ProveedoreController extends Controller
 
         $proveedore->update($request->all());
 
-        return redirect()->route('proveedores.index')
+        return redirect()->route('proveedore.index')
             ->with('success', 'Proveedore updated successfully');
     }
 
@@ -109,7 +115,7 @@ class ProveedoreController extends Controller
     {
         $proveedore = Proveedore::find($id)->delete();
 
-        return redirect()->route('proveedores.index')
+        return redirect()->route('proveedore.index')
             ->with('success', 'Proveedore deleted successfully');
     }
 }

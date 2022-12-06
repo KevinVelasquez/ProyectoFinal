@@ -22,6 +22,10 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+// Route::get('/clientes/create', [ClienteController::class, 'create'])->name('clientes.create');
+// Route::post('/clientes',  [ClienteController::class, 'store'])->name('clientes.store');
+
+
 
 Route::resource('clientes',ClienteController::class)->middleware('auth');
 Route::resource('proveedores',ProveedoreController::class)->middleware('auth');
@@ -38,8 +42,5 @@ Route::resource('proveedores',ProveedoreController::class)->middleware('auth');
    
 // });
 
-//  Route::get('clientes', [ClienteController::class, 'form'])->name('cliente.form');
-
-Route::post('send-form', [ClienteController::class, 'send'])->name('cliente.send');
 
 

@@ -1,93 +1,84 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Proveedore
+Proveedore
 @endsection
 
 @section('content')
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
+<div class="container">
+    <main role="main" class="pb-3">
+        <p>
+            <a class="mdi mdi-cart-outline" id="iconoadd" href="{{ route('proveedores.create') }}"></a>
+        </p>
 
-                            <span id="card_title">
-                                {{ __('Proveedore') }}
-                            </span>
+        <table id="proveedores" class="table table-striped dt-responsive nowrap table" style="width:100%">
+            <thead>
+                <tr>
 
-                             <div class="float-right">
-                                <a href="{{ route('proveedores.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
-                                </a>
-                              </div>
-                        </div>
-                    </div>
-                    @if ($message = Session::get('success'))
-                        <div class="alert alert-success">
-                            <p>{{ $message }}</p>
-                        </div>
-                    @endif
 
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead class="thead">
-                                    <tr>
-                                        <th>No</th>
-                                        
-										<th>Cedula</th>
-										<th>Nombre</th>
-										<th>Telefono</th>
-										<th>Pais</th>
-										<th>Departamento</th>
-										<th>Municipio</th>
-										<th>Direccion</th>
-										<th>Email</th>
-										<th>Estado</th>
-										<th>Tipo Persona</th>
-										<th>Regimen</th>
-										<th>Tipo Comercio</th>
+                    <th>Cedula</th>
+                    <th>Nombre</th>
+                    <th>Telefono</th>
+                    <th>Pais</th>
+                    <th>Departamento</th>
+                    <th>Municipio</th>
+                    <th>Direccion</th>
+                    <th>Email</th>
+                    <th>Estado</th>
+                    <th>Tipo Persona</th>
+                    <th>Regimen</th>
+                    <th>Tipo Comercio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
 
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($proveedores as $proveedore)
-                                        <tr>
-                                            <td>{{ ++$i }}</td>
-                                            
-											<td>{{ $proveedore->cedula }}</td>
-											<td>{{ $proveedore->nombre }}</td>
-											<td>{{ $proveedore->telefono }}</td>
-											<td>{{ $proveedore->pais }}</td>
-											<td>{{ $proveedore->departamento }}</td>
-											<td>{{ $proveedore->municipio }}</td>
-											<td>{{ $proveedore->direccion }}</td>
-											<td>{{ $proveedore->email }}</td>
-											<td>{{ $proveedore->estado }}</td>
-											<td>{{ $proveedore->tipo_persona }}</td>
-											<td>{{ $proveedore->regimen }}</td>
-											<td>{{ $proveedore->tipo_comercio }}</td>
 
-                                            <td>
-                                                <form action="{{ route('proveedores.destroy',$proveedore->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('proveedores.show',$proveedore->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('proveedores.edit',$proveedore->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                {!! $proveedores->links() !!}
-            </div>
-        </div>
-    </div>
+                @foreach ($proveedores as $proveedore)
+                <tr>
+                    <td>{{ ++$i }}</td>
+
+                    <td>{{ $cliente->cedula }}</td>
+                    <td>{{ $cliente->nombre }}</td>
+                    <td>{{ $cliente->telefono }}</td>
+                    <td>{{ $cliente->pais }}</td>
+                    <td>{{ $cliente->departamento }}</td>
+                    <td>{{ $cliente->municipio }}</td>
+                    <td>{{ $cliente->direccion }}</td>
+                    <td>{{ $cliente->email }}</td>
+                    <td>{{ $cliente->estado }}</td>
+                    <td>{{ $cliente->tipo_persona }}</td>
+                    <td>{{ $cliente->regimen }}</td>
+                    <td>{{ $cliente->tipo_comercio }}</td>
+
+                    <td>
+                        <form action="{{ route('proveedores.destroy',$proveedore->id) }}" method="POST">
+                            <a class="btn btn-sm btn-primary " href="{{ route('proveedores.show',$proveedore->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
+                            <a class="btn btn-sm btn-success" href="{{ route('proveedores.edit',$proveedore->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+</div>
+
+{!! $proveedores->links() !!}
+
+
+<!-- scripts -->
+
+<script>
+    $(document).ready(function() {
+        $('#proveedores').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            }
+        });
+    });
+</script>
+
 @endsection

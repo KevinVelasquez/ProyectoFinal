@@ -195,7 +195,40 @@
         </div> -->
 
     </div>
-    <div class="box-footer mt20">
+    <!-- <div class="box-footer mt20">
         <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
+    </div> -->
+
+    <div class="box-footer mt20">
+                        
+                        <button type="submit" class="btn btn-primary">Registrar</button>
+                        <button type="reset"  value="Borrar" class="btn btn-primary">Limpiar</button>
+                        <a data-toggle="modal" data-target="#CancelarCliente" class="btn btn-primary btn-lg active"
+                            aria-pressed="true">Cancelar</a>
+                    </div>
 </div>
+
+
+        <div class="modal fade" id="CancelarCliente" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Desea cancelar el registro del cliente?
+                    </div>
+                    <div class="modal-footer">
+                        <a href="{{ route('clientes.index') }}" class="btn btn-primary btn-lg active" role="button"
+                            aria-hidden="true">Si</a>
+                        <a href="{{ route('clientes.create') }}" class="btn btn-primary btn-lg active" role="button"
+                            data-dismiss="modal">No</a>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
