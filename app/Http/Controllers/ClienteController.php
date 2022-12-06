@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Pais;
 use App\Models\Departamento;
 use App\Models\Municipio;
+use App\Models\Regimen;
+use App\Models\Tipo_comercio;
+use App\Models\Tipo_persona;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
 
@@ -37,9 +40,11 @@ class ClienteController extends Controller
         $paises = Pais::all();
         $departamentos = Departamento::all();
         $municipios = Municipio::all();
+        $tipo_comercio = Tipo_comercio::all();
+        $tipo_persona = Tipo_persona::all();
+        $regimen = Regimen::all();
         $cliente = new Cliente();
-    
-        return view('cliente.create', compact('cliente', 'paises', 'departamentos', 'municipios'));
+        return view('cliente.create', compact('cliente','paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
     }
 
     /**
@@ -54,7 +59,7 @@ class ClienteController extends Controller
 
         $cliente = Cliente::create($request->all());
 
-        return redirect()->route('clientes.index')
+        return redirect()->route('cliente.index')
             ->with('success', 'Cliente created successfully.');
     }
 

@@ -26,16 +26,20 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('clientes',ClienteController::class)->middleware('auth');
 Route::resource('proveedores',ProveedoreController::class)->middleware('auth');
 
-Route::group(['middleware' => 'auth'], function(){
+// Route::group(['middleware' => 'auth'], function(){
 
-    Route::get('/', [ClienteController::class, 'index'])->name('home');
+//     Route::get('/', [ClienteController::class, 'index'])->name('home');
    
-});
+// });
 
-Route::group(['middleware' => 'auth'], function(){
+// Route::group(['middleware' => 'auth'], function(){
 
-    Route::get('/', [ProveedoreController::class, 'index'])->name('home');
+//     Route::get('/', [ProveedoreController::class, 'index'])->name('home');
    
-});
+// });
+
+//  Route::get('clientes', [ClienteController::class, 'form'])->name('cliente.form');
+
+Route::post('send-form', [ClienteController::class, 'send'])->name('cliente.send');
 
 

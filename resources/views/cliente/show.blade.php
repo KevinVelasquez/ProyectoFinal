@@ -33,18 +33,6 @@
                             {{ $cliente->telefono }}
                         </div>
                         <div class="form-group">
-                            <strong>Pais:</strong>
-                            {{ $cliente->pais }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Departamento:</strong>
-                            {{ $cliente->departamento }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Municipio:</strong>
-                            {{ $cliente->municipio }}
-                        </div>
-                        <div class="form-group">
                             <strong>Direccion:</strong>
                             {{ $cliente->direccion }}
                         </div>
@@ -55,6 +43,10 @@
                         <div class="form-group">
                             <strong>Estado:</strong>
                             {{ $cliente->estado }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Id Municipio:</strong>
+                            {{ $cliente->id_municipio }}
                         </div>
                         <div class="form-group">
                             <strong>Tipo Persona:</strong>

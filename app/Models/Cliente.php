@@ -11,18 +11,17 @@ use Illuminate\Database\Eloquent\Model;
  * @property $cedula
  * @property $nombre
  * @property $telefono
- * @property $pais
- * @property $departamento
- * @property $municipio
  * @property $direccion
  * @property $email
  * @property $estado
+ * @property $id_municipio
  * @property $tipo_persona
  * @property $regimen
  * @property $tipo_comercio
  * @property $created_at
  * @property $updated_at
  *
+ * @property Municipio $municipio
  * @property Regiman $regiman
  * @property TipoComercio $tipoComercio
  * @property TipoPersona $tipoPersona
@@ -36,12 +35,10 @@ class Cliente extends Model
 		'cedula' => 'required',
 		'nombre' => 'required',
 		'telefono' => 'required',
-		// 'pais' => 'required',
-		// 'departamento' => 'required',
-		'municipio' => 'required',
 		'direccion' => 'required',
 		'email' => 'required',
 		'estado' => 'required',
+		'id_municipio' => 'required',
 		'tipo_persona' => 'required',
 		'regimen' => 'required',
 		'tipo_comercio' => 'required',
@@ -54,9 +51,17 @@ class Cliente extends Model
      *
      * @var array
      */
-    protected $fillable = ['cedula','nombre','telefono','municipio','direccion','email','estado','tipo_persona','regimen','tipo_comercio'];
+    protected $fillable = ['cedula','nombre','telefono','direccion','email','estado','id_municipio','tipo_persona','regimen','tipo_comercio'];
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function municipio()
+    {
+        return $this->hasOne('App\Models\Municipio', 'id', 'id_municipio');
+    }
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -79,14 +84,6 @@ class Cliente extends Model
     public function tipoPersona()
     {
         return $this->hasOne('App\Models\TipoPersona', 'id', 'tipo_persona');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function municipio()
-    {
-        return $this->hasOne('App\Models\Municipio', 'id', 'id_municipio');
     }
     
 

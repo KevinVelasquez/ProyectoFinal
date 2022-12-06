@@ -19,9 +19,6 @@ return new class extends Migration
             $table->integer('cedula')->unique();  
             $table->string('nombre');
             $table->string('telefono');
-            // $table->string('pais');
-            // $table->string('departamento');
-            // $table->string('municipio');
             $table->string('direccion');
             $table->string('email')->unique();
             $table->integer('estado')->default(1);
