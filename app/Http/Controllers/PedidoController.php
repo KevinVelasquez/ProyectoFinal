@@ -39,18 +39,58 @@ class PedidoController extends Controller
             ->join("productos", "detalle_pedidos.id_producto", "=", "productos.id")
             ->get();
 
-        $pedidocliente = Pedido::select("pedidos.fecha_registro", "pedidos.fecha_entrega", "pedidos.estado", "pedidos.id_metodo_entrega","pedidos.id_metodo_pago","pedidos.direccion","pedidos.id","pedidos.totalpedido","pedidos.proceso","pedidos.id_municipio",
-        "clientes.id AS idcliente","clientes.nombre AS nombrecliente","clientes.cedula","clientes.telefono",
-        "metodo__pagos.id AS idmetodopago","metodo__pagos.nombre AS nombremetodopago",
-        "metodo__entregas.id AS idmetodoentrega","metodo__entregas.nombre AS nombremetodoentrega",
-        "municipios.id AS idmunicipio","municipios.nombre AS nombremunicipio")
+        $pedidocliente = Pedido::select(
+            "pedidos.fecha_registro",
+            "pedidos.fecha_entrega",
+            "pedidos.estado",
+            "pedidos.id_metodo_entrega",
+            "pedidos.id_metodo_pago",
+            "pedidos.direccion",
+            "pedidos.id",
+            "pedidos.totalpedido",
+            "pedidos.proceso",
+            "pedidos.id_municipio",
+            "clientes.id AS idcliente",
+            "clientes.nombre AS nombrecliente",
+            "clientes.cedula",
+            "clientes.telefono",
+            "metodo__pagos.id AS idmetodopago",
+            "metodo__pagos.nombre AS nombremetodopago",
+            "metodo__entregas.id AS idmetodoentrega",
+            "metodo__entregas.nombre AS nombremetodoentrega",
+            "municipios.id AS idmunicipio",
+            "municipios.nombre AS nombremunicipio"
+        )
             ->join("clientes", "pedidos.id_cliente", "=", "clientes.id")
-            ->join("metodo__pagos","pedidos.id_metodo_pago","=","metodo__pagos.id")
-            ->join("metodo__entregas","pedidos.id_metodo_entrega","=","metodo__entregas.id")
-            ->join("municipios","pedidos.id_municipio","=","municipios.id")
+            ->join("metodo__pagos", "pedidos.id_metodo_pago", "=", "metodo__pagos.id")
+            ->join("metodo__entregas", "pedidos.id_metodo_entrega", "=", "metodo__entregas.id")
+            ->join("municipios", "pedidos.id_municipio", "=", "municipios.id")
             ->get();
 
-        return view('pedido.index', compact('pedidos', 'clientes', 'detallepedido','pedidocliente'))
+        $editarpedido = Pedido::select(
+            "clientes.cedula",
+            "clientes.nombre",
+            "clientes.telefono",
+            "pedidos.direccion",
+            "pedidos.id_metodo_entrega",
+            "pedidos.fecha_registro",
+            "pedidos.id_metodo_pago",
+            "pedidos.fecha_entrega",
+            "pedidos.proceso",
+            "pedidos.estado",
+            "pedidos.id",
+            "metodo__pagos.id AS idmetodopago",
+            "metodo__pagos.nombre AS nombremetodopago",
+            "metodo__entregas.id AS idmetodoentrega",
+            "metodo__entregas.nombre AS nombremetodoentrega"
+        )
+            ->join("clientes", "pedidos.id_cliente", "=", "clientes.id")
+            ->join("metodo__pagos", "pedidos.id_metodo_pago", "=", "metodo__pagos.id")
+            ->join("metodo__entregas", "pedidos.id_metodo_entrega", "=", "metodo__entregas.id")
+
+            ->get();
+
+        return view('pedido.index', compact('pedidos', 'clientes', 'detallepedido', 'pedidocliente', 'editarpedido'))
             ->with('i', (request()->input('page', 1) - 1) * $pedidos->perPage());
     }
 
@@ -74,7 +114,6 @@ class PedidoController extends Controller
 
         return view('pedido.create', compact('pedido', 'cliente', 'producto', 'paises', 'departamentos', 'municipios', 'metodo_entrega', 'medio_pago', 'metodo_pago'));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -132,66 +171,40 @@ class PedidoController extends Controller
 
 
     }
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function updatePedido(Request $request)
     {
-        $pedido = Pedido::find($id);
-
-        return view('pedido.show', compact('pedido'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $pedidoedi = Pedido::find($id);
-        $clienteedi = Cliente::find($id);
-
-        return view('pedido.index', compact('pedidoedi', 'clienteedi'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Pedido $pedido
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Pedido $pedido)
-    {
-        request()->validate(Pedido::$rules);
-
-        $pedido->update($request->all());
-
+        $input = $request->all();
+        $pedido = array(
+            'id_metodo_entrega' => $input["id_metodo_entrega"],
+            'id_metodo_pago' => $input["id_metodo_pago"],
+            'direccion' => $input["direccion"],
+            'fecha_registro' => $input["fecha_registro"],
+            'fecha_entrega' => $input["fecha_entrega"],
+        );
+        Pedido::where('id', $input["id"])
+            ->update([
+                'id_metodo_entrega' => $input["id_metodo_entrega"],
+                'id_metodo_pago' => $input["id_metodo_pago"],
+                'direccion' => $input["direccion"],
+                'fecha_registro' => $input["fecha_registro"],
+                'fecha_entrega' => $input["fecha_entrega"],
+                'proceso' => $input["proceso"],
+            ]);
         return redirect()->route('pedidos.index')
-            ->with('success', 'Pedido updated successfully');
-    }
+            ->with('success', 'Pedido update successfully');
 
-    /**
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
-     */
-    public function destroy($id)
+    }
+    public function anularPedido(Request $request)
     {
-        $pedido = Pedido::find($id)->delete();
-
+        
+        $input = $request->all();
+        $id = $obj->id;
+        Pedido::where('id', $id)
+            ->update([
+                'estado' => 2,
+            ]);
         return redirect()->route('pedidos.index')
-            ->with('success', 'Pedido deleted successfully');
+            ->with('success', 'Status pedido successfully');
     }
-
- 
-
-
+    
 }

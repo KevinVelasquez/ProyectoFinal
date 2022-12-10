@@ -24,13 +24,16 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::resource('pedidos', App\Http\Controllers\PedidoController::class);
+Route::put('pedidos', [PedidoController::class, 'anularPedido'])->name('pedidos.anularPedido');
+Route::post('pedidos', [PedidoController::class, 'updatePedido'])->name('pedidos.updatePedido');
+
+
 
 Route::resource('figuras', App\Http\Controllers\FiguraController::class);
-
 Route::resource('clientes', App\Http\Controllers\ClienteController::class);
 Route::resource('Proveedor', App\Http\Controllers\ProveedorController::class);
-
 Route::resource('insumos', App\Http\Controllers\InsumoController::class);
 
-Route::get('/pedidos/{id}', [PedidoController::class, 'detalle'])->name('pedidos.detalle');
+
+
 
