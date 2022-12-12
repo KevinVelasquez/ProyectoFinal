@@ -13,8 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        //
-        Schema::create('proveedores', function (Blueprint $table) {
+        Schema::create('clientes', function (Blueprint $table) {
             $table->id();
             $table->integer('cedula')->unique();  
             $table->string('nombre');
@@ -35,6 +34,7 @@ return new class extends Migration
             $table->foreign('tipo_comercio')->references('id')->on('tipo_comercio')->onDelete("cascade");
 
         });
+        
     }
 
     /**
@@ -44,6 +44,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('clientes');
     }
 };

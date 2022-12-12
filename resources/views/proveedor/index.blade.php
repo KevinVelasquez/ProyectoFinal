@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
 @section('template_title')
-Cliente
+Proveedor
 @endsection
 
 @section('content')
 <div class="container">
     <main role="main" class="pb-3">
         <p>
-            <a class="mdi mdi-cart-outline" id="iconoadd" href="{{ route('cliente.create') }}"></a>
+            <a class="mdi mdi-cart-outline" id="iconoadd" href="{{ route('proveedor.create') }}"></a>
         </p>
 
-        <table id="clientes" class="table table-striped dt-responsive nowrap table" style="width:100%">
+        <table id="proveedores" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>
 
@@ -31,25 +31,25 @@ Cliente
             <tbody>
 
 
-                @foreach ($clientes as $cliente)
+                @foreach ($proveedores as $proveedor)
                 <tr>
 
-                    <td>{{ $cliente->cedula }}</td>
-                    <td>{{ $cliente->nombre }}</td>
-                    <td>{{ $cliente->telefono }}</td>
-                    <td>{{ $cliente->direccion }}</td>
-                    <td>{{ $cliente->email }}</td>
-                    <td>{{ $cliente->estado }}</td>
-                    <td>{{ $cliente->tipo_persona }}</td>
+                    <td>{{ $proveedor->cedula }}</td>
+                    <td>{{ $proveedor->nombre }}</td>
+                    <td>{{ $proveedor->telefono }}</td>
+                    <td>{{ $proveedor->direccion }}</td>
+                    <td>{{ $proveedor->email }}</td>
+                    <td>{{ $proveedor->estado }}</td>
+                    <td>{{ $proveedor->tipo_persona }}</td>
                     <td></td>
                     <td></td>
 
                     <td>
 
-                        <a href="{{ url('/cliente/'.$cliente->id.'/edit') }}"><button class="mdi mdi-lead-pencil"></button></a>
+                        <a href="{{ url('/proveedor/'.$proveedor->id.'/edit') }}"><button class="mdi mdi-lead-pencil"></button></a>
                         <a href=""><button class="mdi mdi-checkbox-multiple-blank"></button></a>
 
-                        <form action="{{ url('/cliente/'.$cliente->id) }}" method="POST">
+                        <form action="{{ url('/proveedor/'.$proveedor->id) }}" method="POST">
 
 
                             @csrf
@@ -60,18 +60,18 @@ Cliente
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Cliente</h5>
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Proveedor</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            ¿Está seguro que desea eliminar el Cliente?
+                                            ¿Está seguro que desea eliminar el proveedor?
                                         </div>
                                         <div class="modal-footer">
                                             <input type="submit" value="Sí" class="btn btn-primary btn-lg active" role="button" aria-hidden="true">
 
-                                            <a href="{{ route('cliente.index') }}" class="btn btn-primary btn-lg active" role="button" data-dismiss="modal">No</a>
+                                            <a href="{{ route('proveedor.index') }}" class="btn btn-primary btn-lg active" role="button" data-dismiss="modal">No</a>
                                             </a>
                                         </div>
                                     </div>
@@ -89,14 +89,14 @@ Cliente
 </div>
 
 
-{!! $clientes->links() !!}
+{!! $proveedores->links() !!}
 
 
 <!-- scripts -->
 
 <script>
     $(document).ready(function() {
-        $('#clientes').DataTable({
+        $('#proveedores').DataTable({
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
             }

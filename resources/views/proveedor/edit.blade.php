@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Update Proveedore
+    Update Proveedor
 @endsection
 
 @section('content')
@@ -16,11 +16,11 @@
                         <span class="card-title">Actualizar Proveedor</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('proveedores.update', $proveedore->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('proveedor.update', $proveedor->id) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 
-                            @include('proveedore.form')
+                            @include('proveedor.form')
 
                         </form>
                     </div>

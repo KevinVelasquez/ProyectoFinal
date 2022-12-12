@@ -13,8 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        //
-        Schema::create('clientes', function (Blueprint $table) {
+        Schema::create('proveedors', function (Blueprint $table) {
             $table->id();
             $table->integer('cedula')->unique();  
             $table->string('nombre');
@@ -28,12 +27,11 @@ return new class extends Migration
             $table->bigInteger('regimen')->unsigned();
             $table->bigInteger('tipo_comercio')->unsigned();
             $table->timestamps();
-            
+
             $table->foreign('id_municipio')->references('id')->on('municipios')->onDelete("cascade");
             $table->foreign('tipo_persona')->references('id')->on('tipo_persona')->onDelete("cascade");
             $table->foreign('regimen')->references('id')->on('regimen')->onDelete("cascade");
             $table->foreign('tipo_comercio')->references('id')->on('tipo_comercio')->onDelete("cascade");
-
         });
     }
 
@@ -44,6 +42,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('proveedors');
     }
 };

@@ -1,17 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Pais;
 use App\Models\Departamento;
 use App\Models\Municipio;
 use App\Models\Regimen;
 use App\Models\Tipo_comercio;
 use App\Models\Tipo_persona;
-use App\Models\Cliente;
+use App\Models\Proveedor;
 use Illuminate\Http\Request;
 
-class ClienteController extends Controller
+class ProveedorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,8 +20,8 @@ class ClienteController extends Controller
     public function index()
     {
         //
-        $datos ['clientes']= Cliente::paginate(5);
-        return view('cliente.index',$datos);
+        $datos ['proveedores']= Proveedor::paginate(5);
+        return view('proveedor.index',$datos);
     }
 
     /**
@@ -39,8 +38,8 @@ class ClienteController extends Controller
         $tipo_comercio = Tipo_comercio::all();
         $tipo_persona = Tipo_persona::all();
         $regimen = Regimen::all();
-        $cliente = new Cliente();
-        return view('cliente.create', compact('cliente','paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
+        $proveedor = new Proveedor();
+        return view('proveedor.create', compact('proveedor','paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
     }
 
     /**
@@ -52,22 +51,21 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         //
-        // $datosCliente = request()->all();
+        $datosProveedor = request()->except('_token','pais','departamento');
+        Proveedor::insert($datosProveedor);
 
-        $datosCliente = request()->except('_token','pais','departamento');
-        Cliente::insert($datosCliente);
-
-        return redirect()->route('cliente.index')
-            ->with('success', 'Cliente created successfully.');
+        return redirect()->route('proveedor.index')
+            ->with('success', 'Proveedor created successfully.');
+        
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Cliente  $cliente
+     * @param  \App\Models\Proveedor  $proveedor
      * @return \Illuminate\Http\Response
      */
-    public function show(Cliente $cliente)
+    public function show(Proveedor $proveedor)
     {
         //
     }
@@ -75,49 +73,45 @@ class ClienteController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Cliente  $cliente
+     * @param  \App\Models\Proveedor  $proveedor
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         //
-        $cliente =Cliente::findOrFail($id);
-        return view('cliente.edit', compact ('cliente'));
+        $proveedor =Proveedor::findOrFail($id);
+        return view('proveedor.edit', compact ('proveedor'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Cliente  $cliente
+     * @param  \App\Models\Proveedor  $proveedor
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         //
-        $datosCliente = request()->except(['_token','pais','departamento','_method']);
-        Cliente::where('id', '=', $id)->update($datosCliente);
+        $datosProveedor = request()->except(['_token','pais','departamento','_method']);
+        Proveedor::where('id', '=', $id)->update($datosProveedor);
 
-        $cliente =Cliente::findOrFail($id);
-        return view('cliente.edit', compact ('cliente'));
-        
+        $proveedor =Proveedor::findOrFail($id);
+        return view('proveedor.edit', compact ('proveedor'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Cliente  $cliente
+     * @param  \App\Models\Proveedor  $proveedor
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
-       // Cliente::destroy($id);
-        // return redirect('cliente');
+        $proveedor = Proveedor::find($id)->delete();
 
-       $cliente = Cliente::find($id)->delete();
-
-        return redirect()->route('cliente.index')
-            ->with('success', 'Cliente deleted successfully');
+        return redirect()->route('proveedor.index')
+            ->with('success', 'Proveedor deleted successfully');
     }
 }

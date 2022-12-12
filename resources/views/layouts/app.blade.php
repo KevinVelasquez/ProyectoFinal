@@ -45,7 +45,7 @@
             </li>
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle  pl-0 pr-0" href="#" data-toggle="dropdown" id="profileDropdown">
-                <span class="nav-profile-name"> {{-- {{ Auth::user()->nombre }}--}}Nombre Usuario</span>
+                <span class="nav-profile-name"> {{-- {{ Auth::user()->nombre }}--}}Nombre usuario</span>
               </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                 <a class="dropdown-item" href="#">
@@ -70,7 +70,7 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="">
                 <i class="mdi mdi-calendar menu-icon"></i>
                 <span class="menu-title">Calendario</span>
               </a>
@@ -95,7 +95,7 @@
               </a>
               <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column ">
-                  <li class="nav-item"> <a class="nav-link" href="{{ route('proveedores.index') }}">Proveedores</a>{{ _('proveedores') }}</li>
+                  <li class="nav-item"> <a class="nav-link" href="{{ route('proveedor.index') }}">Proveedores</a></li>
                   <li class="nav-item"> <a class="nav-link" href="#">Insumos</a></li>
                   <li class="nav-item"> <a class="nav-link" href="#">Ordenes de
                       Compra</a></li>
@@ -110,7 +110,7 @@
               </a>
               <div class="collapse" id="form-elements">
                 <ul class="nav flex-column ">
-                  <li class="nav-item"><a class="nav-link" href="{{ route('clientes.index') }}">{{ _('clientes') }}</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{{ route('cliente.index') }}">Clientes</a></li>
                   <li class="nav-item"><a class="nav-link" href="#">Productos</a></li>
                   <li class="nav-item"><a class="nav-link" href="#">Pedidos</a></li>
                 </ul>
@@ -186,7 +186,7 @@
                     @else
                     <li class="nav-item dropdown">
                       <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }}
+                        {{ Auth::user()->name }} 
                       </a>
 
                       <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

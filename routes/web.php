@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProveedoreController;
+use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ClienteController;
 /*
 |--------------------------------------------------------------------------
@@ -18,29 +18,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Route::get('/clientes/create', [ClienteController::class, 'create'])->name('clientes.create');
-// Route::post('/clientes',  [ClienteController::class, 'store'])->name('clientes.store');
+
+
+Route::resource('cliente',ClienteController::class)->middleware('auth');
+
+Route::resource('proveedor',ProveedorController::class)->middleware('auth');
 
 
 
-Route::resource('clientes',ClienteController::class)->middleware('auth');
-Route::resource('proveedores',ProveedoreController::class)->middleware('auth');
 
-// Route::group(['middleware' => 'auth'], function(){
-
-//     Route::get('/', [ClienteController::class, 'index'])->name('home');
-   
-// });
-
-// Route::group(['middleware' => 'auth'], function(){
-
-//     Route::get('/', [ProveedoreController::class, 'index'])->name('home');
-   
-// });
 
 
 
