@@ -370,13 +370,16 @@
         <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:42%;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Pedido</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitleAbono">Pedido</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form role="form" id="formAbonos" enctype="multipart/form-data" class="form-sample">
+                    <form role="form" method="POST"
+                     {{-- id="formAbonos"  --}}
+                     action="{{ route('agregarAbono') }}"
+                     enctype="multipart/form-data" class="form-sample">
                         @csrf
 
                         <input type="hidden" name="id" id="idpedidoabonar" />
@@ -410,7 +413,9 @@
                         </div>
                 </div>
                 <div class="botonestabla" style="text-align: center;">
-                    <button type="submit" class="btn btn-primary" id="agregarAbono">Agregar</button>
+                    <button type="submit" class="btn btn-primary" 
+                    {{-- id="agregarAbono" --}}
+                    >Agregar</button>
                     <button type="button" class="btn btn-primary">Cancelar</button>
                 </div>
                 </form>
@@ -439,13 +444,41 @@
                         <tbody>
                         </tbody>
                     </table>
-                    <h5>RESTA</h5>
+                    <span id="resta"><h5>RESTA</h5></span>
                     <br>
-                    <h5>TOTAL</h5>
+                    <h5><span id="total"></span></h5>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- modal anular abono -->
+    <div class="modal fade" id="anularabono" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitleanularabono"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <input type="hidden" name="estadoanularabono" id="estadoanularabono" />
+                <form method="POST" action="{{ route('anularAbono') }}" class="form-sample"
+                    role="form" enctype="multipart/form-data">
+                    @method('PUT')
+                    @csrf
+                    <div>¿Está seguro que desea anular el abono?</div>
+                    <input type="hidden" name="idanularabono" id="idanularabono" />
+                    <input type="hidden" name="anulardato" value="2" />
+                    <button type="submit" class="btn btn-primary">Si</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
     <!-- scripts -->
 
     <script>
@@ -514,12 +547,14 @@
 
         function verDatosAbono(id) {
             let abonos = {!! $detalleabono !!}
-            console.log(abonos);
             let detalleabonos = abonos.filter(item => item.id == id)
+            console.log(detalleabonos)
             $("#tablaabonos tbody").children().remove();
             detalleabonos.forEach(function(value, index) {
                 if (value.id == id) {
+                    
                     let fila = `
+                   
               <tr>
                   <td>
                     ${value.fechapago}
@@ -532,22 +567,24 @@
                   </td>
                   <td>
                     <button class="mdi mdi-download"></button>
-                    <button class="mdi mdi-block-helper" data-toggle="modal"
+                    <button onclick="anularAbonoPedido(' ${value.idabono} ') " class="mdi mdi-block-helper" data-toggle="modal"
                     data-target="#anularabono"></button>
                     </td>
                 <td type="hidden" id="idpedidoabonotabla" style="display: none">
                     ${value.id}
                 </td>
                 </tr>
-              `;
+                
+              `
+              $('#exampleModalLongTitleAbono').text(`Pedido #${value.id}`)
+              $('#total').text(`TOTAL ${value.totalpedido}`)
+              ;
                     $("#tablaabonos tbody").append(fila)
                 }
             })
-
+            
             var fila = document.getElementById("tablaabonos").rows[1];
-            // Obtiene el valor de la primera celda de la fila
             var valor = fila.cells[4].innerHTML;
-            // Asigna el valor obtenido al elemento de entrada de texto
             document.getElementById("idpedidoabonar").value = valor;
         }
 
@@ -582,43 +619,13 @@
             window.open('generate-pdf?' + 'id=' + $("#iddescarga").val());
         })
 
-        $("#agregarAbono").on("click", () => {
-            const csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
-            console.log(csrfToken);
-            let token = '{{csrf_token()}}';
-            const obj = {
-                id: 10,
-                cantidadabono: 207,
-                medioabono: 1,
-                fechaabono: '2022-12-30',
-                _token:token
+        function anularAbonoPedido(id) {
+            let consulta = {!! $detalleabono !!}
+            let datos = consulta.find(item => item.idabono == id)
+            $('#exampleModalLongTitleanularabono').text(`Anular Abono `);
+            $('#idanularabono').val(`${datos.idabono}`);
+            $('#estadoanularabaono').val(`${datos.estado}`);
+        }
 
-            }
-            debugger
-            console.log(JSON.stringify(obj));
-            // fetch('{{route('agregarAbono')}}', {
-            //     method: 'post',
-            //     credentials: "same-origin",
-            //     body: JSON.stringify(obj),
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         "X-CSRF-Token": csrfToken
-            //     }
-            // }).then(response =>{
-            //     alert("Se ha realizado el POST con exito " + msg);
-            // });
-            // $.ajax({
-            //     type: "post",
-            //     url: "/abonos",
-            //     data:obj,
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         "X-CSRF-Token": csrfToken
-            //     },
-            //     success: function(msg) {
-            //         alert("Se ha realizado el POST con exito " + msg);
-            //     }
-            // });
-        });
     </script>
 @endsection

@@ -39,7 +39,7 @@
                                     <span> Nit 71613737-9 </span><br>
                                     <span> Feria de Ganado Medellin</span><br>
                                     <span> Calle 103 EE #65-70
-                                        Corredor principal, local 22.</span>
+                                        Corredor Principal - local 22.</span>
                                 </div>
                             </div>
                         </div>
@@ -50,15 +50,15 @@
                                 <br>
                                 <div style="padding: 10px; float: left; width: 45%; text-align: justify;">
                                     <span>Para:{{ $pedidocliente[0]->nombrecliente }}</span><br>
-                                    <span>Cédula:</span><br>
-                                    <span>Dirección:</span><br>
+                                    <span>Cédula:{{ $pedidocliente[0]->cedula }}</span><br>
+                                    <span>Dirección:{{ $pedidocliente[0]->direccion }}</span><br>
                                     <span>Antioquia </span><br>
-                                    <span>Telefono:</span><br>
+                                    <span>Telefono:{{ $pedidocliente[0]->telefono }}</span><br>
                                 </div>
                                 <div style="padding: 10px; float: right; width: 45%; text-align: justify;">
-                                    <span>N° Pedido:</span><br>
-                                    <span>Fecha Registro:</span><br>
-                                    <span>Fecha Entrega:</span><br>
+                                    <span>N° Pedido:{{ $pedidocliente[0]->id }}</span><br>
+                                    <span>Fecha Registro:{{ $pedidocliente[0]->fecha_registro }}</span><br>
+                                    <span>Fecha Entrega:{{ $pedidocliente[0]->fecha_entrega }}</span><br>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +88,7 @@
 
                 </div>
                 <div style="text-align:right">
-                    <b>TOTAL:</b>
+                    <b>TOTAL:{{ $pedidocliente[0]->totalpedido }}</b>
                 </div>
             </div>
         </div>

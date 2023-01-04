@@ -60,15 +60,13 @@ class PagoClienteController extends Controller
             ->join("municipios", "pedidos.id_municipio", "=", "municipios.id")
             ->get();
 
-            // $detallepedido = DetallePedido::select('detalle_pedidos.cantidad AS cantidadproductos', 'detalle_pedidos.precio AS precioUnitario', 'productos.nombre AS nombreproducto', 'detalle_pedidos.id_pedido AS id')
-            // ->join("productos", "detalle_pedidos.id_producto", "=", "productos.id")
-            // ->get();
 
         $detalleabono = Pago_Clientes::select('pago__clientes.fecha AS fechapago', 'pago__clientes.id_medio_pago AS idmedio','pago__clientes.id_pedido AS idpedidoabono','pago__clientes.abono',
         "pedidos.totalpedido","pedidos.id",
         "medio__pagos.id as idmediopago","medio__pagos.nombre")
             ->join("pedidos", "pago__clientes.id_pedido", "=", "pedidos.id")
             ->join("medio__pagos","pago__clientes.id_medio_pago", "=", "medio__pagos.id" )
+            ->where("pago__clientes.estado", 1)
             ->get();
 
         $editarpedido = Pedido::select(
@@ -93,7 +91,21 @@ class PagoClienteController extends Controller
             ->join("metodo__entregas", "pedidos.id_metodo_entrega", "=", "metodo__entregas.id")
             ->get();
 
-        return view('pedido.index', compact('pedidos', 'pedido', 'detallepedido', 'pedidocliente', 'editarpedido','detalleabono'))
-            
+        return view('pedido.index', compact('pedidos', 'pedido', 'detallepedido', 'pedidocliente', 'editarpedido', 'detalleabono'));
+        
     }
+
+    public function anularAbono(Request $request)
+    {
+        $input = $request->all();
+        Pago_Clientes::where('id', $input["idanularabono"])
+            ->update([
+                'estado' => 2
+            ]);
+        
+            
+        return redirect()->route('pedidos.index')
+            ->with('success', 'Status pedido successfully');
+    }
+
 }

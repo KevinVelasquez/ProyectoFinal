@@ -30,7 +30,8 @@ class PDFController extends Controller
         ->join("productos", "detalle_pedidos.id_producto", "=", "productos.id")
         ->where ("detalle_pedidos.id_pedido","=",$id)
         ->get();
-
+            
+        
         $pdf = PDF::loadView('pedido.download',compact('pedidocliente','detallepedido'));
      
         return $pdf->stream('PedidoDetalle'.$id.'.pdf');

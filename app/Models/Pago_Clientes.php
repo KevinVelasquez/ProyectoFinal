@@ -14,11 +14,12 @@ class Pago_Clientes extends Model
         "abono",
         "id_medio_pago",
         "id_pedido",
+        "estado",
     ];
 
     public $timestamps = false;
     public function pagoclientes()
     {
-       return $this->hasMany(\App\Models\Pedido::class, 'id');
+       return $this->hasMany(\App\Models\Pago_Clientes::class, 'id');
     }
 }

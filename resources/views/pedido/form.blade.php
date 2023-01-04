@@ -49,7 +49,7 @@
                     <div class="form-group row">
                         <label class="control-label">Pais</label>
                         <div class="col-sm-9">
-                            <select class="form-control" name="pais" id="pais">
+                            <select class="form-control" name="pais" id="pais" onchange="filtrarDepartamentos()">
                                 <option value="0">Selecciones</option>
                                 @forelse($paises  as $pais)
                                 <option value="{{$pais->id}}">
@@ -68,12 +68,6 @@
                         <div class="col-sm-7">
                             <select class="form-control" name="departamento" id="departamento">
                                 <option value="0">Selecciones</option>
-                                @forelse($departamentos  as $departamento)
-                                <option value="{{$departamento->id}}">
-                               {{ $departamento->nombre}}
-                               </option>
-                                @empty <option>No existen</option>
-                               @endforelse
                             </select>
                         </div>
                     </div>
@@ -368,70 +362,24 @@
         
     }
 
+
+    function filtrarDepartamentos() {
+
+    var pais = document.getElementById("pais").value;
+    var selectordepartamentos = document.getElementById("departamento");
+    selectordepartamentos.innerHTML = "";
+    let paisseleccion = [];
+    let departamentos = <?php echo  $departamentos  ?>;
+    departamentos.forEach(function(value, index) {
+             paisseleccion[index] = value;
+                if(paisseleccion[index].id_paises==pais){
+                    console.log(paisseleccion[index].nombre)
+                    $("#departamento").append(`
+                    <option value="${paisseleccion[index].id}"/>${paisseleccion[index].nombre}
+                    `);
+                }
+            });
+  }
 </script>
-{{-- 
-// <div class="box box-info padding-1">
-//     <div class="box-body">
-        
 
-//         <div class="form-group">
-//             {{ Form::label('id_municipio') }}
-//             {{ Form::text('id_municipio', $pedido->id_municipio, ['class' => 'form-control' . ($errors->has('id_municipio') ? ' is-invalid' : ''), 'placeholder' => 'Id Municipio']) }}
-//             {!! $errors->first('id_municipio', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
-//         <div class="form-group">
-//             {{ Form::label('id_metodo_entrega') }}
-//             {{ Form::text('id_metodo_entrega', $pedido->id_metodo_entrega, ['class' => 'form-control' . ($errors->has('id_metodo_entrega') ? ' is-invalid' : ''), 'placeholder' => 'Id Metodo Entrega']) }}
-//             {!! $errors->first('id_metodo_entrega', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
-//         <div class="form-group">
-//             {{ Form::label('id_medio_pago') }}
-//             {{ Form::text('id_medio_pago', $pedido->id_medio_pago, ['class' => 'form-control' . ($errors->has('id_medio_pago') ? ' is-invalid' : ''), 'placeholder' => 'Id Medio Pago']) }}
-//             {!! $errors->first('id_medio_pago', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
-//         <div class="form-group">
-//             {{ Form::label('id_metodo_pago') }}
-//             {{ Form::text('id_metodo_pago', $pedido->id_metodo_pago, ['class' => 'form-control' . ($errors->has('id_metodo_pago') ? ' is-invalid' : ''), 'placeholder' => 'Id Metodo Pago']) }}
-//             {!! $errors->first('id_metodo_pago', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
-//         <div class="form-group">
-//             {{ Form::label('direccion') }}
-//             {{ Form::text('direccion', $pedido->direccion, ['class' => 'form-control' . ($errors->has('direccion') ? ' is-invalid' : ''), 'placeholder' => 'Direccion']) }}
-//             {!! $errors->first('direccion', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
-//         <div class="form-group">
-//             {{ Form::label('fecha_registro') }}
-//             {{ Form::text('fecha_registro', $pedido->fecha_registro, ['class' => 'form-control' . ($errors->has('fecha_registro') ? ' is-invalid' : ''), 'placeholder' => 'Fecha Registro']) }}
-//             {!! $errors->first('fecha_registro', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
-//         <div class="form-group">
-//             {{ Form::label('fecha_entrega') }}
-//             {{ Form::text('fecha_entrega', $pedido->fecha_entrega, ['class' => 'form-control' . ($errors->has('fecha_entrega') ? ' is-invalid' : ''), 'placeholder' => 'Fecha Entrega']) }}
-//             {!! $errors->first('fecha_entrega', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
-//         <div class="form-group">
-//             {{ Form::label('estado') }}
-//             {{ Form::text('estado', $pedido->estado, ['class' => 'form-control' . ($errors->has('estado') ? ' is-invalid' : ''), 'placeholder' => 'Estado']) }}
-//             {!! $errors->first('estado', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
-//         <div class="form-group">
-//             {{ Form::label('proceso') }}
-//             {{ Form::text('proceso', $pedido->proceso, ['class' => 'form-control' . ($errors->has('proceso') ? ' is-invalid' : ''), 'placeholder' => 'Proceso']) }}
-//             {!! $errors->first('proceso', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
-//         <div class="form-group">
-//             {{ Form::label('abono') }}
-//             {{ Form::text('abono', $pedido->abono, ['class' => 'form-control' . ($errors->has('abono') ? ' is-invalid' : ''), 'placeholder' => 'Abono']) }}
-//             {!! $errors->first('abono', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
-//         <div class="form-group">
-//             {{ Form::label('totalpedido') }}
-//             {{ Form::text('totalpedido', $pedido->totalpedido, ['class' => 'form-control' . ($errors->has('totalpedido') ? ' is-invalid' : ''), 'placeholder' => 'Totalpedido']) }}
-//             {!! $errors->first('totalpedido', '<div class="invalid-feedback">:message</div>') !!}
-//         </div>
 
-//     </div>
-//     <div class="box-footer mt20">
-//         <button type="submit" class="btn btn-primary">Submit</button>
-//     </div>
-// </div> --}} 

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use DB;
 use App\Models\Metodo_Entrega;
 use App\Models\Medio_Pago;
 use App\Models\Metodo_Pago;
@@ -68,15 +68,13 @@ class PedidoController extends Controller
             ->join("municipios", "pedidos.id_municipio", "=", "municipios.id")
             ->get();
 
-            // $detallepedido = DetallePedido::select('detalle_pedidos.cantidad AS cantidadproductos', 'detalle_pedidos.precio AS precioUnitario', 'productos.nombre AS nombreproducto', 'detalle_pedidos.id_pedido AS id')
-            // ->join("productos", "detalle_pedidos.id_producto", "=", "productos.id")
-            // ->get();
 
-        $detalleabono = Pago_Clientes::select('pago__clientes.fecha AS fechapago', 'pago__clientes.id_medio_pago AS idmedio','pago__clientes.id_pedido AS idpedidoabono','pago__clientes.abono',
+        $detalleabono = Pago_Clientes::select('pago__clientes.fecha AS fechapago', 'pago__clientes.id_medio_pago AS idmedio','pago__clientes.id_pedido AS idpedidoabono','pago__clientes.abono','pago__clientes.id AS idabono',
         "pedidos.totalpedido","pedidos.id",
         "medio__pagos.id as idmediopago","medio__pagos.nombre")
             ->join("pedidos", "pago__clientes.id_pedido", "=", "pedidos.id")
             ->join("medio__pagos","pago__clientes.id_medio_pago", "=", "medio__pagos.id" )
+            ->where("pago__clientes.estado", 1)
             ->get();
 
         $editarpedido = Pedido::select(
@@ -114,8 +112,8 @@ class PedidoController extends Controller
     {
 
         $cliente = Cliente::all();
-        $paises = Pais::all();
-        $departamentos = Departamento::all();
+        $paises = DB::table('Pais') -> orderBy ('nombre')->get();
+        $departamentos = DB::table('Departamentos') -> orderBy ('nombre')->get();
         $municipios = Municipio::all();
         $metodo_entrega = Metodo_Entrega::all();
         $medio_pago = Medio_Pago::all();
@@ -214,6 +212,7 @@ class PedidoController extends Controller
         "medio__pagos.id as idmediopago","medio__pagos.nombre")
             ->join("pedidos", "pago__clientes.id_pedido", "=", "pedidos.id")
             ->join("medio__pagos","pago__clientes.id_medio_pago", "=", "medio__pagos.id" )
+            ->where("pago__clientes.estado", 1)
             ->get();
 
         $editarpedido = Pedido::select(
@@ -271,46 +270,4 @@ class PedidoController extends Controller
             ->with('success', 'Status pedido successfully');
     }
 
-// public function getPDF(Request $request)
-// {
-
-//     $input = $request->all();
-
-//     $detallepedido = DetallePedido::select('detalle_pedidos.cantidad', 'detalle_pedidos.precio', 'productos.nombre', 'detalle_pedidos.id_pedido')
-//         ->join("productos", "detalle_pedidos.id_producto", "=", "productos.id")
-//         ->where("detalle_pedidos.id_pedido", $input["idanular"])
-//         ->get();
-
-//     $pedidocliente = Pedido::select(
-//         "pedidos.fecha_registro",
-//         "pedidos.fecha_entrega",
-//         "pedidos.estado",
-//         "pedidos.id_metodo_entrega",
-//         "pedidos.id_metodo_pago",
-//         "pedidos.direccion",
-//         "pedidos.id",
-//         "pedidos.totalpedido",
-//         "pedidos.proceso",
-//         "pedidos.id_municipio",
-//         "clientes.id AS idcliente",
-//         "clientes.nombre AS nombrecliente",
-//         "clientes.cedula",
-//         "clientes.telefono",
-//         "metodo__pagos.id AS idmetodopago",
-//         "metodo__pagos.nombre AS nombremetodopago",
-//         "metodo__entregas.id AS idmetodoentrega",
-//         "metodo__entregas.nombre AS nombremetodoentrega",
-//         "municipios.id AS idmunicipio",
-//         "municipios.nombre AS nombremunicipio"
-//     )
-//         ->join("clientes", "pedidos.id_cliente", "=", "clientes.id")
-//         ->join("metodo__pagos", "pedidos.id_metodo_pago", "=", "metodo__pagos.id")
-//         ->join("metodo__entregas", "pedidos.id_metodo_entrega", "=", "metodo__entregas.id")
-//         ->join("municipios", "pedidos.id_municipio", "=", "municipios.id")
-//         ->where("pedidos.id", $input["idanular"])
-//         ->get();
-
-//     $pdf = PDF::loadView('pedido.download', compact('detallepedido', 'pedidocliente'));
-//     return $pdf->stream('download_#_.pdf');
-// }
 }
