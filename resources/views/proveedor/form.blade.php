@@ -1,69 +1,197 @@
 <div class="box box-info padding-1">
-    <div class="box-body">
-        
-        <div class="form-group">
-            {{ Form::label('cedula') }}
-            {{ Form::text('cedula', $proveedor->cedula, ['class' => 'form-control' . ($errors->has('cedula') ? ' is-invalid' : ''), 'placeholder' => 'Cedula']) }}
-            {!! $errors->first('cedula', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('nombre') }}
-            {{ Form::text('nombre', $proveedor->nombre, ['class' => 'form-control' . ($errors->has('nombre') ? ' is-invalid' : ''), 'placeholder' => 'Nombre']) }}
-            {!! $errors->first('nombre', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('telefono') }}
-            {{ Form::text('telefono', $proveedor->telefono, ['class' => 'form-control' . ($errors->has('telefono') ? ' is-invalid' : ''), 'placeholder' => 'Telefono']) }}
-            {!! $errors->first('telefono', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('pais') }}
-            {{ Form::text('pais', $proveedor->pais, ['class' => 'form-control' . ($errors->has('pais') ? ' is-invalid' : ''), 'placeholder' => 'Pais']) }}
-            {!! $errors->first('pais', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('departamento') }}
-            {{ Form::text('departamento', $proveedor->departamento, ['class' => 'form-control' . ($errors->has('departamento') ? ' is-invalid' : ''), 'placeholder' => 'Departamento']) }}
-            {!! $errors->first('departamento', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('municipio') }}
-            {{ Form::text('municipio', $proveedor->municipio, ['class' => 'form-control' . ($errors->has('municipio') ? ' is-invalid' : ''), 'placeholder' => 'Municipio']) }}
-            {!! $errors->first('municipio', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('direccion') }}
-            {{ Form::text('direccion', $proveedor->direccion, ['class' => 'form-control' . ($errors->has('direccion') ? ' is-invalid' : ''), 'placeholder' => 'Direccion']) }}
-            {!! $errors->first('direccion', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('email') }}
-            {{ Form::text('email', $proveedor->email, ['class' => 'form-control' . ($errors->has('email') ? ' is-invalid' : ''), 'placeholder' => 'Email']) }}
-            {!! $errors->first('email', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('estado') }}
-            {{ Form::text('estado', $proveedor->estado, ['class' => 'form-control' . ($errors->has('estado') ? ' is-invalid' : ''), 'placeholder' => 'Estado']) }}
-            {!! $errors->first('estado', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('tipo_persona') }}
-            {{ Form::text('tipo_persona', $proveedor->tipo_persona, ['class' => 'form-control' . ($errors->has('tipo_persona') ? ' is-invalid' : ''), 'placeholder' => 'Tipo Persona']) }}
-            {!! $errors->first('tipo_persona', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('regimen') }}
-            {{ Form::text('regimen', $proveedor->regimen, ['class' => 'form-control' . ($errors->has('regimen') ? ' is-invalid' : ''), 'placeholder' => 'Regimen']) }}
-            {!! $errors->first('regimen', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('tipo_comercio') }}
-            {{ Form::text('tipo_comercio', $proveedor->tipo_comercio, ['class' => 'form-control' . ($errors->has('tipo_comercio') ? ' is-invalid' : ''), 'placeholder' => 'Tipo Comercio']) }}
-            {!! $errors->first('tipo_comercio', '<div class="invalid-feedback">:message</div>') !!}
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="nombre">Nombre</label>
+                <div class="col-sm-9">
+                    <input type="text" name="nombre" value="{{ $proveedor->nombre }}" id="nombre" class="form-control">
+                </div>
+            </div>
         </div>
 
+
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="cedula">Cédula</label>
+                <div class="col-sm-9">
+                    <input type="text" name="cedula" value="{{ $proveedor->cedula }}" id="cedula" class="form-control">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="telefono">Teléfono</label>
+                <div class="col-sm-9">
+                    <input type="text" name="telefono" value="{{ $proveedor->telefono }}" id="telefono" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="email">Correo</label>
+                <div class="col-sm-9">
+                    <input type="text" name="email" value="{{ $proveedor->email }}" id="email" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group row">
+                <label for="tipo_persona">Tipo persona</label>
+                <div class="col-sm-7">
+                    <select class="form-control" name="tipo_persona" id="tipo_persona">
+                        <option value="0">Seleccione</option>
+                        @forelse($tipo_persona as $tipo_personas)
+                        <option value="{{$tipo_personas->id}}">
+                            {{ $tipo_personas->nombre}}
+                        </option>
+                        @empty <option>No existen</option>
+                        @endforelse
+                    </select>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="form-group row">
+                <label for="regimen">Régimen</label>
+                <div class="col-sm-7">
+                    <select class="form-control" name="regimen" id="regimen">
+                        <option value="0">Seleccione</option>
+                        @forelse($regimen as $regimens)
+                        <option value="{{$regimens->id}}">
+                            {{ $regimens->nombre}}
+                        </option>
+                        @empty <option>No existen</option>
+                        @endforelse
+                    </select>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group row">
+                <label for="tipo_comercio">Tipo comercio</label>
+                <div class="col-sm-7">
+                    <select class="form-control" name="tipo_comercio" id="tipo_comercio">
+                        <option value="0">Seleccione</option>
+                        @forelse($tipo_comercio as $tipo_comercios)
+                        <option value="{{$tipo_comercios->id}}">
+                            {{ $tipo_comercios->nombre}}
+                        </option>
+                        @empty <option>No existen</option>
+                        @endforelse
+                    </select>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-2">
+            <div class="form-group row">
+                <label for="pais">País</label>
+                <div class="col-sm-9">
+                    <select class="form-control" name="pais" id="pais">
+                        <option value="0">Seleccione</option>
+                        @forelse($paises as $pais)
+                        <option value="{{$pais->id}}">
+                            {{ $pais->nombre}}
+                        </option>
+                        @empty <option>No existen</option>
+                        @endforelse
+                    </select>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group row">
+                <label for="departamento">Departamento</label>
+                <div class="col-sm-7">
+                    <select class="form-control" name="departamento" id="departamento">
+                        <option value="0">Seleccione</option>
+                        @forelse($departamentos as $departamento)
+                        <option value="{{$departamento->id}}">
+                            {{ $departamento->nombre}}
+                        </option>
+                        @empty <option>No existen</option>
+                        @endforelse
+                    </select>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-2">
+            <div class="form-group row">
+                <label for="id_municipio">Municipio</label>
+                <div class="col-sm-8">
+                    <select class="form-control" name="id_municipio" id="id_municipio">
+
+                        <option value="0">Seleccione</option>
+                        @forelse($municipios as $municipio)
+                        <option value="{{$municipio->id}}">
+                            {{ $municipio->nombre}}
+                        </option>
+                        @empty <option>No existen</option>
+                        @endforelse
+                    </select>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="direccion">Dirección</label>
+                <div class="col-sm-9">
+                    <input type="text" name="direccion" value="{{ $proveedor->direccion }}" id="direccion" class="form-control">
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
-    <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">Submit</button>
+    <!-- <div class="box-footer mt20">
+        <button type="submit" class="btn btn-primary">Submit</button> -->
+</div>
+
+<div class="box-footer mt20">
+
+    <button type="submit" class="btn btn-primary">Registrar</button>
+    <button type="reset" value="Borrar" class="btn btn-primary">Limpiar</button>
+    <a data-toggle="modal" data-target="#CancelarProveedor" class="btn btn-primary btn-lg active" aria-pressed="true">Cancelar</a>
+</div>
+</div>
+
+<div class="modal fade" id="CancelarProveedor" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Desea cancelar el registro del Proveedor?
+            </div>
+            <div class="modal-footer">
+                <a href="{{ route('proveedor.index') }}" class="btn btn-primary btn-lg active" role="button" aria-hidden="true">Si</a>
+                <a href="{{ route('proveedor.create') }}" class="btn btn-primary btn-lg active" role="button" data-dismiss="modal">No</a>
+                </a>
+            </div>
+        </div>
     </div>
+</div>
 </div>

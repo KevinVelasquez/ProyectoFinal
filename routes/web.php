@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\ClienteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +33,18 @@ Route::resource('figuras', App\Http\Controllers\FiguraController::class);
 Route::resource('clientes', App\Http\Controllers\ClienteController::class);
 Route::resource('Proveedor', App\Http\Controllers\ProveedorController::class);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::resource('cliente',ClienteController::class)->middleware('auth');
+Route::resource('proveedor',ProveedorController::class)->middleware('auth');
 
 
 Auth::routes();
+
+
+
+
+
+
+
+
+

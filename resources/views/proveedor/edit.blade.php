@@ -1,31 +1,31 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Update Proveedor
+Update Proveedor
 @endsection
 
 @section('content')
-    <section class="content container-fluid">
-        <div class="">
-            <div class="col-md-12">
+<section class="content container-fluid">
+    <div class="">
+        <div class="col-md-12">
 
-                @includeif('partials.errors')
+            @includeif('partials.errors')
 
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">Update Proveedor</span>
-                    </div>
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('proveedor.update', $proveedor->id) }}"  role="form" enctype="multipart/form-data">
-                            {{ method_field('PATCH') }}
-                            @csrf
+            <div class="card card-default">
+                <div class="card-header">
+                    <span class="card-title">Actualizar Proveedor</span>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('proveedor.update', $proveedor->id) }}" role="form" enctype="multipart/form-data">
+                        {{ method_field('PATCH') }}
+                        @csrf
 
-                            @include('proveedor.form')
+                        @include('proveedor.form')
 
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 @endsection

@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pais;
+use App\Models\Departamento;
+use App\Models\Municipio;
+use App\Models\Regimen;
+use App\Models\Tipo_comercio;
+use App\Models\Tipo_persona;
 use App\Models\Proveedor;
 use Illuminate\Http\Request;
 
-/**
- * Class ProveedorController
- * @package App\Http\Controllers
- */
 class ProveedorController extends Controller
 {
     /**
@@ -18,10 +20,9 @@ class ProveedorController extends Controller
      */
     public function index()
     {
-        $proveedors = Proveedor::paginate();
-
-        return view('proveedor.index', compact('proveedors'))
-            ->with('i', (request()->input('page', 1) - 1) * $proveedors->perPage());
+        //
+        $datos['proveedores'] = Proveedor::paginate(5);
+        return view('proveedor.index', $datos);
     }
 
     /**
@@ -31,79 +32,86 @@ class ProveedorController extends Controller
      */
     public function create()
     {
+        //
+        $paises = Pais::all();
+        $departamentos = Departamento::all();
+        $municipios = Municipio::all();
+        $tipo_comercio = Tipo_comercio::all();
+        $tipo_persona = Tipo_persona::all();
+        $regimen = Regimen::all();
         $proveedor = new Proveedor();
-        return view('proveedor.create', compact('proveedor'));
+        return view('proveedor.create', compact('proveedor', 'paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        request()->validate(Proveedor::$rules);
+        //
+        $datosProveedor = request()->except('_token', 'pais', 'departamento');
+        Proveedor::insert($datosProveedor);
 
-        $proveedor = Proveedor::create($request->all());
-
-        return redirect()->route('proveedors.index')
+        return redirect()->route('proveedor.index')
             ->with('success', 'Proveedor created successfully.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  \App\Models\Proveedor  $proveedor
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Proveedor $proveedor)
     {
-        $proveedor = Proveedor::find($id);
-
-        return view('proveedor.show', compact('proveedor'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  \App\Models\Proveedor  $proveedor
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $proveedor = Proveedor::find($id);
-
+        //
+        $proveedor = Proveedor::findOrFail($id);
         return view('proveedor.edit', compact('proveedor'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Proveedor $proveedor
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Proveedor  $proveedor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Proveedor $proveedor)
+    public function update(Request $request, $id)
     {
-        request()->validate(Proveedor::$rules);
+        //
+        $datosProveedor = request()->except(['_token', 'pais', 'departamento', '_method']);
+        Proveedor::where('id', '=', $id)->update($datosProveedor);
 
-        $proveedor->update($request->all());
-
-        return redirect()->route('proveedors.index')
-            ->with('success', 'Proveedor updated successfully');
+        $proveedor = Proveedor::findOrFail($id);
+        return view('proveedor.edit', compact('proveedor'));
     }
 
     /**
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Proveedor  $proveedor
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
+        //
         $proveedor = Proveedor::find($id)->delete();
 
-        return redirect()->route('proveedors.index')
+        return redirect()->route('proveedor.index')
             ->with('success', 'Proveedor deleted successfully');
     }
 }

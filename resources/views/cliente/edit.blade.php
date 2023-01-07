@@ -1,31 +1,32 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Update Cliente
+Update Cliente
 @endsection
 
 @section('content')
-    <section class="content container-fluid">
-        <div class="">
-            <div class="col-md-12">
+<section class="content container-fluid">
+    <div class="">
+        <div class="col-md-12">
 
-                @includeif('partials.errors')
+            @includeif('partials.errors')
 
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">Update Cliente</span>
-                    </div>
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('clientes.update', $cliente->id) }}"  role="form" enctype="multipart/form-data">
-                            {{ method_field('PATCH') }}
-                            @csrf
+            <div class="card card-default">
+                <div class="card-header">
+                    <span class="card-title">Actualizar Cliente</span>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('cliente.update', $cliente->id) }}" role="form" enctype="multipart/form-data">
+                        @csrf
+                        {{ method_field('PATCH') }}
 
-                            @include('cliente.form')
 
-                        </form>
-                    </div>
+                        @include('cliente.form')
+
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 @endsection
