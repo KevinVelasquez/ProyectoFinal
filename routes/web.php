@@ -29,6 +29,7 @@ Route::get('generate-pdf', [App\Http\Controllers\PDFController::class, 'generate
 
 Route::post('pedido', [App\Http\Controllers\PagoClienteController::class,'agregarAbono'])->name('agregarAbono');
 Route::put('pedido', [App\Http\Controllers\PagoClienteController::class,'anularAbono'])->name('anularAbono');
+Route::get('abono-pdf', [App\Http\Controllers\PDFController::class, 'abonoPDF'])->name('abono-pdf');
 
 
 

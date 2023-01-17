@@ -50,7 +50,7 @@
                         <label class="control-label">Pais</label>
                         <div class="col-sm-9">
                             <select class="form-control" name="pais" id="pais" onchange="filtrarDepartamentos()">
-                                <option value="0">Selecciones</option>
+                                <option value="0">Seleccione</option>
                                 @forelse($paises  as $pais)
                                 <option value="{{$pais->id}}">
                                {{ $pais->nombre}}
@@ -66,8 +66,8 @@
                     <div class="form-group row">
                         <label class="control-label">Departamento</label>
                         <div class="col-sm-7">
-                            <select class="form-control" name="departamento" id="departamento">
-                                <option value="0">Selecciones</option>
+                            <select class="form-control" name="departamento" id="departamento" onchange="filtrarMunicipios()">
+                                <option value="0">Seleccione</option>
                             </select>
                         </div>
                     </div>
@@ -76,14 +76,8 @@
                     <div class="form-group row">
                         <label class="control-label">Municipio</label>
                         <div class="col-sm-8">
-                            <select class="form-control" name="id_municipio" id="id_municipio">
-                                <option value="0">Selecciones</option>
-                                @forelse($municipios  as $municipio)
-                                <option value="{{$municipio->id}}">
-                               {{ $municipio->nombre}}
-                               </option>
-                                @empty <option>No existen</option>
-                               @endforelse
+                            <select class="form-control" name="id_municipio" id="municipio">
+                                <option value="0">Seleccione</option>
                             </select>
                         </div>
                     </div>
@@ -373,13 +367,29 @@
     departamentos.forEach(function(value, index) {
              paisseleccion[index] = value;
                 if(paisseleccion[index].id_paises==pais){
-                    console.log(paisseleccion[index].nombre)
                     $("#departamento").append(`
                     <option value="${paisseleccion[index].id}"/>${paisseleccion[index].nombre}
                     `);
                 }
             });
   }
+
+  function filtrarMunicipios() {
+
+var departamento = document.getElementById("departamento").value;
+var selectormunicipios = document.getElementById("municipio");
+selectormunicipios.innerHTML = "";
+let departamentoseleccion = [];
+let municipios = <?php echo  $municipios  ?>;
+municipios.forEach(function(value, index) {
+    departamentoseleccion[index] = value;
+            if(departamentoseleccion[index].id_departamentos==departamento){
+                $("#municipio").append(`
+                <option value="${departamentoseleccion[index].id}"/>${departamentoseleccion[index].nombre}
+                `);
+            }
+        });
+}
 </script>
 
 

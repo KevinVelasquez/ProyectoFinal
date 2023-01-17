@@ -20,6 +20,7 @@
                         <th>Fecha Registro</th>
                         <th>Fecha Entrega</th>
                         <th>Estado</th>
+                        <th>Cancelado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -38,6 +39,11 @@
                             } else {
                                 echo 'Entregado';
                             } ?></td>
+                            <td><?php if ($pedidos->cancelado == '0') {
+                                echo 'No';
+                            } else  {
+                                echo 'Si';
+                            }  ?></td>
                             <td>
                                 <button onclick="verDatos('{{ $pedidos->id }}')" class="mdi mdi-format-align-justify"+
                                     data-toggle="modal" data-target="#verdetalle"></button>
@@ -376,12 +382,12 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <input type="hidden" id="totalpedidoresta">
                     <form role="form" method="POST"
                      {{-- id="formAbonos"  --}}
                      action="{{ route('agregarAbono') }}"
                      enctype="multipart/form-data" class="form-sample">
                         @csrf
-
                         <input type="hidden" name="id" id="idpedidoabonar" />
                         <div class="row">
                             <div class="col-md-6">
@@ -444,7 +450,7 @@
                         <tbody>
                         </tbody>
                     </table>
-                    <span id="resta"><h5>RESTA</h5></span>
+                    <h5><span id="resta">Resta </span></h5>
                     <br>
                     <h5><span id="total"></span></h5>
                 </div>
@@ -483,6 +489,12 @@
 
     <script>
         $(document).ready(function() {
+            let pathname = window.location.pathname;
+            console.log(pathname);
+            if (pathname == "/pedido") {
+                window.location.href="/pedidos"
+
+            }
             $('#pedidos').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
@@ -549,8 +561,11 @@
             let abonos = {!! $detalleabono !!}
             let detalleabonos = abonos.filter(item => item.id == id)
             console.log(detalleabonos)
+            let resta = 0
             $("#tablaabonos tbody").children().remove();
             detalleabonos.forEach(function(value, index) {
+                resta = value.abono + resta
+                
                 if (value.id == id) {
                     
                     let fila = `
@@ -566,7 +581,7 @@
                     ${value.nombre}
                   </td>
                   <td>
-                    <button class="mdi mdi-download"></button>
+                    <button onclick="descargarAbonoPedido(' ${value.idabono} ') "class="mdi mdi-download" id="botondescargaabono"></button>
                     <button onclick="anularAbonoPedido(' ${value.idabono} ') " class="mdi mdi-block-helper" data-toggle="modal"
                     data-target="#anularabono"></button>
                     </td>
@@ -578,7 +593,10 @@
               `
               $('#exampleModalLongTitleAbono').text(`Pedido #${value.id}`)
               $('#total').text(`TOTAL ${value.totalpedido}`)
-              ;
+              $('#totalpedidoresta').val(`${value.totalpedido}`)
+              let preciototal =  `${value.totalpedido}`
+              $('#resta').text(`RESTA ${preciototal - resta}`)
+             
                     $("#tablaabonos tbody").append(fila)
                 }
             })
@@ -625,6 +643,10 @@
             $('#exampleModalLongTitleanularabono').text(`Anular Abono `);
             $('#idanularabono').val(`${datos.idabono}`);
             $('#estadoanularabaono').val(`${datos.estado}`);
+        }
+
+        function descargarAbonoPedido(id){
+            window.open('abono-pdf?' + 'id=' + id);
         }
 
     </script>

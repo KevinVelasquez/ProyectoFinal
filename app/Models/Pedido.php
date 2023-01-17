@@ -42,6 +42,7 @@ class Pedido extends Model
 		'fecha_entrega' => 'required',
 		'estado',
 		'proceso',
+        'cancelado',
 		'totalpedido' => 'required',
     ];
 

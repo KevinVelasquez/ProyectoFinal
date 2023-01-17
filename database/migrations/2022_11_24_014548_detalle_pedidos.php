@@ -20,8 +20,8 @@ return new class extends Migration
 
             $table->integer('cantidad');
             $table->integer('precio');
-            $table->binary('imagen');
-            $table->string('descripcion');
+            $table->binary('imagen')->nullable();
+            $table->string('descripcion')->nullable();
             $table->timestamps();
 
             $table->foreign('id_pedido')->references('id')->on('pedidos')->onDelete("cascade");

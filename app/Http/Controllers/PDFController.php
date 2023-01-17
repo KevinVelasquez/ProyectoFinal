@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use PDF;
 use App\Models\Pedido;
 use App\Models\DetallePedido;
+use App\Models\Pago_Clientes;
 use Illuminate\Http\Request;
 
 
@@ -32,8 +33,25 @@ class PDFController extends Controller
         ->get();
             
         
-        $pdf = PDF::loadView('pedido.download',compact('pedidocliente','detallepedido'));
+        $pdf = PDF::loadView('pedido.downloaddetalle',compact('pedidocliente','detallepedido'));
      
         return $pdf->stream('PedidoDetalle'.$id.'.pdf');
+    }
+
+    public function abonoPDF(){
+        $id = $_GET["id"];
+
+        $detalleabono = Pago_Clientes::select('pago__clientes.id AS idabono','pago__clientes.fecha','pago__clientes.abono',
+        "pedidos.id","pedidos.totalpedido",
+        'clientes.id As idcliente','clientes.nombre','clientes.telefono','clientes.cedula')
+        ->join("pedidos", "pago__clientes.id_pedido", "=", "pedidos.id")
+        ->join("clientes", "pedidos.id_cliente", "=", "clientes.id")
+        ->where ("pago__clientes.id","=",$id)
+        ->get();
+
+
+        $pdf = PDF::loadView('pedido.downloadabono',compact('detalleabono'));
+     
+        return $pdf->stream('PedidoDetalle.pdf');
     }
 }

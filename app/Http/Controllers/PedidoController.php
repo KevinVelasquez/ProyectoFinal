@@ -31,7 +31,7 @@ class PedidoController extends Controller
     {
         $pedidos = Pedido::paginate();
 
-        $pedido = Cliente::select("clientes.cedula", "clientes.nombre", "clientes.direccion", "clientes.telefono", "clientes.tipo_comercio", "pedidos.fecha_registro", "pedidos.fecha_entrega", "pedidos.proceso", "pedidos.id")
+        $pedido = Cliente::select("clientes.cedula", "clientes.nombre", "clientes.direccion", "clientes.telefono", "clientes.tipo_comercio", "pedidos.fecha_registro", "pedidos.fecha_entrega", "pedidos.proceso", "pedidos.id","pedidos.cancelado")
             ->join("pedidos", "pedidos.id_cliente", "=", "clientes.id")
             ->where("pedidos.estado", 1)
             ->get();
@@ -70,7 +70,7 @@ class PedidoController extends Controller
 
 
         $detalleabono = Pago_Clientes::select('pago__clientes.fecha AS fechapago', 'pago__clientes.id_medio_pago AS idmedio','pago__clientes.id_pedido AS idpedidoabono','pago__clientes.abono','pago__clientes.id AS idabono',
-        "pedidos.totalpedido","pedidos.id",
+        "pedidos.totalpedido","pedidos.id","pedidos.Cancelado",
         "medio__pagos.id as idmediopago","medio__pagos.nombre")
             ->join("pedidos", "pago__clientes.id_pedido", "=", "pedidos.id")
             ->join("medio__pagos","pago__clientes.id_medio_pago", "=", "medio__pagos.id" )
@@ -208,7 +208,7 @@ class PedidoController extends Controller
             // ->get();
 
         $detalleabono = Pago_Clientes::select('pago__clientes.fecha AS fechapago', 'pago__clientes.id_medio_pago AS idmedio','pago__clientes.id_pedido AS idpedidoabono','pago__clientes.abono',
-        "pedidos.totalpedido","pedidos.id",
+        "pedidos.totalpedido","pedidos.id","pedidos.Cancelado",
         "medio__pagos.id as idmediopago","medio__pagos.nombre")
             ->join("pedidos", "pago__clientes.id_pedido", "=", "pedidos.id")
             ->join("medio__pagos","pago__clientes.id_medio_pago", "=", "medio__pagos.id" )
