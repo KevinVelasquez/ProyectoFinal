@@ -30,16 +30,16 @@
                             <td>{{ $pedidos->id }}</td>
                             <td>{{ $pedidos->cedula }}</td>
                             <td>{{ $pedidos->nombre }}</td>
-                            <td>{{ $pedidos->fecha_registro }}</td>
+                            <td>{{strftime("%A, %d de %B de %Y", strtotime( $pedidos->fecha_registro)) }}</td>
                             <td>{{ $pedidos->fecha_entrega }}</td>
-                            <td><?php if ($pedidos->proceso == '0') {
+                            <td><?php if ($pedidos->proceso == 0) {
                                 echo 'Pendiente';
-                            } elseif ($pedidos->proceso == '1') {
+                            } elseif ($pedidos->proceso == 1) {
                                 echo 'Despachado';
                             } else {
                                 echo 'Entregado';
                             } ?></td>
-                            <td><?php if ($pedidos->cancelado == '0') {
+                            <td><?php if ($pedidos->cancelado == 0) {
                                 echo 'No';
                             } else  {
                                 echo 'Si';
@@ -565,7 +565,6 @@
             $("#tablaabonos tbody").children().remove();
             detalleabonos.forEach(function(value, index) {
                 resta = value.abono + resta
-                
                 if (value.id == id) {
                     
                     let fila = `
@@ -581,7 +580,7 @@
                     ${value.nombre}
                   </td>
                   <td>
-                    <button onclick="descargarAbonoPedido(' ${value.idabono} ') "class="mdi mdi-download" id="botondescargaabono"></button>
+                    <button onclick="descargarAbonoPedido(' ${value.idabono}','${value.id}','${value.fechapago}') "class="mdi mdi-download" id="botondescargaabono"></button>
                     <button onclick="anularAbonoPedido(' ${value.idabono} ') " class="mdi mdi-block-helper" data-toggle="modal"
                     data-target="#anularabono"></button>
                     </td>
@@ -645,8 +644,8 @@
             $('#estadoanularabaono').val(`${datos.estado}`);
         }
 
-        function descargarAbonoPedido(id){
-            window.open('abono-pdf?' + 'id=' + id);
+        function descargarAbonoPedido(idabono,idpedido,fecha){
+            window.open('abono-pdf?' + 'idabono=' + idabono +'&idpedido='+ idpedido+'&fecha='+ fecha);
         }
 
     </script>

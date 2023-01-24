@@ -63,7 +63,7 @@
                     </tr>
                     <tr class="color">
                         <td>Abono: <span class="texto">{{$detalleabono[0]->abono}}</span></td>
-                        <td>Resta:</td>
+                        <td>Resta: <span class="texto">{{$detalleabono[0]->totalpedido-$acomulado[0]->acomulado}} </span></td>
                     </tr>
             </tbody>
         </table>

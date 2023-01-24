@@ -6,7 +6,7 @@ use App\Models\Pedido;
 use App\Models\Cliente;
 use App\Models\DetallePedido;
 use Illuminate\Http\Request;
-
+use DB;
 
 class PagoClienteController extends Controller
 {
@@ -20,7 +20,12 @@ class PagoClienteController extends Controller
             'id_medio_pago' => $input["medioabono"],
         ]);
 
+        $totalabono = $this->verificarAbono($input["id"]);
         
+        if ($totalabono <= 0) {
+            $this->abonoCancelado($input["id"]);
+        }
+
         $pedidos = Pedido::paginate();
 
         $pedido = Cliente::select("clientes.cedula", "clientes.nombre", "clientes.direccion", "clientes.telefono", "clientes.tipo_comercio", "pedidos.fecha_registro", "pedidos.fecha_entrega", "pedidos.proceso", "pedidos.id")
@@ -108,4 +113,20 @@ class PagoClienteController extends Controller
             ->with('success', 'Status pedido successfully');
     }
 
+    public function verificarAbono($id){
+
+        $totalabonopedido = Pago_Clientes::select('pedidos.totalpedido', Pago_Clientes::raw('SUM(pago__clientes.abono) as totalabonado'))
+            ->join("pedidos", "pedidos.id", "=", "pago__clientes.id_pedido")->where([["pago__clientes.estado",1],["pedidos.id",$id]])->groupBy("pago__clientes.id_pedido", "pedidos.totalpedido")
+            ->get();
+
+        return $totalabonopedido[0]->totalpedido - $totalabonopedido[0]->totalabonado;
+    }
+
+    public function abonoCancelado($id){
+
+        Pedido::where('id', $id)
+            ->update([
+                'cancelado' => 1
+            ]);
+    }
 }

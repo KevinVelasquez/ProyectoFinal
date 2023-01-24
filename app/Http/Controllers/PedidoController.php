@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+
 use DB;
 use App\Models\Metodo_Entrega;
 use App\Models\Medio_Pago;
@@ -29,8 +31,8 @@ class PedidoController extends Controller
      */
     public function index()
     {
-        $pedidos = Pedido::paginate();
 
+        $pedidos = Pedido::paginate();
         $pedido = Cliente::select("clientes.cedula", "clientes.nombre", "clientes.direccion", "clientes.telefono", "clientes.tipo_comercio", "pedidos.fecha_registro", "pedidos.fecha_entrega", "pedidos.proceso", "pedidos.id","pedidos.cancelado")
             ->join("pedidos", "pedidos.id_cliente", "=", "clientes.id")
             ->where("pedidos.estado", 1)
@@ -75,6 +77,7 @@ class PedidoController extends Controller
             ->join("pedidos", "pago__clientes.id_pedido", "=", "pedidos.id")
             ->join("medio__pagos","pago__clientes.id_medio_pago", "=", "medio__pagos.id" )
             ->where("pago__clientes.estado", 1)
+            ->orderBy("pago__clientes.fecha", "DESC")
             ->get();
 
         $editarpedido = Pedido::select(
@@ -121,7 +124,7 @@ class PedidoController extends Controller
         $producto = producto::all();
         $pedido = new Pedido();
 
-        return view('pedido.create', compact('pedido', 'cliente', 'producto', 'paises', 'departamentos', 'municipios', 'metodo_entrega', 'medio_pago', 'metodo_pago'));
+        return view('pedido.create', compact('pedido', 'cliente', 'producto', 'paises', 'departamentos', 'municipios', 'metodo_entrega', 'medio_pago', 'metodo_pago','fecha'));
     }
     /**
      * Store a newly created resource in storage.
