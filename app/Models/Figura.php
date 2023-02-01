@@ -12,7 +12,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property $imagen
  * @property $estado
  * @property $id_cliente
+ * @property $created_at
+ * @property $updated_at
  *
+ * @property Cliente $cliente
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
@@ -36,5 +39,13 @@ class Figura extends Model
     protected $fillable = ['etiqueta','imagen','estado','id_cliente'];
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function cliente()
+    {
+        return $this->hasOne('App\Models\Cliente', 'id', 'id_cliente');
+    }
+    
 
 }

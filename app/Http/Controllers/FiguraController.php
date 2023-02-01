@@ -45,10 +45,20 @@ class FiguraController extends Controller
     {
         request()->validate(Figura::$rules);
 
-        $figura = Figura::create($request->all());
+        $input = $request->all();
 
-        return redirect()->route('figuras.index')
-            ->with('success', 'Figura created successfully.');
+        if($request->hasFile('imagen'))
+        {
+            $destination_path = 'public/images/figuras';
+            $imagen = $request->file('imagen');
+            $imagen_name = $imagen->getClientOriginalName();
+            $path = $request->file('imagen')->storeAs($destination_path,$imagen_name);
+
+            $input['imagen'] = $imagen_name;
+        }
+
+        Figura::create($input);
+        return redirect()->route('figuras.index');
     }
 
     /**
@@ -57,12 +67,7 @@ class FiguraController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        $figura = Figura::find($id);
 
-        return view('figura.show', compact('figura'));
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -86,12 +91,29 @@ class FiguraController extends Controller
      */
     public function update(Request $request, Figura $figura)
     {
+        
         request()->validate(Figura::$rules);
+        $input=$request->all();
+        $figura->update([
+            'etiqueta' => 'etiqueta',
+            'imagen' => 'imagen',
+            'estado'=> $input['estado'],
+            'id_cliente'=>$input['id_cliente']
+        ]);
+        
 
-        $figura->update($request->all());
+        if($request->hasFile('imagen'))
+        {
+            $destination_path = 'public/images/figuras';
+            $imagen = $request->file('imagen');
+            $imagen_name = $imagen->getClientOriginalName();
+            $path = $request->file('imagen')->storeAs($destination_path,$imagen_name);
 
-        return redirect()->route('figuras.index')
-            ->with('success', 'Figura updated successfully');
+            $input['imagen'] = $imagen_name;
+        }
+        $figura->update($input);
+
+        return redirect()->route('figuras.index');
     }
 
     /**
@@ -103,7 +125,6 @@ class FiguraController extends Controller
     {
         $figura = Figura::find($id)->delete();
 
-        return redirect()->route('figuras.index')
-            ->with('success', 'Figura deleted successfully');
+        return redirect()->route('figuras.index');
     }
 }

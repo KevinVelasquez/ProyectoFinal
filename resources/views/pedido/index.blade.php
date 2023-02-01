@@ -30,8 +30,9 @@
                             <td>{{ $pedidos->id }}</td>
                             <td>{{ $pedidos->cedula }}</td>
                             <td>{{ $pedidos->nombre }}</td>
-                            <td>{{strftime("%A, %d de %B de %Y", strtotime( $pedidos->fecha_registro)) }}</td>
-                            <td>{{ $pedidos->fecha_entrega }}</td>
+                            
+                            <td>{{ucwords(\Carbon\Carbon::parse($pedidos->fecha_registro)->locale('es_MX','es_MX.utf8')->isoFormat('dddd[,] D [de] MMMM [del] Y')) }}</td>
+                            <td>{{ucwords(\Carbon\Carbon::parse($pedidos->fecha_entrega)->locale('es_MX','es_MX.utf8')->isoFormat('dddd[,] D [de] MMMM [del] Y')) }}</td>
                             <td><?php if ($pedidos->proceso == 0) {
                                 echo 'Pendiente';
                             } elseif ($pedidos->proceso == 1) {

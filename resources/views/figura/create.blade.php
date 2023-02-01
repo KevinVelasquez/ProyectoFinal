@@ -5,26 +5,18 @@
 @endsection
 
 @section('content')
-    <section class="content container-fluid">
-        <div class="row">
-            <div class="col-md-12">
+<div class="container" style="width:50%;margin-left: 25%;">
+    <main role="main" class="pb-3">
+        <h1>Crear Figura</h1>
+        <hr />
+        
+        <form method="POST" action="{{ route('figuras.store') }}"  role="form" enctype="multipart/form-data" class="form-sample">
+        @csrf
 
-                @includeif('partials.errors')
+        @include('figura.form')
 
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">Create Figura</span>
-                    </div>
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('figuras.store') }}"  role="form" enctype="multipart/form-data">
-                            @csrf
-
-                            @include('figura.form')
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        </form>
+        
+    </main>
+    
 @endsection

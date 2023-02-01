@@ -16,10 +16,11 @@ return new class extends Migration
         Schema::create('figuras', function (Blueprint $table) {
             $table->id();
             $table->string('etiqueta');
-            $table->binary('imagen');
+            $table->string('imagen');
             $table->integer('estado');
             $table->bigInteger('id_cliente')->unsigned();
             $table->timestamps();
+            $table->foreign('id_cliente')->references('id')->on('clientes')->onDelete("cascade");
         });
     }
 
