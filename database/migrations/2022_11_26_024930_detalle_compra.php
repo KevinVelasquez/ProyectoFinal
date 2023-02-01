@@ -13,18 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('detalle_pedidos', function (Blueprint $table) {
+        Schema::create('detalle_compra', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_pedido')->unsigned();
-            $table->bigInteger('id_producto')->unsigned();
-
             $table->integer('cantidad');
-            $table->integer('precio');
-            $table->binary('imagen');
-            $table->string('descripcion');
-            $table->timestamps();
-
-            $table->foreign('id_pedido')->references('id')->on('pedidos')->onDelete("cascade");
+            $table->integer('valor_unitario');
+            $table->bigInteger('id_orden_compra')->unsigned();
+            $table->bigInteger('id_insumo')->unsigned();
+            $table->foreign('id_insumo')->references('id')->on('insumos');
+            $table->foreign('id_orden_compra')->references('id')->on('compra');
         });
     }
 

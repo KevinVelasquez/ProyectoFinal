@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('departamentos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->bigInteger('id_paises')->unsigned();
+            $table->bigInteger('id_pais')->unsigned();
 
-            $table->foreign('id_paises')->references('id')->on('paises')->onDelete('cascade');
+            $table->foreign('id_pais')->references('id')->on('pais')->onDelete('cascade');
         });
     }
 

@@ -101,7 +101,7 @@
                 <div class="col-sm-9">
                     <select class="form-control" name="pais" id="pais">
                         <option value="0">Seleccione</option>
-                        @forelse($paises as $pais)
+                        @forelse($pais as $pais)
                         <option value="{{$pais->id}}">
                             {{ $pais->nombre}}
                         </option>

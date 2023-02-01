@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ClienteController;
+use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +23,6 @@ Route::get('/', function () {
 })->middleware('auth');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('auth');
 
-
 Route::resource('compra', App\Http\Controllers\CompraController::class)->middleware('auth');
 Route::resource('usuario', App\Http\Controllers\UsuarioController::class)->middleware('auth');
 Route::resource('/login', App\Http\Controllers\CompraController::class)->middleware('auth');
@@ -36,7 +37,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('cliente',ClienteController::class)->middleware('auth');
 Route::resource('proveedor',ProveedorController::class)->middleware('auth');
-
+Route::get('/VistaPefil',  [UsuarioController::class,'VistaPefil'])->name('VistaPefil')->middleware('auth');
+Route::post('/EditarPerfil',  [UsuarioController::class,'EditarPerfil'])->name('EditarPerfil');
+Route::get('/CambioEstado', [UsuarioController::class,'CambioEstado'])->name('CambioEstado');
+Route::post('/store', [CompraController::class,'store'])->name('store');
 
 Auth::routes();
 

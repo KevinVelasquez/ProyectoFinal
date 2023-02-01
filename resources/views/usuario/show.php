@@ -2,6 +2,15 @@
 
 @section('template_title')
 {{ $user->name ?? 'Perfil' }}
+@if ($message = Session::get('success') )
+<script>
+    swal({
+        title: "{{session::get('success')}}",
+        icon: "success",
+        button: "Aceptar",
+    });
+</script>
+@endif
 @endsection
 
 @section('content')

@@ -33,14 +33,14 @@ class ProveedorController extends Controller
     public function create()
     {
         //
-        $paises = Pais::all();
+        $pais = Pais::all();
         $departamentos = Departamento::all();
         $municipios = Municipio::all();
         $tipo_comercio = Tipo_comercio::all();
         $tipo_persona = Tipo_persona::all();
         $regimen = Regimen::all();
         $proveedor = new Proveedor();
-        return view('proveedor.create', compact('proveedor', 'paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
+        return view('proveedor.create', compact('proveedor', 'pais', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
     }
 
     /**

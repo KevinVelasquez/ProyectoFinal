@@ -70,7 +70,7 @@
     </div>
     <div class="box-footer mt20">
         <div class="col-md-6 offset-md-4">
-            <button type="submit" class="btn btn-primary float-left">Registrar</button>
+            <button type="submit" href="{{ route('usuario.index')}}" class="btn btn-primary float-left">Registrar</button>
             <button onclick="history.back()" type="button" class="btn btn-primary">Cancelar</button>
         </div>
     </div>

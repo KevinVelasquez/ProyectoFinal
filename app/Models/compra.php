@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property DetalleCompra[] $detalleCompras
  * @property Insumo $insumo
- * @property MetodoPago $metodoPago
+ * @property metodo_pagos $metodo_pagos
  * @property Proveedor $proveedor
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
@@ -31,13 +31,11 @@ class Compra extends Model
     static $rules = [
 		'n_orden' => 'required',
 		'fecha_compra' => 'required',
-		'cantidad' => 'required',
-		'precio_unitario' => 'required',
+		'anulado' => 'required',
 		'total' => 'required',
 		'estado' => 'required',
 		'id_proveedor' => 'required',
-		'id_insumo' => 'required',
-		'id_metodo_pago' => 'required',
+		'id_metodo_pagos' => 'required',
     ];
 
     protected $perPage = 20;
@@ -48,7 +46,7 @@ class Compra extends Model
      *
      * @var array
      */
-    protected $fillable = ['n_orden','fecha_compra','cantidad','precio_unitario','total','estado','id_proveedor','id_insumo','id_metodo_pago'];
+    protected $fillable = ['n_orden','fecha_compra','anulado','total','estado','id_proveedor','id_metodo_pagos'];
 
 
     /**
@@ -56,7 +54,7 @@ class Compra extends Model
      */
     public function detalleCompras()
     {
-        return $this->hasMany('App\Models\DetalleCompra', 'id_orden_compra', 'id');
+        return $this->hasMany('App\Models\Detalle_compra', 'id_orden_compra', 'id');
     }
     
     /**
@@ -64,15 +62,15 @@ class Compra extends Model
      */
     public function insumo()
     {
-        return $this->hasOne('App\Models\Insumo', 'id', 'id_insumo');
+        return $this->hasOne('App\Models\insumo', 'id', 'id_insumo');
     }
     
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function metodoPago()
+    public function metodo_pagos()
     {
-        return $this->hasOne('App\Models\MetodoPago', 'id', 'id_metodo_pago');
+        return $this->hasOne('App\Models\metodo_pagos', 'id', 'id_metodo_pagos');
     }
     
     /**
