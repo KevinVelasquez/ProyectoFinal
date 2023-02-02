@@ -11,14 +11,16 @@
             {!! $errors->first('etiqueta', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('estado') }}
-            {{ Form::text('estado', $figura->estado, ['class' => 'form-control' . ($errors->has('estado') ? ' is-invalid' : ''), 'placeholder' => 'Estado']) }}
-            {!! $errors->first('estado', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('id_cliente') }}
-            {{ Form::text('id_cliente', $figura->id_cliente, ['class' => 'form-control' . ($errors->has('id_cliente') ? ' is-invalid' : ''), 'placeholder' => 'Id Cliente']) }}
-            {!! $errors->first('id_cliente', '<div class="invalid-feedback">:message</div>') !!}
+            {{ Form::label('Cliente') }}
+            <select class="form-control" name="id_cliente" id="id_cliente" onchange="info()">
+                <option> {{$figura->etiqueta}} </option>
+                @forelse($cliente  as $clientes)
+                    <option value="{{ $clientes->id }}">
+                        {{ $clientes->nombre }}
+                    </option>
+                @empty <option>No existen</option>
+                @endforelse
+            </select>
         </div>
 
     </div>

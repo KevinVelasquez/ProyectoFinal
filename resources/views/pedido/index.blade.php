@@ -137,8 +137,12 @@
                                                 <div class="col-sm-9">
                                                     <select class="form-control" name="id_metodo_pago"
                                                         id="editarmetodopago">
-                                                        <option value="1">Contado</option>
-                                                        <option value="2">Credito</option>
+                                                        @forelse($metodo_pago  as $metodo_pagos)
+                                                        <option value="{{$metodo_pagos->id}}">
+                                                       {{ $metodo_pagos->nombre}}
+                                                       </option>
+                                                        @empty <option>No existen</option>
+                                                       @endforelse
                                                     </select>
                                                 </div>
                                             </div>
@@ -174,9 +178,12 @@
                                                 <div class="col-sm-9">
                                                     <select class="form-control" name="id_metodo_entrega"
                                                         id="editarmetodoentrega">
-                                                        <option value="1">Feria</option>
-                                                        <option value="2">Taller</option>
-                                                        <option value="3">Transportadora</option>
+                                                        @forelse($metodo_entrega  as $metodo_entregas)
+                                                        <option value="{{$metodo_entregas->id}}">
+                                                       {{ $metodo_entregas->nombre}}
+                                                       </option>
+                                                        @empty <option>No existen</option>
+                                                       @endforelse
                                                     </select>
                                                 </div>
                                             </div>
@@ -504,6 +511,7 @@
         });
 
         function datosDetalle(id) {
+            const fechaActual = new Date()
             let datos = {!! $pedidocliente !!}
 
             let detalledatos = datos.find(item => item.id == id)

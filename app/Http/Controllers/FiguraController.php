@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Figura;
+use App\Models\Cliente;
 use Illuminate\Http\Request;
+use Str;
 
 /**
  * Class FiguraController
@@ -32,7 +34,8 @@ class FiguraController extends Controller
     public function create()
     {
         $figura = new Figura();
-        return view('figura.create', compact('figura'));
+        $cliente = Cliente::all();
+        return view('figura.create', compact('figura','cliente'));
     }
 
     /**
@@ -51,8 +54,9 @@ class FiguraController extends Controller
         {
             $destination_path = 'public/images/figuras';
             $imagen = $request->file('imagen');
-            $imagen_name = $imagen->getClientOriginalName();
-            $path = $request->file('imagen')->storeAs($destination_path,$imagen_name);
+            $extensionimagen = $imagen->getClientOriginalExtension();
+            $imagen_name = Str::uuid() . '.' . $extensionimagen;
+            $request->file('imagen')->storeAs($destination_path,$imagen_name);
 
             $input['imagen'] = $imagen_name;
         }
@@ -78,8 +82,13 @@ class FiguraController extends Controller
     public function edit($id)
     {
         $figura = Figura::find($id);
-
-        return view('figura.edit', compact('figura'));
+        $figuracliente = Figura::select('figuras.id_cliente','clientes.id','clientes.nombre')
+        ->join('clientes','figuras.id_cliente','=','clientes.id')
+        ->get();
+        // print($figuracliente );
+        // exit;
+        $cliente = Cliente::all();
+        return view('figura.edit', compact('figura','cliente','figuracliente'));
     }
 
     /**
@@ -92,12 +101,9 @@ class FiguraController extends Controller
     public function update(Request $request, Figura $figura)
     {
         
-        request()->validate(Figura::$rules);
         $input=$request->all();
         $figura->update([
             'etiqueta' => 'etiqueta',
-            'imagen' => 'imagen',
-            'estado'=> $input['estado'],
             'id_cliente'=>$input['id_cliente']
         ]);
         
@@ -106,8 +112,10 @@ class FiguraController extends Controller
         {
             $destination_path = 'public/images/figuras';
             $imagen = $request->file('imagen');
-            $imagen_name = $imagen->getClientOriginalName();
-            $path = $request->file('imagen')->storeAs($destination_path,$imagen_name);
+            // $imagen_name = $imagen->getClientOriginalName();
+            $extensionimagen = $imagen->getClientOriginalExtension();
+            $imagen_name = Str::uuid() . '.' . $extensionimagen;
+            $request->file('imagen')->storeAs($destination_path,$imagen_name);
 
             $input['imagen'] = $imagen_name;
         }

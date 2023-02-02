@@ -35,6 +35,9 @@ class PedidoController extends Controller
 
         $pedidos = Pedido::paginate();
         
+        $metodo_pago = Metodo_Pago::all();
+
+        $metodo_entrega = Metodo_Entrega::all();
        
         $pedido = Cliente::select("clientes.cedula", "clientes.nombre", "clientes.direccion", "clientes.telefono", "clientes.tipo_comercio",'pedidos.fecha_registro' , "pedidos.fecha_entrega", "pedidos.proceso", "pedidos.id","pedidos.cancelado")
             ->join("pedidos", "pedidos.id_cliente", "=", "clientes.id")
@@ -105,7 +108,7 @@ class PedidoController extends Controller
             ->join("metodo__entregas", "pedidos.id_metodo_entrega", "=", "metodo__entregas.id")
             ->get();
 
-        return view('pedido.index', compact('pedidos', 'pedido', 'detallepedido', 'pedidocliente', 'editarpedido','detalleabono'))
+        return view('pedido.index', compact('pedidos', 'pedido', 'detallepedido', 'pedidocliente', 'editarpedido','detalleabono','metodo_pago','metodo_entrega'))
             ->with('i', (request()->input('page', 1) - 1) * $pedidos->perPage());
     }
 

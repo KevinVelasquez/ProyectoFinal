@@ -52,21 +52,21 @@
                                 <br>
                                 <div style="padding: 10px; float: left; width: 45%; text-align: justify;">
                                     <span class="titulo">Para: <span class="texto">{{ $pedidocliente[0]->nombrecliente }}</span></span><br>
-                                    <span>Cédula:{{ $pedidocliente[0]->cedula }}</span><br>
-                                    <span>Dirección:{{ $pedidocliente[0]->direccion }}</span><br>
-                                    <span>Antioquia </span><br>
-                                    <span>Telefono:{{ $pedidocliente[0]->telefono }}</span><br>
+                                    <span class="titulo">Cédula:<span class="texto">{{ $pedidocliente[0]->cedula }}</span><br>
+                                    <span class="titulo">Dirección:<span class="texto">{{ $pedidocliente[0]->direccion }}</span><br>
+                                    <span class="texto">{{ $pedidocliente[0]->nombremunicipio}} </span><br>
+                                    <span class="titulo">Telefono:<span class="texto">{{ $pedidocliente[0]->telefono }}</span><br>
                                 </div>
                                 <div style="padding: 10px; float: right; width: 45%; text-align: justify;">
-                                    <span>N° Pedido:{{ $pedidocliente[0]->id }}</span><br>
-                                    <span>Fecha Registro:{{ $pedidocliente[0]->fecha_registro }}</span><br>
-                                    <span>Fecha Entrega:{{ $pedidocliente[0]->fecha_entrega }}</span><br>
+                                    <span class="titulo">N° Pedido:<span class="texto">{{ $pedidocliente[0]->id }}</span><br>
+                                    <span class="titulo">Fecha Registro:<span class="texto">{{ucwords(\Carbon\Carbon::parse($pedidocliente[0]->fecha_registro)->locale('es_MX','es_MX.utf8')->isoFormat('D [de] MMMM [del] Y')) }}</span><br>
+                                    <span class="titulo"> Fecha Entrega:<span class="texto">{{ucwords(\Carbon\Carbon::parse($pedidocliente[0]->fecha_entrega)->locale('es_MX','es_MX.utf8')->isoFormat('D [de] MMMM [del] Y')) }}</span><br>
                                 </div>
                             </div>
                         </div>
                         <hr style="margin-top:120px;" />
                         <table style="margin-top:20px;width: 100%;">
-                            <thead>
+                            <thead class="titulo">
                                 <tr>
                                     <th>Producto</th>
                                     <th>Cantidad</th>
@@ -90,7 +90,7 @@
 
                 </div>
                 <div style="text-align:right">
-                    <b>TOTAL:{{ $pedidocliente[0]->totalpedido }}</b>
+                    <b  class="titulo">TOTAL:<span class="texto">{{ $pedidocliente[0]->totalpedido }}</b>
                 </div>
             </div>
         </div>

@@ -24,8 +24,8 @@ class Figura extends Model
     
     static $rules = [
 		'etiqueta' => 'required',
-		'imagen' => 'required',
-		'estado' => 'required',
+		'imagen',
+		'estado',
 		'id_cliente' => 'required',
     ];
 

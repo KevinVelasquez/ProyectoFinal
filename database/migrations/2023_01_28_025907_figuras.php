@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('etiqueta');
             $table->string('imagen');
-            $table->integer('estado');
+            $table->integer('estado')->default(1);
             $table->bigInteger('id_cliente')->unsigned();
             $table->timestamps();
             $table->foreign('id_cliente')->references('id')->on('clientes')->onDelete("cascade");
