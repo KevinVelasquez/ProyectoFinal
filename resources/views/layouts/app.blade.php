@@ -120,7 +120,7 @@
                 <div class="collapse" id="form-elements">
                   <ul class="nav flex-column ">
                     <li class="nav-item"><a class="nav-link" href="#">Clientes</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Productos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('productos.index')}}">Productos</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Pedidos</a></li>
                   </ul>
                 </div>

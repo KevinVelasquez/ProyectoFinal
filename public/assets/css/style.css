@@ -15199,6 +15199,7 @@ a.close.disabled {
     border-top: 1px solid #e8eff9;
     border-bottom-right-radius: 0.3rem;
     border-bottom-left-radius: 0.3rem;
+    background-color: ;
 }
 
     .modal-footer > :not(:first-child) {
@@ -24578,6 +24579,7 @@ body.avgrund-active {
     -webkit-flex-grow: 1;
     flex-grow: 1;
     margin: 20px;
+    margin-bottom: 4%;
     padding: 5px;
 }
 
@@ -26806,7 +26808,7 @@ body.avgrund-active {
 
 #tituloinicial {
     margin-left: 38%;
-    width: 30%;
+    width: 100%;
     color: white;
 }
 
@@ -27066,10 +27068,11 @@ iframe {
 }
 
 .btn-primary {
-    color: #fff !important;
-    background: #428bca !important;
-    border-color: #357ebd !important;
-    box-shadow: none !important;
+    margin-top: 5%;
+    color: #fff;
+    background-color: #81242E;
+    border-color: #81242E;
+      
 }
 
 .btn-danger {

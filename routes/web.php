@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RolController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +22,15 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('insumos', App\Http\Controllers\InsumoController::class);
+Route::put('insumos', [App\Http\Controllers\InsumoController::class, 'updateInsumos'])->name('insumos.updateInsumos');
+Route::patch('insumos', [App\Http\Controllers\InsumoController::class, 'anularInsumo'])->name('insumos.anularInsumo');
+Route::delete('insumos', [App\Http\Controllers\InsumoController::class, 'eliminarInsumo'])->name('insumos.eliminarInsumo');
+
+Route::resource('productos', App\Http\Controllers\ProductoController::class);
+
+
+Route:: group(['middleware' => ['auth'] ], function(){
+    Route::resource('roles', RolController::class);
+    Route::resource('usuarios', UsuarioController::class);
+});
+

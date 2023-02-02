@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Create Insumo
+    Create Producto
 @endsection
 
 @section('content')
@@ -13,13 +13,13 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">Create Insumo</span>
+                        <span class="card-title">Create Producto</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('insumos.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('productos.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 
-                            @include('insumo.form')
+                            @include('producto.form')
 
                         </form>
                     </div>
