@@ -21,7 +21,6 @@ Proveedor
                     <th>Telefono</th>
                     <th>Direccion</th>
                     <th>Email</th>
-                    <th>Estado</th>
                     <th>Tipo Persona</th>
                     <th>SaldoPendiente</th>
                     <th>Estado</th>
@@ -29,7 +28,6 @@ Proveedor
                 </tr>
             </thead>
             <tbody>
-
 
                 @foreach ($proveedores as $proveedor)
                 <tr>
@@ -39,15 +37,42 @@ Proveedor
                     <td>{{ $proveedor->telefono }}</td>
                     <td>{{ $proveedor->direccion }}</td>
                     <td>{{ $proveedor->email }}</td>
-                    <td>{{ $proveedor->estado }}</td>
-                    <td>{{ $proveedor->tipo_persona }}</td>
-                    <td></td>
-                    <td></td>
+                    @if ($proveedor->tipo_persona==1)
+                    <td>Juridico</td>
+                    @else
+                    <td>Natural</td>
+                    @endif
+                    
+                    <td>0</td>
+                    <td id="resp{{ $proveedor->id }}">
+                        <!-- <input value="{{ $proveedor->estado }}" data-id="{{ $proveedor->id }}" class="mi_checkbox" type="checkbox" id="switch" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $proveedor->estado ? 'checked' : '' }}>
+                        <label for="switch" class="lbl">
+
+                        </label> -->
+
+
+                        @if($proveedor->estado == 1)
+                        <button type="button" class="btn btn-sm btn-success">Activo</button>
+                        @else
+                        <button type="button" class="btn btn-sm btn-danger">Inactivo</button>
+                        @endif
+
+                        <!-- <br>
+                        <label class="switch">
+                            <input data-id="{{ $proveedor->id }}" class="mi_checkbox" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $proveedor->estado ? 'checked' : '' }}>
+                            <span class="slider round"></span>
+                        </label> -->
+
+                    </td>
 
                     <td>
 
                         <a href="{{ url('/proveedor/'.$proveedor->id.'/edit') }}"><button class="mdi mdi-lead-pencil"></button></a>
-                        <a href=""><button class="mdi mdi-checkbox-multiple-blank"></button></a>
+
+                        <!-- Button trigger modalvisualizar facturas -->
+                        <a href="{{ route('proveedor.show', $proveedor->id) }}"><button class="mdi mdi-format-align-left"></button></a>
+
+
 
                         <form action="{{ url('/proveedor/'.$proveedor->id) }}" method="POST">
 
@@ -102,6 +127,34 @@ Proveedor
             }
         });
     });
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(window).load(function() {
+            $(".cargando").fadeOut(1000);
+        });
+$('.mi_checkbox').change(function() {
+    //Verifico el estado del checkbox, si esta seleccionado sera igual a 1 de lo contrario sera igual a 0
+    var estado = $(this).prop('checked') == true ? 1 : 0; 
+    var id = $(this).data('id'); 
+        console.log(estado);
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: 'updateStatusProveedor',
+        // url: '{{ route('proveedor.updateStatusProveedor') }}',
+        data: {'estado': estado, 'id': id},
+        success: function(data){
+            $('#resp' + id).html(data.var); 
+            console.log(data.var)
+         
+        }
+    });
+})
+      
+});
 </script>
 
 @endsection

@@ -21,7 +21,6 @@ Cliente
                     <th>Telefono</th>
                     <th>Direccion</th>
                     <th>Email</th>
-                    <th>Estado</th>
                     <th>Tipo Persona</th>
                     <th>SaldoPendiente</th>
                     <th>Estado</th>
@@ -39,10 +38,34 @@ Cliente
                     <td>{{ $cliente->telefono }}</td>
                     <td>{{ $cliente->direccion }}</td>
                     <td>{{ $cliente->email }}</td>
-                    <td>{{ $cliente->estado }}</td>
-                    <td>{{ $cliente->tipo_persona }}</td>
-                    <td></td>
-                    <td></td>
+                    @if ($cliente->tipo_persona==1)
+                    <td>Juridico</td>
+                    @else
+                    <td>Natural</td>
+                    @endif
+                    
+                    <td>150000</td>
+                    @if ($cliente->estado==1)
+                    <td>
+                        <a class="btn btn-sm btn-success" type="button" href="{{route('updateStatusCliente', $cliente)}}">Activo <i class="mdi mdi-check" ></i></a>
+                    </td>
+                    @else
+                    <td>
+                        <a class="btn btn-sm btn-danger" type="button" href="{{route('updateStatusCliente', $cliente)}}">Inactivo <i class="mdi mdi-window-close" ></i></a>
+                    </td>
+                    @endif
+
+
+
+
+
+                    <!-- <input value="{{ $cliente->estado }}" data-id="{{ $cliente->id }}" class="mi_checkbox" type="checkbox" id="switch" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $cliente->estado ? 'checked' : '' }}>
+                    <label for="switch" class="lbl">
+                    
+                    </label> -->
+
+
+
 
                     <td>
 
@@ -103,5 +126,7 @@ Cliente
         });
     });
 </script>
+
+
 
 @endsection

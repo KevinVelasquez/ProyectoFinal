@@ -21,8 +21,10 @@ class ClienteController extends Controller
     public function index()
     {
         //
+        
         $datos ['clientes']= Cliente::paginate(5);
         return view('cliente.index',$datos);
+   
     }
 
     /**
@@ -57,8 +59,8 @@ class ClienteController extends Controller
         $datosCliente = request()->except('_token','pais','departamento');
         Cliente::insert($datosCliente);
 
-        return redirect()->route('cliente.index')
-            ->with('success', 'Cliente created successfully.');
+        return redirect('cliente')
+            ->with('mensaje', 'Proveedor creado con éxito.');
     }
 
     /**
@@ -67,10 +69,25 @@ class ClienteController extends Controller
      * @param  \App\Models\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function show(Cliente $cliente)
+    public function updateStatusCliente(cliente $cliente)
     {
         //
+
+    if($cliente->estado == 1)  {
+        $cliente->update(['estado'=>0]);
+            return redirect()->back();
+
+        $cliente = '<br> <button type="button" class="btn btn-sm btn-danger">Inactivo</button>';
+
+    }else{
+        $cliente->update(['estado'=>1]);
+        return redirect()->back();
+
+        $cliente ='<br> <button type="button" class="btn btn-sm btn-success">Activo</button>';
     }
+
+    }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -81,8 +98,16 @@ class ClienteController extends Controller
     public function edit($id)
     {
         //
+        
+        $paises = Pais::all();
+        $departamentos = Departamento::all();
+        $municipios = Municipio::all();
+        $tipo_comercio = Tipo_comercio::all();
+        $tipo_persona = Tipo_persona::all();
+        $regimen = Regimen::all();
         $cliente =Cliente::findOrFail($id);
-        return view('cliente.edit', compact ('cliente'));
+        return view('cliente.edit', compact('cliente','paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
+    
     }
 
     /**
@@ -98,8 +123,14 @@ class ClienteController extends Controller
         $datosCliente = request()->except(['_token','pais','departamento','_method']);
         Cliente::where('id', '=', $id)->update($datosCliente);
 
+        $paises = Pais::all();
+        $departamentos = Departamento::all();
+        $municipios = Municipio::all();
+        $tipo_comercio = Tipo_comercio::all();
+        $tipo_persona = Tipo_persona::all();
+        $regimen = Regimen::all();
         $cliente =Cliente::findOrFail($id);
-        return view('cliente.edit', compact ('cliente'));
+        return view('cliente.edit', compact ('cliente','paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
         
     }
 
@@ -117,7 +148,7 @@ class ClienteController extends Controller
 
        $cliente = Cliente::find($id)->delete();
 
-        return redirect()->route('cliente.index')
-            ->with('success', 'Cliente deleted successfully');
+       return redirect('cliente')
+       ->with('mensaje', 'Proveedor eliminado con éxito.');
     }
 }

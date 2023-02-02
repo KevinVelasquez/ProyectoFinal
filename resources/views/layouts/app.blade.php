@@ -5,12 +5,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FERRUM</title>
-  <script
-  src="https://code.jquery.com/jquery-3.6.1.js"
-  integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-  crossorigin="anonymous"></script>    
+  <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/assets/css/style.css">
-  <link rel="shortcut icon" href="/assets/img/favicon.png" >
+  <link rel="shortcut icon" href="/assets/img/favicon.png">
   <link rel="stylesheet" href="/assets/vendors/typicons.font/font/typicons.css">
   <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -20,6 +17,8 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
   <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
   <link href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap5.min.css">
+
+  
 
 </head>
 
@@ -70,7 +69,7 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" href="">
+              <a class="nav-link" href="{{ route('calendario.index') }}">
                 <i class="mdi mdi-calendar menu-icon"></i>
                 <span class="menu-title">Calendario</span>
               </a>
@@ -186,7 +185,7 @@
                     @else
                     <li class="nav-item dropdown">
                       <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }} 
+                        {{ Auth::user()->name }}
                       </a>
 
                       <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -220,32 +219,36 @@
   </footer> -->
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="/assets/lib/jquery/dist/jquery.min.js"></script>
-<script src="/assets/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/assets/js/site.js" asp-append-version="true"></script>
+  <script src="/assets/lib/jquery/dist/jquery.min.js"></script>
+  <script src="/assets/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/js/site.js" asp-append-version="true"></script>
 
-<script src="/assets/vendors/js/vendor.bundle.base.js"></script>
-<script src="/assets/js/off-canvas.js"></script>
-<script src="/assets/js/hoverable-collapse.js"></script>
-<script src="/assets/js/template.js"></script>
-<script src="/assets/js/settings.js"></script>
-<script src="/assets/js/todolist.js"></script>
+  <script src="/assets/vendors/js/vendor.bundle.base.js"></script>
+  <script src="/assets/js/off-canvas.js"></script>
+  <script src="/assets/js/hoverable-collapse.js"></script>
+  <script src="/assets/js/template.js"></script>
+  <script src="/assets/js/settings.js"></script>
+  <script src="/assets/js/todolist.js"></script>
 
-<script src="/assets/vendors/progressbar.js/progressbar.min.js"></script>
-<script src="/assets/vendors/chart.js/Chart.min.js"></script>
+  <!-- <script src="/public/assets/js/jquery.min.js"></script>
+  <script src="/public/assets/js/popper.min.js"></script>
+  <script src="/public/assets/js/bootstrap.min.js"></script> -->
 
-<script src="/assets/js/dashboard.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.4.0/js/responsive.bootstrap5.min.js"></script>
+  <script src="/assets/vendors/progressbar.js/progressbar.min.js"></script>
+  <script src="/assets/vendors/chart.js/Chart.min.js"></script>
+
+  <script src="/assets/js/dashboard.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.4.0/js/responsive.bootstrap5.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 
-<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  
 </body>
 
 </html>

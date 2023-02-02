@@ -20,7 +20,7 @@ Create Cliente
                     <form action="{{ url('/cliente') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
-                        @include('cliente.form');
+                        @include('cliente.form')
 
 
                     </form>

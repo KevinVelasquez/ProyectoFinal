@@ -25,6 +25,6 @@ class Regimen extends Model
 
     public function proveedores()
     {
-       return $this->hasMany(\App\Models\Proveedore::class, 'id');
+       return $this->hasMany(\App\Models\Proveedor::class, 'id');
     }
 }

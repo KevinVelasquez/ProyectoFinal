@@ -12,6 +12,10 @@ Create Proveedor
             @includeif('partials.errors')
 
             <div class="card card-default">
+                @if(Session::has('mensaje'))
+                {{Session::get('mensaje') }}
+
+                @endif
                 <div class="card-header">
                     <span class="card-title">Registrar Proveedor</span>
                 </div>
@@ -20,7 +24,7 @@ Create Proveedor
                     <form action="{{ url('/proveedor') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
-                        @include('proveedor.form');
+                        @include('proveedor.form')
 
 
                     </form>

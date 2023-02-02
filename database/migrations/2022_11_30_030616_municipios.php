@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->bigInteger('id_departamentos')->unsigned();
 
-            $table->foreign('id_departamentos')->references('id')->on('departamentos')->onDelete('cascade');
+            $table->foreign('id_departamentos')->references('id')->on('departamentos');
         });
     }
 
