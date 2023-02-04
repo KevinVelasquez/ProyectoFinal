@@ -44,8 +44,7 @@
                                                                 aria-labelledby="modalimagen<?php echo $figura->id; ?>"
                                                                 aria-hidden="true" class="modal fade"
                                                                 id="modalimagen<?php echo $figura->id; ?>">
-                                                                <div class="modal-dialog modal-lg modal-dialog-centered"
-                                                                    style="max-width: 445px;">
+                                                                <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width: 445px;">
                                                                     <div class="modal-content">
                                                                         <img
                                                                             src="{{ asset('/storage/images/figuras/' . $figura->imagen) }}">
@@ -89,8 +88,8 @@
                         </button>
                     </div>
                     <div class="modal-body" style="text-align: center;">
-                        <form method="POST" action="{{ route('figuras.eliminarfigura') }}" class="form-sample"
-                            role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('figuras.eliminarfigura') }}" class="form-sample" role="form"
+                            enctype="multipart/form-data">
                             @method('DELETE')
                             @csrf
                             <div>¿Está seguro que desea eliminar la figura?</div>

@@ -274,7 +274,7 @@
                                                     name="direccionclientedetalle">
                                                 </div>
                                                 <div class="my-1">
-                                                    Antioquia, Colombia
+                                                    
                                                 </div>
                                                 <div class="my-1"><i
                                                         class="fa fa-phone fa-flip-horizontal text-secondary"></i> <b
@@ -540,6 +540,7 @@
         function verDatos(id) {
             datosDetalle(id)
             let pedidos = {!! $detallepedido !!}
+            console.log(pedidos)
             let detallePedidos = pedidos.filter(item => item.id == id)
             console.log(detallePedidos)
             $("#tablaDetallePedidoSeleccionado tbody").children().remove();

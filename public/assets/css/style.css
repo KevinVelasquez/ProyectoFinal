@@ -27100,3 +27100,27 @@ left:0;
 background-color: rgba(0, 0, 0, 0.70);
 z-index:0
 }
+
+.dispo1 {
+position: absolute;
+top: 10px;
+right: 10px;
+width: 10px;
+height: 10px;
+border-radius: 5px;
+background-color: #17c964;
+}
+
+.dispo2 {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: red;
+    }
+
+    .modal-lg, .modal-xl {
+    max-width: 445px;
+}

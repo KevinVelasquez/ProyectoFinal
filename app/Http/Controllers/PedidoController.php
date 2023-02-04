@@ -85,6 +85,8 @@ class PedidoController extends Controller
             ->where("pago__clientes.estado", 1)
             ->orderBy("pago__clientes.fecha", "DESC")
             ->get();
+        
+
 
         $editarpedido = Pedido::select(
             "clientes.cedula",
@@ -212,9 +214,6 @@ class PedidoController extends Controller
             ->join("municipios", "pedidos.id_municipio", "=", "municipios.id")
             ->get();
 
-            // $detallepedido = DetallePedido::select('detalle_pedidos.cantidad AS cantidadproductos', 'detalle_pedidos.precio AS precioUnitario', 'productos.nombre AS nombreproducto', 'detalle_pedidos.id_pedido AS id')
-            // ->join("productos", "detalle_pedidos.id_producto", "=", "productos.id")
-            // ->get();
 
         $detalleabono = Pago_Clientes::select('pago__clientes.fecha AS fechapago', 'pago__clientes.id_medio_pago AS idmedio','pago__clientes.id_pedido AS idpedidoabono','pago__clientes.abono',
         "pedidos.totalpedido","pedidos.id","pedidos.Cancelado",

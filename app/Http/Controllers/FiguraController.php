@@ -20,10 +20,12 @@ class FiguraController extends Controller
      */
     public function index()
     {
-        $figuras = Figura::paginate();
+        $figuras = Figura::paginate(12);
 
-        return view('figura.index', compact('figuras'))
-            ->with('i', (request()->input('page', 1) - 1) * $figuras->perPage());
+        $filtro = figura::all();
+
+        return view('figura.index', compact('figuras', 'filtro'))
+            ->with('i', (request()->input('page', 1) - 1) * $figuras->perPage(12));
     }
 
     /**
@@ -35,7 +37,7 @@ class FiguraController extends Controller
     {
         $figura = new Figura();
         $cliente = Cliente::all();
-        return view('figura.create', compact('figura','cliente'));
+        return view('figura.create', compact('figura', 'cliente'));
     }
 
     /**
@@ -50,13 +52,12 @@ class FiguraController extends Controller
 
         $input = $request->all();
 
-        if($request->hasFile('imagen'))
-        {
+        if ($request->hasFile('imagen')) {
             $destination_path = 'public/images/figuras';
             $imagen = $request->file('imagen');
             $extensionimagen = $imagen->getClientOriginalExtension();
             $imagen_name = Str::uuid() . '.' . $extensionimagen;
-            $request->file('imagen')->storeAs($destination_path,$imagen_name);
+            $request->file('imagen')->storeAs($destination_path, $imagen_name);
 
             $input['imagen'] = $imagen_name;
         }
@@ -82,13 +83,14 @@ class FiguraController extends Controller
     public function edit($id)
     {
         $figura = Figura::find($id);
-        $figuracliente = Figura::select('figuras.id_cliente','clientes.id','clientes.nombre')
-        ->join('clientes','figuras.id_cliente','=','clientes.id')
-        ->get();
+        $figuracliente = Figura::select('figuras.id_cliente', 'clientes.id', 'clientes.nombre', 'figuras.id')
+            ->join('clientes', 'figuras.id_cliente', '=', 'clientes.id')
+            ->where('figuras.id', '=', $id)
+            ->get();
         // print($figuracliente );
         // exit;
         $cliente = Cliente::all();
-        return view('figura.edit', compact('figura','cliente','figuracliente'));
+        return view('figura.edit', compact('figura', 'cliente', 'figuracliente'));
     }
 
     /**
@@ -100,26 +102,31 @@ class FiguraController extends Controller
      */
     public function update(Request $request, Figura $figura)
     {
-        
-        $input=$request->all();
+
+        $input = $request->all();
         $figura->update([
             'etiqueta' => 'etiqueta',
-            'id_cliente'=>$input['id_cliente']
+            'id_cliente' => $input['id_cliente']
         ]);
-        
 
-        if($request->hasFile('imagen'))
-        {
+
+        if ($request->hasFile('imagen')) {
             $destination_path = 'public/images/figuras';
             $imagen = $request->file('imagen');
-            // $imagen_name = $imagen->getClientOriginalName();
             $extensionimagen = $imagen->getClientOriginalExtension();
             $imagen_name = Str::uuid() . '.' . $extensionimagen;
-            $request->file('imagen')->storeAs($destination_path,$imagen_name);
+            $request->file('imagen')->storeAs($destination_path, $imagen_name);
 
             $input['imagen'] = $imagen_name;
         }
         $figura->update($input);
+
+        if ($input['id_cliente'] == 1) {
+            Figura::where('id_cliente', '=', 1)->update(['estado' => 1]);
+        } else if ($input['id_cliente'] !== 1) {
+            Figura::where('id_cliente', '!=', 1)->update(['estado' => 2]);
+        }
+
 
         return redirect()->route('figuras.index');
     }
@@ -129,10 +136,24 @@ class FiguraController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy($id)
+    public function eliminarfigura(Request $request)
     {
-        $figura = Figura::find($id)->delete();
+        $input = $request->all();
+        Figura::find($input["ideliminar"])->delete();
 
         return redirect()->route('figuras.index');
+    }
+
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('search');
+
+        $figuras = Figura::where('etiqueta', 'like', '%' . $searchTerm . '%')
+            ->paginate(12);
+        
+        $filtro = figura::all();
+
+        return view('figura.search', compact('figuras','filtro'));
+
     }
 }
