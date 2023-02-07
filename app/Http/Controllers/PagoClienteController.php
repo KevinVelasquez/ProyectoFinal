@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Pago_Clientes;
 use App\Models\Pedido;
 use App\Models\Cliente;
 use App\Models\DetallePedido;
 use Illuminate\Http\Request;
+use App\Models\Metodo_Entrega;
+use App\Models\Metodo_Pago;
 use DB;
 
 class PagoClienteController extends Controller
@@ -21,10 +24,14 @@ class PagoClienteController extends Controller
         ]);
 
         $totalabono = $this->verificarAbono($input["id"]);
-        
+
+
+
         if ($totalabono <= 0) {
+
             $this->abonoCancelado($input["id"]);
         }
+
 
         $pedidos = Pedido::paginate();
 
@@ -66,11 +73,18 @@ class PagoClienteController extends Controller
             ->get();
 
 
-        $detalleabono = Pago_Clientes::select('pago__clientes.fecha AS fechapago', 'pago__clientes.id_medio_pago AS idmedio','pago__clientes.id_pedido AS idpedidoabono','pago__clientes.abono',
-        "pedidos.totalpedido","pedidos.id",
-        "medio__pagos.id as idmediopago","medio__pagos.nombre")
+        $detalleabono = Pago_Clientes::select(
+            'pago__clientes.fecha AS fechapago',
+            'pago__clientes.id_medio_pago AS idmedio',
+            'pago__clientes.id_pedido AS idpedidoabono',
+            'pago__clientes.abono',
+            "pedidos.totalpedido",
+            "pedidos.id",
+            "medio__pagos.id as idmediopago",
+            "medio__pagos.nombre"
+        )
             ->join("pedidos", "pago__clientes.id_pedido", "=", "pedidos.id")
-            ->join("medio__pagos","pago__clientes.id_medio_pago", "=", "medio__pagos.id" )
+            ->join("medio__pagos", "pago__clientes.id_medio_pago", "=", "medio__pagos.id")
             ->where("pago__clientes.estado", 1)
             ->get();
 
@@ -96,8 +110,12 @@ class PagoClienteController extends Controller
             ->join("metodo__entregas", "pedidos.id_metodo_entrega", "=", "metodo__entregas.id")
             ->get();
 
-        return view('pedido.index', compact('pedidos', 'pedido', 'detallepedido', 'pedidocliente', 'editarpedido', 'detalleabono'));
-        
+        $metodo_entrega = Metodo_Entrega::all();
+
+        $metodo_pago = Metodo_Pago::all();
+
+        return view('pedido.index', compact('pedidos', 'pedido', 'detallepedido', 'pedidocliente', 'editarpedido', 'detalleabono', 'metodo_entrega', 'metodo_pago'));
+
     }
 
     public function anularAbono(Request $request)
@@ -107,26 +125,34 @@ class PagoClienteController extends Controller
             ->update([
                 'estado' => 2
             ]);
-        
-            
+
+        Pedido::where('id', $input["idpedidoabono"])
+            ->update([
+                'cancelado' => 0
+            ]);
+
         return redirect()->route('pedidos.index')
             ->with('success', 'Status pedido successfully');
     }
 
-    public function verificarAbono($id){
+    public function verificarAbono($id)
+    {
 
         $totalabonopedido = Pago_Clientes::select('pedidos.totalpedido', Pago_Clientes::raw('SUM(pago__clientes.abono) as totalabonado'))
-            ->join("pedidos", "pedidos.id", "=", "pago__clientes.id_pedido")->where([["pago__clientes.estado",1],["pedidos.id",$id]])->groupBy("pago__clientes.id_pedido", "pedidos.totalpedido")
+            ->join("pedidos", "pedidos.id", "=", "pago__clientes.id_pedido")->where([["pago__clientes.estado", 1], ["pedidos.id", $id]])->groupBy("pago__clientes.id_pedido", "pedidos.totalpedido")
             ->get();
 
         return $totalabonopedido[0]->totalpedido - $totalabonopedido[0]->totalabonado;
     }
 
-    public function abonoCancelado($id){
+    public function abonoCancelado($id)
+    {
 
         Pedido::where('id', $id)
             ->update([
                 'cancelado' => 1
             ]);
     }
+
+
 }

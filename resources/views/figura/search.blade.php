@@ -21,10 +21,10 @@
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover">
-                                    <form action="{{ route('figuras.search') }}" method="GET">
+                                    <form action="{{ route('figuras.search') }}" method="GET" style="width: 20%;">
                                         <div class="form-group" id="formsearch">
                                             <input type="text" name="search" class="form-control" id="search"
-                                                placeholder="Buscar" value="{{ request()->input('search') }}">
+                                                placeholder="Buscar" value="{{ request()->input('search') }}" style="width: 20%;">
                                         </div>
                                     </form>
                                     <br>

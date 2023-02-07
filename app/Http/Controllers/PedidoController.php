@@ -15,6 +15,7 @@ use App\Models\Departamento;
 use App\Models\Municipio;
 use App\Models\DetallePedido;
 use App\Models\Pago_Clientes;
+use App\Models\Figura;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -131,8 +132,9 @@ class PedidoController extends Controller
         $metodo_pago = Metodo_Pago::all();
         $producto = producto::all();
         $pedido = new Pedido();
+        $figuras = Figura::all();
 
-        return view('pedido.create', compact('pedido', 'cliente', 'producto', 'paises', 'departamentos', 'municipios', 'metodo_entrega', 'medio_pago', 'metodo_pago'));
+        return view('pedido.create', compact('pedido', 'cliente', 'producto', 'paises', 'departamentos', 'municipios', 'metodo_entrega', 'medio_pago', 'metodo_pago','figuras'));
     }
     /**
      * Store a newly created resource in storage.

@@ -150,10 +150,10 @@ class FiguraController extends Controller
 
         $figuras = Figura::where('etiqueta', 'like', '%' . $searchTerm . '%')
             ->paginate(12);
-        
+
         $filtro = figura::all();
 
-        return view('figura.search', compact('figuras','filtro'));
+        return view('figura.search', compact('figuras', 'filtro'));
 
     }
 }

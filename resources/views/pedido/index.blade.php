@@ -30,9 +30,11 @@
                             <td>{{ $pedidos->id }}</td>
                             <td>{{ $pedidos->cedula }}</td>
                             <td>{{ $pedidos->nombre }}</td>
-                            
-                            <td>{{ucwords(\Carbon\Carbon::parse($pedidos->fecha_registro)->locale('es_MX','es_MX.utf8')->isoFormat('dddd[,] D [de] MMMM [del] Y')) }}</td>
-                            <td>{{ucwords(\Carbon\Carbon::parse($pedidos->fecha_entrega)->locale('es_MX','es_MX.utf8')->isoFormat('dddd[,] D [de] MMMM [del] Y')) }}</td>
+
+                            <td>{{ ucwords(\Carbon\Carbon::parse($pedidos->fecha_registro)->locale('es_MX', 'es_MX.utf8')->isoFormat('dddd[,] D [de] MMMM [del] Y')) }}
+                            </td>
+                            <td>{{ ucwords(\Carbon\Carbon::parse($pedidos->fecha_entrega)->locale('es_MX', 'es_MX.utf8')->isoFormat('dddd[,] D [de] MMMM [del] Y')) }}
+                            </td>
                             <td><?php if ($pedidos->proceso == 0) {
                                 echo 'Pendiente';
                             } elseif ($pedidos->proceso == 1) {
@@ -42,9 +44,9 @@
                             } ?></td>
                             <td><?php if ($pedidos->cancelado == 0) {
                                 echo 'No';
-                            } else  {
+                            } else {
                                 echo 'Si';
-                            }  ?></td>
+                            } ?></td>
                             <td>
                                 <button onclick="verDatos('{{ $pedidos->id }}')" class="mdi mdi-format-align-justify"+
                                     data-toggle="modal" data-target="#verdetalle"></button>
@@ -138,11 +140,11 @@
                                                     <select class="form-control" name="id_metodo_pago"
                                                         id="editarmetodopago">
                                                         @forelse($metodo_pago  as $metodo_pagos)
-                                                        <option value="{{$metodo_pagos->id}}">
-                                                       {{ $metodo_pagos->nombre}}
-                                                       </option>
+                                                            <option value="{{ $metodo_pagos->id }}">
+                                                                {{ $metodo_pagos->nombre }}
+                                                            </option>
                                                         @empty <option>No existen</option>
-                                                       @endforelse
+                                                        @endforelse
                                                     </select>
                                                 </div>
                                             </div>
@@ -179,11 +181,11 @@
                                                     <select class="form-control" name="id_metodo_entrega"
                                                         id="editarmetodoentrega">
                                                         @forelse($metodo_entrega  as $metodo_entregas)
-                                                        <option value="{{$metodo_entregas->id}}">
-                                                       {{ $metodo_entregas->nombre}}
-                                                       </option>
+                                                            <option value="{{ $metodo_entregas->id }}">
+                                                                {{ $metodo_entregas->nombre }}
+                                                            </option>
                                                         @empty <option>No existen</option>
-                                                       @endforelse
+                                                        @endforelse
                                                     </select>
                                                 </div>
                                             </div>
@@ -274,7 +276,7 @@
                                                     name="direccionclientedetalle">
                                                 </div>
                                                 <div class="my-1">
-                                                    
+
                                                 </div>
                                                 <div class="my-1"><i
                                                         class="fa fa-phone fa-flip-horizontal text-secondary"></i> <b
@@ -391,10 +393,8 @@
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="totalpedidoresta">
-                    <form role="form" method="POST"
-                     {{-- id="formAbonos"  --}}
-                     action="{{ route('agregarAbono') }}"
-                     enctype="multipart/form-data" class="form-sample">
+                    <form role="form" method="POST" {{-- id="formAbonos"  --}} action="{{ route('agregarAbono') }}"
+                        onsubmit="return validarMonto()" enctype="multipart/form-data" class="form-sample">
                         @csrf
                         <input type="hidden" name="id" id="idpedidoabonar" />
                         <div class="row">
@@ -410,7 +410,8 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">Abono</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="cantidadabono" class="form-control">
+                                        <input type="text" id="cantidadabono" name="cantidadabono"
+                                            class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -427,9 +428,7 @@
                         </div>
                 </div>
                 <div class="botonestabla" style="text-align: center;">
-                    <button type="submit" class="btn btn-primary" 
-                    {{-- id="agregarAbono" --}}
-                    >Agregar</button>
+                    <button type="submit" class="btn btn-primary">Agregar</button>
                     <button type="button" class="btn btn-primary">Cancelar</button>
                 </div>
                 </form>
@@ -468,52 +467,51 @@
 
     <!-- modal anular abono -->
     <div class="modal fade" id="anularabono" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitleanularabono"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="text-align: center;">
-                <input type="hidden" name="estadoanularabono" id="estadoanularabono" />
-                <form method="POST" action="{{ route('anularAbono') }}" class="form-sample"
-                    role="form" enctype="multipart/form-data">
-                    @method('PUT')
-                    @csrf
-                    <div>¿Está seguro que desea anular el abono?</div>
-                    <input type="hidden" name="idanularabono" id="idanularabono" />
-                    <input type="hidden" name="anulardato" value="2" />
-                    <button type="submit" class="btn btn-primary">Si</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
-                </form>
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitleanularabono"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="text-align: center;">
+                    <input type="hidden" name="estadoanularabono" id="estadoanularabono" />
+                    <form method="POST" action="{{ route('anularAbono') }}" class="form-sample" role="form"
+                        enctype="multipart/form-data">
+                        @method('PUT')
+                        @csrf
+                        <div>¿Está seguro que desea anular el abono?</div>
+                        <input type="hidden" name="idanularabono" id="idanularabono" />
+                        <input type="hidden" name="idpedidoabono" id="idpedidoabono" />
+                        <input type="hidden" name="anulardato" value="2" />
+                        <button type="submit" class="btn btn-primary">Si</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
     <!-- scripts -->
 
     <script>
         $(document).ready(function() {
             let pathname = window.location.pathname;
-            console.log(pathname);
             if (pathname == "/pedido") {
-                window.location.href="/pedidos"
-
+                window.location.href = "/pedidos"
             }
             $('#pedidos').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
                 }
             });
+
         });
 
         function datosDetalle(id) {
-            const fechaActual = new Date()
-            let datos = {!! $pedidocliente !!}
 
+            let datos = {!! $pedidocliente !!}
             let detalledatos = datos.find(item => item.id == id)
             $('#exampleModalLongTitledetalle').text(`Pedido #${detalledatos.id}`)
             $('#nombreclientedetalle').text(`${detalledatos.nombrecliente}`)
@@ -540,9 +538,7 @@
         function verDatos(id) {
             datosDetalle(id)
             let pedidos = {!! $detallepedido !!}
-            console.log(pedidos)
             let detallePedidos = pedidos.filter(item => item.id == id)
-            console.log(detallePedidos)
             $("#tablaDetallePedidoSeleccionado tbody").children().remove();
             detallePedidos.forEach(function(value, index) {
                 if (value.id == id) {
@@ -570,13 +566,11 @@
         function verDatosAbono(id) {
             let abonos = {!! $detalleabono !!}
             let detalleabonos = abonos.filter(item => item.id == id)
-            console.log(detalleabonos)
             let resta = 0
             $("#tablaabonos tbody").children().remove();
             detalleabonos.forEach(function(value, index) {
                 resta = value.abono + resta
                 if (value.id == id) {
-                    
                     let fila = `
                    
               <tr>
@@ -600,16 +594,17 @@
                 </tr>
                 
               `
-              $('#exampleModalLongTitleAbono').text(`Pedido #${value.id}`)
-              $('#total').text(`TOTAL ${value.totalpedido}`)
-              $('#totalpedidoresta').val(`${value.totalpedido}`)
-              let preciototal =  `${value.totalpedido}`
-              $('#resta').text(`RESTA ${preciototal - resta}`)
-             
+                    $('#exampleModalLongTitleAbono').text(`Pedido #${value.id}`)
+                    $('#total').text(`TOTAL ${value.totalpedido}`)
+                    $('#totalpedidoresta').val(`${value.totalpedido}`)
+                    let preciototal = `${value.totalpedido}`
+                    let restatotal = preciototal - resta
+                    $('#resta').text(`RESTA ${restatotal}`)
+                    $('#resta').val(`${restatotal}`)
                     $("#tablaabonos tbody").append(fila)
                 }
             })
-            
+
             var fila = document.getElementById("tablaabonos").rows[1];
             var valor = fila.cells[4].innerHTML;
             document.getElementById("idpedidoabonar").value = valor;
@@ -642,7 +637,6 @@
         }
 
         $("#botonDescarga").on("click", (event) => {
-            console.log()
             window.open('generate-pdf?' + 'id=' + $("#iddescarga").val());
         })
 
@@ -651,12 +645,36 @@
             let datos = consulta.find(item => item.idabono == id)
             $('#exampleModalLongTitleanularabono').text(`Anular Abono `);
             $('#idanularabono').val(`${datos.idabono}`);
+            $('#idpedidoabono').val(`${datos.idpedidoabono}`);
             $('#estadoanularabaono').val(`${datos.estado}`);
         }
 
-        function descargarAbonoPedido(idabono,idpedido,fecha){
-            window.open('abono-pdf?' + 'idabono=' + idabono +'&idpedido='+ idpedido+'&fecha='+ fecha);
+
+        function validarMonto() {
+            var input = document.getElementById("cantidadabono").value;
+
+            if (!isNumeric(input)) {
+                alert("El abono debe ser un valor numérico");
+                return false;
+            } else {
+                var cantidadabono = document.getElementById("cantidadabono").value;
+                var resta = document.getElementById("resta").value
+                if (cantidadabono > resta) {
+                    alert("El abono no puede superar la cantidad de " + resta);
+                    return false;
+                }
+                return true;
+            }
+
+            function isNumeric(n) {
+                return !isNaN(parseFloat(n)) && isFinite(n);
+            }
+
+
         }
 
+        function descargarAbonoPedido(idabono, idpedido, fecha) {
+            window.open('abono-pdf?' + 'idabono=' + idabono + '&idpedido=' + idpedido + '&fecha=' + fecha);
+        }
     </script>
 @endsection
