@@ -22,10 +22,15 @@ class ClienteController extends Controller
     {
         //
         
-        $datos ['clientes']= Cliente::paginate(5);
-        return view('cliente.index',$datos);
+        // $datos ['clientes']= Cliente::paginate(5);
+        // return view('cliente.index',$datos);
    
+        $clientes = Cliente::paginate();
+
+        return view('cliente.index', compact('clientes'))
+            ->with('i', (request()->input('page', 1) - 1) * $clientes->perPage());
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -60,7 +65,7 @@ class ClienteController extends Controller
         Cliente::insert($datosCliente);
 
         return redirect('cliente')
-            ->with('mensaje', 'Proveedor creado con éxito.');
+            ->with('mensaje', 'cliente creado con éxito.');
     }
 
     /**
@@ -117,20 +122,26 @@ class ClienteController extends Controller
      * @param  \App\Models\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Cliente $cliente)
     {
         //
-        $datosCliente = request()->except(['_token','pais','departamento','_method']);
-        Cliente::where('id', '=', $id)->update($datosCliente);
+        // $datosCliente = request()->except(['_token','pais','departamento','_method']);
+        // Cliente::where('id', '=', $id)->update($datosCliente);
 
-        $paises = Pais::all();
-        $departamentos = Departamento::all();
-        $municipios = Municipio::all();
-        $tipo_comercio = Tipo_comercio::all();
-        $tipo_persona = Tipo_persona::all();
-        $regimen = Regimen::all();
-        $cliente =Cliente::findOrFail($id);
-        return view('cliente.edit', compact ('cliente','paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
+        // $paises = Pais::all();
+        // $departamentos = Departamento::all();
+        // $municipios = Municipio::all();
+        // $tipo_comercio = Tipo_comercio::all();
+        // $tipo_persona = Tipo_persona::all();
+        // $regimen = Regimen::all();
+        // $cliente =Cliente::findOrFail($id);
+        // return view('cliente.edit', compact ('cliente','paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
+
+        $cliente->update($request->all());
+
+        return redirect()->route('cliente.index')
+            ->with('success', 'Cliente updated successfully');
+            
         
     }
 

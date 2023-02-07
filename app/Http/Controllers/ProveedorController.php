@@ -11,6 +11,9 @@ use App\Models\Proveedor;
 use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Illuminate\Http\Request;
 use PDF;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+
 class ProveedorController extends Controller
 {
     /**
@@ -22,8 +25,14 @@ class ProveedorController extends Controller
     {
         //
         
-        $datos ['proveedores']= Proveedor::paginate(5);
-        return view('proveedor.index',$datos);
+        // $datos ['proveedores']= Proveedor::paginate(5);
+        // return view('proveedor.index',$datos);
+
+        $proveedores = Proveedor::paginate();
+
+        return view('proveedor.index', compact('proveedores'))
+            ->with('i', (request()->input('page', 1) - 1) * $proveedores->perPage());
+    
     }
 
 
@@ -137,20 +146,25 @@ class ProveedorController extends Controller
      * @param  \App\Models\Proveedor  $proveedor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Proveedor $proveedor)
     {
         //
-        $datosProveedor = request()->except(['_token','pais','departamento','_method']);
-        Proveedor::where('id', '=', $id)->update($datosProveedor);
+        // $datosProveedor = request()->except(['_token','pais','departamento','_method']);
+        // Proveedor::where('id', '=', $id)->update($datosProveedor);
 
-        $paises = Pais::all();
-        $departamentos = Departamento::all();
-        $municipios = Municipio::all();
-        $tipo_comercio = Tipo_comercio::all();
-        $tipo_persona = Tipo_persona::all();
-        $regimen = Regimen::all();
-        $proveedor =Proveedor::findOrFail($id);
-        return view('proveedor.edit', compact ('proveedor','paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
+        // $paises = Pais::all();
+        // $departamentos = Departamento::all();
+        // $municipios = Municipio::all();
+        // $tipo_comercio = Tipo_comercio::all();
+        // $tipo_persona = Tipo_persona::all();
+        // $regimen = Regimen::all();
+        // $proveedor =Proveedor::findOrFail($id);
+        // return view('proveedor.edit', compact ('proveedor','paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
+
+        $proveedor->update($request->all());
+
+        return redirect()->route('proveedor.index')
+            ->with('success', 'Proveedor updated successfully');
     }
 
     /**
@@ -172,15 +186,36 @@ class ProveedorController extends Controller
 
     public function updateStatusProveedor(Request $request){ 
 
-        $updateStatus = Proveedor::findOrFail($request->id)->update(['estado' => $request->estado]); 
+       $updateStatus = Proveedor::findOrFail($request->id)->update(['estado' => $request->estado]); 
     
         if($request->estado == 1)  {
-            $newStatus ='<br> <button type="button" class="btn btn-sm btn-success">Activa</button>';
+             $newStatus ='<br> <button type="button" class="btn btn-sm btn-success">Activa</button>';
         }else{
-            $newStatus = '<br> <button type="button" class="btn btn-sm btn-danger">Inactiva</button>';
-        }
+             $newStatus = '<br> <button type="button" class="btn btn-sm btn-danger">Inactiva</button>';
+         }
     
         return response()->json(['var'=>''.$newStatus.'']);
-        }
+         }
+
+    // public function update_status(){
+    //     abort_if(Gate::denies('Editar_estado_proveedor'), 401);
+    //     $id = $_POST['id'];
+    //     $activo = isset($_POST['Activo']);
+    //     $campos = request()->validate([
+    //         'estado' =>' '
+    //     ]);
+    //     if($activo=="Activo"){
+    //         DB::update("UPDATE proveedor SET estado ='Inactivo' WHERE id='".$id."'");
+    //         return redirect()->route('proveedor.index');
+
+
+
+    //     }else{
+    //         DB::update("UPDATE proveedor SET estado ='Activo' WHERE id ='".$id."'");
+    //         return redirect()->route('proveedor.index');
+
+    //     }
+
+    // }
 
 }

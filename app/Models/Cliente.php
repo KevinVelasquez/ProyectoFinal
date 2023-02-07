@@ -5,11 +5,38 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Cliente
+ *
+ * @property $id
+ * @property $cedula
+ * @property $nombre
+ * @property $telefono
+ * @property $direccion
+ * @property $email
+ * @property $estado
+ * @property $id_municipio
+ * @property $tipo_persona
+ * @property $regimen
+ * @property $tipo_comercio
+ * @property $created_at
+ * @property $updated_at
+ *
+ * @property Municipio $municipio
+ * @property Regimen $regimen
+ * @property Tipo_Comercio $tipoComercio
+ * @property Tipo_Persona $tipoPersona
+ * @package App
+ * @mixin \Illuminate\Database\Eloquent\Builder
+ */
+
 class Cliente extends Model
 {
     use HasFactory;
 
-    
+    protected $perPage = 20;
+
+    protected $fillable = ['cedula','nombre','telefono','direccion','email','estado','id_municipio','tipo_persona','regimen','tipo_comercio'];
 
 
     /**
