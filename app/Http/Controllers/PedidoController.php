@@ -247,7 +247,9 @@ class PedidoController extends Controller
             ->join("metodo__entregas", "pedidos.id_metodo_entrega", "=", "metodo__entregas.id")
             ->get();
 
-        return view('pedido.index', compact('pedidos', 'pedido', 'detallepedido', 'pedidocliente', 'editarpedido','detalleabono'))
+            $metodo_entrega = Metodo_Entrega::all();
+
+        return view('pedido.index', compact('pedidos', 'pedido', 'detallepedido', 'pedidocliente', 'editarpedido','detalleabono','metodo_entrega'))
             ->with('i', (request()->input('page', 1) - 1) * $pedidos->perPage());
 
 
@@ -255,11 +257,10 @@ class PedidoController extends Controller
     public function updatePedido(Request $request)
     {
         $input = $request->all();
-
+        
         Pedido::where('id', $input["id"])
             ->update([
                 'id_metodo_entrega' => $input["id_metodo_entrega"],
-                'id_metodo_pago' => $input["id_metodo_pago"],
                 'direccion' => $input["direccion"],
                 'fecha_registro' => $input["fecha_registro"],
                 'fecha_entrega' => $input["fecha_entrega"],
@@ -279,5 +280,6 @@ class PedidoController extends Controller
         return redirect()->route('pedidos.index')
             ->with('success', 'Status pedido successfully');
     }
+
 
 }

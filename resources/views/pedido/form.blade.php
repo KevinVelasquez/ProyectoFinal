@@ -206,9 +206,12 @@
     <div class="col-md-6">
         <div class="form-group row">
             <label class="control-label">Diseño</label>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <button id="figura" type="button" class="form-control btn btn-success" data-toggle="modal"
-                    data-target="#verdiseños" disabled>Seleccione diseño</button>
+                    data-target="#verdiseños" disabled>Seleccione diseño</button>     
+            </div>
+            <div class="col-sm-6">
+            <input id="imagen" class="form-control" style="border: 0;" readonly/>
             </div>
         </div>
     </div>
@@ -280,10 +283,12 @@
             <div class="modal-body" id="contenidomarcas">
                 <div class="page-content container">
                     <div class="container px-0">
+                        <form>
                         <div class="row mt-4" id="listadoimg">
-                            
-                            
-                        </div>
+
+                        </div>  
+                        <button id="acceptBtn" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Aceptar</button> 
+                        </form>   
                     </div>
                 </div>
             </div>
@@ -296,26 +301,31 @@
     $(document).ready(function() {
 
         $('#agregarprodu').click(function() {
-
+            let consulta = {!! $figuras !!}
             let producto_id = document.getElementById("producto").value;
             let producto = document.getElementById("producto");
             let selected = producto.options[producto.selectedIndex].text;
-            let imagen = document.getElementById("figura").value;
             let cantidad = document.getElementById("cantidad").value;
             let precio = document.getElementById("precio").value;
             let descripcion = document.getElementById("descripcion").value;
-            let figura = document.getElementById("figura").value;
-
+            let imagen = document.getElementById("imagen").value;
+            if(imagen == ""){
+                ruta = "";
+            }else {
+                let listadoimg = consulta.find(item => item.imagen == imagen)
+                ruta = `<img src="http://127.0.0.1:8000/storage/images/figuras/${listadoimg.imagen}"/>`
+            }
+            
 
             if (cantidad > 0 && precio > 0) {
                 $("#datosresumen").append(`
                                 
                                 <tr id="tr-${producto_id}">
-                                <td>${imagen}</td>
+                                <td>${ruta}</td>
                                 <input type="hidden" name="producto_id[]" value="${producto_id}"/>
                                 <input type="hidden" name="cantidades[]" value="${cantidad}"/>
                                 <input type="hidden" name="precios[]" value="${precio}"/>
-                                <input type="hidden" name="imagenes[]" value="${figura}"/>
+                                <input type="hidden" name="imagenes[]" value="${imagen}"/>
                                 <input type="hidden" name="descripciones[]" value="${descripcion}"/>
                                 <td>
                                 ${selected}
@@ -339,8 +349,9 @@
 
             document.getElementById("cantidad").value = "";
             document.getElementById("precio").value = "";
-            document.getElementById("figura").value = "";
+            document.getElementById("imagen").value = "";
             document.getElementById("descripcion").value = "";
+            
         })
 
 
@@ -381,7 +392,7 @@
             });
 
             listarFiguras(idseleccion);
-            
+
         }
 
     }
@@ -395,11 +406,25 @@
             if (listafiguras[index].id_cliente == id) {
                 let figuri = listafiguras[index].imagen;
                 let idimagen = listafiguras[index].id;
-                const imagen = `<div class="col-md-2 p-1">
-                                    <div class="card">
-                                        <img src="http://127.0.0.1:8000/storage/images/figuras/${figuri}" id="img-${idimagen}"/>
+                const imagen = `
+                <div class="col-md-2 p-1" style="width:14%">
+                    <div class="card">
+                        <div class="row">
+                            <div class='col text-center'>
+                                <input type="radio" name="imgbackground" id="${idimagen}" class="d-none imgbgchk" value="${figuri}">
+                                <label for="${idimagen}">
+                                <img src="http://127.0.0.1:8000/storage/images/figuras/${figuri}" id="${idimagen}" style="margin-top: 24%"/>
+                                    <div class="tick_container">
+                                        <div class="tick">
+                                        <i class="fa fa-check"> </i>
+                                        </div>
                                     </div>
-                                </div>`
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                `
                 $("#listadoimg").append(imagen)
             }
         });
@@ -455,4 +480,17 @@
             inputs[i].value = "";
         }
     }
+
+    var modal = document.getElementById("verdiseños");
+    acceptBtn.addEventListener("click", function() {
+        event.preventDefault();
+        var radios = document.getElementsByName("imgbackground");
+        for (var i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                imagen.value = radios[i].value;
+                break;
+            }
+        }
+
+    });
 </script>

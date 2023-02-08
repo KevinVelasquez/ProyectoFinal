@@ -100,7 +100,7 @@
                                                 <label class="col-sm-3 col-form-label">Fecha Registro</label>
                                                 <div class="col-sm-9">
                                                     <input type="date" name="fecha_registro" id="editarfecharegistro"
-                                                        class="form-control">
+                                                        class="form-control" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -135,13 +135,13 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Metodo Pago</label>
+                                                <label class="col-sm-3 col-form-label">Metodo Entrega</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-control" name="id_metodo_pago"
-                                                        id="editarmetodopago">
-                                                        @forelse($metodo_pago  as $metodo_pagos)
-                                                            <option value="{{ $metodo_pagos->id }}">
-                                                                {{ $metodo_pagos->nombre }}
+                                                    <select class="form-control" name="id_metodo_entrega"
+                                                        id="editarmetodoentrega">
+                                                        @forelse($metodo_entrega  as $metodo_entregas)
+                                                            <option value="{{ $metodo_entregas->id }}">
+                                                                {{ $metodo_entregas->nombre }}
                                                             </option>
                                                         @empty <option>No existen</option>
                                                         @endforelse
@@ -168,24 +168,6 @@
                                                         <option value="0">Pendiente</option>
                                                         <option value="1">Despachado</option>
                                                         <option value="2">Entregado</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Metodo Entrega</label>
-                                                <div class="col-sm-9">
-                                                    <select class="form-control" name="id_metodo_entrega"
-                                                        id="editarmetodoentrega">
-                                                        @forelse($metodo_entrega  as $metodo_entregas)
-                                                            <option value="{{ $metodo_entregas->id }}">
-                                                                {{ $metodo_entregas->nombre }}
-                                                            </option>
-                                                        @empty <option>No existen</option>
-                                                        @endforelse
                                                     </select>
                                                 </div>
                                             </div>
@@ -434,6 +416,7 @@
                 </form>
                 <br>
                 <br>
+                <input placeholder="Buscar" style="width: 20%;margin-left: 63%;" id="buscarAbono">
                 <div class="table-responsive pt-3" style="padding:3%">
                     <table class="table table-bordered" id="tablaabonos" style="width:70%" align="center">
                         <thead>
@@ -649,17 +632,42 @@
             $('#estadoanularabaono').val(`${datos.estado}`);
         }
 
+        document.getElementById("buscarAbono").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                buscarTabla();
+            }
+        });
+
+        function buscarTabla() {
+            var busqueda = document.getElementById("buscarAbono").value;
+            var filas = document.getElementById("tablaabonos").getElementsByTagName("tr");
+            for (var i = 0; i < filas.length; i++) {
+                var celdas = filas[i].getElementsByTagName("td");
+                var coincide = false;
+                for (var j = 0; j < celdas.length; j++) {
+                    if (celdas[j].innerHTML.toUpperCase().indexOf(busqueda.toUpperCase()) > -1) {
+                        coincide = true;
+                        break;
+                    }
+                }
+                if (coincide) {
+                    filas[i].style.display = "";
+                } else {
+                    filas[i].style.display = "none";
+                }
+            }
+        }
+
 
         function validarMonto() {
             var input = document.getElementById("cantidadabono").value;
-
+            var resta = document.getElementById("resta").value
             if (!isNumeric(input)) {
                 alert("El abono debe ser un valor numérico");
                 return false;
             } else {
-                var cantidadabono = document.getElementById("cantidadabono").value;
-                var resta = document.getElementById("resta").value
-                if (cantidadabono > resta) {
+                console.log(resta)
+                if (input > resta) {
                     alert("El abono no puede superar la cantidad de " + resta);
                     return false;
                 }
