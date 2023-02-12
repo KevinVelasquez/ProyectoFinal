@@ -30,7 +30,7 @@
                             value="{{ $figura->etiqueta }}"required />
                     </div>
                 </div>
-                {{ Form::label('Cliente') }}
+                <label class="control-label">Cliente</label>
                 <select class="form-control" name="id_cliente" id="id_cliente" required>
                     <option value="{{ $figuracliente[0]->id_cliente }}">{{ $figuracliente[0]->nombre }}</option>
                     @forelse($cliente  as $clientes)
