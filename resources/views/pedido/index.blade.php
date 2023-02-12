@@ -20,6 +20,7 @@
                         <th>Fecha Registro</th>
                         <th>Fecha Entrega</th>
                         <th>Estado</th>
+                        <th>Proceso</th>
                         <th>Cancelado</th>
                         <th>Acciones</th>
                     </tr>
@@ -35,6 +36,11 @@
                             </td>
                             <td>{{ ucwords(\Carbon\Carbon::parse($pedidos->fecha_entrega)->locale('es_MX', 'es_MX.utf8')->isoFormat('dddd[,] D [de] MMMM [del] Y')) }}
                             </td>
+                            <td><?php if ($pedidos->estado == 1) {
+                                echo 'Activo';
+                            } else {
+                                echo 'Anulado';
+                            } ?></td>
                             <td><?php if ($pedidos->proceso == 0) {
                                 echo 'Pendiente';
                             } elseif ($pedidos->proceso == 1) {
@@ -81,8 +87,8 @@
                         <div class="card">
                             <div class="card-body">
 
-                                <form method="POST" action="{{ route('pedidos.updatePedido') }}" class="form-sample"
-                                    role="form" enctype="multipart/form-data">
+                                <form method="POST" action="{{ route('pedidos.updatePedido') }}" role="form"
+                                    enctype="multipart/form-data" class="form-sample needs-validation" novalidate>
                                     @method('PUT')
                                     @csrf
                                     <input type="hidden" name="id" id="idpedidoeditar" />
@@ -119,7 +125,7 @@
                                                 <label class="col-sm-3 col-form-label">Fecha Entrega</label>
                                                 <div class="col-sm-9">
                                                     <input type="date" class="form-control" name="fecha_entrega"
-                                                        id="editarfechaentrega">
+                                                        id="editarfechaentrega" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -138,7 +144,7 @@
                                                 <label class="col-sm-3 col-form-label">Metodo Entrega</label>
                                                 <div class="col-sm-9">
                                                     <select class="form-control" name="id_metodo_entrega"
-                                                        id="editarmetodoentrega">
+                                                        id="editarmetodoentrega" required>
                                                         @forelse($metodo_entrega  as $metodo_entregas)
                                                             <option value="{{ $metodo_entregas->id }}">
                                                                 {{ $metodo_entregas->nombre }}
@@ -156,7 +162,7 @@
                                                 <label class="col-sm-3 col-form-label">Dirección</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" name="direccion"
-                                                        id="editardireccion">
+                                                        id="editardireccion" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -164,7 +170,8 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Estado</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-control" name="proceso" id="editarproceso">
+                                                    <select class="form-control" name="proceso" id="editarproceso"
+                                                        required>
                                                         <option value="0">Pendiente</option>
                                                         <option value="1">Despachado</option>
                                                         <option value="2">Entregado</option>
@@ -173,17 +180,15 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                                </form>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Actualizar</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        </form>
     </div>
 
     <!-- modal anular -->
@@ -375,8 +380,7 @@
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="totalpedidoresta">
-                    <form role="form" method="POST" {{-- id="formAbonos"  --}} action="{{ route('agregarAbono') }}"
-                        onsubmit="return validarMonto()" enctype="multipart/form-data" class="form-sample">
+                    <form role="form" method="POST"  action="{{ route('agregarAbono') }}" enctype="multipart/form-data" class="form-sample needs-validation" onsubmit="return validarMonto()" novalidate>
                         @csrf
                         <input type="hidden" name="id" id="idpedidoabonar" />
                         <div class="row">
@@ -384,7 +388,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">Fecha</label>
                                     <div class="col-sm-9">
-                                        <input type="date" name="fechaabono" class="form-control">
+                                        <input type="date" name="fechaabono" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
@@ -392,8 +396,8 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">Abono</label>
                                     <div class="col-sm-9">
-                                        <input type="text" id="cantidadabono" name="cantidadabono"
-                                            class="form-control">
+                                        <input type="number" id="cantidadabono" name="cantidadabono"
+                                            class="form-control" required>
                                     </div>
                                 </div>
                             </div>
@@ -401,7 +405,7 @@
                         <div class="row">
                             <label class="col-sm-3 ">Medio de Pago</label>
                             <div class="col-3">
-                                <select class="form-control" name="medioabono">
+                                <select class="form-control" name="medioabono" required>
                                     <option value="1">Efectivo</option>
                                     <option value="2">Transferencia</option>
                                 </select>
@@ -662,27 +666,33 @@
         function validarMonto() {
             var input = document.getElementById("cantidadabono").value;
             var resta = document.getElementById("resta").value
-            if (!isNumeric(input)) {
-                alert("El abono debe ser un valor numérico");
-                return false;
-            } else {
-                console.log(resta)
                 if (input > resta) {
                     alert("El abono no puede superar la cantidad de " + resta);
                     return false;
                 }
                 return true;
-            }
-
-            function isNumeric(n) {
-                return !isNaN(parseFloat(n)) && isFinite(n);
-            }
-
-
         }
 
         function descargarAbonoPedido(idabono, idpedido, fecha) {
             window.open('abono-pdf?' + 'idabono=' + idabono + '&idpedido=' + idpedido + '&fecha=' + fecha);
         }
+
+        (function() {
+            'use strict'
+
+            var forms = document.querySelectorAll('.needs-validation')
+
+            Array.prototype.slice.call(forms)
+                .forEach(function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
     </script>
 @endsection

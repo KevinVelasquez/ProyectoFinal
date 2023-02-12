@@ -10,7 +10,7 @@
         <h1>Crear Figura</h1>
         <hr />
         
-        <form method="POST" action="{{ route('figuras.store') }}"  role="form" enctype="multipart/form-data" class="form-sample">
+        <form method="POST" action="{{ route('figuras.store') }}"  role="form" enctype="multipart/form-data" class="form-sample needs-validation" novalidate>
         @csrf
 
         @include('figura.form')

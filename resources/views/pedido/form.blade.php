@@ -5,8 +5,8 @@
         <div class="form-group row">
             <label class="control-label">Nombre</label>
             <div class="col-sm-9">
-                <select class="form-control" name="id_cliente" id="id_cliente" onchange="info()">
-                    <option value="0">Selecciones</option>
+                <select class="form-control" name="id_cliente" id="id_cliente" onchange="info()" required>
+                    <option selected disabled value="">Seleccione</option>
                     @forelse($cliente  as $clientes)
                         <option value="{{ $clientes->id }}">
                             {{ $clientes->nombre }}
@@ -17,6 +17,7 @@
 
             </div>
         </div>
+
     </div>
 
     <div class="col-md-3">
@@ -24,7 +25,6 @@
             <label class="control-label">Cédula</label>
             <div class="col-sm-9">
                 <input type="number" name="cedula" id="cedula" class="form-control" readonly />
-
             </div>
         </div>
     </div>
@@ -49,7 +49,7 @@
             <label class="control-label">Pais</label>
             <div class="col-sm-9">
                 <select class="form-control" name="pais" id="pais" onchange="filtrarDepartamentos()">
-                    <option value="0">Seleccione</option>
+                    <option selected disabled value="">Seleccione</option>
                     @forelse($paises  as $pais)
                         <option value="{{ $pais->id }}">
                             {{ $pais->nombre }}
@@ -66,7 +66,7 @@
             <label class="control-label">Departamento</label>
             <div class="col-sm-7">
                 <select class="form-control" name="departamento" id="departamento" onchange="filtrarMunicipios()">
-                    <option value="0">Seleccione</option>
+                    <option selected disabled value="">Seleccione</option>
                 </select>
             </div>
         </div>
@@ -76,7 +76,7 @@
             <label class="control-label">Municipio</label>
             <div class="col-sm-8">
                 <select class="form-control" name="id_municipio" id="municipio">
-                    <option value="0">Seleccione</option>
+                    <option selected disabled value="">Seleccione</option>
                 </select>
             </div>
         </div>
@@ -85,7 +85,7 @@
         <div class="form-group row">
             <label class="control-label">Dirección</label>
             <div class="col-sm-9">
-                <input id="direccion" name="direccion" class="form-control" />
+                <input id="direccion" name="direccion" class="form-control" required />
             </div>
         </div>
     </div>
@@ -97,7 +97,7 @@
         <div class="form-group row">
             <label class="control-label">Fecha de Registro</label>
             <div class="col-sm-7">
-                <input type="date" name="fecha_registro" id="fecha_registro" class="form-control" />
+                <input type="date" name="fecha_registro" id="fecha_registro" class="form-control" required />
             </div>
         </div>
     </div>
@@ -105,7 +105,7 @@
         <div class="form-group row">
             <label class="control-label"> Fecha de Entrega</label>
             <div class="col-sm-7">
-                <input type="date" name="fecha_entrega" id="fecha_entrega" class="form-control" />
+                <input type="date" name="fecha_entrega" id="fecha_entrega" class="form-control" required />
             </div>
         </div>
     </div>
@@ -113,8 +113,8 @@
         <div class="form-group row">
             <label class="control-label">Metodo de Entrega</label>
             <div class="col-sm-7">
-                <select class="form-control" name="id_metodo_entrega" id="id_metodo_entrega">
-                    <option value="0">Selecciones</option>
+                <select class="form-control" name="id_metodo_entrega" id="id_metodo_entrega" required>
+                    <option selected disabled value="">Seleccione</option>
                     @forelse($metodo_entrega  as $metodo_entregas)
                         <option value="{{ $metodo_entregas->id }}">
                             {{ $metodo_entregas->nombre }}
@@ -129,8 +129,8 @@
         <div class="form-group row">
             <label class="control-label"> Medio de Pago</label>
             <div class="col-sm-9">
-                <select class="form-control" name="id_medio_pago" id="id_medio_pago">
-                    <option value="0">Selecciones</option>
+                <select class="form-control" name="id_medio_pago" id="id_medio_pago" required>
+                    <option selected disabled value="">Seleccione</option>
                     @forelse($medio_pago  as $medio_pagos)
                         <option value="{{ $medio_pagos->id }}">
                             {{ $medio_pagos->nombre }}
@@ -145,8 +145,8 @@
         <div class="form-group row">
             <label class="control-label">Metodo de Pago</label>
             <div class="col-sm-9">
-                <select class="form-control" name="id_metodo_pago" id="id_metodo_pago">
-                    <option value="0">Selecciones</option>
+                <select class="form-control" name="id_metodo_pago" id="id_metodo_pago" required>
+                    <option selected disabled value="">Seleccione</option>
                     @forelse($metodo_pago  as $metodo_pagos)
                         <option value="{{ $metodo_pagos->id }}">
                             {{ $metodo_pagos->nombre }}
@@ -161,7 +161,7 @@
         <div class="form-group row">
             <label class="control-label">Abono</label>
             <div class="col-sm-9">
-                <input type="number" name="abono" id="abono" class="form-control" />
+                <input type="number" name="abono" id="abono" class="form-control" required />
             </div>
         </div>
     </div>
@@ -173,8 +173,8 @@
         <div class="form-group row">
             <label class="control-label">Productos</label>
             <div class="col-sm-9">
-                <select class="form-control" name="producto" id="producto">
-                    <option value="0">Selecciones</option>
+                <select class="form-control" name="producto" id="producto" required>
+                    <option selected disabled value="">Seleccione</option>
                     @forelse($producto  as $productos)
                         <option value="{{ $productos->id }}">
                             {{ $productos->nombre }}
@@ -190,7 +190,7 @@
         <div class="form-group row">
             <label class="control-label">Cantidad</label>
             <div class="col-sm-9">
-                <input type="number" id="cantidad" class="form-control" />
+                <input type="number" id="cantidad" class="form-control" required />
 
             </div>
         </div>
@@ -199,7 +199,7 @@
         <div class="form-group row">
             <label class="control-label">Precio</label>
             <div class="col-sm-9">
-                <input type="number" class="form-control" id="precio" />
+                <input type="number" class="form-control" id="precio" required />
             </div>
         </div>
     </div>
@@ -208,10 +208,10 @@
             <label class="control-label">Diseño</label>
             <div class="col-sm-3">
                 <button id="figura" type="button" class="form-control btn btn-success" data-toggle="modal"
-                    data-target="#verdiseños" disabled>Seleccione diseño</button>     
+                    data-target="#verdiseños" disabled>Seleccione diseño</button>
             </div>
             <div class="col-sm-6">
-            <input id="imagen" class="form-control" style="border: 0;" readonly/>
+                <input id="imagen" class="form-control" style="border: 0;" readonly />
             </div>
         </div>
     </div>
@@ -220,15 +220,14 @@
             <label class="control-label">Descripción</label>
             <div class="col-sm-9">
                 <input id="descripcion" class="form-control" style="height:5%" />
+                <a type="button" class="mdi mdi-check-circle" style="color:green;font-size:400%;margin-left:40%"
+                id="agregarprodu"></a>
             </div>
         </div>
     </div>
+    
 </div>
-<div style="margin-top: 2%;">
-    <a type="button" class="mdi mdi-check-circle" style="color:green;font-size:400%;margin-left:40%"
-        id="agregarprodu"></a>
-    <a type="button" class="mdi mdi-close-circle" style="color:red;font-size:400%;margin-left:8%"></a>
-</div>
+
 
 <div style="margin-top: 3%;">
     <table id="resumen" class="table table-striped dt-responsive nowrap" style="width:70%;margin-left:15%">
@@ -262,10 +261,9 @@
 
 </div>
 <div class="form-group" style="margin-top: 2%;margin-left: 39%;">
-    <input type="submit" value="Crear" class="btn btn-primary no-clear" />
-    <input type="button" value="Limpiar" class="btn btn-primary no-clear" onclick="limpiarForm()" />
-    <input type="button" value="Cancelar" class="btn btn-primary no-clear" />
-
+    <button type="submit" class="btn btn-success" style="margin: 10px">Crear</button>
+    <a class="btn btn-primary " style="margin: 10px" onclick="resetForm('formpedidos')">Limpiar</a>
+    <a class="btn btn-danger " href="{{ route('pedidos.index') }}" style="margin: 10px">Cancelar</a>
 </div>
 
 <!-- modal diseños -->
@@ -284,11 +282,12 @@
                 <div class="page-content container">
                     <div class="container px-0">
                         <form>
-                        <div class="row mt-4" id="listadoimg">
+                            <div class="row mt-4" id="listadoimg">
 
-                        </div>  
-                        <button id="acceptBtn" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Aceptar</button> 
-                        </form>   
+                            </div>
+                            <button id="acceptBtn" class="btn btn-primary" data-dismiss="modal"
+                                aria-label="Close">Aceptar</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -309,13 +308,13 @@
             let precio = document.getElementById("precio").value;
             let descripcion = document.getElementById("descripcion").value;
             let imagen = document.getElementById("imagen").value;
-            if(imagen == ""){
+            if (imagen == "") {
                 ruta = "";
-            }else {
-                let listadoimg = consulta.find(item => item.imagen == imagen)
+            } else {
+                let listadoimg = consulta.find(item => item.id == imagen)
                 ruta = `<img src="http://127.0.0.1:8000/storage/images/figuras/${listadoimg.imagen}"/>`
             }
-            
+
 
             if (cantidad > 0 && precio > 0) {
                 $("#datosresumen").append(`
@@ -351,7 +350,7 @@
             document.getElementById("precio").value = "";
             document.getElementById("imagen").value = "";
             document.getElementById("descripcion").value = "";
-            
+
         })
 
 
@@ -369,7 +368,6 @@
 
     function info() {
         let idseleccion = $("#id_cliente").val();
-        console.log(idseleccion)
         if (idseleccion != 0) {
             let usuarioseleccion = [];
 
@@ -411,7 +409,7 @@
                     <div class="card">
                         <div class="row">
                             <div class='col text-center'>
-                                <input type="radio" name="imgbackground" id="${idimagen}" class="d-none imgbgchk" value="${figuri}">
+                                <input type="radio" name="imgbackground" id="${idimagen}" class="d-none imgbgchk" value="${idimagen}">
                                 <label for="${idimagen}">
                                 <img src="http://127.0.0.1:8000/storage/images/figuras/${figuri}" id="${idimagen}" style="margin-top: 24%"/>
                                     <div class="tick_container">
@@ -493,4 +491,25 @@
         }
 
     });
+
+    (function() {
+        'use strict'
+
+        var forms = document.querySelectorAll('.needs-validation')
+
+        Array.prototype.slice.call(forms)
+            .forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+    function resetForm(formpedidos) {
+    document.getElementById(formpedidos).reset();
+}
 </script>

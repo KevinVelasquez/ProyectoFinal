@@ -35,14 +35,13 @@ class PedidoController extends Controller
     {
 
         $pedidos = Pedido::paginate();
-        
+
         $metodo_pago = Metodo_Pago::all();
 
         $metodo_entrega = Metodo_Entrega::all();
        
-        $pedido = Cliente::select("clientes.cedula", "clientes.nombre", "clientes.direccion", "clientes.telefono", "clientes.tipo_comercio",'pedidos.fecha_registro' , "pedidos.fecha_entrega", "pedidos.proceso", "pedidos.id","pedidos.cancelado")
+        $pedido = Cliente::select("clientes.cedula", "clientes.nombre", "clientes.direccion", "clientes.telefono", "clientes.tipo_comercio",'pedidos.fecha_registro' , "pedidos.fecha_entrega", "pedidos.proceso", "pedidos.id","pedidos.cancelado","pedidos.estado")
             ->join("pedidos", "pedidos.id_cliente", "=", "clientes.id")
-            ->where("pedidos.estado", 1)
             ->get();
 
         $detallepedido = DetallePedido::select('detalle_pedidos.cantidad AS cantidadproductos', 'detalle_pedidos.precio AS precioUnitario', 'productos.nombre AS nombreproducto', 'detalle_pedidos.id_pedido AS id')
@@ -181,7 +180,6 @@ class PedidoController extends Controller
 
         $pedido = Cliente::select("clientes.cedula", "clientes.nombre", "clientes.direccion", "clientes.telefono", "clientes.tipo_comercio", "pedidos.fecha_registro", "pedidos.fecha_entrega", "pedidos.proceso", "pedidos.id")
             ->join("pedidos", "pedidos.id_cliente", "=", "clientes.id")
-            ->where("pedidos.estado", 1)
             ->get();
 
         $detallepedido = DetallePedido::select('detalle_pedidos.cantidad AS cantidadproductos', 'detalle_pedidos.precio AS precioUnitario', 'productos.nombre AS nombreproducto', 'detalle_pedidos.id_pedido AS id')

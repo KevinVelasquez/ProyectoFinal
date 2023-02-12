@@ -52,6 +52,7 @@ class FiguraController extends Controller
 
         $input = $request->all();
 
+
         if ($request->hasFile('imagen')) {
             $destination_path = 'public/images/figuras';
             $imagen = $request->file('imagen');

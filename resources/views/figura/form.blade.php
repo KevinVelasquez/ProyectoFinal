@@ -1,19 +1,21 @@
 <div class="box box-info padding-1">
     <div class="box-body">
         <div class="form-group">
-            {{ Form::label('imagen') }}
-            {{ Form::file('imagen', $figura->imagen, ['class' => 'form-control-file' . ($errors->has('imagen') ? ' is-invalid' : ''), 'placeholder' => 'Imagen']) }}
-            {!! $errors->first('imagen', '<div class="invalid-feedback">:message</div>') !!}
+            <label class="control-label">Imagen</label>
+            <div class="col-sm-9">
+                <input type="file" name="imagen" id="imagen" class="form-control" required />
+            </div>
         </div>
         <div class="form-group">
-            {{ Form::label('etiqueta') }}
-            {{ Form::text('etiqueta', $figura->etiqueta, ['class' => 'form-control' . ($errors->has('etiqueta') ? ' is-invalid' : ''), 'placeholder' => 'Etiqueta']) }}
-            {!! $errors->first('etiqueta', '<div class="invalid-feedback">:message</div>') !!}
+            <label class="control-label">Etiqueta</label>
+            <div class="col-sm-9">
+                <input type="text" name="etiqueta" id="etiqueta" class="form-control" required />
+            </div>
         </div>
         <div class="form-group">
-            {{ Form::label('Cliente') }}
-            <select class="form-control" name="id_cliente" id="id_cliente" onchange="info()">
-                <option> {{$figura->etiqueta}} </option>
+            <label class="control-label">Cliente</label>
+            <select class="form-control" name="id_cliente" id="id_cliente" required>
+                <option selected disabled value="">Seleccione</option>
                 @forelse($cliente  as $clientes)
                     <option value="{{ $clientes->id }}">
                         {{ $clientes->nombre }}
@@ -24,7 +26,29 @@
         </div>
 
     </div>
-    <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">Crear</button>
+    <div class="box-footer mt20" style="margin-top:2%">
+        <button type="submit" class="btn btn-success">Crear</button>
+        <a class="btn btn-danger " href="{{ route('figuras.index') }}" style="margin: 10px">Cancelar</a>
     </div>
 </div>
+
+
+<script>
+    (function() {
+        'use strict'
+
+        var forms = document.querySelectorAll('.needs-validation')
+
+        Array.prototype.slice.call(forms)
+            .forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>

@@ -11,7 +11,7 @@
         <h1>Crear Pedido</h1>
         <hr />
         
-        <form method="POST" action="{{ route('pedidos.store') }}"  role="form" enctype="multipart/form-data" class="form-sample">
+        <form method="POST" action="{{ route('pedidos.store') }}" id="formpedidos" role="form" enctype="multipart/form-data" class="form-sample needs-validation" novalidate>
         @csrf
 
         @include('pedido.form')
