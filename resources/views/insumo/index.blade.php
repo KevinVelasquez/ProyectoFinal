@@ -1,6 +1,7 @@
 @extends('layouts.app')
-@extends('nav')
 
+@section('template_title')
+@endsection
 
 @section('content')
     
@@ -13,18 +14,18 @@
               <h3 class="mb-0 font-weight-bold">Insumos</h3>
             </div>
           </div>
-        </div>
+    </div>
         <p>
-            <a class="mdi mdi-plus-circle-multiple-outline" id="iconoadd" data-toggle="modal" data-target="#crearmodal"></a>
+            <a class="mdi mdi-plus-circle-multiple-outline" id="iconoadd" data-toggle="modal" data-target="#crearmodal" ></a>
         </p>
 
         <table id="insumos" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>
-                    
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Medidas</th>
+                    <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -34,17 +35,21 @@
                                             <td>{{ $insumos->id }}</td>
 											<td>{{ $insumos->nombre }}</td>
 											<td>{{ $insumos->medidas }}</td>
-                                            
+                                            <td><?php if ($insumos->estado == 1) {
+                                            echo 'Disponible';
+                                            } else {
+                                            echo 'No Disponible';
+                                            }  ?></td>
                                             <td>
                                 <button onclick="editarInsumo('{{ $insumos->id }}')" class="mdi mdi-lead-pencil"
                                     data-toggle="modal" data-target="#editarmodal"></button>
-                                <button onclick="anularInsumo('{{ $insumos->id }}')" class="mdi mdi-block-helper"
-                                    data-toggle="modal" data-target="#anularmodal"></button>
+                                <!-- <button onclick="anularInsumo('{{ $insumos->id }}')" class="mdi mdi-block-helper"
+                                    data-toggle="modal" data-target="#anularmodal"></button> -->
                                     <button onclick="eliminarInsumo('{{ $insumos->id }}')" class="mdi mdi-trash-can-outline"
                                     data-toggle="modal" data-target="#eliminarmodal"></button>
                             </td>
                         </tr>
-                                    @endforeach
+                @endforeach
             </tbody>
         </table>
      </main>     
@@ -69,7 +74,7 @@
 
                                 <form method="POST" 
                                action= "{{route('insumos.store')}}"  
-                                class="form-sample"
+                               class="form-sample needs-validation" novalidate
                                     role="form" enctype="multipart/form-data">
                                     @method('POST')
                                     @csrf
@@ -79,7 +84,7 @@
                                                 <label class="col-sm-9 col-form-label">Nombre</label>
                                                 <div class="col-sm-12">
                                                     <input type="text" class="form-control" name="nombre"
-                                                        id="crearnombre">
+                                                        id="crearnombre" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -90,7 +95,8 @@
                                                 <label class="col-sm-9 col-form-label">Medidas</label>
                                                 <div class="col-sm-12">
                                                     <select class="form-control" name="id_medidas"
-                                                        id="crearmedidas">
+                                                        id="crearmedidas" required>
+                                                        <option selected disabled value="">Seleccione</option>
                                                         <option value="Metros">Metros</option>
                                                         <option value="Centimetros">Centimetros</option>
                                                     </select>
@@ -127,7 +133,8 @@
                         <div class="card">
                             <div class="card-body">
 
-                                <form method="POST" action="{{ route('insumos.updateInsumos') }}" class="form-sample"
+                                <form method="POST" action="{{ route('insumos.updateInsumos') }}" 
+                                class="form-sample needs-validation" novalidate
                                     role="form" enctype="multipart/form-data">
                                     @method('PUT')
                                     @csrf
@@ -138,7 +145,7 @@
                                                 <label class="col-sm-9 col-form-label">Nombre</label>
                                                 <div class="col-sm-12">
                                                     <input type="text" class="form-control" name="nombre"
-                                                        id="editarnombre">
+                                                        id="editarnombre" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -149,9 +156,23 @@
                                                 <label class="col-sm-9 col-form-label">Medidas</label>
                                                 <div class="col-sm-12">
                                                     <select class="form-control" name="id_medidas"
-                                                        id="editarmedidas">
+                                                        id="editarmedidas" required>
                                                         <option value="Metros">Metros</option>
                                                         <option value="Centimetros">Centimetros</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <label class="col-sm-9 col-form-label">Estado</label>
+                                                <div class="col-sm-12">
+                                                <select class="form-control" name="id_estado"
+                                                        id="editarestado" required>
+                                                        <option value="1">Disponible</option>
+                                                        <option value="0">No Disponible</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -225,19 +246,16 @@
     </div>
     
 <script>
-    $(document).ready(function() {
-            let pathname = window.location.pathname;
-            console.log(pathname);
-            if (pathname == "/insumo") {
-                window.location.href="/insumos"
-
-            }
-            $('#insumos').DataTable({
+    $(document).ready(function () {
+        $('#insumos').DataTable(
+            { 
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
                 }
             });
-        });
+    });
+
+
 
 
     function editarInsumo(id) {
@@ -246,6 +264,7 @@
             $('#exampleModalLongTitleeditar').text(`Actualizar Insumo #${editardatos.id}`);
             $('#editarnombre').val(`${editardatos.nombre}`);
             $('#editarmedidas').val(`${editardatos.medidas}`);
+            $('#editarestado').val(`${editardatos.estado}`);
             $('#idinsumoeditar').val(`${editardatos.id}`);
             let idinsumo = `${editardatos.id}`;
 
@@ -268,6 +287,24 @@
             
 
         }
+
+        (function() {
+            'use strict'
+
+            var forms = document.querySelectorAll('.needs-validation')
+
+            Array.prototype.slice.call(forms)
+                .forEach(function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
 
 </script>
 @endsection

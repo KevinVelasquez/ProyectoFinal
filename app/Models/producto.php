@@ -21,7 +21,7 @@ class Producto extends Model
     static $rules = [
 		'nombre' => 'required',
 		'imagen' => 'required',
-		'estado' => 'required',
+		'estado',
     ];
 
     protected $perPage = 20;

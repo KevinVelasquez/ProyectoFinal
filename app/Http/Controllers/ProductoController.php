@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Str;
 
 /**
  * Class ProductoController
@@ -18,10 +19,11 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $productos = Producto::paginate(5);
+        $productos = Producto::paginate(12);
+        $filtro = producto::all();
 
-        return view('producto.index', compact('productos'))
-            ->with('i', (request()->input('page', 1) - 1) * $productos->perPage());
+        return view('producto.index', compact('productos', 'filtro'))
+            ->with('i', (request()->input('page', 1) - 1) * $productos->perPage(12));
     }
 
     /**
@@ -46,19 +48,19 @@ class ProductoController extends Controller
         request()->validate(Producto::$rules);
 
         $input = $request->all();
-
+        
         if($request->hasFile('imagen'))
         {
             $destination_path = 'public/images/productos';
             $imagen = $request->file('imagen');
-            $imagen_name = $imagen->getClientOriginalName();
-            $path = $request->file('imagen')->storeAs($destination_path,$imagen_name);
+            $extensiomimagen=$imagen->getClientOriginalExtension();
+            $imagen_name = Str::uuid(). '.' . $extensiomimagen;
+            $request->file('imagen')->storeAs($destination_path,$imagen_name);
 
             $input['imagen'] = $imagen_name;
         }
 
         Producto::create($input);
-        session()->flash('message',$input['nombre']. 'succesfully save');
         return redirect()->route('productos.index');
 
         //return redirect()->route('productos.index')
@@ -71,12 +73,7 @@ class ProductoController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        $producto = Producto::find($id);
-
-        return view('producto.show', compact('producto'));
-    }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -87,8 +84,8 @@ class ProductoController extends Controller
     public function edit($id)
     {
         $producto = Producto::find($id);
-
-        return view('producto.edit', compact('producto'));
+        $productoestado= Producto::find($id);
+        return view('producto.edit', compact('producto','productoestado'));
     }
 
     /**
@@ -100,12 +97,10 @@ class ProductoController extends Controller
      */
     public function update(Request $request, Producto $producto)
     {
-        request()->validate(Producto::$rules);
         $input= $request->all();
 
         $producto->update([
             'nombre' => 'nombre',
-            'imagen' => 'imagen',
             'estado' => $input['estado'],
         ]);
         
@@ -113,8 +108,9 @@ class ProductoController extends Controller
         {
             $destination_path = 'public/images/productos';
             $imagen = $request->file('imagen');
-            $imagen_name = $imagen->getClientOriginalName();
-            $path = $request->file('imagen')->storeAs($destination_path,$imagen_name);
+            $extensiomimagen=$imagen->getClientOriginalExtension();
+            $imagen_name = Str::uuid(). '.' . $extensiomimagen;
+            $request->file('imagen')->storeAs($destination_path,$imagen_name);
 
             $input['imagen'] = $imagen_name;
         }
@@ -134,11 +130,24 @@ class ProductoController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy($id)
+    public function eliminarproducto(Request $request)
     {
-        $producto = Producto::find($id)->delete();
+        $input = $request->all();
+        Producto::find($input["ideliminar"])->delete();
 
-        return redirect()->route('productos.index')
-            ->with('success', 'Producto deleted successfully');
+        return redirect()->route('productos.index');
+    }
+
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('search');
+
+        $productos = Producto::where('nombre', 'like', '%' . $searchTerm . '%')
+            ->paginate(12);
+        
+        $filtro = Producto::all();
+
+        return view('producto.search', compact('productos','filtro'));
+
     }
 }

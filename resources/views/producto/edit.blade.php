@@ -1,55 +1,74 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Update Producto
+Update Producto
 @endsection
 
 @section('content')
-    <section class="content container-fluid">
-        <div class="">
-            <div class="col-md-12">
+<div class="container" style="width:50%;margin-left: 25%;">
+    <main role="main" class="pb-3">
+        <h1>Actualizar Producto</h1>
+        <hr />
 
-                @includeif('partials.errors')
+        <form method="POST" action="{{ route('productos.update', $producto->id) }}" role="form"
+            enctype="multipart/form-data" class="form-sample needs-validation" novalidate>
+            {{ method_field('PATCH') }}
+            @csrf
 
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">Update Producto</span>
-                    </div>
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('productos.update', $producto->id) }}"  role="form" enctype="multipart/form-data">
-                            {{ method_field('PATCH') }}
-                            @csrf
-
-                            <div class="box box-info padding-1">
-    <div class="box-body">
-        
-        <div class="form-group">
-            {{ Form::label('nombre') }}
-            {{ Form::text('nombre', $producto->nombre, ['class' => 'form-control' . ($errors->has('nombre') ? ' is-invalid' : ''), 'placeholder' => 'Nombre']) }}
-            {!! $errors->first('nombre', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('imagen') }}
-            <image height="200px" src="{{asset('/storage/images/productos/'.$producto->imagen)  }}"/>
-            {{ Form::file('imagen', ['class' => 'form-control-file' . ($errors->has('imagen') ? ' is-invalid' : ''), 'placeholder' => 'Imagen']) }}
-            {!! $errors->first('imagen', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('estado') }}
-            {{ Form::text('estado', $producto->estado, ['class' => 'form-control' . ($errors->has('estado') ? ' is-invalid' : ''), 'placeholder' => 'Estado']) }}
-            {!! $errors->first('estado', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-
-    </div>
-    <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-</div>
-
-                        </form>
-                    </div>
+            <div class="form-group">
+                <label class="control-label">Nombre</label>
+                <div class="col-sm-9">
+                    <input value="{{$producto->nombre}}" type="text" name="nombre" id="nombre" class="form-control"
+                        required/>
                 </div>
             </div>
-        </div>
-    </section>
+            <div class="form-group">
+                <label class="control-label">Productos</label>
+                <image height="200px" src="{{ asset('/storage/images/productos/' . $producto->imagen) }}" />
+                </td>
+                <input type="file" name="imagen" id="imagen" class="form-control" style="margin-top: 2%;" />
+            </div>
+            <div>
+                <select class="form-control" name="estado" id="editarEstado" required>
+                    <option value="1">Disponible</option>
+                    <option value="0">No disponible</option>
+                </select>
+            </div>
+
+
+            <div class="box-footer mt20">
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+            </div>
+
+
+        </form>
+    </main>
+</div>
+
+<script>
+$(document).ready(function() {
+    let producto =  {!! $productoestado->estado !!}
+    $('#editarEstado').val(`${producto}`)
+})
+</script>
+
+<script>
+(function() {
+    'use strict'
+
+    var forms = document.querySelectorAll('.needs-validation')
+
+    Array.prototype.slice.call(forms)
+        .forEach(function(form) {
+            form.addEventListener('submit', function(event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+})()
+</script>
 @endsection

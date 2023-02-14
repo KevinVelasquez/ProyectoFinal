@@ -15199,7 +15199,7 @@ a.close.disabled {
     border-top: 1px solid #e8eff9;
     border-bottom-right-radius: 0.3rem;
     border-bottom-left-radius: 0.3rem;
-    background-color: ;
+    
 }
 
     .modal-footer > :not(:first-child) {
@@ -27089,3 +27089,27 @@ iframe {
 .container {
     max-width: 1320px;
 }
+
+.dispop1 {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 11px;
+    border-radius: 5px;
+    background-color: #17c964;
+    }
+    
+    .dispop0 {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 20px;
+        height: 11px;
+        border-radius: 5px;
+        background-color: red;
+        }
+    
+        .modal-lg, .modal-xl {
+        max-width: 445px;
+    }

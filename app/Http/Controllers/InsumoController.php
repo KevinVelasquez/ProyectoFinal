@@ -20,8 +20,8 @@ class InsumoController extends Controller
     {
         $insumos = Insumo::paginate();
 
-            $insumo = Insumo::select('insumos.nombre','insumos.medidas','insumos.id')
-            ->where('insumos.estado',1)
+            $insumo = Insumo::select('insumos.nombre','insumos.medidas','insumos.id','insumos.estado')
+            
             ->get();
         
             $editarinsumo = Insumo::select(
@@ -52,6 +52,7 @@ class InsumoController extends Controller
             ->update([
                 'nombre' => $input["nombre"],
                 'medidas' => $input["id_medidas"],
+                'estado' => $input["id_estado"]
             
             ]);
         return redirect()->route('insumos.index')

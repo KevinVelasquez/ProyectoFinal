@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('imagen');
-            $table->integer('estado');
+            $table->integer('estado')->default(1);
             $table ->timestamps();
         });
     }
