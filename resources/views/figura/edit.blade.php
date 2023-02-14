@@ -21,7 +21,9 @@
                     <label class="control-label">Figura</label>
                     <image height="200px" src="{{ asset('/storage/images/figuras/' . $figura->imagen) }}" />
                     </td>
-                    <input type="file" name="imagen" id="imagen" class="form-control" style="margin-top: 2%;" />
+                    <div class="col-sm-9">
+                        <input type="file" name="imagen" id="imagen" class="form-control" style="margin-top: 2%;" />
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Etiqueta</label>
@@ -31,17 +33,19 @@
                     </div>
                 </div>
                 <label class="control-label">Cliente</label>
-                <select class="form-control" name="id_cliente" id="id_cliente" required>
-                    <option value="{{ $figuracliente[0]->id_cliente }}">{{ $figuracliente[0]->nombre }}</option>
-                    @forelse($cliente  as $clientes)
-                        <option value="{{ $clientes->id }}">
-                            {{ $clientes->nombre }}
-                        </option>
-                    @empty <option>No existen</option>
-                    @endforelse
-                </select>
+                <div class="col-sm-9">
+                    <select class="form-control" name="id_cliente" id="id_cliente" required>
+                        <option value="{{ $figuracliente[0]->id_cliente }}">{{ $figuracliente[0]->nombre }}</option>
+                        @forelse($cliente  as $clientes)
+                            <option value="{{ $clientes->id }}">
+                                {{ $clientes->nombre }}
+                            </option>
+                        @empty <option>No existen</option>
+                        @endforelse
+                    </select>
+                </div>
                 <div class="box-footer mt20" style="margin-top: 2%;">
-                    <button type="submit" class="btn btn-success" >Actualizar</button>
+                    <button type="submit" class="btn btn-success">Actualizar</button>
                     <a class="btn btn-danger " href="{{ route('figuras.index') }}" style="margin: 10px">Cancelar</a>
 
                 </div>

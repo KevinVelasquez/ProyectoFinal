@@ -414,7 +414,7 @@
                         </div>
                 </div>
                 <div class="botonestabla" style="text-align: center;">
-                    <button type="submit" class="btn btn-primary">Agregar</button>
+                    <button type="submit" id="agregarAbono" class="btn btn-primary">Agregar</button>
                     <button type="button" class="btn btn-primary">Cancelar</button>
                 </div>
                 </form>
@@ -587,6 +587,7 @@
                     let preciototal = `${value.totalpedido}`
                     let restatotal = preciototal - resta
                     $('#resta').text(`RESTA ${restatotal}`)
+                    $('#agregarAbono').attr(`disabled`,!restatotal)
                     $('#resta').val(`${restatotal}`)
                     $("#tablaabonos tbody").append(fila)
                 }

@@ -14,17 +14,18 @@
         </div>
         <div class="form-group">
             <label class="control-label">Cliente</label>
-            <select class="form-control" name="id_cliente" id="id_cliente" required>
-                <option selected disabled value="">Seleccione</option>
-                @forelse($cliente  as $clientes)
-                    <option value="{{ $clientes->id }}">
-                        {{ $clientes->nombre }}
-                    </option>
-                @empty <option>No existen</option>
-                @endforelse
-            </select>
+            <div class="col-sm-9">
+                <select class="form-control" name="id_cliente" id="id_cliente" required>
+                    <option selected disabled value="">Seleccione</option>
+                    @forelse($cliente  as $clientes)
+                        <option value="{{ $clientes->id }}">
+                            {{ $clientes->nombre }}
+                        </option>
+                    @empty <option>No existen</option>
+                    @endforelse
+                </select>
+            </div>
         </div>
-
     </div>
     <div class="box-footer mt20" style="margin-top:2%">
         <button type="submit" class="btn btn-success">Crear</button>

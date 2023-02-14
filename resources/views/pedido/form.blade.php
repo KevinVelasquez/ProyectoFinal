@@ -95,14 +95,6 @@
 <div class="row">
     <div class="col-md-4">
         <div class="form-group row">
-            <label class="control-label">Fecha de Registro</label>
-            <div class="col-sm-7">
-                <input type="date" name="fecha_registro" id="fecha_registro" class="form-control" required />
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group row">
             <label class="control-label"> Fecha de Entrega</label>
             <div class="col-sm-7">
                 <input type="date" name="fecha_entrega" id="fecha_entrega" class="form-control" required />
@@ -190,7 +182,7 @@
         <div class="form-group row">
             <label class="control-label">Cantidad</label>
             <div class="col-sm-9">
-                <input type="number" id="cantidad" class="form-control" required />
+                <input type="number" id="cantidad" class="form-control" />
 
             </div>
         </div>
@@ -199,7 +191,7 @@
         <div class="form-group row">
             <label class="control-label">Precio</label>
             <div class="col-sm-9">
-                <input type="number" class="form-control" id="precio" required />
+                <input type="number" class="form-control" id="precio" />
             </div>
         </div>
     </div>
@@ -220,7 +212,7 @@
             <label class="control-label">Descripción</label>
             <div class="col-sm-9">
                 <input id="descripcion" class="form-control" style="height:5%" />
-                <a type="button" class="mdi mdi-check-circle" style="color:green;font-size:400%;margin-left:40%"
+                <a type="button" class="mdi mdi-plus-circle" style="color:green;font-size:400%;margin-left:40%"
                 id="agregarprodu"></a>
             </div>
         </div>

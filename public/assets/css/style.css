@@ -27083,7 +27083,7 @@ iframe {
     margin-left: 62%;
 }
 .container {
-    max-width: 1320px;
+    max-width: 95% !important;
 }
 
 .filtro{

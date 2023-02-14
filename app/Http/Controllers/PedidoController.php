@@ -151,17 +151,18 @@ class PedidoController extends Controller
             'id_metodo_entrega' => $input["id_metodo_entrega"],
             'id_metodo_pago' => $input["id_metodo_pago"],
             'direccion' => $input["direccion"],
-            'fecha_registro' => $input["fecha_registro"],
+            'fecha_registro' => now(),
             'fecha_entrega' => $input["fecha_entrega"],
             'totalpedido' => $input["total"],
         ]);
 
         $pagoclientes = Pago_Clientes::create([
             "id_pedido" => $pedido->id,
-            "fecha" => $input["fecha_registro"],
+            "fecha" => now(),
             "abono" => $input["abono"],
             'id_medio_pago' => $input["id_medio_pago"],
         ]);
+
 
         foreach ($input["producto_id"] as $key => $value) {
             DetallePedido::create([
@@ -176,11 +177,19 @@ class PedidoController extends Controller
 
         }
 
+        $totalabono = $this->validarEstadoPedido($pedido->id);
+
+        if ($totalabono <= 0) {
+
+            $this->abonoCancelado($pedido->id);
+        }
+
         $pedidos = Pedido::paginate();
 
-        $pedido = Cliente::select("clientes.cedula", "clientes.nombre", "clientes.direccion", "clientes.telefono", "clientes.tipo_comercio", "pedidos.fecha_registro", "pedidos.fecha_entrega", "pedidos.proceso", "pedidos.id")
+        $pedido = Cliente::select("clientes.cedula", "clientes.nombre", "clientes.direccion", "clientes.telefono", "clientes.tipo_comercio", "pedidos.fecha_registro", "pedidos.fecha_entrega", "pedidos.proceso", "pedidos.id","pedidos.cancelado","pedidos.estado")
             ->join("pedidos", "pedidos.id_cliente", "=", "clientes.id")
             ->get();
+
 
         $detallepedido = DetallePedido::select('detalle_pedidos.cantidad AS cantidadproductos', 'detalle_pedidos.precio AS precioUnitario', 'productos.nombre AS nombreproducto', 'detalle_pedidos.id_pedido AS id')
             ->join("productos", "detalle_pedidos.id_producto", "=", "productos.id")
@@ -279,5 +288,20 @@ class PedidoController extends Controller
             ->with('success', 'Status pedido successfully');
     }
 
+    public function validarEstadoPedido($id){
+
+        $totalabonopedido = Pago_Clientes::select('pedidos.totalpedido', Pago_Clientes::raw('SUM(pago__clientes.abono) as totalabonado'))
+            ->join("pedidos", "pedidos.id", "=", "pago__clientes.id_pedido")->where([["pedidos.id", $id]])->groupBy("pago__clientes.id_pedido", "pedidos.totalpedido")
+            ->get();
+
+            return $totalabonopedido[0]->totalpedido - $totalabonopedido[0]->totalabonado;
+    }
+
+    public function abonoCancelado($id){
+        Pedido::where('id', $id)
+        ->update([
+            'cancelado' => 1
+        ]);
+    }
 
 }

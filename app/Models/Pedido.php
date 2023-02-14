@@ -38,7 +38,7 @@ class Pedido extends Model
 		'id_metodo_entrega' => 'required',
 		'id_metodo_pago' => 'required',
 		'direccion' => 'required',
-		'fecha_registro' => 'required',
+		'fecha_registro',
 		'fecha_entrega' => 'required',
 		'estado',
 		'proceso',
