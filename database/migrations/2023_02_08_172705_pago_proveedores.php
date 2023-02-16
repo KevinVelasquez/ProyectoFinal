@@ -13,17 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('pago_proveedores', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->integer('cedula')->unique();     
-            $table->string('email')->unique();
-            $table->string('rol');
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->date('fecha');
+            $table->integer('abono');
             $table->integer('estado')->default(1);
-            $table->rememberToken();
+            $table->bigInteger('id_medio_pagos')->unsigned();
+            $table->bigInteger('id_compra')->unsigned();
+
+            $table->foreign('id_medio_pagos')->references('id')->on('medio_pagos');
+            $table->foreign('id_compra')->references('id')->on('compra');
             $table->timestamps();
+
         });
     }
 
@@ -34,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        //
     }
 };

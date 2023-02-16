@@ -30,14 +30,11 @@ class UsuarioController extends Controller
      */
     public function index()
     { {
-
-
             $users = ModelsUser::paginate();
 
             return view('usuario.index', compact('users'))
                 ->with('i', (request()->input('page', 1) - 1) * $users->perPage());
         }
-
         return view('usuario.index');
     }
 
@@ -221,11 +218,11 @@ class UsuarioController extends Controller
 
     public function CambioEstado(Request $request)
     {
-       $users = Usuario::find($request->id);
-       $users->estado = $request->estado;
-       $users->save();
+        $users = Usuario::find($request->id);
+        $users->estado = $request->estado;
+        $users->save();
 
- /*        if ($request->estado == 0) {
+        /*        if ($request->estado == 0) {
             $newStatus = '<br> <button type="button" class="btn btn-sm btn-danger">Inactiva</button>';
         } else {
             $newStatus = '<br> <button type="button" class="btn btn-sm btn-success">Activa</button>';

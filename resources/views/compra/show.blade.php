@@ -15,6 +15,7 @@
                     </div>
                     <div class="float-right">
                         <a class="btn btn-primary" href="{{ route('compra.index') }}"> Back</a>
+                        <a class="btn btn-sm btn-primary " href="{{route('generarPDF', $compra->id)}}"><i class="fa fa-fw fa-eye"></i> Descargar PDF</a>
                     </div>
                 </div>
                 <div class="card-body">

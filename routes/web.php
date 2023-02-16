@@ -24,6 +24,7 @@ Route::get('/', function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('auth');
 
 Route::resource('compra', App\Http\Controllers\CompraController::class)->middleware('auth');
+Route::resource('pago-proveedore', App\Http\Controllers\PagoProveedoreController::class)->middleware('auth');
 Route::resource('usuario', App\Http\Controllers\UsuarioController::class)->middleware('auth');
 Route::resource('/login', App\Http\Controllers\CompraController::class)->middleware('auth');
 Route::resource('clientes', App\Http\Controllers\ClienteController::class)->middleware('auth');
@@ -40,6 +41,8 @@ Route::resource('proveedor',ProveedorController::class)->middleware('auth');
 Route::get('/VistaPefil',  [UsuarioController::class,'VistaPefil'])->name('VistaPefil')->middleware('auth');
 Route::post('/EditarPerfil',  [UsuarioController::class,'EditarPerfil'])->name('EditarPerfil');
 Route::get('/CambioEstado', [UsuarioController::class,'CambioEstado'])->name('CambioEstado');
+Route::get('/CambioEstadoCompra', [CompraController::class,'CambioEstado'])->name('CambioEstado');
+Route::get('/generarPDF/{id}', [App\Http\Controllers\CompraController::class,'generarPDF'])->name('generarPDF');
 Route::post('/store', [CompraController::class,'store'])->name('store');
 
 Auth::routes();

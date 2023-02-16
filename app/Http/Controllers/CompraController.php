@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Models\Compra;
 use App\Models\Proveedor;
+use App\Models\PagoProveedore;
 use App\Models\insumo;
 use App\Models\metodo_pagos;
 use App\Models\Detalle_compra;
 use Illuminate\Http\Request;
+use PDF;
 
 /**
  * Class CompraController
@@ -27,8 +29,10 @@ class CompraController extends Controller
         $proveedor = Proveedor::all();
         $metodo_pagos = metodo_pagos::all();
         $insumos = Insumo::all();
+        $pdf = Detalle_compra::all();
+        $pago_provedor = PagoProveedore::all();
 
-        return view('compra.index', compact('compras', 'proveedor', 'insumos', 'metodo_pagos'))
+        return view('compra.index', compact('compras', 'proveedor', 'insumos', 'metodo_pagos', 'pdf','pago_provedor'))
             ->with('i', (request()->input('page', 1) - 1) * $compras->perPage());
     }
 
@@ -165,5 +169,31 @@ class CompraController extends Controller
 
         return redirect()->route('compra.index')
             ->with('success', 'Compra deleted successfully');
+    }
+
+    public function generarPDF($id){
+       
+        $compra = Compra::select('*')->where('compra.id',$id)->get();
+        $detalle = Detalle_compra::select('*')->where('detalle_compra.id_orden_compra',$id)->get();
+        $pdf = PDF::loadView('compra.pdf', compact('compra','detalle'));
+        return $pdf->stream('compra.pdf');
+    }
+
+    public function CambioEstadoCompra(Request $request)
+    {
+        $input = $request;
+        print($input);
+        exit;
+        $compra = Compra::find($request->id);
+        $compra->estado = $request->estado;
+        $compra->save();
+
+        /*        if ($request->estado == 0) {
+            $newStatus = '<br> <button type="button" class="btn btn-sm btn-danger">Inactiva</button>';
+        } else {
+            $newStatus = '<br> <button type="button" class="btn btn-sm btn-success">Activa</button>';
+        }
+
+        return response()->json(['var'=>''.$newStatus.'']); */
     }
 }

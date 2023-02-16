@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-Usuario
+Usuarios
 @endsection
 
 @section('content')
@@ -10,17 +10,7 @@ Usuario
         <p>
             <a class="mdi mdi-account-plus" id="iconoadd" href="{{ route('usuario.create') }}"></a>
         </p>
-        <div class="dataTables_length" id="insumos_length"><label>Mostrar <select name="insumos_length" aria-controls="insumos" class="">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                </select> registros</label>
-        </div>
-        <div id="insumos_filter" class="dataTables_filter">
-            <label>Buscar:<input type="search" class="" placeholder="" aria-controls="usuarios"></label>
-        </div>
-        <table id="insumos" class="table table-striped dt-responsive nowrap table" style="width:100%">
+        <table id="usuarios" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -40,10 +30,12 @@ Usuario
                     <td>{{ $user->nombre }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->rol }}</td>
-                    <td id="resp{{ $user->id }}">
-
-                        <input data-id="{{$user->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Activo" data-off="Inactivo" {{$user->estado ? 'checked' : ''}}>
-
+                    <td>
+                    @if($user->estado == 1)
+                        <button type="button" class="btn btn-sm btn-success">Activo</button>
+                        @else
+                        <button type="button" class="btn btn-sm btn-danger">Inactivo</button>
+                        @endif
                     </td>
                     <td>
                         <form action="{{ route('usuario.destroy',$user->id) }}" method="POST">
@@ -58,28 +50,10 @@ Usuario
 </div>
 <script>
     $(document).ready(function() {
-        $('#user').DataTable({
+        $('#usuarios').DataTable({
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
             }
-        });
-        $(function() {
-            $('.toggle-class').change(function() {
-                var estado = $(this).prop('checked') == true ? 1 : 0;
-                var id = $(this).data('id');
-                $ajax({
-                    type: "GET",
-                    dataType: "json",
-                    url: '/CambioEstado',
-                    data: {
-                        'estado': estado,
-                        'id': id
-                    },
-                    success: function(data) {
-                        console.log(data.success)
-                    }
-                });
-            });
         });
     });
 </script>
