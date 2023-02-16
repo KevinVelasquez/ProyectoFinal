@@ -30,7 +30,7 @@
     </div>
     <div class="col-md-3">
         <div class="form-group row">
-            <label class="control-label">Telefono</label>
+            <label class="control-label">Teléfono</label>
             <div class="col-sm-9">
                 <input id="telefono" name="telefono" class="form-control" readonly />
             </div>
@@ -46,7 +46,7 @@
     </div>
     <div class="col-md-2">
         <div class="form-group row">
-            <label class="control-label">Pais</label>
+            <label class="control-label">País</label>
             <div class="col-sm-9">
                 <select class="form-control" name="pais" id="pais" onchange="filtrarDepartamentos()">
                     <option selected disabled value="">Seleccione</option>
@@ -95,7 +95,7 @@
 <div class="row">
     <div class="col-md-4">
         <div class="form-group row">
-            <label class="control-label"> Fecha de Entrega</label>
+            <label class="control-label">Fecha de Entrega</label>
             <div class="col-sm-7">
                 <input type="date" name="fecha_entrega" id="fecha_entrega" class="form-control" required />
             </div>
@@ -103,7 +103,7 @@
     </div>
     <div class="col-md-4">
         <div class="form-group row">
-            <label class="control-label">Metodo de Entrega</label>
+            <label class="control-label">Método de Entrega</label>
             <div class="col-sm-7">
                 <select class="form-control" name="id_metodo_entrega" id="id_metodo_entrega" required>
                     <option selected disabled value="">Seleccione</option>
@@ -135,7 +135,7 @@
     </div>
     <div class="col-md-4">
         <div class="form-group row">
-            <label class="control-label">Metodo de Pago</label>
+            <label class="control-label">Método de Pago</label>
             <div class="col-sm-9">
                 <select class="form-control" name="id_metodo_pago" id="id_metodo_pago" required>
                     <option selected disabled value="">Seleccione</option>

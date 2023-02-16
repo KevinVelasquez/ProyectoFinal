@@ -14,7 +14,7 @@
             <table id="pedidos" class="table table-striped dt-responsive nowrap table" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Número Pedido</th>
+                        <th># Pedido</th>
                         <th>Cédula</th>
                         <th>Nombre</th>
                         <th>Fecha Registro</th>
@@ -95,7 +95,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Cedula</label>
+                                                <label class="col-sm-3 col-form-label">Cédula</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" id="editarcedula" readonly>
                                                 </div>
@@ -133,7 +133,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Telefono</label>
+                                                <label class="col-sm-3 col-form-label">Teléfono</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" id="editartelefono" readonly>
                                                 </div>
@@ -141,7 +141,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Metodo Entrega</label>
+                                                <label class="col-sm-3 col-form-label">Método Entrega</label>
                                                 <div class="col-sm-9">
                                                     <select class="form-control" name="id_metodo_entrega"
                                                         id="editarmetodoentrega" required>
@@ -181,7 +181,7 @@
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Actualizar</button>
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                 </form>
                             </div>
                         </div>
@@ -212,7 +212,7 @@
                         <input type="hidden" name="idanular" id="idanular" />
                         <input type="hidden" name="anulardato" value="2" />
                         <button type="submit" class="btn btn-primary">Si</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
                     </form>
                 </div>
             </div>
@@ -474,7 +474,7 @@
                         <input type="hidden" name="idpedidoabono" id="idpedidoabono" />
                         <input type="hidden" name="anulardato" value="2" />
                         <button type="submit" class="btn btn-primary">Si</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
                     </form>
                 </div>
             </div>
