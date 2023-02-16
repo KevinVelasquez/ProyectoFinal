@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->integer('cedula')->unique();     
             $table->string('email')->unique();
+            $table->string('rol');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('estado')->default(1);
