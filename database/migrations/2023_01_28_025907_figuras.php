@@ -13,10 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('metodo__pagos', function (Blueprint $table) {
+        Schema::create('figuras', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-
+            $table->string('etiqueta');
+            $table->string('imagen');
+            $table->integer('estado');
+            $table->bigInteger('id_cliente')->unsigned();
+            $table->timestamps();
+            $table->foreign('id_cliente')->references('id')->on('clientes')->onDelete("cascade");
         });
     }
 

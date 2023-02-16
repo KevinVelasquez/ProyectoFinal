@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('metodo__pagos', function (Blueprint $table) {
+        Schema::create('insumos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
+            $table->string('medidas');
+            $table->integer('estado')->default(1);
+            $table->timestamps();
 
         });
     }
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('insumos');
     }
 };

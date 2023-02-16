@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PedidoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ClienteController;
@@ -26,6 +27,28 @@ Auth::routes();
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::resource('pedidos', App\Http\Controllers\PedidoController::class);
+Route::put('pedidos', [PedidoController::class, 'updatePedido'])->name('pedidos.updatePedido');
+Route::patch('pedidos', [PedidoController::class, 'anularPedido'])->name('pedidos.anularPedido');
+Route::get('generate-pdf', [App\Http\Controllers\PDFController::class, 'generatePDF'])->name('generate-pdf');
+
+Route::post('pedido', [App\Http\Controllers\PagoClienteController::class,'agregarAbono'])->name('agregarAbono');
+Route::put('pedido', [App\Http\Controllers\PagoClienteController::class,'anularAbono'])->name('anularAbono');
+Route::get('abono-pdf', [App\Http\Controllers\PDFController::class, 'abonoPDF'])->name('abono-pdf');
+
+
+
+
+
+Route::resource('figuras', App\Http\Controllers\FiguraController::class);
+Route::resource('clientes', App\Http\Controllers\ClienteController::class);
+Route::resource('Proveedor', App\Http\Controllers\ProveedorController::class);
+Route::resource('insumos', App\Http\Controllers\InsumoController::class);
+
+
+
+
 
 
 //RUTAS CLIENTES
