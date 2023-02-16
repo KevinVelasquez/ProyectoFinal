@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
+Insumo
 @endsection
 
 @section('content')

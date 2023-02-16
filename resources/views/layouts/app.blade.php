@@ -83,7 +83,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('roles.index') }}">
                   <i class="mdi mdi-settings menu-icon"></i>
                   <span class="menu-title">Configuración</span>
                 </a>

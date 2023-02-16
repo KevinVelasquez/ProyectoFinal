@@ -28,9 +28,9 @@ Route::delete('insumos', [App\Http\Controllers\InsumoController::class, 'elimina
 
 Route::get('productos/search', [App\Http\Controllers\ProductoController::class, 'search'])->name('productos.search');
 Route::delete('productos', [App\Http\Controllers\ProductoController::class, 'eliminarproducto'])->name('productos.eliminarproducto');
-
 Route::resource('productos', App\Http\Controllers\ProductoController::class);
 
+Route::delete('productos', [App\Http\Controllers\RolController::class, 'eliminarrol'])->name('roles.eliminarrol');
 
 
 

@@ -7,7 +7,6 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
-
             <div class="container">
                 <main role="main" class="pb-3">
                     <div class="content-wrapper">
@@ -17,16 +16,15 @@
                             </div>
                         </div>
                     </div>
-                    <p>
-                        <a class="mdi mdi-plus-circle-multiple-outline" id="iconoadd"
+                        <p>
+                            <a class="mdi mdi-plus-circle-multiple-outline" id="iconoadd"
                             href="{{ route('productos.create') }}"></a>
-                    </p>
-
-                    @if ($message = Session::get('success'))
-                    <div class="alert alert-success">
-                        <p>{{ $message }}</p>
-                    </div>
-                    @endif
+                        </p>
+                        @if ($message = Session::get('success'))
+                            <div class="alert alert-success">
+                                <p>{{ $message }}</p>
+                            </div>
+                        @endif
 
                     <div class="card-body">
                         <div class="table-responsive">
@@ -47,20 +45,18 @@
                                             <div class="col-md-2 p-1">
                                                 <div class="card">
                                                     <img class="card-img-top"
-                                                        src="{{asset('/storage/images/productos/'.$producto->imagen)  }}"
-                                                        alt="Card image cap" data-bs-toggle="modal"
-                                                        data-bs-target="#modalimagen<?php echo $producto->id; ?>">
-                                                    <div id="activ" class="dispop<?php echo $producto->estado; ?>">
-                                                    </div>
+                                                        src="{{ asset('/storage/images/productos/' . $producto->imagen)  }}"
+                                                        alt="Card image cap" 
+                                                        data-bs-toggle="modal"data-bs-target="#modalimagen<?php echo $producto->id; ?>">
+                                                    <div id="activ" class="dispop<?php echo $producto->estado; ?>"></div>
                                                     <div tabindex="-1"
                                                         aria-labelledby="modalimagen <?php echo $producto->id; ?>"
                                                         aria-hidden="true" class="modal fade"
-                                                        id="modalimagen <?php echo $producto->id; ?>">
-                                                        <div class="modal-dialog modal-lg modal-dialog-centered"
-                                                            style="max-width: 445px;">
+                                                        id="modalimagen<?php echo $producto->id; ?>">
+                                                        <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width: 445px;">
                                                             <div class="modal-content">
-                                                                <img class="card-img-top"
-                                                                    src="{{asset('/storage/images/productos/'.$producto->imagen)  }}">
+                                                                <img 
+                                                                    src="{{asset('/storage/images/productos/' . $producto->imagen)  }}">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -75,7 +71,6 @@
                                                                 class="mdi mdi-delete" data-toggle="modal"
                                                                 data-target="#eliminarmodal"></button>
                                                         </div>
-                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -87,10 +82,11 @@
                             {{$productos->links()}}
                         </div>
                     </div>
+                </main>
             </div>
         </div>
     </div>
-
+</div>
     <!-- modal eliminar producto -->
     <div class="modal fade" id="eliminarmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
@@ -131,9 +127,7 @@
     });
 
     function eliminarProducto(id) {
-        let consulta = {!!$filtro!!}
-        console.log(id)
-        console.log(consulta)
+        let consulta = {!! $filtro !!}
         let datos = consulta.find(item => item.id == id)
         $('#exampleModalLongTitleeliminar').text(`Eliminar Producto`);
         $('#ideliminar').val(`${datos.id}`);

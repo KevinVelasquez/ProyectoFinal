@@ -9,6 +9,13 @@
             <div class="col-sm-12">
                 <div class="container">
                     <main role="main" class="pb-3">
+                    <div class="content-wrapper">
+                        <div class="row">
+                            <div class="col-sm-6" id="tituloinicial">
+                                <h3 class="mb-0 font-weight-bold">Productos</h3>
+                            </div>
+                        </div>
+                    </div>
                         <p>
                             <a class="mdi mdi-plus-circle-multiple-outline" id="iconoadd" href="{{ route('productos.create') }}"></a>
                         </p>
@@ -39,7 +46,7 @@
                                                                 src="{{ asset('/storage/images/productos/' . $producto->imagen) }}"
                                                                 alt="Card image cap"
                                                                 data-bs-toggle="modal"data-bs-target="#modalimagen<?php echo $producto->id; ?>">
-                                                            <div id="activ" class="dispo<?php echo $producto->estado; ?>"></div>
+                                                            <div id="activ" class="dispop<?php echo $producto->estado; ?>"></div>
                                                             <div tabindex="-1"
                                                                 aria-labelledby="modalimagen<?php echo $producto->id; ?>"
                                                                 aria-hidden="true" class="modal fade"
@@ -73,9 +80,11 @@
                                 {{ $productos->links() }}
                             </div>
                         </div>
+                    </main>
                 </div>
             </div>
         </div>
+    </div>    
         <!-- modal eliminar producto -->
         <div class="modal fade" id="eliminarmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
             aria-hidden="true">

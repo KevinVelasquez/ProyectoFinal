@@ -13,10 +13,10 @@ class RolController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:ver-rol | crear-rol | editar-rol | borrar-rol,', ['only'=>['index']]);
+        $this->middleware('permission:ver-rol|crear-rol|editar-rol|borrar-rol,', ['only'=>['index']]);
         $this->middleware ('permission: crear-rol', ['only'=>['create,store']]);
         $this->middleware ('permission: editar-rol', ['only'=>['edit,update']]);
-        $this->middleware ('permission: borrar-rol', ['only'=>['destroy']]);
+        $this->middleware ('permission: borrar-rol', ['only'=>['eliminarRol']]);
     }
     /**
      * Display a listing of the resource.
@@ -26,7 +26,8 @@ class RolController extends Controller
     public function index()
     {
         $roles = Role::paginate(5);
-        return view('roles.index', compact('roles'));
+        $filtro = Role::all();
+        return view('roles.index', compact('roles','filtro'));
     }
 
     /**
@@ -38,7 +39,7 @@ class RolController extends Controller
     {
         $permission = Permission::get();
         return view ('roles.crear', compact('permission'));
-    }
+    } 
 
     /**
      * Store a newly created resource in storage.
@@ -108,9 +109,13 @@ class RolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function eliminarRol(Request $request)
     {
-        DB::table('roles')->where('id',$id)->delete();
-        return redirect()->route('roles.index');
+        $input=$request->all();
+        
+        $role = Role::find($input["ideliminar"])->delete();
+
+        return redirect()->route('roles.index')
+            ->with('success', 'Rol deleted successfully');
     }
 }
