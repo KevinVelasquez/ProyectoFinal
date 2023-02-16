@@ -20,7 +20,7 @@ class ProductoController extends Controller
     public function index()
     {
         $productos = Producto::paginate(12);
-        $filtro = producto::all();
+        $filtro = Producto::all();
 
         return view('producto.index', compact('productos', 'filtro'))
             ->with('i', (request()->input('page', 1) - 1) * $productos->perPage(12));

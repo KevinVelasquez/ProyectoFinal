@@ -16,10 +16,12 @@
                             </div>
                         </div>
                     </div>
+                    @can('crear-producto')
                         <p>
                             <a class="mdi mdi-plus-circle-multiple-outline" id="iconoadd"
                             href="{{ route('productos.create') }}"></a>
                         </p>
+                        @endcan
                         @if ($message = Session::get('success'))
                             <div class="alert alert-success">
                                 <p>{{ $message }}</p>
@@ -63,13 +65,17 @@
                                                     <div class="card-body" style="padding: 0rem">
                                                         <p class="card-text">{{ $producto->nombre }}</p>
                                                         <div>
+                                                            @can('editar-producto')
                                                             <a class="mdi mdi-lead-pencil"
                                                                 style="height: 28%;width: 17%;color:black"
                                                                 href="{{ route('productos.edit',$producto->id) }}"></a>
+                                                                @endcan
+                                                                @can('borrar-producto')
                                                             <button onclick="eliminarProducto('{{ $producto->id }}')"
                                                                 style="height: 28%;width: 17%;border: none;background-color: white;"
                                                                 class="mdi mdi-delete" data-toggle="modal"
                                                                 data-target="#eliminarmodal"></button>
+                                                                @endcan
                                                         </div>
                                                     </div>
                                                 </div>

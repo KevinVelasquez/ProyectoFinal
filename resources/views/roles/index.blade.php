@@ -45,7 +45,7 @@ Rol
                         @can('borrar-rol')
                         <button onclick="eliminarRol('{{ $role->id }}')" class="mdi mdi-trash-can-outline"
                             data-toggle="modal" data-target="#eliminarmodal"></button>
-                        @endcan 
+                            @endcan
                     </td>
                 </tr>
                 @endforeach
@@ -54,7 +54,7 @@ Rol
     </main>
 </div>
 
-  <!-- modal eliminar producto -->
+  <!-- modal eliminar rol -->
   <div class="modal fade" id="eliminarmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">

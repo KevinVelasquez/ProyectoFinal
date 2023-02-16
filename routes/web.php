@@ -30,7 +30,7 @@ Route::get('productos/search', [App\Http\Controllers\ProductoController::class, 
 Route::delete('productos', [App\Http\Controllers\ProductoController::class, 'eliminarproducto'])->name('productos.eliminarproducto');
 Route::resource('productos', App\Http\Controllers\ProductoController::class);
 
-Route::delete('productos', [App\Http\Controllers\RolController::class, 'eliminarrol'])->name('roles.eliminarrol');
+Route::delete('roles', [App\Http\Controllers\RolController::class, 'eliminarrol'])->name('roles.eliminarrol');
 
 
 
