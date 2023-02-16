@@ -5,8 +5,6 @@ Insumo
 @endsection
 
 @section('content')
-    
-
 <div class="container">
     <main role="main" class="pb-3">
     <div class="content-wrapper">

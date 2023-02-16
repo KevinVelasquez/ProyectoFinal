@@ -2,6 +2,7 @@
 
 @section('template_title')
 Update Proveedor
+Update Proveedor
 @endsection
 
 
@@ -10,7 +11,11 @@ Update Proveedor
 <section class="content container-fluid">
     <div class="">
         <div class="col-md-12">
+<section class="content container-fluid">
+    <div class="">
+        <div class="col-md-12">
 
+            @includeif('partials.errors')
             @includeif('partials.errors')
 
             <div class="card card-default">

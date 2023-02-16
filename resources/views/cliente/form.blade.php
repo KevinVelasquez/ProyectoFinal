@@ -19,8 +19,6 @@
                 </div>
             </div>
         </div>
-
-
         <div class="col-md-6">
             <div class="form-group row">
                 <label for="telefono">Teléfono</label>
@@ -29,7 +27,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-6">
             <div class="form-group row">
                 <label for="email">Correo</label>
@@ -38,7 +35,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-4">
             <div class="form-group row">
                 <label for="tipo_persona">Tipo persona</label>
@@ -55,8 +51,6 @@
                 </div>
             </div>
         </div>
-
-
         <div class="col-md-4">
             <div class="form-group row">
                 <label for="regimen">Régimen</label>
@@ -74,7 +68,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-4">
             <div class="form-group row">
                 <label for="tipo_comercio">Tipo comercio</label>
@@ -91,8 +84,6 @@
                 </div>
             </div>
         </div>
-
-
         <div class="col-md-2">
             <div class="form-group row">
                 <label for="">País</label>
@@ -109,7 +100,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-2">
             <div class="form-group row">
                 <label for="">Departamento</label>
@@ -126,8 +116,6 @@
                 </div>
             </div>
         </div>
-
-
         <div class="col-md-2">
             <div class="form-group row">
                 <label for="id_municipio">Municipio</label>
@@ -144,7 +132,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-6">
             <div class="form-group row">
                 <label for="direccion">Dirección</label>
@@ -153,9 +140,6 @@
                 </div>
             </div>
         </div>
-
-
-
     </div>
     <!-- <div class="box-footer mt20">
         <button type="submit" class="btn btn-primary">Submit</button> -->

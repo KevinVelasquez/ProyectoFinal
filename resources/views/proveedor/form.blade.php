@@ -2,6 +2,7 @@
 
 <div class="box box-info padding-1">
     <div class="row">
+    <div class="row">
 
         <div class="col-md-6">
             <div class="form-group row">
@@ -46,6 +47,11 @@
                 <label for="tipo_persona">Tipo persona</label>
                 <div class="col-sm-7">
                     <select class="form-control" name="tipo_persona" id="tipo_persona">
+        <div class="col-md-4">
+            <div class="form-group row">
+                <label for="tipo_persona">Tipo persona</label>
+                <div class="col-sm-7">
+                    <select class="form-control" name="tipo_persona" id="tipo_persona">
                         <option value="0">Seleccione</option>
                         @forelse($tipo_persona as $tipo_personas)
                         <option value="{{$tipo_personas->id}} ">
@@ -54,12 +60,21 @@
                         @empty <option>No existen</option>
                         @endforelse
                     </select>
+                    </select>
 
+                </div>
+            </div>
+        </div>
                 </div>
             </div>
         </div>
 
 
+        <div class="col-md-4">
+            <div class="form-group row">
+                <label for="regimen">Régimen</label>
+                <div class="col-sm-7">
+                    <select class="form-control" name="regimen" id="regimen">
         <div class="col-md-4">
             <div class="form-group row">
                 <label for="regimen">Régimen</label>
@@ -73,11 +88,20 @@
                         @empty <option>No existen</option>
                         @endforelse
                     </select>
+                    </select>
 
                 </div>
             </div>
         </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="col-md-4">
+            <div class="form-group row">
+                <label for="tipo_comercio">Tipo comercio</label>
+                <div class="col-sm-7">
+                    <select class="form-control" name="tipo_comercio" id="tipo_comercio">
         <div class="col-md-4">
             <div class="form-group row">
                 <label for="tipo_comercio">Tipo comercio</label>
@@ -103,7 +127,7 @@
                 <div class="col-sm-9">
                     <select class="form-control" name="pais" id="pais">
                         <option value="0">Seleccione</option>
-                        @forelse($paises as $pais)
+                        @forelse($pais as $pais)
                         <option value="{{$pais->id}}">
                             {{ $pais->nombre}}
                         </option>
@@ -152,6 +176,9 @@
                 </div>
             </div>
         </div>
+                </div>
+            </div>
+        </div>
 
         <div class="col-md-6">
             <div class="form-group row">
@@ -167,6 +194,7 @@
     </div>
     <!-- <div class="box-footer mt20">
         <button type="submit" class="btn btn-primary">Submit</button> -->
+</div>
 </div>
 
 <div class="box-footer mt20">

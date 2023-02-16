@@ -44,7 +44,7 @@ class ProveedorController extends Controller
     public function create()
     {
         //
-        $paises = Pais::all();
+        $pais = Pais::all();
         $departamentos = Departamento::all();
         $municipios = Municipio::all();
         $tipo_comercio = Tipo_comercio::all();

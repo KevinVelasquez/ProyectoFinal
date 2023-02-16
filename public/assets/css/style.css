@@ -12012,7 +12012,7 @@ textarea.is-invalid.tt-hint {
     color: #001737;
     text-align: center;
     vertical-align: middle;
-    user-select: none;
+    /* user-select: none; */
     background-color: transparent;
     border: 1px solid transparent;
     padding: 0.875rem 1.5rem;
@@ -15473,7 +15473,6 @@ a.close.disabled {
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
     opacity: 0;
     border-radius: 0.25rem;
 }
