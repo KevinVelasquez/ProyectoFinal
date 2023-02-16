@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->binary('imagen');
+            $table->string('imagen');
             $table->integer('estado')->default(1);
+            $table ->timestamps();
         });
     }
 

@@ -11,6 +11,13 @@ use Illuminate\Http\Request;
  */
 class InsumoController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:ver-insumo|crear-insumo|editar-insumo|borrar-insumo,', ['only'=>['index']]);
+        $this->middleware ('permission: crear-insumo', ['only'=>['store']]);
+        $this->middleware ('permission: editar-insumo', ['only'=>['updateInsumos']]);
+        $this->middleware ('permission: borrar-insumo', ['only'=>['eliminarInsumo']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,88 +27,82 @@ class InsumoController extends Controller
     {
         $insumos = Insumo::paginate();
 
-        return view('insumo.index', compact('insumos'))
+            $insumo = Insumo::select('insumos.nombre','insumos.medidas','insumos.id','insumos.estado')
+            
+            ->get();
+        
+            $editarinsumo = Insumo::select(
+                "insumos.nombre",
+                "insumos.medidas",
+                "insumos.estado",
+                "insumos.id"
+                
+            )->get();
+
+            
+                
+            return view('insumo.index', compact('insumos','editarinsumo','insumo'))
             ->with('i', (request()->input('page', 1) - 1) * $insumos->perPage());
+
+            
+        
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+    public function updateInsumos(Request $request)
     {
-        $insumo = new Insumo();
-        return view('insumo.create', compact('insumo'));
+        $input = $request->all();
+        //print_r($input);
+        //exit;
+
+        $actualizar =Insumo::where('id', $input["id"])
+            ->update([
+                'nombre' => $input["nombre"],
+                'medidas' => $input["id_medidas"],
+                'estado' => $input["id_estado"]
+            
+            ]);
+        return redirect()->route('insumos.index')
+            ->with('success', 'Insumo update successfully');
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
+
+    public function anularInsumo(Request $request)
+    {
+        $input = $request->all();
+        Insumo::where('id', $input["idanular"])
+            ->update([
+                'estado' => 0
+            ]);
+        return redirect()->route('insumos.index')
+            ->with('success', 'Status insumo successfully');
+    }
+
+
+   
     public function store(Request $request)
     {
-        request()->validate(Insumo::$rules);
-
-        $insumo = Insumo::create($request->all());
+        
+        //request()->validate(Insumo::$rules);
+        $input=$request->all();
+        $insumo = Insumo::create([
+            "nombre"=>$input["nombre"],
+            "medidas"=>$input["id_medidas"]
+        ]);
 
         return redirect()->route('insumos.index')
             ->with('success', 'Insumo created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    
+
+   
+    public function eliminarInsumo(Request $request)
     {
-        $insumo = Insumo::find($id);
-
-        return view('insumo.show', compact('insumo'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $insumo = Insumo::find($id);
-
-        return view('insumo.edit', compact('insumo'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Insumo $insumo
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Insumo $insumo)
-    {
-        request()->validate(Insumo::$rules);
-
-        $insumo->update($request->all());
-
-        return redirect()->route('insumos.index')
-            ->with('success', 'Insumo updated successfully');
-    }
-
-    /**
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
-     */
-    public function destroy($id)
-    {
-        $insumo = Insumo::find($id)->delete();
+        $input=$request->all();
+        
+        $insumo = Insumo::find($input["ideliminar"])->delete();
 
         return redirect()->route('insumos.index')
             ->with('success', 'Insumo deleted successfully');

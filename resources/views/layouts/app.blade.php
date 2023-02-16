@@ -82,7 +82,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('roles.index') }}">
                   <i class="mdi mdi-settings menu-icon"></i>
                   <span class="menu-title">Configuración</span>
                 </a>
@@ -119,7 +119,7 @@
                 <div class="collapse" id="form-elements">
                   <ul class="nav flex-column ">
                     <li class="nav-item"><a class="nav-link" href="#">Clientes</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Productos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('productos.index')}}">Productos</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('pedidos.index') }}">Pedidos</a></li>
                   </ul>
                 </div>
