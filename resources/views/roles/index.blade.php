@@ -40,7 +40,7 @@ Rol
                             } ?></td>
                     <td>
                         @can('editar-rol')
-                        <button class="mdi mdi-lead-pencil" href="{{ route('roles.edit',$role->id) }}"></button>
+                        <a href="{{ route('roles.edit',$role->id) }}"><button class="mdi mdi-lead-pencil"></button></a>
                         @endcan
                         @can('borrar-rol')
                         <button onclick="eliminarRol('{{ $role->id }}')" class="mdi mdi-trash-can-outline"

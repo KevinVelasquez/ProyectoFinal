@@ -29,6 +29,7 @@ Update Producto
                 <input type="file" name="imagen" id="imagen" class="form-control" style="margin-top: 2%;" />
             </div>
             <div>
+            <label class="control-label">Estado</label>
                 <select class="form-control" name="estado" id="editarEstado" required>
                     <option value="1">Disponible</option>
                     <option value="0">No disponible</option>
@@ -36,8 +37,9 @@ Update Producto
             </div>
 
 
-            <div class="box-footer mt20">
+            <div class="box-footer mt20" >
                 <button type="submit" class="btn btn-primary">Actualizar</button>
+                <a class="btn btn-primary" href="{{ route('productos.index')}}" style="margin: 10px;  margin-top: 7%;">Cancelar</a>
             </div>
 
 

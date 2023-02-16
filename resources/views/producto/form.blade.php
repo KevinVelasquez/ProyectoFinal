@@ -17,6 +17,8 @@
 
         <div class="box-footer mt20">
             <button type="submit" class="btn btn-primary">Crear</button>
+            <a class="btn btn-primary" href="{{ route('productos.index')}}" style="margin: 10px;  margin-top: 7%;">Cancelar</a>
+            </div>
         </div>
     </div>
 </div>
