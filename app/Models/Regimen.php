@@ -5,20 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Municipio extends Model
+class Regimen extends Model
 {
+
+    protected $table='Regimen';
+    
     use HasFactory;
     
     public $fillable=[
-        "nombre",
-        "id_departamento"
+        "nombre"
     ];
 
     public $timestamps = false;
-    public function pedidos()
-    {
-       return $this->hasMany(\App\Models\Pedido::class, 'id');
-    }
 
     public function clientes()
     {

@@ -19,4 +19,14 @@ class Departamento extends Model
     {
        return $this->hasMany(\App\Models\Pedido::class, 'id');
     }
+
+    public function clientes()
+    {
+       return $this->hasMany(\App\Models\Cliente::class, 'id');
+    }
+
+    public function proveedores()
+    {
+       return $this->hasMany(\App\Models\Proveedor::class, 'id');
+    }
 }

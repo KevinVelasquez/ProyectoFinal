@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pais;
+use App\Models\Departamento;
+use App\Models\Municipio;
+use App\Models\Regimen;
+use App\Models\Tipo_comercio;
+use App\Models\Tipo_persona;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
 
-/**
- * Class ClienteController
- * @package App\Http\Controllers
- */
 class ClienteController extends Controller
 {
     /**
@@ -18,11 +20,17 @@ class ClienteController extends Controller
      */
     public function index()
     {
+        //
+        
+        // $datos ['clientes']= Cliente::paginate(5);
+        // return view('cliente.index',$datos);
+   
         $clientes = Cliente::paginate();
 
         return view('cliente.index', compact('clientes'))
             ->with('i', (request()->input('page', 1) - 1) * $clientes->perPage());
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -31,79 +39,128 @@ class ClienteController extends Controller
      */
     public function create()
     {
+        //
+        $paises = Pais::all();
+        $departamentos = Departamento::all();
+        $municipios = Municipio::all();
+        $tipo_comercio = Tipo_comercio::all();
+        $tipo_persona = Tipo_persona::all();
+        $regimen = Regimen::all();
         $cliente = new Cliente();
-        return view('cliente.create', compact('cliente'));
+        return view('cliente.create', compact('cliente','paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        request()->validate(Cliente::$rules);
+        //
+        // $datosCliente = request()->all();
 
-        $cliente = Cliente::create($request->all());
+        $datosCliente = request()->except('_token','pais','departamento');
+        Cliente::insert($datosCliente);
 
-        return redirect()->route('clientes.index')
-            ->with('success', 'Cliente created successfully.');
+        return redirect('cliente')
+            ->with('mensaje', 'cliente creado con éxito.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  \App\Models\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function updateStatusCliente(cliente $cliente)
     {
-        $cliente = Cliente::find($id);
+        //
 
-        return view('cliente.show', compact('cliente'));
+    if($cliente->estado == 1)  {
+        $cliente->update(['estado'=>0]);
+            return redirect()->back();
+
+        $cliente = '<br> <button type="button" class="btn btn-sm btn-danger">Inactivo</button>';
+
+    }else{
+        $cliente->update(['estado'=>1]);
+        return redirect()->back();
+
+        $cliente ='<br> <button type="button" class="btn btn-sm btn-success">Activo</button>';
     }
+
+    }
+    
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  \App\Models\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $cliente = Cliente::find($id);
-
-        return view('cliente.edit', compact('cliente'));
+        //
+        
+        $paises = Pais::all();
+        $departamentos = Departamento::all();
+        $municipios = Municipio::all();
+        $tipo_comercio = Tipo_comercio::all();
+        $tipo_persona = Tipo_persona::all();
+        $regimen = Regimen::all();
+        $clienteEstado = Cliente::find($id);
+        $cliente =Cliente::findOrFail($id);
+        return view('cliente.edit', compact('cliente','paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen','clienteEstado'));
+    
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Cliente $cliente
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Cliente $cliente)
     {
-        request()->validate(Cliente::$rules);
+        //
+        // $datosCliente = request()->except(['_token','pais','departamento','_method']);
+        // Cliente::where('id', '=', $id)->update($datosCliente);
+
+        // $paises = Pais::all();
+        // $departamentos = Departamento::all();
+        // $municipios = Municipio::all();
+        // $tipo_comercio = Tipo_comercio::all();
+        // $tipo_persona = Tipo_persona::all();
+        // $regimen = Regimen::all();
+        // $cliente =Cliente::findOrFail($id);
+        // return view('cliente.edit', compact ('cliente','paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
 
         $cliente->update($request->all());
 
-        return redirect()->route('clientes.index')
+        return redirect()->route('cliente.index')
             ->with('success', 'Cliente updated successfully');
+            
+        
     }
 
     /**
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Cliente  $cliente
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $cliente = Cliente::find($id)->delete();
+        //
+       // Cliente::destroy($id);
+        // return redirect('cliente');
 
-        return redirect()->route('clientes.index')
-            ->with('success', 'Cliente deleted successfully');
+       $cliente = Cliente::find($id)->delete();
+
+       return redirect('cliente')
+       ->with('mensaje', 'Proveedor eliminado con éxito.');
     }
 }

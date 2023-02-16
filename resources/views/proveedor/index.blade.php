@@ -1,81 +1,130 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Proveedor
+Proveedor
 @endsection
 
 @section('content')
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
+<div class="container">
+    <main role="main" class="pb-3">
+        <p>
+            <a class="mdi mdi-cart-outline" id="iconoadd" href="{{ route('proveedor.create') }}"></a>
+        </p>
 
-                            <span id="card_title">
-                                {{ __('Proveedor') }}
-                            </span>
+        <table id="proveedores" class="table table-striped dt-responsive nowrap table" style="width:100%">
+            <thead>
+                <tr>
 
-                             <div class="float-right">
-                                <a href="{{ route('proveedors.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
-                                </a>
-                              </div>
-                        </div>
-                    </div>
-                    @if ($message = Session::get('success'))
-                        <div class="alert alert-success">
-                            <p>{{ $message }}</p>
-                        </div>
+
+                    <th>Cedula</th>
+                    <th>Nombre</th>
+                    <th>Telefono</th>
+                    <th>Direccion</th>
+                    <th>Email</th>
+                    <th>Tipo Persona</th>
+                    <th>SaldoPendiente</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach ($proveedores as $proveedor)
+                <tr>
+
+                    <td>{{ $proveedor->cedula }}</td>
+                    <td>{{ $proveedor->nombre }}</td>
+                    <td>{{ $proveedor->telefono }}</td>
+                    <td>{{ $proveedor->direccion }}</td>
+                    <td>{{ $proveedor->email }}</td>
+                    @if ($proveedor->tipo_persona==1)
+                    <td>Juridico</td>
+                    @else
+                    <td>Natural</td>
                     @endif
 
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead class="thead">
-                                    <tr>
-                                        <th>No</th>
-                                        
-										<th>Cedula</th>
-										<th>Nombre</th>
-										<th>Telefono</th>
-										<th>Direccion</th>
-										<th>Email</th>
-										<th>Estado</th>
+                    <td>0</td>
+                    <!-- <td>
+                        @if($proveedor->estado == 1)
+                        <button type="button" class="btn btn-sm btn-success">Activo</button>
+                        @else
+                        <button type="button" class="btn btn-sm btn-danger">Inactivo</button>
+                        @endif
 
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($proveedors as $proveedor)
-                                        <tr>
-                                            <td>{{ ++$i }}</td>
-                                            
-											<td>{{ $proveedor->cedula }}</td>
-											<td>{{ $proveedor->nombre }}</td>
-											<td>{{ $proveedor->telefono }}</td>
-											<td>{{ $proveedor->direccion }}</td>
-											<td>{{ $proveedor->email }}</td>
-											<td>{{ $proveedor->estado }}</td>
+                    </td> -->
 
-                                            <td>
-                                                <form action="{{ route('proveedors.destroy',$proveedor->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('proveedors.show',$proveedor->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('proveedors.edit',$proveedor->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                {!! $proveedors->links() !!}
-            </div>
-        </div>
-    </div>
+                    <td>
+                        <?php if ($proveedor->estado == 1) {
+                            echo 'Activo';
+                        } else {
+                            echo 'Inactivo';
+                        }  ?></td>
+                    
+                    <td>
+
+                        <a href="{{ url('/proveedor/'.$proveedor->id.'/edit') }}"><button class="mdi mdi-lead-pencil"></button></a>
+
+                        <!-- Button trigger modalvisualizar facturas -->
+                        <a href="{{ route('proveedor.show', $proveedor->id) }}"><button class="mdi mdi-format-align-left"></button></a>
+
+
+
+                        <form action="{{ url('/proveedor/'.$proveedor->id) }}" method="POST">
+
+
+                            @csrf
+                            {{ method_field('DELETE') }}
+                            <a data-toggle="modal" data-target="#eliminar"><button class="mdi mdi-trash-can-outline"></button></a>
+
+                            <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Proveedor</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ¿Está seguro que desea eliminar el proveedor?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="submit" value="Sí" class="btn btn-primary btn-lg active" role="button" aria-hidden="true">
+
+                                            <a href="{{ route('proveedor.index') }}" class="btn btn-primary btn-lg active" role="button" data-dismiss="modal">No</a>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+
+</div>
+
+
+{!! $proveedores->links() !!}
+
+
+<!-- scripts -->
+
+<script>
+    $(document).ready(function() {
+        $('#proveedores').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            }
+        });
+    });
+</script>
+
+
+
+
 @endsection
