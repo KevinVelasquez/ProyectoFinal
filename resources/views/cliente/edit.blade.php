@@ -122,10 +122,10 @@ Update Cliente
                                 </div>
 
 
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                     <div class="form-group row">
                                         <label for="">País</label>
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-7">
                                             <select class="form-control" name="pais" id="pais">
                                                 <option value="0">Seleccione</option>
                                                 @forelse($paises as $pais)
@@ -139,7 +139,7 @@ Update Cliente
                                     </div>
                                 </div>
 
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                     <div class="form-group row">
                                         <label for="">Departamento</label>
                                         <div class="col-sm-7">
@@ -157,10 +157,10 @@ Update Cliente
                                 </div>
 
 
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                     <div class="form-group row">
                                         <label for="id_municipio">Municipio</label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-7">
                                             <select class="form-control" name="id_municipio" id="id_municipio">
                                                 <option value="0">Seleccione</option>
                                                 @forelse($municipios as $municipio)
@@ -183,7 +183,17 @@ Update Cliente
                                     </div>
                                 </div>
 
-
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label for="estado">Estado</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="estado" id="editarEstado" required>
+                                                <option value="1">Activo</option>
+                                                <option value="0">Inactivo</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
                             
@@ -202,5 +212,13 @@ Update Cliente
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            let cliente = {!! $clienteEstado->estado !!}
+            $('#editarEstado').val(`${cliente}`)
+        })
+    </script>
+
 </section>
 @endsection

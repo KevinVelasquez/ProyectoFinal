@@ -276,4 +276,6 @@ class PedidoController extends Controller
             ->with('success', 'Status pedido successfully');
     }
 
+    
+
 }

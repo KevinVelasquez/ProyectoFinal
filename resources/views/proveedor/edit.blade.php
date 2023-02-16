@@ -126,10 +126,10 @@ Update Proveedor
                                 </div>
 
 
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                     <div class="form-group row">
                                         <label for="pais">País</label>
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-7">
                                             <select class="form-control" name="pais" id="pais">
                                                 <option value="0">Seleccione</option>
                                                 @forelse($paises as $pais)
@@ -144,7 +144,7 @@ Update Proveedor
                                     </div>
                                 </div>
 
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                     <div class="form-group row">
                                         <label for="departamento">Departamento</label>
                                         <div class="col-sm-7">
@@ -163,10 +163,10 @@ Update Proveedor
                                 </div>
 
 
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                     <div class="form-group row">
                                         <label for="id_municipio">Municipio</label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-7">
                                             <select class="form-control" name="id_municipio" id="id_municipio">
 
                                                 <option value="0">Seleccione</option>
@@ -192,6 +192,18 @@ Update Proveedor
                                 </div>
 
 
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label for="estado">Estado</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="estado" id="editarEstado" required>
+                                                <option value="1">Activo</option>
+                                                <option value="0">Inactivo</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                             </div>
 
@@ -214,6 +226,14 @@ Update Proveedor
 
         </div>
     </div>
-    
+
+
+    <script>
+        $(document).ready(function() {
+            let proveedor = {!! $proveedorEstado->estado !!}
+            $('#editarEstado').val(`${proveedor}`)
+        })
+    </script>
+
 </section>
 @endsection

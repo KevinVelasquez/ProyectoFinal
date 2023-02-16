@@ -16,17 +16,16 @@ use App\Http\Controllers\CalendarioController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//RUTAS HOME
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-
 Auth::routes();
-
-
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//RUTAS PEDIDOS 
 
 Route::resource('pedidos', App\Http\Controllers\PedidoController::class);
 Route::put('pedidos', [PedidoController::class, 'updatePedido'])->name('pedidos.updatePedido');
@@ -37,17 +36,9 @@ Route::post('pedido', [App\Http\Controllers\PagoClienteController::class,'agrega
 Route::put('pedido', [App\Http\Controllers\PagoClienteController::class,'anularAbono'])->name('anularAbono');
 Route::get('abono-pdf', [App\Http\Controllers\PDFController::class, 'abonoPDF'])->name('abono-pdf');
 
-
-
-
+//RUTAS FIGURAS
 
 Route::resource('figuras', App\Http\Controllers\FiguraController::class);
-Route::resource('clientes', App\Http\Controllers\ClienteController::class);
-Route::resource('Proveedor', App\Http\Controllers\ProveedorController::class);
-Route::resource('insumos', App\Http\Controllers\InsumoController::class);
-
-
-
 
 
 

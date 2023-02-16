@@ -45,28 +45,14 @@ Cliente
                     @endif
                     
                     <td>150000</td>
-                    @if ($cliente->estado==1)
                     <td>
-                        <a class="btn btn-sm btn-success" type="button" href="{{route('updateStatusCliente', $cliente)}}">Activo <i class="mdi mdi-check" ></i></a>
-                    </td>
-                    @else
-                    <td>
-                        <a class="btn btn-sm btn-danger" type="button" href="{{route('updateStatusCliente', $cliente)}}">Inactivo <i class="mdi mdi-window-close" ></i></a>
-                    </td>
-                    @endif
-
-
-
-
-
-                    <!-- <input value="{{ $cliente->estado }}" data-id="{{ $cliente->id }}" class="mi_checkbox" type="checkbox" id="switch" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $cliente->estado ? 'checked' : '' }}>
-                    <label for="switch" class="lbl">
+                        <?php if ($cliente->estado == 1) {
+                            echo 'Activo';
+                        } else {
+                            echo 'Inactivo';
+                        }  ?></td>
                     
-                    </label> -->
-
-
-
-
+                    
                     <td>
 
                         <a href="{{ url('/cliente/'.$cliente->id.'/edit') }}"><button class="mdi mdi-lead-pencil"></button></a>

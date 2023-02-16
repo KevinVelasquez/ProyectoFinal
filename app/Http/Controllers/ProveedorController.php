@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Pais;
 use App\Models\Departamento;
 use App\Models\Municipio;
@@ -24,7 +25,7 @@ class ProveedorController extends Controller
     public function index()
     {
         //
-        
+
         // $datos ['proveedores']= Proveedor::paginate(5);
         // return view('proveedor.index',$datos);
 
@@ -32,7 +33,6 @@ class ProveedorController extends Controller
 
         return view('proveedor.index', compact('proveedores'))
             ->with('i', (request()->input('page', 1) - 1) * $proveedores->perPage());
-    
     }
 
 
@@ -51,7 +51,7 @@ class ProveedorController extends Controller
         $tipo_persona = Tipo_persona::all();
         $regimen = Regimen::all();
         $proveedor = new Proveedor();
-        return view('proveedor.create', compact('proveedor','paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
+        return view('proveedor.create', compact('proveedor', 'paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
     }
 
     /**
@@ -88,12 +88,11 @@ class ProveedorController extends Controller
 
         // $this->validate($request, $campos, $mensaje);
 
-        $datosProveedor = request()->except('_token','pais','departamento');
+        $datosProveedor = request()->except('_token', 'pais', 'departamento');
         Proveedor::insert($datosProveedor);
 
         return redirect('proveedor')
             ->with('mensaje', 'Proveedor creado con éxito.');
-        
     }
 
     /**
@@ -104,16 +103,14 @@ class ProveedorController extends Controller
      */
     public function show($id)
     {
-        $proveedor =Proveedor::find($id);
+        $proveedor = Proveedor::find($id);
         return view('proveedor.show', $proveedor);
-
-       
     }
 
     public function pdf()
     {
         //
-        $proveedor =Proveedor::paginate();
+        $proveedor = Proveedor::paginate();
         $pdf = PDF::loadView('proveedor.pdf', ['proveedor' => $proveedor]);
         return $pdf->stream();
     }
@@ -134,9 +131,9 @@ class ProveedorController extends Controller
         $tipo_comercio = Tipo_comercio::all();
         $tipo_persona = Tipo_persona::all();
         $regimen = Regimen::all();
-        $proveedor =Proveedor::findOrFail($id);
-        return view('proveedor.edit', compact('proveedor','paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
-   
+        $proveedorEstado = Proveedor::find($id);
+        $proveedor = Proveedor::findOrFail($id);
+        return view('proveedor.edit', compact('proveedor', 'paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen', 'proveedorEstado'));
     }
 
     /**
@@ -178,44 +175,12 @@ class ProveedorController extends Controller
         //
         $proveedor = Proveedor::find($id)->delete();
 
-        
-            return redirect('proveedor')
+
+        return redirect('proveedor')
             ->with('mensaje', 'Proveedor eliminado con éxito.');
     }
 
 
-    public function updateStatusProveedor(Request $request){ 
-
-       $updateStatus = Proveedor::findOrFail($request->id)->update(['estado' => $request->estado]); 
     
-        if($request->estado == 1)  {
-             $newStatus ='<br> <button type="button" class="btn btn-sm btn-success">Activa</button>';
-        }else{
-             $newStatus = '<br> <button type="button" class="btn btn-sm btn-danger">Inactiva</button>';
-         }
-    
-        return response()->json(['var'=>''.$newStatus.'']);
-         }
-
-    // public function update_status(){
-    //     abort_if(Gate::denies('Editar_estado_proveedor'), 401);
-    //     $id = $_POST['id'];
-    //     $activo = isset($_POST['Activo']);
-    //     $campos = request()->validate([
-    //         'estado' =>' '
-    //     ]);
-    //     if($activo=="Activo"){
-    //         DB::update("UPDATE proveedor SET estado ='Inactivo' WHERE id='".$id."'");
-    //         return redirect()->route('proveedor.index');
-
-
-
-    //     }else{
-    //         DB::update("UPDATE proveedor SET estado ='Activo' WHERE id ='".$id."'");
-    //         return redirect()->route('proveedor.index');
-
-    //     }
-
-    // }
 
 }

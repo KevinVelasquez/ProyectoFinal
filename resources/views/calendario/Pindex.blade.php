@@ -32,6 +32,19 @@ Calendario
         });
         calendar.render();
     });
+
+    
+
+
+
+    $(document).ready(function() {
+    $('#calendar').fullCalendar({
+        events: JSON.parse('{!! htmlspecialchars(json_encode($orders)) !!}'),
+      eventClick: function(event) {
+        alert(event.title);
+      }
+    });
+  });
 </script>
 
 

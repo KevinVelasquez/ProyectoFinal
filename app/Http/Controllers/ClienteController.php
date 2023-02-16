@@ -110,8 +110,9 @@ class ClienteController extends Controller
         $tipo_comercio = Tipo_comercio::all();
         $tipo_persona = Tipo_persona::all();
         $regimen = Regimen::all();
+        $clienteEstado = Cliente::find($id);
         $cliente =Cliente::findOrFail($id);
-        return view('cliente.edit', compact('cliente','paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
+        return view('cliente.edit', compact('cliente','paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen','clienteEstado'));
     
     }
 
