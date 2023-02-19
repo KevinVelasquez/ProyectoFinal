@@ -76,6 +76,7 @@ class RolController extends Controller
     public function edit($id)
     {
         $role = Role::find($id);
+        $rolestado= Role::find($id);
         $permission = Permission::get();
         $rolePermissions = DB::table('role_has_permissions')->where('role_has_permissions.role_id',$id)
         ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
@@ -96,7 +97,8 @@ class RolController extends Controller
         $this->validate($request, ['name'=>'required', 'permission'=>'required']);
 
         $role = Role::find($id);
-        $role->name =$reuest->input('name');
+        $role->name =$request->input('name');
+        $role->estado =$request->input('estado');
         $role->save();
 
         $role->syncPermissions($request->input('permission'));

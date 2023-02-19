@@ -1,15 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container" style="width:100%">
+<div class="container" style="width:70%">
     <main role="main" class="pb-3">
         <h1>Actualizar Rol</h1>
         <hr />
-        <!-- 
-        <form method="POST" action="{{route('roles.store')}}" role="form" enctype="multipart/form-data"
-            class="form-sample needs-validation" novalidate>
-            @csrf -->
-        {!!Form::open(array('route'=>'roles.store','method'=>'POST'))!!}
+
+        {!!Form::model($role,['method'=>'PATCH','route'=>['roles.update',$role->id]])!!}
         <div class="box box-info padding-1">
             <div class="box-body">
                 <div class="form-group">
@@ -20,40 +17,62 @@
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
                 </div>
-
-                <input type="checkbox" id="select-all" /> Seleccionar todos
-                <hr>
-
-                <table id="roles" class="table table-striped dt-responsive nowrap table" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th class="col-md-1 "><label>Seleccione</label></th>
-                            <th> <label for="">Permisos para este Rol:</label></th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($permission as $value)
-                        <tr>
-                            <td>{{Form::checkbox('permission[]', $value->id, false, array('class'=>'name'))}}</td>
-                            <td>{{ ucwords(str_replace('-',' ', $value->name )) }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                @error('permission')
+                <div class="form-group">
+                    <label for="">
+                        <label class="control-label">Estado</label>
+                        <select class="form-control" name="estado" id="editarEstado" style="width:170%" required>
+                            <option value="1">Disponible</option>
+                            <option value="0">No disponible</option>
+                        </select>
+                        @error('estado')
                 <div class="text-danger">{{ $message }}</div>
                 @enderror
-
-                <br>
-                <button type="submit" class="btn btn-primary ">Crear</button>
-                <button onclick="history.back()" type="button" class="btn btn-primary">Cancelar</button>
             </div>
+
+            <input type="checkbox" id="select-all" /> Seleccionar todos
+            <hr>
+
+            <table id="roles" class="table table-striped dt-responsive nowrap table" style="width:100%">
+                <thead>
+                    <tr>
+                        <th class="col-md-1 "><label>Seleccione</label></th>
+                        <th> <label for="">Permisos para este Rol:</label></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($permission as $value)
+                    <tr>
+                        <td>
+                            <label>
+                                {{Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions))}}
+                            </label>
+                        </td>
+                        <td>{{ ucwords(str_replace('-',' ', $value->name )) }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            @error('permission')
+            <div class="text-danger">{{ $message }}</div>
+            @enderror
+
+            <br>
+            <button type="submit" class="btn btn-primary ">Actualizar</button>
+            <button onclick="history.back()" type="button" class="btn btn-primary">Cancelar</button>
         </div>
-        {!!Form::close()!!}
-    </main>
+</div>
+{!!Form::close()!!}
+</main>
 </div>
 
+
+<script>
+$(document).ready(function() {
+    let roles =  {!! $role->estado !!}
+    $('#editarEstado').val(`${roles}`)
+})
+</script>
 
 <script>
 $(document).ready(function() {
