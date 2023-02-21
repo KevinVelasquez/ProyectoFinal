@@ -36,7 +36,8 @@
                                                     <div class="col-md-2 p-1">
                                                         <div class="card">
                                                             <img class="card-img-top"
-                                                                src="{{ asset('/storage/images/figuras/' . $figura->imagen) }}"
+                                                                src="http://127.0.0.1:8000/storage/images/figuras/{{$figura->imagen}}"
+                                                                {{-- src="{{ asset('/storage/images/figuras/' . $figura->imagen) }}" --}}
                                                                 alt="Card image cap"
                                                                 data-bs-toggle="modal"data-bs-target="#modalimagen<?php echo $figura->id; ?>">
                                                             <div id="activ" class="dispo<?php echo $figura->estado; ?>"></div>
@@ -48,7 +49,7 @@
                                                                     style="max-width: 445px;">
                                                                     <div class="modal-content">
                                                                         <img
-                                                                            src="{{ asset('/storage/images/figuras/' . $figura->imagen) }}">
+                                                                src="http://127.0.0.1:8000/storage/images/figuras/{{$figura->imagen}}">       
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -96,7 +97,7 @@
                             <div>¿Está seguro que desea eliminar la figura?</div>
                             <input type="hidden" name="ideliminar" id="ideliminar" />
                             <button type="submit" class="btn btn-primary">Si</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                            <button type="button" class="btn btn-danger" style="margin-top:5%" data-dismiss="modal">No</button>
                         </form>
                     </div>
                 </div>

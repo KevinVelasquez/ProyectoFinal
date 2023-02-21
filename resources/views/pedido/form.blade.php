@@ -67,6 +67,12 @@
             <div class="col-sm-7">
                 <select class="form-control" name="departamento" id="departamento" onchange="filtrarMunicipios()">
                     <option selected disabled value="">Seleccione</option>
+                    @forelse($departamentos  as $departamento)
+                        <option value="{{ $departamento->id }}">
+                            {{ $departamento->nombre }}
+                        </option>
+                    @empty <option>No existen</option>
+                    @endforelse
                 </select>
             </div>
         </div>
@@ -77,6 +83,12 @@
             <div class="col-sm-8">
                 <select class="form-control" name="id_municipio" id="municipio">
                     <option selected disabled value="">Seleccione</option>
+                    @forelse($municipios  as $municipio)
+                        <option value="{{ $municipio->id }}">
+                            {{ $municipio->nombre }}
+                        </option>
+                    @empty <option>No existen</option>
+                    @endforelse
                 </select>
             </div>
         </div>
@@ -213,11 +225,11 @@
             <div class="col-sm-9">
                 <input id="descripcion" class="form-control" style="height:5%" />
                 <a type="button" class="mdi mdi-plus-circle" style="color:green;font-size:400%;margin-left:40%"
-                id="agregarprodu"></a>
+                    id="agregarprodu"></a>
             </div>
         </div>
     </div>
-    
+
 </div>
 
 
@@ -362,9 +374,7 @@
         let idseleccion = $("#id_cliente").val();
         if (idseleccion != 0) {
             let usuarioseleccion = [];
-
             let usuario = <?php echo $cliente; ?>;
-
             usuario.forEach(function(value, index) {
                 usuarioseleccion[index] = value;
 
@@ -377,14 +387,28 @@
                     if (usuarioseleccion[index].tipo_comercio == 2) {
                         $("#tipo_persona").val("Minorista");
                     }
+                    $("#municipio").val(usuarioseleccion[index].id_municipio);
+                    let idmunicipio = usuarioseleccion[index].id_municipio;
                     $("#direccion").val(usuarioseleccion[index].direccion);
+
+                    let todoMunicipios = <?php echo $municipios; ?>;
+                    let idDepartMunici = todoMunicipios.find(item => item.id == idmunicipio)
+                    let iddepartamento = `${idDepartMunici.id_departamentos}`
+                    let departament = <?php echo $departamentos; ?>;
+                    let depa = departament.find(item => item.id == iddepartamento)
+                    $('#departamento').val(`${depa.id}`);
+                    let idpaisdepa = `${depa.id_paises}`;
+                    let todoPaises = <?php echo $paises; ?>;
+                    let paises = todoPaises.find(item => item.id == idpaisdepa)
+                    $('#pais').val(`${paises.id}`);
+                    
+
                 }
             });
 
             listarFiguras(idseleccion);
 
         }
-
     }
 
     function listarFiguras(id) {
@@ -432,6 +456,7 @@
             paisseleccion[index] = value;
             if (paisseleccion[index].id_paises == pais) {
                 $("#departamento").append(`
+                <option selected disabled value="">Seleccione</option>
                     <option value="${paisseleccion[index].id}"/>${paisseleccion[index].nombre}
                     `);
             }
@@ -449,6 +474,7 @@
             departamentoseleccion[index] = value;
             if (departamentoseleccion[index].id_departamentos == departamento) {
                 $("#municipio").append(`
+                <option selected disabled value="">Seleccione</option>
                 <option value="${departamentoseleccion[index].id}"/>${departamentoseleccion[index].nombre}
                 `);
             }
@@ -501,7 +527,9 @@
                 }, false)
             })
     })()
+
+
     function resetForm(formpedidos) {
-    document.getElementById(formpedidos).reset();
-}
+        document.getElementById(formpedidos).reset();
+    }
 </script>

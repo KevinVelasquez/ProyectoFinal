@@ -170,8 +170,7 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Estado</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-control" name="proceso" id="editarproceso"
-                                                        required>
+                                                    <select class="form-control" name="proceso" id="editarproceso" required>
                                                         <option value="0">Pendiente</option>
                                                         <option value="1">Despachado</option>
                                                         <option value="2">Entregado</option>
@@ -181,7 +180,8 @@
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Actualizar</button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-danger" style="margin-top: 5%;"
+                                        data-dismiss="modal">Cancelar</button>
                                 </form>
                             </div>
                         </div>
@@ -380,7 +380,9 @@
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="totalpedidoresta">
-                    <form role="form" method="POST"  action="{{ route('agregarAbono') }}" enctype="multipart/form-data" class="form-sample needs-validation" onsubmit="return validarMonto()" novalidate>
+                    <form role="form" method="POST" action="{{ route('agregarAbono') }}"
+                        enctype="multipart/form-data" class="form-sample needs-validation"
+                        onsubmit="return validarMonto()" novalidate>
                         @csrf
                         <input type="hidden" name="id" id="idpedidoabonar" />
                         <div class="row">
@@ -415,7 +417,7 @@
                 </div>
                 <div class="botonestabla" style="text-align: center;">
                     <button type="submit" id="agregarAbono" class="btn btn-primary">Agregar</button>
-                    <button type="button" class="btn btn-primary">Cancelar</button>
+                    <button type="button" class="btn btn-danger" style="margin-top:5%;">Cancelar</button>
                 </div>
                 </form>
                 <br>
@@ -474,7 +476,8 @@
                         <input type="hidden" name="idpedidoabono" id="idpedidoabono" />
                         <input type="hidden" name="anulardato" value="2" />
                         <button type="submit" class="btn btn-primary">Si</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger"
+                            style="margin-top:5%;"data-dismiss="modal">No</button>
                     </form>
                 </div>
             </div>
@@ -587,7 +590,7 @@
                     let preciototal = `${value.totalpedido}`
                     let restatotal = preciototal - resta
                     $('#resta').text(`RESTA ${restatotal}`)
-                    $('#agregarAbono').attr(`disabled`,!restatotal)
+                    $('#agregarAbono').attr(`disabled`, !restatotal)
                     $('#resta').val(`${restatotal}`)
                     $("#tablaabonos tbody").append(fila)
                 }
@@ -615,6 +618,48 @@
             let idpedido = `${editardatos.id}`;
 
         }
+
+        // verificacion de proceso
+        var select = document.getElementById("editarproceso");
+        var inputs = document.querySelectorAll("#editardireccion, #editarfechaentrega, #editarmetodoentrega");
+
+        var selectValue = localStorage.getItem("editarproceso-value") || sessionStorage.getItem("editarproceso-value");
+        if (selectValue != null) {
+            select.value = selectValue;
+        }
+
+        if (select.value === "0") {
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].readOnly = false;
+            }
+        } else {
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].readOnly = true;
+            }
+        }
+
+        select.addEventListener("change", function() {
+            if (select.value === "0") {
+                for (var i = 0; i < inputs.length; i++) {
+                    inputs[i].readOnly = false;
+                }
+            } else {
+                for (var i = 0; i < inputs.length; i++) {
+                    inputs[i].readOnly = true;
+                }
+            }
+
+            if (typeof(Storage) !== "undefined") {
+                if (localStorage) {
+                    localStorage.setItem("editarproceso-value", select.value);
+                } else {
+                    sessionStorage.setItem("editarproceso-value", select.value);
+                }
+            }
+        });
+
+
+
 
         function anularPedido(id) {
             let consulta = {!! $editarpedido !!}
@@ -667,16 +712,17 @@
         function validarMonto() {
             var input = document.getElementById("cantidadabono").value;
             var resta = document.getElementById("resta").value
-                if (input > resta) {
-                    alert("El abono no puede superar la cantidad de " + resta);
-                    return false;
-                }
-                return true;
+            if (input > resta) {
+                alert("El abono no puede superar la cantidad de " + resta);
+                return false;
+            }
+            return true;
         }
 
         function descargarAbonoPedido(idabono, idpedido, fecha) {
             window.open('abono-pdf?' + 'idabono=' + idabono + '&idpedido=' + idpedido + '&fecha=' + fecha);
         }
+
 
         (function() {
             'use strict'
