@@ -48,7 +48,7 @@
         <div class="form-group row">
             <label class="control-label">País</label>
             <div class="col-sm-9">
-                <select class="form-control" name="pais" id="pais" onchange="filtrarDepartamentos()">
+                <select class="form-control" name="pais" id="pais" onchange="filtrarDepartamentos()" required>
                     <option selected disabled value="">Seleccione</option>
                     @forelse($paises  as $pais)
                         <option value="{{ $pais->id }}">
@@ -65,7 +65,7 @@
         <div class="form-group row">
             <label class="control-label">Departamento</label>
             <div class="col-sm-7">
-                <select class="form-control" name="departamento" id="departamento" onchange="filtrarMunicipios()">
+                <select class="form-control" name="departamento" id="departamento" onchange="filtrarMunicipios()" required>
                     <option selected disabled value="">Seleccione</option>
                     @forelse($departamentos  as $departamento)
                         <option value="{{ $departamento->id }}">
@@ -81,7 +81,7 @@
         <div class="form-group row">
             <label class="control-label">Municipio</label>
             <div class="col-sm-8">
-                <select class="form-control" name="id_municipio" id="municipio">
+                <select class="form-control" name="id_municipio" id="municipio" required>
                     <option selected disabled value="">Seleccione</option>
                     @forelse($municipios  as $municipio)
                         <option value="{{ $municipio->id }}">
