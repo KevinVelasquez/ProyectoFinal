@@ -710,8 +710,8 @@
 
 
         function validarMonto() {
-            var input = document.getElementById("cantidadabono").value;
-            var resta = document.getElementById("resta").value
+            var input = parseInt(document.getElementById("cantidadabono").value);
+            var resta = parseInt(document.getElementById("resta").value)
             if (input > resta) {
                 alert("El abono no puede superar la cantidad de " + resta);
                 return false;

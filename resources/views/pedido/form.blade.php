@@ -1,5 +1,5 @@
 <h4>Información Cliente</h4>
-<input type="hidden" name="total" id="total" />
+
 <div class="row">
     <div class="col-md-3">
         <div class="form-group row">
@@ -229,7 +229,7 @@
             </div>
         </div>
     </div>
-
+    <input  name="total" id="total" />
 </div>
 
 
@@ -368,6 +368,8 @@
         let nuevototal = (parseInt(preciototal) - subtotal);
         $("#totalpedido").val(nuevototal);
         document.getElementById('totalpedido').innerHTML = nuevototal;
+        document.getElementById('total').value = nuevototal;
+
     }
 
     function info() {
