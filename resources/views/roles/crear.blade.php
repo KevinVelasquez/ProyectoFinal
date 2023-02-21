@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container" style="width:100%">
+<div class="container" style="width:70%">
     <main role="main" class="pb-3">
         <h1>Crear Rol</h1>
         <hr />
@@ -9,13 +9,13 @@
         <form method="POST" action="{{route('roles.store')}}" role="form" enctype="multipart/form-data"
             class="form-sample needs-validation" novalidate>
             @csrf -->
-        {!!Form::open(array('route'=>'roles.store','method'=>'POST'))!!}
+       {!!Form::open(array('route'=>'roles.store','method'=>'POST'))!!}
         <div class="box box-info padding-1">
             <div class="box-body">
                 <div class="form-group">
                     <label for="">
                         <label class="control-label">Nombre</label>
-                        {!!Form::text('name',null,array('class'=>'form-control'))!!}
+                        <div required>{!!Form::text('name',null,array('class'=>'form-control'))!!}</div>
                         @error('name')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -67,5 +67,7 @@ $(document).ready(function() {
         $('input[type="checkbox"]').prop('checked', $(this).prop('checked'));
     });
 });
+
+
 </script>
 @endsection
