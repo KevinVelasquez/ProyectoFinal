@@ -16,13 +16,13 @@ Proveedor
                 <tr>
 
 
-                    <th>Cedula</th>
+                    <th>Cédula</th>
                     <th>Nombre</th>
-                    <th>Telefono</th>
-                    <th>Direccion</th>
+                    <th>Teléfono</th>
+                    <th>Dirección</th>
                     <th>Email</th>
                     <th>Tipo Persona</th>
-                    <th>SaldoPendiente</th>
+                    <th>Saldo Pendiente</th>
                     <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
