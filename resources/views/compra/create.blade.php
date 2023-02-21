@@ -42,9 +42,9 @@
                             <div class="col-sm-7">
                                 <select class="form-control" name="id_metodo_pagos" id="id_metodo_pagos">
                                     <option value="0">Seleccione</option>
-                                    @forelse($metodo_pagos as $metodo_pagos)
-                                    <option value="{{$metodo_pagos->id}}">
-                                        {{ $metodo_pagos->nombre}}
+                                    @forelse($metodo__pagos as $metodo__pagos)
+                                    <option value="{{$metodo__pagos->id}}">
+                                        {{ $metodo__pagos->nombre}}
                                     </option>
                                     @empty <option>No existen</option>
                                     @endforelse

@@ -27,12 +27,12 @@ class CompraController extends Controller
     {
         $compras = Compra::paginate();
         $proveedor = Proveedor::all();
-        $metodo_pagos = metodo_pagos::all();
+        $metodo__pagos = metodo_pagos::all();
         $insumos = Insumo::all();
         $pdf = Detalle_compra::all();
         $pago_provedor = PagoProveedore::all();
 
-        return view('compra.index', compact('compras', 'proveedor', 'insumos', 'metodo_pagos', 'pdf','pago_provedor'))
+        return view('compra.index', compact('compras', 'proveedor', 'insumos', 'metodo__pagos', 'pdf','pago_provedor'))
             ->with('i', (request()->input('page', 1) - 1) * $compras->perPage());
     }
 
@@ -46,9 +46,9 @@ class CompraController extends Controller
 
         $id_proveedor = Proveedor::all();
         $insumo = insumo::all();
-        $metodo_pagos = metodo_pagos::all();
+        $metodo__pagos = metodo_pagos::all();
         $compra = new Compra();
-        return view('compra.create', compact('compra', 'id_proveedor', 'insumo', 'metodo_pagos'));
+        return view('compra.create', compact('compra', 'id_proveedor', 'insumo', 'metodo__pagos'));
     }
 
     /**
@@ -113,7 +113,7 @@ class CompraController extends Controller
         $compra = Compra::find($id);
         $proveedor = Proveedor::all();
         $insumo = insumo::all();
-        $metodo_pagos = metodo_pagos::all();
+        $metodo__pagos = metodo_pagos::all();
         $detalle = Detalle_compra::all();
 
         $detalle = [];
@@ -122,7 +122,7 @@ class CompraController extends Controller
             ->where("detalle_compra.id_orden_compra", $id)
             ->get();
         }
-        return view('compra.show', compact('compra', 'proveedor', 'insumo', 'metodo_pagos','detalle'));
+        return view('compra.show', compact('compra', 'proveedor', 'insumo', 'metodo__pagos','detalle'));
     }
     
 
@@ -137,8 +137,8 @@ class CompraController extends Controller
         $compra = Compra::find($id);
         $proveedor = Proveedor::all();
         $insumo = insumo::all();
-        $metodo_pagos = metodo_pagos::all();
-        return view('compra.edit', compact('compra', 'proveedor', 'insumo', 'metodo_pagos'));
+        $metodo__pagos = metodo_pagos::all();
+        return view('compra.edit', compact('compra', 'proveedor', 'insumo', 'metodo__pagos'));
     }
 
     /**

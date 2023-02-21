@@ -22,8 +22,6 @@ class ClienteController extends Controller
     {
         //
         
-        // $datos ['clientes']= Cliente::paginate(5);
-        // return view('cliente.index',$datos);
    
         $clientes = Cliente::paginate();
 
@@ -59,8 +57,7 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         //
-        // $datosCliente = request()->all();
-
+        
         $datosCliente = request()->except('_token','pais','departamento');
         Cliente::insert($datosCliente);
 
@@ -74,24 +71,7 @@ class ClienteController extends Controller
      * @param  \App\Models\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function updateStatusCliente(cliente $cliente)
-    {
-        //
-
-    if($cliente->estado == 1)  {
-        $cliente->update(['estado'=>0]);
-            return redirect()->back();
-
-        $cliente = '<br> <button type="button" class="btn btn-sm btn-danger">Inactivo</button>';
-
-    }else{
-        $cliente->update(['estado'=>1]);
-        return redirect()->back();
-
-        $cliente ='<br> <button type="button" class="btn btn-sm btn-success">Activo</button>';
-    }
-
-    }
+    
     
 
     /**
@@ -126,18 +106,7 @@ class ClienteController extends Controller
     public function update(Request $request, Cliente $cliente)
     {
         //
-        // $datosCliente = request()->except(['_token','pais','departamento','_method']);
-        // Cliente::where('id', '=', $id)->update($datosCliente);
-
-        // $paises = Pais::all();
-        // $departamentos = Departamento::all();
-        // $municipios = Municipio::all();
-        // $tipo_comercio = Tipo_comercio::all();
-        // $tipo_persona = Tipo_persona::all();
-        // $regimen = Regimen::all();
-        // $cliente =Cliente::findOrFail($id);
-        // return view('cliente.edit', compact ('cliente','paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
-
+        
         $cliente->update($request->all());
 
         return redirect()->route('cliente.index')

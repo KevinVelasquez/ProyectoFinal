@@ -196,13 +196,13 @@ Update Cliente
                                 </div>
 
                             </div>
-                            
+
                         </div>
 
                         <div class="box-footer mt20">
 
                             <button type="submit" class="btn btn-primary">Actualizar</button>
-                            
+
                             <a href="{{ route('cliente.index') }}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Cancelar</a>
 
                         </div>
@@ -215,7 +215,7 @@ Update Cliente
 
     <script>
         $(document).ready(function() {
-            let cliente = {!! $clienteEstado->estado !!}
+            let cliente = {!!$clienteEstado->estado!!}
             $('#editarEstado').val(`${cliente}`)
         })
     </script>

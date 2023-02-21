@@ -44,7 +44,7 @@
                     <ul class="navbar-nav navbar-nav-right">
 
                         <li class="nav-item d-none d-lg-flex  mr-2">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ route('ayuda.index') }}">
                                 Ayuda
                             </a>
                         </li>
