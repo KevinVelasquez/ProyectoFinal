@@ -229,7 +229,7 @@
             </div>
         </div>
     </div>
-    <input  name="total" id="total" />
+    <input type="hidden" name="total" id="total" />
 </div>
 
 
