@@ -64,6 +64,12 @@ class FiguraController extends Controller
         }
 
         Figura::create($input);
+        
+        if ($input['id_cliente'] !== 1) {
+            Figura::where('id_cliente', '!=', 1)->update(['estado' => 2]);
+        }
+        
+        
         return redirect()->route('figuras.index');
     }
 
