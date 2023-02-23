@@ -2,46 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Compra;
-use App\Models\Proveedor;
-use App\Models\insumo;
-use App\Models\metodo_pagos;
-use App\Models\Detalle_compra;
+use PDF;
 use App\Models\Pedido;
 use App\Models\DetallePedido;
 use App\Models\Pago_Clientes;
-use App\Http\Controllers\App;
-use PDF;
+use Illuminate\Http\Request;
 
-class PdfController extends Controller
+
+class PDFController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function pdf(Request $request, $id)
-    {
-        $compra = Compra::paginate();
-        $proveedor = Proveedor::all();
-        $insumo = insumo::all();
-        $metodo_pagos = metodo_pagos::all();
-        $detalle = Detalle_compra::all();
-        $detalle = [];
-        if ($id != null) {
-            $detalle = Detalle_compra::select("detalle_compra.*")
-                ->where("detalle_compra.id_orden_compra", $id)
-                ->get();
-        }
-
-        $pdf = PDF::loadView('pdf', ['compra' => $compra]);
-        $pdf->loadHTML('<h1>Test</h1>');
-        return $pdf->stream();
-
-    }
-
-
     public function generatePDF()
     {
         $id = $_GET["id"];
@@ -112,11 +81,11 @@ class PdfController extends Controller
 
 
         $acomulado = Pago_Clientes::select(Pago_Clientes::raw('SUM(pago__clientes.abono) as acomulado'))
-            ->join('pedidos', 'pago__clientes.id_pedido', '=', 'pedidos.id')
-            ->where('pedidos.id', $idpedido)
-            ->where('pago__clientes.fecha', '<=', $fecha)
-            ->where('pago__clientes.estado', 1)
-            ->get();
+        ->join('pedidos','pago__clientes.id_pedido','=', 'pedidos.id')
+        ->where('pedidos.id',$idpedido)
+        ->where('pago__clientes.fecha','<=',$fecha)
+        ->where('pago__clientes.estado',1)
+        ->get();
 
 
         $pdf = PDF::loadView('pedido.downloadabono', compact('detalleabono', 'acomulado'));
