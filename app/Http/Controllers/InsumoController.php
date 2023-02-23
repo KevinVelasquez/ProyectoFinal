@@ -51,13 +51,14 @@ class InsumoController extends Controller
 
     public function updateInsumos(Request $request)
     {
+        $input = $request->all();
         $validatedData =$request->validate([
-            'nombre' => 'required|unique:insumos,nombre',
+            'nombre' => 'required|unique:insumos,nombre,'.$input["id"],
             'id_medidas' => 'required',
         ], [
             'nombre.unique' => 'No se puede crear 2 insumos con el mismo nombre',
         ]);
-        $input = $request->all();
+        
 
         $actualizar =Insumo::where('id', $input["id"])
             ->update([

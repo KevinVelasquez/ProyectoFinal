@@ -94,22 +94,27 @@ class RolController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $this->validate($request, ['name'=>'required|unique:roles,name', 'permission'=>'required']);
-
         $role = Role::find($id);
-        $old_nombre = $role->nombre;
-        $role->name =$request->input('name');
-        $role->estado =$request->input('estado');
-        if ($input['name'] !== $old_nombre) {
-            $request->validate([
-                'name' => 'unique:roles',
-            ]);
-        }
-        $role->save();
+    $old_nombre = $role->nombre;
 
-        $role->syncPermissions($request->input('permission'));
-        return redirect()->route('roles.index');
+    $this->validate($request, [
+        'name' => 'required|unique:roles,name,' . $role->id,
+        'permission' => 'required',
+    ]);
+
+    $role->name = $request->input('name');
+    $role->estado = $request->input('estado');
+    $role->save();
+
+    if ($request->input('name') !== $old_nombre) {
+        $this->validate($request, [
+            'name' => 'unique:roles,name,' . $role->id,
+        ]);
+    }
+
+    $role->syncPermissions($request->input('permission'));
+
+    return redirect()->route('roles.index');
     }
 
     /**
