@@ -123,6 +123,4 @@ class PdfController extends Controller
 
         return $pdf->stream('PedidoDetalle.pdf');
     }
-
-
 }
