@@ -33,10 +33,10 @@ Route::resource('insumos', App\Http\Controllers\InsumoController::class);
 Route::resource('pedidos', App\Http\Controllers\PedidoController::class);
 Route::put('pedidos', [PedidoController::class, 'updatePedido'])->name('pedidos.updatePedido');
 Route::patch('pedidos', [PedidoController::class, 'anularPedido'])->name('pedidos.anularPedido');
-Route::get('generate-pdf', [App\Http\Controllers\pdfController::class, 'generatePDF'])->name('generate-pdf');
+Route::get('generate-pdf', [App\Http\Controllers\pdfControllerdos::class, 'generatePDF'])->name('generate-pdf');
 Route::post('pedido', [App\Http\Controllers\PagoClienteController::class,'agregarAbono'])->name('agregarAbono');
 Route::put('pedido', [App\Http\Controllers\PagoClienteController::class,'anularAbono'])->name('anularAbono');
-Route::get('abono-pdf', [App\Http\Controllers\pdfcontroller::class, 'abonoPDF'])->name('abono-pdf');
+Route::get('abono-pdf', [App\Http\Controllers\pdfcontrollerdos::class, 'abonoPDF'])->name('abono-pdf');
 
 Route::delete('figuras', [App\Http\Controllers\FiguraController::class, 'eliminarfigura'])->name('figuras.eliminarfigura');
 Route::get('figuras/search', [App\Http\Controllers\FiguraController::class, 'search'])->name('figuras.search');

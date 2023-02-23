@@ -9,7 +9,7 @@ use App\Models\Pago_Clientes;
 use Illuminate\Http\Request;
 
 
-class PDFController extends Controller
+class PDFControllerdos extends Controller
 {
     public function generatePDF()
     {
