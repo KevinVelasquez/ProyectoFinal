@@ -7,7 +7,7 @@ use App\Models\Compra;
 use App\Models\Proveedor;
 use App\Models\PagoProveedore;
 use App\Models\insumo;
-use App\Models\metodo_pagos;
+use App\Models\Metodo_Pago;
 use App\Models\Detalle_compra;
 use Illuminate\Http\Request;
 use PDF;
@@ -27,7 +27,7 @@ class CompraController extends Controller
     {
         $compras = Compra::paginate();
         $proveedor = Proveedor::all();
-        $metodo__pagos = metodo_pagos::all();
+        $metodo__pagos = Metodo_Pago::all();
         $insumos = Insumo::all();
         $pdf = Detalle_compra::all();
         $pago_provedor = PagoProveedore::all();
@@ -46,7 +46,7 @@ class CompraController extends Controller
 
         $id_proveedor = Proveedor::all();
         $insumo = insumo::all();
-        $metodo__pagos = metodo_pagos::all();
+        $metodo__pagos = Metodo_Pago::all();
         $compra = new Compra();
         return view('compra.create', compact('compra', 'id_proveedor', 'insumo', 'metodo__pagos'));
     }
@@ -113,7 +113,7 @@ class CompraController extends Controller
         $compra = Compra::find($id);
         $proveedor = Proveedor::all();
         $insumo = insumo::all();
-        $metodo__pagos = metodo_pagos::all();
+        $metodo__pagos = Metodo_Pago::all();
         $detalle = Detalle_compra::all();
 
         $detalle = [];
@@ -137,7 +137,7 @@ class CompraController extends Controller
         $compra = Compra::find($id);
         $proveedor = Proveedor::all();
         $insumo = insumo::all();
-        $metodo__pagos = metodo_pagos::all();
+        $metodo__pagos = Metodo_Pago::all();
         return view('compra.edit', compact('compra', 'proveedor', 'insumo', 'metodo__pagos'));
     }
 

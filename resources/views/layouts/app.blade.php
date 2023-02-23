@@ -190,6 +190,7 @@
     </script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.1/index.global.min.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.4/locales-all.js"></script>
+    @yield("script")
 </body>
 
 </html>

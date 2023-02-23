@@ -54,7 +54,7 @@
                         </div>
                         <div class="form-group">
                             <strong>Metodo Pago:</strong>
-                            {{ $compra[0]->metodo_pagos->nombre }}
+                            {{ $compra[0]->metodo__pagos->nombre }}
                         </div>
                     </div>
                 </div>

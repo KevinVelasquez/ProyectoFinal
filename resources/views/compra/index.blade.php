@@ -60,7 +60,7 @@ Compra
                                         {{ $compra->proveedor->nombre }}
                                     </td>
 
-                                    <td>{{ $compra->metodo_pagos->nombre }}</td>
+                                    <td>{{ $compra->metodo__pagos->nombre }}</td>
 
                                     <td>
                                         @if($compra->estado == 1)

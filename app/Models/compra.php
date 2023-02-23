@@ -68,9 +68,9 @@ class Compra extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function metodo_pagos()
+    public function metodo__pagos()
     {
-        return $this->hasOne('App\Models\metodo_pagos', 'id', 'id_metodo_pagos');
+        return $this->hasOne('App\Models\Metodo_Pago', 'id', 'id_metodo_pagos');
     }
     
     /**
