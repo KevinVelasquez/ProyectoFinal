@@ -215,7 +215,7 @@
                     data-target="#verdiseños" disabled>Seleccione diseño</button>
             </div>
             <div class="col-sm-6">
-                <input id="imagen" class="form-control" style="border: 0;" readonly />
+                <input type="hidden" id="imagen" class="form-control" style="border: 0;" readonly />
             </div>
         </div>
     </div>
