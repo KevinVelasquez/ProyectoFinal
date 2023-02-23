@@ -18,8 +18,13 @@ Update Producto
             <div class="form-group">
                 <label class="control-label">Nombre</label>
                 <div class="col-sm-9">
-                    <input value="{{$producto->nombre}}" type="text" name="nombre" id="nombre" class="form-control"
+                    <input value="{{$producto->nombre}}" type="text" name="nombre" id="nombre" class="form-control @error('nombre') is-invalid @enderror"
                         required/>
+                        @error('nombre')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>No se puede crear 2 productos con el mismo nombre</strong>
+                        </span>
+                        @enderror
                 </div>
             </div>
             <div class="form-group">

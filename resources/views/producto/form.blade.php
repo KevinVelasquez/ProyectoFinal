@@ -5,7 +5,13 @@
         <div class="form-group">
             <label class="control-label">Nombre</label>
             <div class="col-sm-9">
-                <input type="text" name="nombre" id="nombre" class="form-control" required />
+                <!-- <input type="text" name="nombre" id="nombre" class="form-control" required /> -->
+                <input type="text" name="nombre" id="nombre" class="form-control @error('nombre') is-invalid @enderror" required />
+                @error('nombre')
+                <span class="invalid-feedback" role="alert">
+                    <strong>No se puede crear 2 productos con el mismo nombre</strong>
+                </span>
+                @enderror
             </div>
             <div class="form-group">
                 <label class="control-label">Imagen</label>

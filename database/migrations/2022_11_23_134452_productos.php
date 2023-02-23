@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('imagen');
             $table->integer('estado')->default(1);
             $table ->timestamps();
+            $table->unique('nombre');
         });
     }
 

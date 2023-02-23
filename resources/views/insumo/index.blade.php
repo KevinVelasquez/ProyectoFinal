@@ -80,7 +80,7 @@ Insumo
                                 <form method="POST" 
                                action= "{{route('insumos.store')}}"  
                                class="form-sample needs-validation" novalidate
-                                    role="form" enctype="multipart/form-data">
+                                    role="form" enctype="multipart/form-data" id="crear-form">
                                     @method('POST')
                                     @csrf
                                     <div class="row">
@@ -88,8 +88,9 @@ Insumo
                                             <div class="form-group row">
                                                 <label class="col-sm-9 col-form-label">Nombre</label>
                                                 <div class="col-sm-12">
-                                                    <input type="text" class="form-control" name="nombre"
+                                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre"
                                                         id="crearnombre" required>
+                                                        <div class="invalid-feedback">{{ $errors->first('nombre') }}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -112,8 +113,8 @@ Insumo
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Crear</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" id="crear-insumo" class="btn btn-primary" >Crear</button>
+                            <a class="btn btn-primary" href="{{ route('insumos.index')}}" style="margin: 10px;">Cancelar</a>
                         </div>
                     </div>
                 </div>
@@ -138,7 +139,7 @@ Insumo
                         <div class="card">
                             <div class="card-body">
 
-                                <form method="POST" action="{{ route('insumos.updateInsumos') }}" 
+                                <form id="actualizar-form" method="POST" action="{{ route('insumos.updateInsumos') }}" 
                                 class="form-sample needs-validation" novalidate
                                     role="form" enctype="multipart/form-data">
                                     @method('PUT')
@@ -149,8 +150,9 @@ Insumo
                                             <div class="form-group row">
                                                 <label class="col-sm-9 col-form-label">Nombre</label>
                                                 <div class="col-sm-12">
-                                                    <input type="text" class="form-control" name="nombre"
+                                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre"
                                                         id="editarnombre" required>
+                                                        <div class="invalid-feedback">{{ $errors->first('nombre') }}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -187,7 +189,7 @@ Insumo
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Actualizar</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                            <a class="btn btn-primary" href="{{ route('insumos.index')}}" style="margin: 10px;">Cancelar</a>
                         </div>
                     </div>
                 </div>
@@ -260,13 +262,39 @@ Insumo
             });
     });
 
+    $('#crear-form').submit(function(event) {
+        event.preventDefault(); // Previene la acción predeterminada del formulario
+
+        $.ajax({
+            url: $(this).attr('action'), // La URL a la que enviar la petición AJAX
+            type: $(this).attr('method'), // El método HTTP a utilizar (POST en este caso)
+            data: new FormData(this), // Los datos del formulario en formato FormData
+            processData: false, // No procesa los datos de forma convencional (necesario para enviar archivos)
+            contentType: false, // No establece el tipo de contenido (necesario para enviar archivos)
+            success: function(response) {
+                // La respuesta del servidor es correcta, cierra el modal
+                $('#crearmodal').modal('hide');
+                location.reload();
+            },
+            error: function(xhr) {
+                // La respuesta del servidor contiene un error de validación
+                if (xhr.status === 422) {
+                    var errors = xhr.responseJSON.errors;
+                    $.each(errors, function(key, value) {
+                        $('#crearnombre').addClass('is-invalid');
+                        $('#crearnombre').next('.invalid-feedback').text(value[0])
+                    });
+                }
+            }
+        });
+    });
 
 
 
     function editarInsumo(id) {
             let consulta = {!! $editarinsumo !!}
             let editardatos = consulta.find(item => item.id == id)
-            $('#exampleModalLongTitleeditar').text(`Actualizar Insumo #${editardatos.id}`);
+            $('#exampleModalLongTitleeditar').text(`Actualizar Insumo`);
             $('#editarnombre').val(`${editardatos.nombre}`);
             $('#editarmedidas').val(`${editardatos.medidas}`);
             $('#editarestado').val(`${editardatos.estado}`);
@@ -274,6 +302,33 @@ Insumo
             let idinsumo = `${editardatos.id}`;
 
         }
+
+        $('#actualizar-form').submit(function(event) {
+        event.preventDefault(); // Previene la acción predeterminada del formulario
+
+        $.ajax({
+            url: $(this).attr('action'), // La URL a la que enviar la petición AJAX
+            type: $(this).attr('method'), // El método HTTP a utilizar (POST en este caso)
+            data: new FormData(this), // Los datos del formulario en formato FormData
+            processData: false, // No procesa los datos de forma convencional (necesario para enviar archivos)
+            contentType: false, // No establece el tipo de contenido (necesario para enviar archivos)
+            success: function(response) {
+                // La respuesta del servidor es correcta, cierra el modal
+                $('#editarmodal').modal('hide');
+                location.reload();
+            },
+            error: function(xhr) {
+                // La respuesta del servidor contiene un error de validación
+                if (xhr.status === 422) {
+                    var errors = xhr.responseJSON.errors;
+                    $.each(errors, function(key, value) {
+                        $('#editarnombre').addClass('is-invalid');
+                        $('#editarnombre').next('.invalid-feedback').text(value[0])
+                    });
+                }
+            }
+        });
+    });
 
         function anularInsumo(id) {
             let consulta = {!! $editarinsumo !!}

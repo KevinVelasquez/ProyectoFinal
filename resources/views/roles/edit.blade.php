@@ -15,7 +15,7 @@
                             <label class="control-label">Nombre</label>
                             {!!Form::text('name',null,array('class'=>'form-control'))!!}
                             @error('name')
-                            <div class="text-danger">{{ $message }}</div>
+                            <div class="text-danger">{{ str_replace("name", "nombre", $errors->first('name')) }}</div>
                             @enderror
                     </div>
                     <div class="form-group col-6">
@@ -55,12 +55,12 @@
                     </tbody>
                 </table>
                 @error('permission')
-                <div class="text-danger">{{ $message }}</div>
+                <div class="text-danger">Debe seleccionar al menos un permiso</div>
                 @enderror
 
                 <br>
                 <button type="submit" class="btn btn-primary ">Actualizar</button>
-                <button onclick="history.back()" type="button" class="btn btn-primary">Cancelar</button>
+                <a class="btn btn-primary" href="{{ route('roles.index')}}" style="margin: 10px;  margin-top: 6%;">Cancelar</a>
             </div>
         </div>
         {!!Form::close()!!}

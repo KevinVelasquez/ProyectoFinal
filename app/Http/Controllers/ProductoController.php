@@ -45,7 +45,11 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate(Producto::$rules);
+        //request()->validate(Producto::$rules);
+        $request->validate([
+            'nombre' => 'required|unique:productos,nombre',
+            'imagen'=> 'required',
+        ]);
 
         $input = $request->all();
         
@@ -97,10 +101,11 @@ class ProductoController extends Controller
      */
     public function update(Request $request, Producto $producto)
     {
+        $old_nombre = $producto->nombre;
         $input= $request->all();
 
         $producto->update([
-            'nombre' => 'nombre',
+            'nombre' => $old_nombre,
             'estado' => $input['estado'],
         ]);
         
@@ -114,15 +119,15 @@ class ProductoController extends Controller
 
             $input['imagen'] = $imagen_name;
         }
-
+        if ($input['nombre'] !== $old_nombre) {
+            $request->validate([
+                'nombre' => 'unique:productos',
+            ]);
+        }
         $producto->update($input);
         session()->flash('message',$input['nombre']. 'succesfully save');
         return redirect()->route('productos.index');
 
-        // $producto->update($request->all());
-
-        // return redirect()->route('productos.index')
-        //     ->with('success', 'Producto updated successfully');
     }
 
     /**
