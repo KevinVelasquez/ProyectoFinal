@@ -404,7 +404,18 @@
                     let paises = todoPaises.find(item => item.id == idpaisdepa)
                     $('#pais').val(`${paises.id}`);
                     
+                    $('#fecha_entrega').val('');
+                    $('#id_metodo_entrega').val('');
+                    $('#id_medio_pago').val('');
+                    $('#id_metodo_pago').val('');
+                    $('#abono').val('');
+                    $('#datosresumen').text('');
+                    $('#datosresumen').val('');
+                    $('#totalpedido').text(''); 
+                    $('#totalpedido').val(''); 
+                    $('#total').val(''); 
 
+                     
                 }
             });
 

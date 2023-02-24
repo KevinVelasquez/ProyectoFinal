@@ -170,7 +170,8 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Estado</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-control" name="proceso" id="editarproceso" required>
+                                                    <select class="form-control" name="proceso" id="editarproceso"
+                                                        required>
                                                         <option value="0">Pendiente</option>
                                                         <option value="1">Despachado</option>
                                                         <option value="2">Entregado</option>
@@ -212,7 +213,7 @@
                         <input type="hidden" name="idanular" id="idanular" />
                         <input type="hidden" name="anulardato" value="2" />
                         <button type="submit" class="btn btn-primary">Si</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-top:5%;">No</button>
                     </form>
                 </div>
             </div>
@@ -628,7 +629,7 @@
             select.value = selectValue;
         }
 
-        if (select.value === "0") {
+        if (select.value == null || select.value == 0) {
             for (var i = 0; i < inputs.length; i++) {
                 inputs[i].readOnly = false;
             }
@@ -639,7 +640,7 @@
         }
 
         select.addEventListener("change", function() {
-            if (select.value === "0") {
+            if (select.value == 0) {
                 for (var i = 0; i < inputs.length; i++) {
                     inputs[i].readOnly = false;
                 }
