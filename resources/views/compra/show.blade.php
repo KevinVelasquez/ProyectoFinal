@@ -11,11 +11,11 @@
             <div class="card">
                 <div class="card-header">
                     <div class="float-left">
-                        <span class="card-title">Show Compra</span>
+                        <span class="card-title">Detalle Compra</span>
                     </div>
                     <div class="float-right">
-                        <a class="btn btn-primary" href="{{ route('compra.index') }}"> Back</a>
-                        <a class="btn btn-sm btn-primary " href="{{route('generarPDF', $compra->id)}}"><i class="fa fa-fw fa-eye"></i> Descargar PDF</a>
+                        <a class="btn btn-primary btn-lg active" href="{{ route('compra.index') }}"> Atrás</a>
+                        <a class="btn btn-primary btn-lg active " href="{{route('generarPDF', $compra->id)}}"><i class="fa fa-fw fa-eye"></i> Descargar PDF</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -53,8 +53,8 @@
                         {{ $compra->proveedor->nombre}}
                     </div>
                     <div class="form-group">
-                        <strong>Metodo Pago:</strong>
-                        {{ $compra->metodo_pagos->nombre }}
+                        <strong>Método Pago:</strong>
+                        {{ $compra->metodo__pagos->nombre }}
                     </div>
                 </div>
             </div>

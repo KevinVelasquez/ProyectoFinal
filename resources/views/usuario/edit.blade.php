@@ -61,9 +61,17 @@ Update Usuario
                         </div>
 
                         <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="estado">Estado</label>
-                                {!!Form::number('estado',null,array('class'=>'form-control'))!!}
+                            <label for="estado" >Estado</label>
+                            <select name="estado" class="form-control">
+                                <option value="1">Activo</option>
+                                <option value="2">Inactivo</option>
+                            </select>
+                            <div class="col-md-6">
+                                @error('estado')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
 

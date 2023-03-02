@@ -7,8 +7,8 @@ use App\Models\Compra;
 use App\Models\Proveedor;
 use App\Models\PagoProveedore;
 use App\Models\insumo;
-use App\Models\metodo_pagos;
 use App\Models\Detalle_compra;
+use App\Models\Metodo_Pago;
 use Illuminate\Http\Request;
 use PDF;
 
@@ -27,12 +27,22 @@ class CompraController extends Controller
     {
         $compras = Compra::paginate();
         $proveedor = Proveedor::all();
-        $metodo_pagos = metodo_pagos::all();
+        $metodo__pagos = Metodo_Pago::all();
         $insumos = Insumo::all();
         $pdf = Detalle_compra::all();
         $pago_provedor = PagoProveedore::all();
 
-        return view('compra.index', compact('compras', 'proveedor', 'insumos', 'metodo_pagos', 'pdf','pago_provedor'))
+        $detalleabono = PagoProveedore::select('pago_proveedores.fecha AS fechapago','pago_proveedores.id_compra AS idcomprabono','pago_proveedores.abono','pago_proveedores.id AS idabono',
+        "compra.total","compra.id","compra.anulado")
+            ->join("compra", "pago_proveedores.id_compra", "=", "compra.id")
+            ->where("pago_proveedores.estado", 1)
+            ->orderBy("pago_proveedores.fecha", "DESC")
+            ->get();
+
+        $editarCompra = Compra::all();
+        
+
+        return view('compra.index', compact('compras', 'proveedor', 'insumos', 'metodo__pagos', 'pdf','pago_provedor', 'detalleabono','editarCompra'))
             ->with('i', (request()->input('page', 1) - 1) * $compras->perPage());
     }
 
@@ -46,9 +56,11 @@ class CompraController extends Controller
 
         $id_proveedor = Proveedor::all();
         $insumo = insumo::all();
-        $metodo_pagos = metodo_pagos::all();
+        $metodo__pagos = Metodo_Pago::all();
         $compra = new Compra();
-        return view('compra.create', compact('compra', 'id_proveedor', 'insumo', 'metodo_pagos'));
+        $pagos = PagoProveedore::all();
+
+        return view('compra.create', compact('compra', 'id_proveedor', 'insumo', 'metodo__pagos','pagos'));
     }
 
     /**
@@ -62,6 +74,7 @@ class CompraController extends Controller
         $input = $request->all();
         try {
             DB::beginTransaction();
+
             $compra = Compra::create([
                 "n_orden" => $input["n_orden"],
                 "fecha_compra" => $input["fecha_compra"],
@@ -70,6 +83,13 @@ class CompraController extends Controller
                 "id_metodo_pagos" => $input["id_metodo_pagos"],
                 "anulado" => $input["anulado"],
                 "total" => $input["total"],
+            ]);
+
+            $pago_proveedor = PagoProveedore::create([
+                "id_compra" => $compra->id,
+                "fecha" => $compra->fecha_compra,
+                "abono" => $input["abono"]
+
             ]);
 
             foreach ($input["id_insumo"] as $key => $value) {
@@ -82,7 +102,7 @@ class CompraController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('compra.index')->with('status', '1');
+            return redirect()->route('compra.index', compact('pago_proveedor', 'compra'))->with('status', '1');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->route('compra.index')
@@ -113,7 +133,7 @@ class CompraController extends Controller
         $compra = Compra::find($id);
         $proveedor = Proveedor::all();
         $insumo = insumo::all();
-        $metodo_pagos = metodo_pagos::all();
+        $metodo__pagos = Metodo_Pago::all();
         $detalle = Detalle_compra::all();
 
         $detalle = [];
@@ -122,7 +142,7 @@ class CompraController extends Controller
             ->where("detalle_compra.id_orden_compra", $id)
             ->get();
         }
-        return view('compra.show', compact('compra', 'proveedor', 'insumo', 'metodo_pagos','detalle'));
+        return view('compra.show', compact('compra', 'proveedor', 'insumo', 'metodo__pagos','detalle'));
     }
     
 
@@ -137,8 +157,8 @@ class CompraController extends Controller
         $compra = Compra::find($id);
         $proveedor = Proveedor::all();
         $insumo = insumo::all();
-        $metodo_pagos = metodo_pagos::all();
-        return view('compra.edit', compact('compra', 'proveedor', 'insumo', 'metodo_pagos'));
+        $metodo__pagos = Metodo_Pago::all();
+        return view('compra.edit', compact('compra', 'proveedor', 'insumo', 'metodo__pagos'));
     }
 
     /**
@@ -156,6 +176,17 @@ class CompraController extends Controller
 
         return redirect()->route('compra.index')
             ->with('success', 'Compra editada con éxito');
+    }
+
+    public function anularCompra(Request $request)
+    {
+        $input = $request->all();
+        Compra::where('id', $input["idanular"])
+            ->update([
+                'anulado' => 1
+            ]);
+        return redirect()->route('compra.index')
+            ->with('success', 'Status pedido successfully');
     }
 
     /**

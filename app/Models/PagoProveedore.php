@@ -28,7 +28,6 @@ class PagoProveedore extends Model
 		'fecha' => 'required',
 		'abono' => 'required',
 		'estado' => 'required',
-		'id_medio_pagos' => 'required',
 		'id_compra' => 'required',
     ];
 

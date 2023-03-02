@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Compra;
 use App\Models\Proveedor;
 use App\Models\insumo;
-use App\Models\metodo_pagos;
+use App\Models\Metodo_Pago;
 use App\Models\Detalle_compra;
 use App\Http\Controllers\App;
 use PDF;
@@ -23,7 +23,7 @@ class PdfController extends Controller
         $compra = Compra::paginate();
         $proveedor = Proveedor::all();
         $insumo = insumo::all();
-        $metodo_pagos = metodo_pagos::all();
+        $metodo_pagos = Metodo_Pago::all();
         $detalle = Detalle_compra::all();
         $detalle = [];
         if($id != null){
