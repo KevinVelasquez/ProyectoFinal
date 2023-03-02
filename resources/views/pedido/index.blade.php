@@ -54,14 +54,14 @@
                                 echo 'Si';
                             } ?></td>
                             <td>
-                                <button onclick="verDatos('{{ $pedidos->id }}')" class="mdi mdi-format-align-justify"+
+                                <button onclick="verDatos('{{ $pedidos->id }}')" class="mdi mdi-format-align-justify "
                                     data-toggle="modal" data-target="#verdetalle"></button>
-                                <button onclick="verDatosAbono('{{ $pedidos->id }}')" class="mdi mdi-cash-usd"
-                                    data-toggle="modal" data-target="#abonos"></button>
+                                <button onclick="verDatosAbono('{{ $pedidos->id }}')" class="mdi mdi-cash-usd "
+                                    data-toggle="modal" data-target="#abonos" @if ($pedidos->estado !== 1)disabled @endif></button>
                                 <button onclick="editarPedido('{{ $pedidos->id }}')" class="mdi mdi-lead-pencil"
-                                    data-toggle="modal" data-target="#editarmodal"></button>
+                                    data-toggle="modal" data-target="#editarmodal"  @if ($pedidos->estado !== 1)disabled @endif></button>
                                 <button onclick="anularPedido('{{ $pedidos->id }}')" class="mdi mdi-block-helper"
-                                    data-toggle="modal" data-target="#anularmodal"></button>
+                                    data-toggle="modal" data-target="#anularmodal" @if ($pedidos->estado !== 1)disabled @endif></button>
                             </td>
                         </tr>
                     @endforeach
@@ -307,6 +307,8 @@
                                             <thead>
                                                 <tr>
                                                     <th>
+                                                    </th>
+                                                    <th>
                                                         Producto
                                                     </th>
                                                     <th>
@@ -532,9 +534,18 @@
             let detallePedidos = pedidos.filter(item => item.id == id)
             $("#tablaDetallePedidoSeleccionado tbody").children().remove();
             detallePedidos.forEach(function(value, index) {
+                if(value.imagen === null){
+                    ruta = "";
+                }else{
+                    ruta = `<img src="http://127.0.0.1:8000/storage/images/figuras/${value.imagen}"/>`
+                }
+
                 if (value.id == id) {
                     let fila = `
               <tr>
+                <td id="imagen-ruta">
+                    ${ruta}
+                  </td>
                   <td>
                     ${value.nombreproducto}
                   </td>

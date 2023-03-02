@@ -26,6 +26,13 @@ use Carbon\Carbon;
  */
 class PedidoController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:ver-pedido|crear-pedido|editar-pedido|borrar-pedido,', ['only'=>['index']]);
+        $this->middleware ('permission: crear-pedido', ['only'=>['store']]);
+        $this->middleware ('permission: editar-pedido', ['only'=>['updatePedido']]);
+        $this->middleware ('permission: anular-pedido', ['only'=>['anularPedido']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -44,9 +51,12 @@ class PedidoController extends Controller
             ->join("pedidos", "pedidos.id_cliente", "=", "clientes.id")
             ->get();
 
-        $detallepedido = DetallePedido::select('detalle_pedidos.cantidad AS cantidadproductos', 'detalle_pedidos.precio AS precioUnitario', 'productos.nombre AS nombreproducto', 'detalle_pedidos.id_pedido AS id')
+        $detallepedido = DetallePedido::select('detalle_pedidos.cantidad AS cantidadproductos', 'detalle_pedidos.precio AS precioUnitario', 'productos.nombre AS nombreproducto', 'detalle_pedidos.id_pedido AS id','figuras.imagen')
             ->join("productos", "detalle_pedidos.id_producto", "=", "productos.id")
+            ->leftJoin("figuras", "detalle_pedidos.imagen", "=", "figuras.id")
             ->get();
+
+            
 
         $pedidocliente = Pedido::select(
             "pedidos.fecha_registro",
@@ -191,8 +201,9 @@ class PedidoController extends Controller
             ->get();
 
 
-        $detallepedido = DetallePedido::select('detalle_pedidos.cantidad AS cantidadproductos', 'detalle_pedidos.precio AS precioUnitario', 'productos.nombre AS nombreproducto', 'detalle_pedidos.id_pedido AS id')
+            $detallepedido = DetallePedido::select('detalle_pedidos.cantidad AS cantidadproductos', 'detalle_pedidos.precio AS precioUnitario', 'productos.nombre AS nombreproducto', 'detalle_pedidos.id_pedido AS id','figuras.imagen')
             ->join("productos", "detalle_pedidos.id_producto", "=", "productos.id")
+            ->leftJoin("figuras", "detalle_pedidos.imagen", "=", "figuras.id")
             ->get();
 
         $pedidocliente = Pedido::select(

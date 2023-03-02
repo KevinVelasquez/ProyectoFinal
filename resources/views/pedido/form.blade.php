@@ -165,7 +165,7 @@
         <div class="form-group row">
             <label class="control-label">Abono</label>
             <div class="col-sm-9">
-                <input type="number" name="abono" id="abono" class="form-control" required />
+                <input type="number"  name="abono" id="abono" class="form-control" required/>
             </div>
         </div>
     </div>
