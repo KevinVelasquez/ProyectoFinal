@@ -42,8 +42,10 @@
                 @enderror
 
                 <br>
-                <button type="submit" class="btn btn-primary ">Crear</button>
-                <a class="btn btn-primary" href="{{ route('roles.index')}}" style="margin: 10px;  margin-top: 7%;">Cancelar</a>
+                <button type="submit" class="btn btn-primary" style="background-color: #81242E;
+                            border-color: #81242E;">Crear</button>
+                <a class="btn btn-primary" href="{{ route('roles.index')}}" style="background-color: #81242E;
+                            border-color: #81242E; margin: 10px;  margin-top: 6%;">Cancelar</a>
             </div>
         </div>
         {!!Form::close()!!}

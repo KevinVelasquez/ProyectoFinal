@@ -72,8 +72,10 @@ Rol
                         @csrf
                         <div>¿Está seguro que desea eliminar el rol?</div>
                         <input type="hidden" name="ideliminar" id="ideliminar" />
-                        <button type="submit" class="btn btn-primary">Si</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-primary" style="background-color: #81242E;
+                            border-color: #81242E;">Si</button>
+                        <button type="button" class="btn btn-primary" style="background-color: #81242E;
+                            border-color: #81242E;" data-dismiss="modal">No</button>
                     </form>
                 </div>
             </div>
