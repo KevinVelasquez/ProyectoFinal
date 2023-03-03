@@ -9,6 +9,15 @@ use App\Models\Regimen;
 use App\Models\Tipo_comercio;
 use App\Models\Tipo_persona;
 use App\Models\Proveedor;
+use App\Models\Metodo_Entrega;
+use App\Models\Medio_Pago;
+use App\Models\Metodo_Pago;
+use App\Models\Compra;
+use App\Models\Insumo;
+use App\Models\PagoProveedore;
+
+
+
 use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Illuminate\Http\Request;
 use PDF;
@@ -78,8 +87,16 @@ class ProveedorController extends Controller
      */
     public function show($id)
     {
-        $proveedor = Proveedor::find($id);
-        return view('proveedor.show', $proveedor);
+        $proveedores = Proveedor::find($id);
+
+        $compra = Compra::select("compra.n_orden","fecha_compra","id_metodo_pagos")
+        ->join("proveedors","proveedors.id", "=","compra.id_proveedor")
+        ->join("metodo__pagos", "compra.id_metodo_pagos", "=", "metodo__pagos.id")
+        
+        ->where("proveedors.id", "=", $id)
+        ->get();
+
+        return view('proveedor.show', compact('proveedores','compra') );
     }
 
     public function pdf()

@@ -6,34 +6,45 @@ Detalle Proveedor
 
 @section('content')
 <div class="container">
+<main role="main" class="pb-3">
     <p>
     <div class="card-header">
         <span class="card-title">Ordenes de compra</span>
 
     </div>
     </p>
-    <main role="main" class="pb-3">
+    
 
         <table id="factproveedor" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>
 
                     <th>N° Factura</th>
-                    <th>Fecha</th>
+                    <th>Fecha Compra</th>
                     <th>Método Pago</th>
                     <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-
-
+            
+            @foreach ($compra as $compras)
                 <tr>
 
-                    <td>0459</td>
-                    <td>22/04/22</td>
+                    <td>{{ $compras->n_orden }}</td>
+                    <td>{{ $compras->fecha_compra }}</td>
+                    
+                    @if ($compras->id_metodo_pagos==1)
+                    <td>Crédito</td>
+                    @else
                     <td>Contado</td>
+                    @endif
+
+                    @if ($compras->estado==1)
                     <td>Pendiente</td>
+                    @else
+                    <td>Finalizada</td>
+                    @endif
                     <td>
 
                         <!-- Button detalle factura -->
@@ -43,28 +54,8 @@ Detalle Proveedor
 
 
                 </tr>
-                <tr>
-                    <td>
-                        0460
-                    </td>
-                    <td>
-                        23/04/22
-                    </td>
-                    <td>
-                        Contado
-                    </td>
-                    <td>
-                        Pendiente
-                    </td>
-                    <td>
-
-                        <!-- Button detalle factura -->
-
-                        <button type="button" class="mdi mdi-eye" data-toggle="modal" data-target="#verdetalle"></button>
-
-                    </td>
-                </tr>
-
+                
+                @endforeach
             </tbody>
         </table>
         <!-- Modal detalle facturas proveedor-->
@@ -251,6 +242,17 @@ Detalle Proveedor
             }
         });
     });
+
+    function datosDetalle(id) {
+
+let datos = {!! $compra !!}
+let detalledatos = datos.find(item => item.id == id)
+$('#exampleModalLongTitledetalle').text(`Proveedores #${detalledatos.id}`)
+$('#nfactura').text(`${detalledatos.n_orden}`)
+console.log(detalledatos);
+}
+
+
 </script>
 
 @endsection

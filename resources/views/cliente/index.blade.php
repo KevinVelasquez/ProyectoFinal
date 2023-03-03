@@ -98,7 +98,7 @@ Cliente
         </table>
 
 
-        //modal ver diseño
+        <!-- modal ver diseño -->
 
         <div class="modal fade" id="verdiseños" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
@@ -155,6 +155,7 @@ Cliente
             if (listafiguras[index].id_cliente == id) {
                 let figuri = listafiguras[index].imagen;
                 let idimagen = listafiguras[index].id;
+                let etiqueta = listafiguras[index].etiqueta;
                 const imagen = `
                 <div class="col-md-2 p-1" style="width:14%">
                     <div class="card">
@@ -162,9 +163,10 @@ Cliente
                             <div class='col text-center'>
                                 <label for="${idimagen}">
                                 <img src="http://127.0.0.1:8000/storage/images/figuras/${figuri}" id="${idimagen}" style="margin-top: 24%"/>
-                                    
+                                <p class="card-text">${etiqueta}</p> 
                                 </label>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
