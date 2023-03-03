@@ -7,7 +7,7 @@
 @section('content')
     <div class="container">
         <main role="main" class="pb-3">
-            @can(crear-pedido)
+            @can('crear-pedido')
             <p>
                 <a class="mdi mdi-cart-outline" id="iconoadd" href="{{ route('pedidos.create') }}"></a>
             </p>
@@ -60,11 +60,11 @@
                                     data-toggle="modal" data-target="#verdetalle"></button>
                                 <button onclick="verDatosAbono('{{ $pedidos->id }}')" class="mdi mdi-cash-usd "
                                     data-toggle="modal" data-target="#abonos" @if ($pedidos->estado !== 1)disabled @endif></button>
-                                @can(editar-pedido)
+                                @can('editar-pedido')
                                 <button onclick="editarPedido('{{ $pedidos->id }}')" class="mdi mdi-lead-pencil"
                                     data-toggle="modal" data-target="#editarmodal"  @if ($pedidos->estado !== 1)disabled @endif></button>
                                 @endcan
-                                @can(anular-pedido)
+                                @can('anular-pedido')
                                 <button onclick="anularPedido('{{ $pedidos->id }}')" class="mdi mdi-block-helper"
                                     data-toggle="modal" data-target="#anularmodal" @if ($pedidos->estado !== 1)disabled @endif></button>
                                 @endcan
