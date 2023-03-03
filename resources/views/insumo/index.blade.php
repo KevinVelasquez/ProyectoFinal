@@ -23,7 +23,7 @@ Insumo
         <table id="insumos" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    
                     <th>Nombre</th>
                     <th>Medidas</th>
                     <th>Estado</th>
@@ -33,7 +33,7 @@ Insumo
             <tbody>
                 @foreach ($insumo as $insumos)
                                 <tr>
-                                            <td>{{ $insumos->id }}</td>
+                                            
 											<td>{{ $insumos->nombre }}</td>
 											<td>{{ $insumos->medidas }}</td>
                                             <td><?php if ($insumos->estado == 1) {
@@ -57,6 +57,11 @@ Insumo
                 @endforeach
             </tbody>
         </table>
+        @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
      </main>     
 </div>
 
@@ -90,7 +95,7 @@ Insumo
                                                 <div class="col-sm-12">
                                                     <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre"
                                                         id="crearnombre" required>
-                                                        <div class="invalid-feedback">{{ $errors->first('nombre') }}</div>
+                                                        <div class="invalid-feedback"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -113,8 +118,10 @@ Insumo
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" id="crear-insumo" class="btn btn-primary" >Crear</button>
-                            <a class="btn btn-primary" href="{{ route('insumos.index')}}" style="margin: 10px;">Cancelar</a>
+                            <button type="submit" id="crear-insumo" class="btn btn-primary" style="background-color: #81242E;
+                            border-color: #81242E;" >Crear</button>
+                            <a class="btn btn-primary" href="{{ route('insumos.index')}}" style="margin: 10px; background-color: #81242E;
+                            border-color: #81242E;">Cancelar</a>
                         </div>
                     </div>
                 </div>
@@ -188,8 +195,10 @@ Insumo
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Actualizar</button>
-                            <a class="btn btn-primary" href="{{ route('insumos.index')}}" style="margin: 10px;">Cancelar</a>
+                            <button type="submit" class="btn btn-primary" style="background-color: #81242E;
+                            border-color: #81242E;">Actualizar</button>
+                            <a class="btn btn-primary" href="{{ route('insumos.index')}}" style="margin: 10px; 
+                            background-color: #81242E; border-color: #81242E;">Cancelar</a>
                         </div>
                     </div>
                 </div>
@@ -244,8 +253,10 @@ Insumo
                         @csrf
                         <div>¿Está seguro que desea eliminar el insumo?</div>
                         <input type="hidden" name="ideliminar" id="ideliminar" />
-                        <button type="submit" class="btn btn-primary">Si</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-primary" style="background-color: #81242E;
+                            border-color: #81242E;">Si</button>
+                        <button type="button" class="btn btn-primary" style="background-color: #81242E;
+                            border-color: #81242E;" data-dismiss="modal">No</button>
                     </form>
                 </div>
             </div>

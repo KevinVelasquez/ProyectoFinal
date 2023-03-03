@@ -33,6 +33,9 @@ class Insumo extends Model
      */
     protected $fillable = ['nombre','medidas','estado'];
 
-
+    public function detallecompra()
+    {
+        return $this->hasOne('App\Models\Detalle_compra', 'id', 'id_insumo', 'id_orden_compra');
+    }
 
 }

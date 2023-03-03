@@ -22,8 +22,10 @@
         </div>
 
         <div class="box-footer mt20">
-            <button type="submit" class="btn btn-primary">Crear</button>
-            <a class="btn btn-primary" href="{{ route('productos.index')}}" style="margin: 10px;  margin-top: 7%;">Cancelar</a>
+            <button type="submit" class="btn btn-primary" style="background-color: #81242E;
+                            border-color: #81242E;">Crear</button>
+            <a class="btn btn-primary" href="{{ route('productos.index')}}" style="margin: 10px; background-color: #81242E;
+                            border-color: #81242E; margin-top: 7%;">Cancelar</a>
             </div>
         </div>
     </div>

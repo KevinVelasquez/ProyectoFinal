@@ -70,9 +70,7 @@
 
 <script>
 $(document).ready(function() {
-    let roles = {
-        !!$role - > estado!!
-    }
+    let roles = {!! json_encode($role->estado) !!}
     $('#editarEstado').val(`${roles}`)
 })
 </script>

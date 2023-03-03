@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Insumo;
 use Illuminate\Http\Request;
+use App\Models\Detalle_compra;
 
 /**
  * Class InsumoController
@@ -18,6 +19,7 @@ class InsumoController extends Controller
         $this->middleware ('permission: editar-insumo', ['only'=>['updateInsumos']]);
         $this->middleware ('permission: borrar-insumo', ['only'=>['eliminarInsumo']]);
     }
+   
     /**
      * Display a listing of the resource.
      *
@@ -56,7 +58,7 @@ class InsumoController extends Controller
             'nombre' => 'required|unique:insumos,nombre,'.$input["id"],
             'id_medidas' => 'required',
         ], [
-            'nombre.unique' => 'No se puede crear 2 insumos con el mismo nombre',
+            'nombre.unique' => 'No se puede crear dos insumos con el mismo nombre',
         ]);
         
 
@@ -106,7 +108,7 @@ class InsumoController extends Controller
         'nombre' => 'required|unique:insumos,nombre',
         'id_medidas' => 'required',
     ], [
-        'nombre.unique' => 'No se puede crear 2 insumos con el mismo nombre',
+        'nombre.unique' => 'No se puede crear dos insumos con el mismo nombre',
     ]);
 
     $insumo = Insumo::create([
@@ -118,29 +120,30 @@ class InsumoController extends Controller
         ->with('success', 'Insumo created successfully.');
 }
 
-    
 
    
     public function eliminarInsumo(Request $request)
     {
         
             $input = $request->all();
-            $insumo = Insumo::find($input["ideliminar"]);
+            $insumo = $input["ideliminar"];
+
+            $consultadetalle = Detalle_compra::select(
+                "detalle_compra.id_insumo",
+            )->get();
             
-            if ($insumo->ordenes->count() > 0) {
-                return redirect()->route('insumos.index')->with('error', 'No se puede eliminar el insumo porque está asociado a una orden de compra');
+            
+
+            foreach ($consultadetalle as $valor) {
+               
+                if($insumo==$valor->id_insumo) {
+                    
+                    return redirect()->route('insumos.index')->with('error', 'No se puede eliminar el insumo porque está asociado a una orden de compra');
+                    
+                }
             }
             
-            $insumo->delete();
-        
-            return redirect()->route('insumos.index')
-                ->with('success', 'Insumo deleted successfully');
-    
-        // $input=$request->all();
-        
-        // $insumo = Insumo::find($input["ideliminar"])->delete();
-
-        // return redirect()->route('insumos.index')
-        //     ->with('success', 'Insumo deleted successfully');
+                Insumo::find($input["ideliminar"])->delete();
+                return redirect()->route('insumos.index');
     }
 }
