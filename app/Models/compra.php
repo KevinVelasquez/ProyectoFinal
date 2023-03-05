@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property DetalleCompra[] $detalleCompras
  * @property Insumo $insumo
- * @property metodo_pagos $metodo_pagos
+ * @property Metodo_Pago $metodo_pagos
  * @property Proveedor $proveedor
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
@@ -80,6 +80,7 @@ class Compra extends Model
     {
         return $this->hasOne('App\Models\Proveedor', 'id', 'id_proveedor');
     }
+
     
 
 }

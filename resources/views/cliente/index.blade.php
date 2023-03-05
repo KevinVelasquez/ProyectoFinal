@@ -44,7 +44,8 @@ Cliente
                     <td>Natural</td>
                     @endif
 
-                    <td>150000</td>
+                    <td>{{ $cliente->total_pedido-$cliente->total_abonos }}</td>
+
                     <td>
                         <?php if ($cliente->estado == 1) {
                             echo 'Activo';
@@ -57,16 +58,17 @@ Cliente
 
                         <a href="{{ url('/cliente/'.$cliente->id.'/edit') }}"><button class="mdi mdi-lead-pencil"></button></a>
 
-                        <!-- <a href=""><button class="mdi mdi-checkbox-multiple-blank"></button></a> -->
 
                         <button id="figura" type="button" class="mdi mdi-checkbox-multiple-blank" data-toggle="modal" data-target="#verdiseños" onclick="verdiseños('{{$cliente->id}}')"></button>
 
+                        <a data-toggle="modal" data-target="#eliminar"><button class="mdi mdi-trash-can-outline"></button></a>
+                        
                         <form action="{{ url('/cliente/'.$cliente->id) }}" method="POST">
 
 
                             @csrf
                             {{ method_field('DELETE') }}
-                            <a data-toggle="modal" data-target="#eliminar"><button class="mdi mdi-trash-can-outline"></button></a>
+                            
 
                             <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -130,7 +132,7 @@ Cliente
 </div>
 
 
-{!! $clientes->links() !!}
+{!! $cliente->links() !!}
 
 
 <!-- scripts -->

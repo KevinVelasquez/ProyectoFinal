@@ -1,12 +1,13 @@
 @extends('layouts.app')
 
 @section('template_title')
-Detalle Proveedor
+Cliente
 @endsection
 
 @section('content')
+
 <div class="container">
-<main role="main" class="pb-3">
+    <main role="main" class="pb-3">
     <p>
     <div class="card-header">
         <span class="card-title">Ordenes de compra</span>
@@ -243,14 +244,7 @@ Detalle Proveedor
         });
     });
 
-    function datosDetalle(id) {
-
-let datos = {!! $compra !!}
-let detalledatos = datos.find(item => item.id == id)
-$('#exampleModalLongTitledetalle').text(`Proveedores #${detalledatos.id}`)
-$('#nfactura').text(`${detalledatos.n_orden}`)
-console.log(detalledatos);
-}
+    
 
 
 </script>

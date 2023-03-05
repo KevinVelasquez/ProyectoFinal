@@ -22,51 +22,81 @@
     <!-- endinject -->
     <!-- plugin css for this page -->
     <link rel="stylesheet" href="/../assets/vendors/mdi/css/materialdesignicons.min.css">
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        #titulo {
+            color: #79242f;
+        }
+
+        .texto {
+            color: black;
+        }
+    </style>
 
 </head>
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
 
+<body>
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial -->
+            <div class="main-panel" id="main-panel">
+                <div class="content-wrapper">
+                    <div class="row">
+                        <div class="col-sm-6" id="tituloinicial">
+                            <h3 class="mb-0 font-weight-bold" id="titulo">Recuperar Contraseña</h3>
+                        </div>
+                    </div>
+                </div>
                 <div class="card-body">
                     @if (session('status'))
                     <div class="alert alert-success" role="alert">
                         {{ session('status') }}
                     </div>
                     @endif
+                    <div class="container mt-5">
+                        <form method="POST" action="{{ route('password.email') }}">
+                            @csrf
+                            <div class="row">
+                                <div class="col-sm">
 
-                    <form method="POST" action="{{ route('password.email') }}">
-                        @csrf
+                                </div>
+                                <div class="col-sm">
+                                    <div class="form-group">
+                                        <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Correo Electrónico') }}</label>
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                                        <div class="col-md-6">
+                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                            @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="parbotones">
+                                        <button type="submit" class="btn btn-primary">
+                                            {{ __('Siguiente') }}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
 
-                                @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</body>
 <script src="/assets/lib/jquery/dist/jquery.min.js"></script>
 <script src="/assets/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/js/site.js" asp-append-version="true"></script>

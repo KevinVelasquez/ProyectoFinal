@@ -44,14 +44,7 @@ Proveedor
                     @endif
 
                     <td>0</td>
-                    <!-- <td>
-                        @if($proveedor->estado == 1)
-                        <button type="button" class="btn btn-sm btn-success">Activo</button>
-                        @else
-                        <button type="button" class="btn btn-sm btn-danger">Inactivo</button>
-                        @endif
-
-                    </td> -->
+                   
 
                     <td>
                         <?php if ($proveedor->estado == 1) {
@@ -67,14 +60,14 @@ Proveedor
                         <!-- Button trigger modalvisualizar facturas -->
                         <a href="{{ route('proveedor.show', $proveedor->id) }}"><button class="mdi mdi-format-align-left"></button></a>
 
-
+                        <a data-toggle="modal" data-target="#eliminar"><button class="mdi mdi-trash-can-outline"></button></a>
 
                         <form action="{{ url('/proveedor/'.$proveedor->id) }}" method="POST">
 
 
                             @csrf
                             {{ method_field('DELETE') }}
-                            <a data-toggle="modal" data-target="#eliminar"><button class="mdi mdi-trash-can-outline"></button></a>
+                            
 
                             <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">

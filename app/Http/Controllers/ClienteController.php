@@ -10,6 +10,8 @@ use App\Models\Tipo_comercio;
 use App\Models\Tipo_persona;
 use App\Models\Cliente;
 use App\Models\Figura;
+use App\Models\Pedido;
+use App\Models\Pago_Clientes;
 use Illuminate\Http\Request;
 
 class ClienteController extends Controller
@@ -24,10 +26,15 @@ class ClienteController extends Controller
         //
 
         $figuras = Figura::all();
-        $clientes = Cliente::paginate();
-
-        return view('cliente.index', compact('clientes', 'figuras'))
-            ->with('i', (request()->input('page', 1) - 1) * $clientes->perPage());
+        $cliente = Cliente::paginate();
+        $clientes = Cliente::select('clientes.id', 'clientes.nombre', 'clientes.cedula', 'clientes.telefono', 'clientes.direccion', 'clientes.email', 'clientes.tipo_persona', 'clientes.estado', Pago_Clientes::raw('SUM(CASE WHEN pago__clientes.estado = 1 THEN pago__clientes.abono ELSE 0 END) as total_abonos'), Pedido::raw('(SELECT SUM(CASE WHEN pedidos.estado = 1 THEN pedidos.totalpedido ELSE 0 END) FROM pedidos WHERE pedidos.id_cliente = clientes.id) as total_pedido'))
+    ->join('pedidos', 'pedidos.id_cliente', '=', 'clientes.id')
+    ->join('pago__clientes', 'pago__clientes.id_pedido', '=', 'pedidos.id')
+    ->groupBy('clientes.id', 'clientes.nombre', 'clientes.cedula', 'clientes.telefono', 'clientes.direccion', 'clientes.email', 'clientes.tipo_persona', 'clientes.estado')
+    ->get();
+        
+        return view('cliente.index', compact('clientes', 'figuras','cliente'))
+            ->with('i', (request()->input('page', 1) - 1) * $cliente->perPage());
     }
 
 
@@ -122,9 +129,6 @@ class ClienteController extends Controller
     public function destroy($id)
     {
         //
-        // Cliente::destroy($id);
-        // return redirect('cliente');
-
         $cliente = Cliente::find($id)->delete();
 
         return redirect('cliente')

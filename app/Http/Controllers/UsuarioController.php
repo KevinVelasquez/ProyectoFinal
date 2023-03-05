@@ -148,6 +148,11 @@ class UsuarioController extends Controller
         return view('usuario/perfil');
     }
 
+    public function recuperarClave()
+    {
+        return view('recuperarContraseña/recuperarClave');
+    }
+
     public function EditarPerfil(Request $request)
     {
         $user = Auth::user();

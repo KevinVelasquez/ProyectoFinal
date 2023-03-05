@@ -13,7 +13,6 @@ Usuarios
         <table id="usuarios" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Cédula</th>
                     <th>Nombre</th>
                     <th>Correo Electrónico</th>
@@ -24,7 +23,6 @@ Usuarios
             <tbody>
                 @foreach ($users as $user)
                 <tr>
-                    <td>{{ $user->id }}</td>
 
                     <td>{{ $user->cedula }}</td>
                     <td>{{ $user->nombre }}</td>
@@ -39,7 +37,7 @@ Usuarios
                     </td>
                     <td>
                         <form action="{{ route('usuario.destroy',$user->id) }}" method="POST">
-                            <a class="btn btn-sm btn-success" href="{{ route('usuario.edit',$user->id) }}"><i class="fa fa-fw fa-edit"></i>Editar</a>
+                            <a class="btn btn-primary btn-lg active" href="{{ route('usuario.edit',$user->id) }}"><i class="fa fa-fw fa-edit"></i>Editar</a>
                         </form>
                     </td>
                 </tr>

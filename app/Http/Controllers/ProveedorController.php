@@ -15,9 +15,6 @@ use App\Models\Metodo_Pago;
 use App\Models\Compra;
 use App\Models\Insumo;
 use App\Models\PagoProveedore;
-
-
-
 use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Illuminate\Http\Request;
 use PDF;
@@ -155,7 +152,6 @@ class ProveedorController extends Controller
     {
         //
         $proveedor = Proveedor::find($id)->delete();
-
 
         return redirect('proveedor')
             ->with('mensaje', 'Proveedor eliminado con éxito.');
