@@ -86,9 +86,10 @@ class ProveedorController extends Controller
     {
         $proveedores = Proveedor::find($id);
 
-        $compra = Compra::select("compra.n_orden","fecha_compra","id_metodo_pagos")
+        $compra = Compra::select("compra.n_orden","fecha_compra","id_metodo_pagos","proveedors.nombre","proveedors.cedula","proveedors.direccion","municipios.id  AS idmunicipio","municipios.nombre AS nombremunicipio","proveedors.telefono",)
         ->join("proveedors","proveedors.id", "=","compra.id_proveedor")
         ->join("metodo__pagos", "compra.id_metodo_pagos", "=", "metodo__pagos.id")
+        ->join("municipios", "proveedors.id_municipio", "=", "municipios.id")
         
         ->where("proveedors.id", "=", $id)
         ->get();

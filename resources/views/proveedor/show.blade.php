@@ -64,15 +64,13 @@ Cliente
             <div class="modal-dialog modal-dialog-centered" role="document" id="modalactualizar" style="max-width: 63%;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Orden de Compra 0102</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">N° Factura {{ $compras->n_orden }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body" id="contenidoactualizar">
                         <div class="page-content container">
-
-
                             <div class="container px-0">
                                 <div class="row mt-4">
                                     <div class="col-12 col-lg-12">
@@ -86,27 +84,26 @@ Cliente
                                         </div>
                                         <!-- .row -->
                                         <br>
-
+                                        @foreach ($compra as $compras)
                                         <hr class="row brc-default-l1 mx-n1 mb-4" />
 
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div>
                                                     <span class="text-sm text-grey-m2 align-middle">Proveedor:</span>
-                                                    <span class="text-600 text-110 text-blue align-middle">Julio
-                                                        Varillas</span>
+                                                    <span class="text-600 text-110 text-blue align-middle">{{ $compras->nombre }}</span>
                                                 </div>
                                                 <div class="text-grey-m2">
                                                     <div class="my-1">
-                                                        nit 99753839-1
+                                                        Nit/CC: {{ $compras->cedula }}
                                                     </div>
                                                     <div class="my-1">
-                                                        Calle 44 = 53 - 30, Medellín
+                                                    {{ $compras->direccion }}
                                                     </div>
                                                     <div class="my-1">
-                                                        Antioquia, Colombia
+                                                    {{ $compras->nombremunicipio }}
                                                     </div>
-                                                    <div class="my-1"><i class="fa fa-phone fa-flip-horizontal text-secondary"></i> <b class="text-600">3029984563</b></div>
+                                                    <div class="my-1"><i class="fa fa-phone fa-flip-horizontal text-secondary"></i> <b class="text-600">{{ $compras->telefono }}</b></div>
                                                 </div>
                                             </div>
                                             <!-- /.col -->
@@ -115,10 +112,10 @@ Cliente
                                                 <hr class="d-sm-none" />
                                                 <div class="text-grey-m2">
                                                     <div class="mt-1 mb-2 text-secondary-m1 text-600 text-125">
-                                                        Orden de Compra
+                                                    Factura
                                                     </div>
                                                     <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
-                                                        <span class="text-600 text-90">ID:</span> #010101
+                                                        <span class="text-600 text-90">ID:</span> {{ $compras->n_orden }}
                                                     </div>
                                                     <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
                                                         <span class="text-600 text-90">Fecha Registro:</span> Nov 23,2022
@@ -214,6 +211,7 @@ Cliente
                                                     </div>
                                                 </div>
                                             </div>
+                                            @endforeach
                                             <hr />
                                             <div>
                                                 <a href="{{ route('proveedor.pdf') }}" class="btn btn-primary " target="_blank">Descargar</a>
