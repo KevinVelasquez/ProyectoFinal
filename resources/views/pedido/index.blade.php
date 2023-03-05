@@ -7,9 +7,11 @@
 @section('content')
     <div class="container">
         <main role="main" class="pb-3">
+            @can('crear-pedido')
             <p>
                 <a class="mdi mdi-cart-outline" id="iconoadd" href="{{ route('pedidos.create') }}"></a>
             </p>
+            @endcan
 
             <table id="pedidos" class="table table-striped dt-responsive nowrap table" style="width:100%">
                 <thead>
@@ -54,14 +56,18 @@
                                 echo 'Si';
                             } ?></td>
                             <td>
-                                <button onclick="verDatos('{{ $pedidos->id }}')" class="mdi mdi-format-align-justify"+
+                                <button onclick="verDatos('{{ $pedidos->id }}')" class="mdi mdi-format-align-justify "
                                     data-toggle="modal" data-target="#verdetalle"></button>
-                                <button onclick="verDatosAbono('{{ $pedidos->id }}')" class="mdi mdi-cash-usd"
-                                    data-toggle="modal" data-target="#abonos"></button>
+                                <button onclick="verDatosAbono('{{ $pedidos->id }}')" class="mdi mdi-cash-usd "
+                                    data-toggle="modal" data-target="#abonos" @if ($pedidos->estado !== 1)disabled @endif></button>
+                                @can('editar-pedido')
                                 <button onclick="editarPedido('{{ $pedidos->id }}')" class="mdi mdi-lead-pencil"
-                                    data-toggle="modal" data-target="#editarmodal"></button>
+                                    data-toggle="modal" data-target="#editarmodal"  @if ($pedidos->estado !== 1)disabled @endif></button>
+                                @endcan
+                                @can('anular-pedido')
                                 <button onclick="anularPedido('{{ $pedidos->id }}')" class="mdi mdi-block-helper"
-                                    data-toggle="modal" data-target="#anularmodal"></button>
+                                    data-toggle="modal" data-target="#anularmodal" @if ($pedidos->estado !== 1)disabled @endif></button>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach
@@ -170,7 +176,8 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Estado</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-control" name="proceso" id="editarproceso" required>
+                                                    <select class="form-control" name="proceso" id="editarproceso"
+                                                        required>
                                                         <option value="0">Pendiente</option>
                                                         <option value="1">Despachado</option>
                                                         <option value="2">Entregado</option>
@@ -212,7 +219,7 @@
                         <input type="hidden" name="idanular" id="idanular" />
                         <input type="hidden" name="anulardato" value="2" />
                         <button type="submit" class="btn btn-primary">Si</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-top:5%;">No</button>
                     </form>
                 </div>
             </div>
@@ -305,6 +312,8 @@
                                         <table id="tablaDetallePedidoSeleccionado" class="table table-bordered">
                                             <thead>
                                                 <tr>
+                                                    <th>
+                                                    </th>
                                                     <th>
                                                         Producto
                                                     </th>
@@ -531,9 +540,18 @@
             let detallePedidos = pedidos.filter(item => item.id == id)
             $("#tablaDetallePedidoSeleccionado tbody").children().remove();
             detallePedidos.forEach(function(value, index) {
+                if(value.imagen === null){
+                    ruta = "";
+                }else{
+                    ruta = `<img src="http://127.0.0.1:8000/storage/images/figuras/${value.imagen}"/>`
+                }
+
                 if (value.id == id) {
                     let fila = `
               <tr>
+                <td id="imagen-ruta">
+                    ${ruta}
+                  </td>
                   <td>
                     ${value.nombreproducto}
                   </td>
@@ -628,7 +646,7 @@
             select.value = selectValue;
         }
 
-        if (select.value === "0") {
+        if (select.value == null || select.value == 0) {
             for (var i = 0; i < inputs.length; i++) {
                 inputs[i].readOnly = false;
             }
@@ -639,7 +657,7 @@
         }
 
         select.addEventListener("change", function() {
-            if (select.value === "0") {
+            if (select.value == 0) {
                 for (var i = 0; i < inputs.length; i++) {
                     inputs[i].readOnly = false;
                 }

@@ -1,17 +1,25 @@
 @extends('layouts.app')
 
+
 @section('template_title')
 @endsection
 
 @section('content')
+<script>
+@if (session('mensaje'))
+    alert('La figura no puede ser eliminada al estar asociada a un pedido.')
+@endif
+</script>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
                 <div class="container">
                     <main role="main" class="pb-3">
-                        <p>
-                            <a class="mdi mdi-shape-plus" id="iconoadd" href="{{ route('figuras.create') }}"></a>
-                        </p>
+                        @can('crear-figura')
+                            <p>
+                                <a class="mdi mdi-shape-plus" id="iconoadd" href="{{ route('figuras.create') }}"></a>
+                            </p>
+                        @endcan
                         @if ($message = Session::get('success'))
                             <div class="alert alert-success">
                                 <p>{{ $message }}</p>
@@ -21,10 +29,11 @@
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover">
-                                    <form action="{{ route('figuras.search') }}" method="GET" >
+                                    <form action="{{ route('figuras.search') }}" method="GET">
                                         <div class="form-group" id="formsearch">
                                             <input type="text" name="search" class="form-control" id="search"
-                                                placeholder="Buscar" value="{{ request()->input('search') }}" style="width: 20%;">
+                                                placeholder="Buscar" value="{{ request()->input('search') }}"
+                                                style="width: 20%;">
                                         </div>
                                     </form>
                                     <br>
@@ -36,9 +45,8 @@
                                                     <div class="col-md-2 p-1">
                                                         <div class="card">
                                                             <img class="card-img-top"
-                                                                src="http://127.0.0.1:8000/storage/images/figuras/{{$figura->imagen}}"
-                                                                {{-- src="{{ asset('/storage/images/figuras/' . $figura->imagen) }}" --}}
-                                                                alt="Card image cap"
+                                                                src="http://127.0.0.1:8000/storage/images/figuras/{{ $figura->imagen }}"
+                                                                {{-- src="{{ asset('/storage/images/figuras/' . $figura->imagen) }}" --}} alt="Card image cap"
                                                                 data-bs-toggle="modal"data-bs-target="#modalimagen<?php echo $figura->id; ?>">
                                                             <div id="activ" class="dispo<?php echo $figura->estado; ?>"></div>
                                                             <div tabindex="-1"
@@ -49,20 +57,24 @@
                                                                     style="max-width: 445px;">
                                                                     <div class="modal-content">
                                                                         <img
-                                                                src="http://127.0.0.1:8000/storage/images/figuras/{{$figura->imagen}}">       
+                                                                            src="http://127.0.0.1:8000/storage/images/figuras/{{ $figura->imagen }}">
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="card-body" style="padding: 0rem">
                                                                 <p class="card-text">{{ $figura->etiqueta }}</p>
                                                                 <div>
-                                                                    <a class="mdi mdi-lead-pencil"
-                                                                        style="height: 28%;width: 17%;color:black"
-                                                                        href="{{ route('figuras.edit', $figura->id) }}"></a>
-                                                                    <button onclick="eliminarFigura('{{ $figura->id }}')"
-                                                                        style="height: 28%;width: 17%;border: none;background-color: white;"
-                                                                        class="mdi mdi-delete" data-toggle="modal"
-                                                                        data-target="#eliminarmodal"></button>
+                                                                    @can('editar-figura')
+                                                                        <a class="mdi mdi-lead-pencil"
+                                                                            style="height: 28%;width: 17%;color:black"
+                                                                            href="{{ route('figuras.edit', $figura->id) }}"></a>
+                                                                    @endcan
+                                                                    @can('borrar-figura')
+                                                                        <button onclick="eliminarFigura('{{ $figura->id }}')"
+                                                                            style="height: 28%;width: 17%;border: none;background-color: white;"
+                                                                            class="mdi mdi-delete" data-toggle="modal"
+                                                                            data-target="#eliminarmodal"></button>
+                                                                    @endcan
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -97,7 +109,8 @@
                             <div>¿Está seguro que desea eliminar la figura?</div>
                             <input type="hidden" name="ideliminar" id="ideliminar" />
                             <button type="submit" class="btn btn-primary">Si</button>
-                            <button type="button" class="btn btn-danger" style="margin-top:5%" data-dismiss="modal">No</button>
+                            <button type="button" class="btn btn-danger" style="margin-top:5%"
+                                data-dismiss="modal">No</button>
                         </form>
                     </div>
                 </div>

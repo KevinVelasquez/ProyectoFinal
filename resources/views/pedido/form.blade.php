@@ -165,7 +165,7 @@
         <div class="form-group row">
             <label class="control-label">Abono</label>
             <div class="col-sm-9">
-                <input type="number" name="abono" id="abono" class="form-control" required />
+                <input type="number"  name="abono" id="abono" class="form-control" required/>
             </div>
         </div>
     </div>
@@ -404,7 +404,18 @@
                     let paises = todoPaises.find(item => item.id == idpaisdepa)
                     $('#pais').val(`${paises.id}`);
                     
+                    $('#fecha_entrega').val('');
+                    $('#id_metodo_entrega').val('');
+                    $('#id_medio_pago').val('');
+                    $('#id_metodo_pago').val('');
+                    $('#abono').val('');
+                    $('#datosresumen').text('');
+                    $('#datosresumen').val('');
+                    $('#totalpedido').text(''); 
+                    $('#totalpedido').val(''); 
+                    $('#total').val(''); 
 
+                     
                 }
             });
 
