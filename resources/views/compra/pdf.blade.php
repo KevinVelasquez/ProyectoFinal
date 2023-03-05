@@ -11,18 +11,15 @@
         body {
             font-family: sans-serif;
         }
-
         table,
         th,
         td {
             border: 1px solid;
             border-collapse: collapse;
         }
-
         .titulo {
             color: #79242f;
         }
-
         .texto {
             color: black;
         }

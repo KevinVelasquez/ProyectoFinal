@@ -33,7 +33,7 @@ class ClienteController extends Controller
     ->groupBy('clientes.id', 'clientes.nombre', 'clientes.cedula', 'clientes.telefono', 'clientes.direccion', 'clientes.email', 'clientes.tipo_persona', 'clientes.estado')
     ->get();
         
-        return view('cliente.index', compact('clientes', 'figuras','cliente'))
+        return view('cliente.index', compact('cliente', 'figuras','clientes'))
             ->with('i', (request()->input('page', 1) - 1) * $cliente->perPage());
     }
 

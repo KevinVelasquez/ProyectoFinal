@@ -143,21 +143,15 @@
 
 <script>
     function colocar_precio() {
-
         let precio = $(e).attr("valor_unitario");
-
         $("valor_unitario").val(precio);
-
     }
-
     function agregar_insumo() {
         let id_insumo = $("#id_insumo option:selected").val();
         let insumo_text = $("#id_insumo option:selected").text();
         let cantidad = $("#cantidad").val();
         let valor_unitario = $("#valor_unitario").val();
-
         if (cantidad > 0 && valor_unitario > 0) {
-
             $("#tblInsumos").append(`
                 <tr id="tr-${id_insumo}">
                     <td>
@@ -174,16 +168,12 @@
                     </td>
                 </tr>
                 `);
-
             let total = $("#total").val() || 0;
             $("#total").val(parseInt(total) + parseInt(cantidad) * parseInt(valor_unitario));
-
         } else {
             alert("Se debe ingresar una cantidad o precio válido");
         }
-
     }
-
     function eliminar_insumo(id, subtotal) {
         $("#tr-" + id).remove();
         let total = $("#total").val() || 0;
@@ -191,4 +181,3 @@
     }
 </script>
 
-@endsection

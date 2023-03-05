@@ -7,7 +7,6 @@ use App\Models\Compra;
 use App\Models\Proveedor;
 use App\Models\PagoProveedore;
 use App\Models\insumo;
-use App\Models\metodo_pagos;
 use App\Models\Detalle_compra;
 use App\Models\Metodo_Pago;
 use Illuminate\Http\Request;
@@ -225,7 +224,6 @@ class CompraController extends Controller
         } else {
             $newStatus = '<br> <button type="button" class="btn btn-sm btn-success">Activa</button>';
         }
-
         return response()->json(['var'=>''.$newStatus.'']); */
     }
 }

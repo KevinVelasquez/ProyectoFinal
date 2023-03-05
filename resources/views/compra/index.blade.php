@@ -11,7 +11,7 @@ Compra
             <a class="mdi mdi-cart-outline" id="iconoadd" href="{{ route('compra.create') }}"></a>
         </p>
 
-        <table id="compras" class="table table-striped dt-responsive nowrap table" style="width:100%">
+        <table id="compra" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>
                     <th>N Orden</th>
@@ -198,13 +198,9 @@ Compra
             }
         });
     });
-
     function verDatosAbono(id) {
-
         $('#idcomprabonar').val(`${id}`)
-
         let abonos = {!!$detalleabono!!}
-
         let detalleabonos = abonos.filter(item => item.idcomprabono == id)
         let resta = 0
         $("#tablaabonos tbody").children().remove();
@@ -246,7 +242,6 @@ Compra
         var valor = fila.cells[4].innerHTML;
         document.getElementById("idcomprabonar").value = valor;
     }
-
     function validarMonto() {
         var input = document.getElementById("cantidadabono").value;
         var resta = document.getElementById("resta").value
@@ -256,7 +251,6 @@ Compra
         }
         return true;
     }
-
     function anularAbonoCompra(id) {
         let consulta = {!!$detalleabono!!}
         let datos = consulta.find(item => item.idabono == id)
@@ -265,14 +259,11 @@ Compra
         $('#idcomprabono').val(`${datos.idcomprabono}`);
         $('#estadoanularabaono').val(`${datos.estado}`);
     }
-
-
     document.getElementById("buscarAbono").addEventListener("keyup", function(event) {
         if (event.key === "Enter") {
             buscarTabla();
         }
     });
-
     function anularCompra(id) {
         let consulta = {!!$editarCompra!!}
         let values = consulta.find(item => item.id == id)
@@ -280,7 +271,6 @@ Compra
         $('#idanular').val(`${values.id}`);
         $('#estadoanular').val(`${values.estado}`);
     }
-
     function buscarTabla() {
         var busqueda = document.getElementById("buscarAbono").value;
         var filas = document.getElementById("tablaabonos").getElementsByTagName("tr");

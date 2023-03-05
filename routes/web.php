@@ -7,8 +7,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ClienteController;
 use Illuminate\Support\Facades\Auth;
-
-
+use App\Http\Controllers\CompraController;
 use App\Http\Controllers\CalendarioController;
 
 //RUTAS HOME
@@ -17,7 +16,7 @@ Route::get('/', function () {
     return view('welcome');
 })->middleware('auth');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('auth');
-
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.request');
 Route::resource('compra', App\Http\Controllers\CompraController::class)->middleware('auth');
 Route::resource('pago-proveedore', App\Http\Controllers\PagoProveedoreController::class)->middleware('auth');
 Route::resource('usuario', App\Http\Controllers\UsuarioController::class)->middleware('auth');
@@ -36,7 +35,11 @@ Route::patch('pedidos', [PedidoController::class, 'anularPedido'])->name('pedido
 Route::get('generate-pdf', [App\Http\Controllers\PdfControllerdos::class, 'generatePDF'])->name('generate-pdf');
 Route::post('pedido', [App\Http\Controllers\PagoClienteController::class,'agregarAbono'])->name('agregarAbono');
 Route::put('pedido', [App\Http\Controllers\PagoClienteController::class,'anularAbono'])->name('anularAbono');
+Route::post('compras', [App\Http\Controllers\PagoProveedoreController::class,'agregarAbonoCompra'])->name('agregarAbonoCompra');
+Route::put('compras', [App\Http\Controllers\PagoProveedoreController::class,'anularAbono'])->name('anularAbono');
+Route::patch('compras', [CompraController::class, 'anularCompra'])->name('compras.anularCompra');
 Route::get('abono-pdf', [App\Http\Controllers\PdfControllerdos::class, 'abonoPDF'])->name('abono-pdf');
+Route::post('recuperarClave', [App\Http\Controllers\UsuarioController::class, 'recuperarClave'])->name('recuperarClave');
 
 Route::delete('figuras', [App\Http\Controllers\FiguraController::class, 'eliminarfigura'])->name('figuras.eliminarfigura');
 Route::get('figuras/search', [App\Http\Controllers\FiguraController::class, 'search'])->name('figuras.search');
@@ -68,12 +71,7 @@ Route::resource('proveedor',ProveedorController::class)->middleware('auth');
 Route::get('/detalleproveedor', [App\Http\Controllers\ProveedorController::class, 'show']);
 Route::get('detallefactura/pdf',[App\Http\Controllers\ProveedorController::class, 'pdf'])->name('proveedor.pdf');
 Route::get('estadoproveedor',[App\Http\Controllers\ProveedorController::class, 'updateStatusProveedor'])->name('proveedor.updateStatusProveedor');
-//Route::get('proveedor', [App\Http\Controllers\ProveedorController::class, 'update_status'])->name('Editar_estado_proveedor');
 
-
-// RUTAS CALENDARIO
-
-//Route::resource('calendario', [App\Http\Controllers\CalendarioController::class, 'Pindex']);
 
 Route::resource('calendario',CalendarioController::class);
 
