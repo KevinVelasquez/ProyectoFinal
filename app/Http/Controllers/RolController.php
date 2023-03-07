@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class RolController extends Controller
 {
@@ -125,18 +126,34 @@ class RolController extends Controller
      */
     public function eliminarRol(Request $request)
     {
-        $input=$request->all();
+        // $input=$request->all();
         
-        $role = Role::find($input["ideliminar"]);
-        if($role->name =='Administrador'){
-            $error = 'No se puede eliminar el rol de administrador.';
-        return redirect()->route('roles.index')->with('error', $error);
-        }
+        // $role = Role::find($input["ideliminar"]);
+        // if($role->name =='Administrador'){
+        //     $error = 'No se puede eliminar el rol de administrador.';
+        // return redirect()->route('roles.index')->with('error', $error);
+        // }
         
-        
-        $role->delete();
+        $input = $request->all();
+            $role = $input["ideliminar"];
 
-        return redirect()->route('roles.index')
-            ->with('success', 'Rol deleted successfully');
+            $consultarol = User::select(
+                "users.rol",
+            )->get();
+
+            foreach ($consultarol as $valor) {
+               
+                if($role==$valor->rol) {
+                    
+                    return redirect()->route('roles.index')->with('error', 'No se puede eliminar el rol');
+                }
+            }
+                Role::find($input["ideliminar"])->delete();
+                return redirect()->route('roles.index');
+        
+        // $role->delete();
+
+        // return redirect()->route('roles.index')
+        //     ->with('success', 'Rol deleted successfully');
     }
 }

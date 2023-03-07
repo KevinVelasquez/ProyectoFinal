@@ -22,7 +22,6 @@ Rol
         <table id="roles" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Nombre</th>
                     <th>Estado</th>
                     <th>Acciones</th>
@@ -31,7 +30,6 @@ Rol
             <tbody>
                 @foreach ($roles as $role)
                 <tr>
-                    <td>{{ $role->id }}</td>
                     <td>{{ $role->name }}</td>
                     <td><?php if ($role->estado == 1) {
                                 echo 'Disponible';
@@ -51,6 +49,11 @@ Rol
                 @endforeach
             </tbody>
         </table>
+        @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
     </main>
 </div>
 

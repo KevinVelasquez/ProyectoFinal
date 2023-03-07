@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use App\Models\DetallePedido;
 use Str;
 
 /**
@@ -138,9 +139,21 @@ class ProductoController extends Controller
     public function eliminarproducto(Request $request)
     {
         $input = $request->all();
-        Producto::find($input["ideliminar"])->delete();
+            $producto = $input["ideliminar"];
 
-        return redirect()->route('productos.index');
+            $consultadetalle = DetallePedido::select(
+                "detalle_pedidos.id_producto",
+            )->get();
+
+            foreach ($consultadetalle as $valor) {
+               
+                if($producto==$valor->id_producto) {
+                    
+                    return redirect()->route('productos.index')->with('error', 'No se puede eliminar el producto porque está asociado a un pedido');
+                }
+            }
+                Producto::find($input["ideliminar"])->delete();
+                return redirect()->route('productos.index');
     }
 
     public function search(Request $request)

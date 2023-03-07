@@ -131,18 +131,14 @@ class InsumoController extends Controller
             $consultadetalle = Detalle_compra::select(
                 "detalle_compra.id_insumo",
             )->get();
-            
-            
 
             foreach ($consultadetalle as $valor) {
                
                 if($insumo==$valor->id_insumo) {
                     
                     return redirect()->route('insumos.index')->with('error', 'No se puede eliminar el insumo porque está asociado a una orden de compra');
-                    
                 }
             }
-            
                 Insumo::find($input["ideliminar"])->delete();
                 return redirect()->route('insumos.index');
     }
