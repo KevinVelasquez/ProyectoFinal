@@ -155,6 +155,12 @@ class PedidoController extends Controller
     {
 
         $input = $request->all();
+        // if($input["abono"] > $input["total"]){
+        //     return false;
+        // }else{
+        //     return true;
+        // };
+
         $pedido = Pedido::create([
             "id_cliente" => $input["id_cliente"],
             'id_municipio' => $input["id_municipio"],
@@ -295,6 +301,12 @@ class PedidoController extends Controller
             ->update([
                 'estado' => 2
             ]);
+
+        Pago_Clientes::where('id_pedido', $input["idanular"])
+            ->update([
+                'estado' => 2
+            ]);
+
         return redirect()->route('pedidos.index')
             ->with('success', 'Status pedido successfully');
     }

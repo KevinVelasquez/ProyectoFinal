@@ -265,7 +265,7 @@
 
 </div>
 <div class="form-group" style="margin-top: 2%;margin-left: 39%;">
-    <button type="submit" class="btn btn-success" style="margin: 10px">Crear</button>
+    <button type="submit" class="btn btn-success" style="margin: 10px" >Crear</button>
     <a class="btn btn-primary " style="margin: 10px" onclick="resetForm('formpedidos')">Limpiar</a>
     <a class="btn btn-danger " href="{{ route('pedidos.index') }}" style="margin: 10px">Cancelar</a>
 </div>
@@ -522,6 +522,16 @@
         }
 
     });
+
+    function validar_abono() {
+    var total = parseInt(document.getElementById("total").value);
+    var abono = parseInt(document.getElementById("abono").value);
+    if(abono > total){
+        alert("El abono no puede ser mayor a el total del pedido.")
+        return false;
+    }
+    return true;
+}
 
     (function() {
         'use strict'

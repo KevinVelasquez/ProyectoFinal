@@ -6,6 +6,7 @@
 
 @section('content')
     <div class="container">
+        
         <main role="main" class="pb-3">
             @can('crear-pedido')
             <p>
@@ -13,7 +14,7 @@
             </p>
             @endcan
 
-            <table id="pedidos" class="table table-striped dt-responsive nowrap table" style="width:100%">
+            <table id="pedidos" class="table table-striped dt-responsive nowrap table display mowrap"  cellspacing="0" style="width:100%"  >
                 <thead>
                     <tr>
                         <th># Pedido</th>
@@ -501,8 +502,9 @@
                 window.location.href = "/pedidos"
             }
             $('#pedidos').DataTable({
+                responsive:false,
                 "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"   
                 }
             });
 
