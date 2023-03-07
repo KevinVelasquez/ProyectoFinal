@@ -31,70 +31,94 @@
             color: #79242f;
         }
 
-        .texto {
-            color: black;
+        .recuperar {
+            width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px #ddd;
+        }
+
+        .recuperar h1 {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .recuperar form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .recuperar label {
+            margin-bottom: 10px;
+        }
+
+        .recuperar input[type="email"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .recuperar button[type="submit"] {
+            padding: 10px;
+            background-color: #81242E;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .recuperar button[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+
+        .recuperar a[type="button"] {
+            padding: 9px;
+            font-size: small;
+            background-color: #81242E;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .recuperar a[type="button"]:hover {
+            background-color: #3e8e41;
+        }
+
+        .buton {
+            padding-top: 5%;
         }
     </style>
 
 </head>
 
 <body>
-    <div class="container-scroller">
-        <!-- partial:partials/_navbar.html -->
-
-        <!-- partial -->
-        <div class="container-fluid page-body-wrapper">
-            <!-- partial -->
-            <div class="main-panel" id="main-panel">
-                <div class="content-wrapper">
-                    <div class="row">
-                        <div class="col-sm-6" id="tituloinicial">
-                            <h3 class="mb-0 font-weight-bold" id="titulo">Recuperar Contraseña</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                    @endif
-                    <div class="container mt-5">
-                        <form method="POST" action="{{ route('password.email') }}">
-                            @csrf
-                            <div class="row">
-                                <div class="col-sm">
-
-                                </div>
-                                <div class="col-sm">
-                                    <div class="form-group">
-                                        <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Correo Electrónico') }}</label>
-
-                                        <div class="col-md-6">
-                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                            @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="parbotones">
-                                        <button type="submit" class="btn btn-primary">
-                                            {{ __('Siguiente') }}
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-sm">
-
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+    <div class="recuperar">
+        @if (session('status'))
+        <div class="alert alert-success" role="alert">
+            {{ session('status') }}
         </div>
+        @endif
+        <h1>Recuperar Contraseña</h1>
+        <form method="POST" action="{{ route('password.email') }}">
+            @csrf
+            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Correo Electrónico') }}</label>
+            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+            @error('email')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+            <div class="buton">
+                <button type="submit" class="btn btn-primary btn-lg active">
+                    {{ __('Siguiente') }}
+                </button>
+                <a type="button" class="btn btn-primary btn-lg active" href="{{ route('login') }}">Regresar</a>
+            </div>
+        </form>
     </div>
 </body>
 <script src="/assets/lib/jquery/dist/jquery.min.js"></script>

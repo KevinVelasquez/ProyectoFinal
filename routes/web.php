@@ -15,7 +15,7 @@ use App\Http\Controllers\CompraController;
 //RUTAS HOME
 
 Route::get('/', function () {
-    return view('/home');
+    return view('/calendario/Pindex');
 })->middleware('auth');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('auth');
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.request');

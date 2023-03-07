@@ -11,7 +11,7 @@ Compra
             <a class="mdi mdi-cart-outline" id="iconoadd" href="{{ route('compra.create') }}"></a>
         </p>
 
-        <table id="compras" class="table table-striped dt-responsive nowrap table" style="width:100%">
+        <table id="compra" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>
                     <th>N Orden</th>
@@ -116,6 +116,13 @@ Compra
                                     <input type="date" name="fechaabono" class="form-control" required>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                @error('fechaabono')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group row">
@@ -124,12 +131,19 @@ Compra
                                     <input type="number" id="cantidadabono" name="cantidadabono" class="form-control" required>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                @error('cantidadabono')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
                         </div>
                     </div>
             </div>
             <div class="botonestabla" style="text-align: center;">
-                <button type="submit" id="agregarAbono" class="btn btn-primary">Agregar</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                <button type="submit" id="agregarAbono" class="btn btn-primary btn-lg active">Agregar</button>
+                <button type="button" class="btn btn-primary btn-lg active" data-dismiss="modal" aria-label="Close">Cancelar</button>
             </div>
             </form>
             <br>
@@ -181,8 +195,8 @@ Compra
                     <input type="hidden" name="idanularabono" id="idanularabono" />
                     <input type="hidden" name="idpedidoabono" id="idpedidoabono" />
                     <input type="hidden" name="anulardato" value="2" />
-                    <button type="submit" class="btn btn-primary">Si</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-primary btn-lg active">Si</button>
+                    <button type="button" class="btn btn-primary btn-lg active" data-dismiss="modal">No</button>
                 </form>
             </div>
         </div>
