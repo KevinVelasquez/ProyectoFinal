@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('insumos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
+            $table->string('nombre')->unique();
             $table->string('medidas');
             $table->integer('estado')->default(1);
             $table->timestamps();
+            
 
         });
     }

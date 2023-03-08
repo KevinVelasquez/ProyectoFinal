@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use App\Models\DetallePedido;
 use Str;
 
 /**
@@ -45,7 +46,11 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate(Producto::$rules);
+        //request()->validate(Producto::$rules);
+        $request->validate([
+            'nombre' => 'required|unique:productos,nombre',
+            'imagen'=> 'required',
+        ]);
 
         $input = $request->all();
         
@@ -97,10 +102,11 @@ class ProductoController extends Controller
      */
     public function update(Request $request, Producto $producto)
     {
+        $old_nombre = $producto->nombre;
         $input= $request->all();
 
         $producto->update([
-            'nombre' => 'nombre',
+            'nombre' => $old_nombre,
             'estado' => $input['estado'],
         ]);
         
@@ -114,15 +120,15 @@ class ProductoController extends Controller
 
             $input['imagen'] = $imagen_name;
         }
-
+        if ($input['nombre'] !== $old_nombre) {
+            $request->validate([
+                'nombre' => 'unique:productos'.$input["id"],
+            ]);
+        }
         $producto->update($input);
         session()->flash('message',$input['nombre']. 'succesfully save');
         return redirect()->route('productos.index');
 
-        // $producto->update($request->all());
-
-        // return redirect()->route('productos.index')
-        //     ->with('success', 'Producto updated successfully');
     }
 
     /**
@@ -133,9 +139,21 @@ class ProductoController extends Controller
     public function eliminarproducto(Request $request)
     {
         $input = $request->all();
-        Producto::find($input["ideliminar"])->delete();
+            $producto = $input["ideliminar"];
 
-        return redirect()->route('productos.index');
+            $consultadetalle = DetallePedido::select(
+                "detalle_pedidos.id_producto",
+            )->get();
+
+            foreach ($consultadetalle as $valor) {
+               
+                if($producto==$valor->id_producto) {
+                    
+                    return redirect()->route('productos.index')->with('error', 'No se puede eliminar el producto porque está asociado a un pedido');
+                }
+            }
+                Producto::find($input["ideliminar"])->delete();
+                return redirect()->route('productos.index');
     }
 
     public function search(Request $request)
