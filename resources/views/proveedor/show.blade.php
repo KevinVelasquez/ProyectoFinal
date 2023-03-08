@@ -168,8 +168,6 @@ Cliente
                                                 <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
                                                     <div class="my-1" id="metodopago" >
                                                     </div>
-                                                    <div class="my-1" id="totalabono">
-                                                    </div>
                                                 </div>
 
                                                 <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
