@@ -35,6 +35,18 @@ class SeederTablaPermisos extends Seeder
             'crear-insumo',
             'editar-insumo',
             'borrar-insumo',
+
+            //permisos figuras
+            'ver-figura',
+            'crear-figura',
+            'editar-figura',
+            'borrar-figura',
+
+            //permisos pedidos
+            'ver-pedido',
+            'crear-pedido',
+            'editar-pedido',
+            'anular-pedido',
         ];
         
         foreach($permisos as $permiso){
