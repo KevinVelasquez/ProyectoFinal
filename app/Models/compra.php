@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property DetalleCompra[] $detalleCompras
  * @property Insumo $insumo
- * @property metodo_pagos $metodo_pagos
+ * @property Metodo_Pago $metodo_pagos
  * @property Proveedor $proveedor
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
@@ -68,9 +68,9 @@ class Compra extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function metodo_pagos()
+    public function metodo__pagos()
     {
-        return $this->hasOne('App\Models\metodo_pagos', 'id', 'id_metodo_pagos');
+        return $this->hasOne('App\Models\Metodo_Pago', 'id', 'id_metodo_pagos');
     }
     
     /**
@@ -80,6 +80,7 @@ class Compra extends Model
     {
         return $this->hasOne('App\Models\Proveedor', 'id', 'id_proveedor');
     }
+
     
 
 }

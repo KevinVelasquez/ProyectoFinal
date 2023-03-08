@@ -21,13 +21,33 @@
                             <input type="date" class="form-control" name="fecha_compra">
                         </div>
                         <div class="form-group col-6">
-                            <label for="">Estado</label>
-                            <input type="number" class="form-control" name="estado">
+                            <label for="estado">Estado</label>
+                            <select name="estado" class="form-control">
+                                <option value="1">Activa</option>
+                                <option value="2">Inactiva</option>
+                            </select>
+                            <div class="col-md-6">
+                                @error('estado')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
                         </div>
                         <div class="form-group col-6">
-                            <label for="">Anular</label>
-                            <input type="number" class="form-control" name="anulado" value="0">
-                        </div>
+                            <label for="anulado">Anular</label>
+                            <select name="anulado" class="form-control">
+                                <option value="0">No Anulado</option>
+                                <option value="1">Anulado</option>
+                            </select>
+                            <div class="col-md-6">
+                                @error('anulado')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div> 
                         <div class="form-group col-6">
                             <label for="">Proveedor</label>
                             <select name="id_proveedor" class="form-control">
@@ -42,7 +62,7 @@
                             <div class="col-sm-7">
                                 <select class="form-control" name="id_metodo_pagos" id="id_metodo_pagos">
                                     <option value="0">Seleccione</option>
-                                    @forelse($metodo_pagos as $metodo_pagos)
+                                    @forelse($metodo__pagos as $metodo_pagos)
                                     <option value="{{$metodo_pagos->id}}">
                                         {{ $metodo_pagos->nombre}}
                                     </option>
@@ -51,15 +71,19 @@
                                 </select>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div class="col-6">
                     <label for="">Total Compra</label>
                     <input type="number" class="form-control" name="total" id="total">
                 </div>
-                <div class="box-footer mt20">
-                    <button style="margin-top: 10%;" type="submit" class="btn btn-primary">Guardar</button>
+                <div class="col-6">
+                    <label for="">Abono</label>
+                    <input type="number" class="form-control" name="abono" id="abono" >
+                </div>
+                <div class="col-12">
+                    <button  type="submit" class="btn btn-primary">Guardar</button>
+                    <a onclick="history.back()" type="button" class="btn btn-primary" style="color:white" >Cancelar</a>
                 </div>
             </div>
             <div class="col-6">
@@ -119,21 +143,15 @@
 
 <script>
     function colocar_precio() {
-
         let precio = $(e).attr("valor_unitario");
-
         $("valor_unitario").val(precio);
-
     }
-
     function agregar_insumo() {
         let id_insumo = $("#id_insumo option:selected").val();
         let insumo_text = $("#id_insumo option:selected").text();
         let cantidad = $("#cantidad").val();
         let valor_unitario = $("#valor_unitario").val();
-
         if (cantidad > 0 && valor_unitario > 0) {
-
             $("#tblInsumos").append(`
                 <tr id="tr-${id_insumo}">
                     <td>
@@ -150,16 +168,12 @@
                     </td>
                 </tr>
                 `);
-
             let total = $("#total").val() || 0;
             $("#total").val(parseInt(total) + parseInt(cantidad) * parseInt(valor_unitario));
-
         } else {
             alert("Se debe ingresar una cantidad o precio válido");
         }
-
     }
-
     function eliminar_insumo(id, subtotal) {
         $("#tr-" + id).remove();
         let total = $("#total").val() || 0;
@@ -167,4 +181,3 @@
     }
 </script>
 
-@endsection

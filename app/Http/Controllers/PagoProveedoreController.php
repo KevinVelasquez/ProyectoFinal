@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Compra;
+use App\Models\Detalle_compra;
 use App\Models\medio_pagos;
 use App\Models\PagoProveedore;
+use App\Models\Metodo_Entrega;
+use App\Models\Metodo_Pago;
 use Illuminate\Http\Request;
 
 /**
@@ -14,16 +17,72 @@ use Illuminate\Http\Request;
 class PagoProveedoreController extends Controller
 {
 
-    public function agregarAbono(Request $request)
+    public function agregarAbonoCompra(Request $request)
     {
         $input = $request->all();
         $abono = PagoProveedore::create([
             "id_compra" => $input["id"],
             'fecha' => $input["fechaabono"],
-            'estado' => $input["estado"],
             'abono' => $input["cantidadabono"],
-            'id_medio_pagos' => $input["medioabono"],
         ]);
+
+        $totalabono = $this->verificarAbono($input["id"]);
+
+/* 
+        if ($totalabono <= 0) {
+
+            $this->abonoCancelado($input["id"]);
+        } */
+
+        $compras = Compra::paginate();
+
+        $detallecompra = Detalle_compra::all();
+
+        $compraProveedor = Compra::all();
+
+        $detalleabono = PagoProveedore::all();
+
+        $editarCompra = Compra::all();
+
+
+        return view('compra.index', compact('compras',  'detallecompra', 'compraProveedor', 'detalleabono','editarCompra'));
+
+    }
+
+
+    public function verificarAbono($id)
+    {
+
+        $totalabonocompra = PagoProveedore::all();
+
+        return $totalabonocompra[0]->totalcompra - $totalabonocompra[0]->totalabonado;
+    }
+
+
+    public function abonoCancelado($id)
+    {
+
+        Compra::where('id', $id)
+            ->update([
+                'cancelada' => 1
+            ]);
+    }
+
+    public function anularAbono(Request $request)
+    {
+        $input = $request->all();
+        PagoProveedore::where('id', $input["idanularabono"])
+            ->update([
+                'estado' => 2
+            ]);
+
+/*         Compra::where('id', $input["idpedidoabono"])
+            ->update([
+                'cancelado' => 0
+            ]); */
+
+        return redirect()->route('compra.index')
+            ->with('success', 'Status pedido successfully');
     }
     /**
      * Display a listing of the resource.
@@ -43,84 +102,5 @@ class PagoProveedoreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $pagoProveedore = new PagoProveedore();
-        $medioPago = medio_pagos::all();
-        $compra = Compra::all();
-
-        return view('pago-proveedore.create', compact('pagoProveedore','medioPago','compra'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        request()->validate(PagoProveedore::$rules);
-
-        $pagoProveedore = PagoProveedore::create($request->all());
-
-        return redirect()->route('pago-proveedores.index')
-            ->with('success', 'PagoProveedore created successfully.');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $pagoProveedore = PagoProveedore::find($id);
-
-        return view('pago-proveedore.show', compact('pagoProveedore'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $pagoProveedore = PagoProveedore::find($id);
-
-        return view('pago-proveedore.edit', compact('pagoProveedore'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  PagoProveedore $pagoProveedore
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, PagoProveedore $pagoProveedore)
-    {
-        request()->validate(PagoProveedore::$rules);
-
-        $pagoProveedore->update($request->all());
-
-        return redirect()->route('pago-proveedores.index')
-            ->with('success', 'PagoProveedore updated successfully');
-    }
-
-    /**
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
-     */
-    public function destroy($id)
-    {
-        $pagoProveedore = PagoProveedore::find($id)->delete();
-
-        return redirect()->route('pago-proveedores.index')
-            ->with('success', 'PagoProveedore deleted successfully');
-    }
+    
 }

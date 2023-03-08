@@ -9,11 +9,20 @@ use App\Models\insumo;
 use App\Models\metodo_pagos;
 use App\Models\Detalle_compra;
 use App\Http\Controllers\App;
+use Illuminate\Http\Request;
+use App\Models\Compra;
+use App\Models\Proveedor;
+use App\Models\insumo;
+use App\Models\metodo_pagos;
+use App\Models\Detalle_compra;
+use App\Http\Controllers\App;
 use App\Models\Pedido;
 use App\Models\DetallePedido;
 use App\Models\Pago_Clientes;
 use PDF;
+use PDF;
 
+class PdfControllerdos extends Controller
 class PdfControllerdos extends Controller
 {
     /**
@@ -123,4 +132,5 @@ class PdfControllerdos extends Controller
 
         return $pdf->stream('PedidoDetalle.pdf');
     }
+    
 }

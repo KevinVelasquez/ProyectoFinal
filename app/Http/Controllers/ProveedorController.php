@@ -9,11 +9,18 @@ use App\Models\Regimen;
 use App\Models\Tipo_comercio;
 use App\Models\Tipo_persona;
 use App\Models\Proveedor;
+use App\Models\Metodo_Entrega;
+use App\Models\Medio_Pago;
+use App\Models\Metodo_Pago;
+use App\Models\Compra;
+use App\Models\Insumo;
+use App\Models\PagoProveedore;
+use App\Models\Detalle_compra;
 use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Illuminate\Http\Request;
 use PDF;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
+
 
 class ProveedorController extends Controller
 {
@@ -44,7 +51,7 @@ class ProveedorController extends Controller
     public function create()
     {
         //
-        $pais = Pais::all();
+        $paises = Pais::all();
         $departamentos = Departamento::all();
         $municipios = Municipio::all();
         $tipo_comercio = Tipo_comercio::all();
@@ -62,31 +69,6 @@ class ProveedorController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        // $request->validate([
-
-        //     'cedula'=>'required|integer',
-        //     'nombre'=>'required|string|max:60',
-        //     'telefono'=>'required|string|max:60',
-        //     'direccion'=>'required|string|max:60',
-        //     'email'=>'required|email',
-        //     'tipo_persona'=>'required|bigInteger',
-        //     'regimen'=>'required|bigInteger',
-        //     'tipo_comercio'=>'required|bigInteger',
-        //     'pais'=>'required|bigInteger',
-        //     'departamento'=>'required|bigInteger',
-        //     'id_municipio'=>'required|bigInteger',
-        // ]);
-
-
-        // $mensaje = [
-        //     'required' => 'El :attribute es obligatorio',
-        //     'cedula.required' => 'La Cédula es obligatoria',
-        //     'direccion.required' => 'La Cédula es obligatoria',
-
-        // ];
-
-        // $this->validate($request, $campos, $mensaje);
 
         $datosProveedor = request()->except('_token', 'pais', 'departamento');
         Proveedor::insert($datosProveedor);
@@ -103,8 +85,29 @@ class ProveedorController extends Controller
      */
     public function show($id)
     {
-        $proveedor = Proveedor::find($id);
-        return view('proveedor.show', $proveedor);
+        $proveedores = Proveedor::find($id);
+        $detallecompra = Detalle_compra::select("detalle_compra.cantidad","detalle_compra.valor_unitario","insumos.nombre","detalle_compra.id_orden_compra","detalle_compra.id" )
+        ->join("compra","compra.id", "=","detalle_compra.id_orden_compra")
+        ->join("insumos","detalle_compra.id_insumo", "=", "insumos.id",  )
+        ->get();
+
+        
+        $compra = Compra::select("compra.n_orden","compra.id","compra.fecha_compra","compra.id_metodo_pagos","compra.total","proveedors.nombre", "compra.created_at","compra.estado","proveedors.cedula","proveedors.direccion","municipios.id  AS idmunicipio","municipios.nombre AS nombremunicipio","proveedors.telefono","metodo__pagos.id",
+        "metodo__pagos.nombre AS nombremetodopago",)
+        ->join("proveedors","proveedors.id", "=","compra.id_proveedor")
+        ->join("metodo__pagos", "compra.id_metodo_pagos", "=", "metodo__pagos.id")
+        ->join("municipios", "proveedors.id_municipio", "=", "municipios.id")
+        ->where("proveedors.id", "=", $id)
+        ->get();
+
+
+        $abono = PagoProveedore::select('pago_proveedores.id_compra',PagoProveedore::raw('SUM(pago_proveedores.abono) as totalabonado'))
+        ->where("pago_proveedores.estado", "=", 1) 
+      ->groupBy("pago_proveedores.id_compra")
+      ->get();
+      
+
+        return view('proveedor.show', compact('proveedores','compra','detallecompra','abono') );
     }
 
     public function pdf()
@@ -146,18 +149,7 @@ class ProveedorController extends Controller
     public function update(Request $request, Proveedor $proveedor)
     {
         //
-        // $datosProveedor = request()->except(['_token','pais','departamento','_method']);
-        // Proveedor::where('id', '=', $id)->update($datosProveedor);
-
-        // $paises = Pais::all();
-        // $departamentos = Departamento::all();
-        // $municipios = Municipio::all();
-        // $tipo_comercio = Tipo_comercio::all();
-        // $tipo_persona = Tipo_persona::all();
-        // $regimen = Regimen::all();
-        // $proveedor =Proveedor::findOrFail($id);
-        // return view('proveedor.edit', compact ('proveedor','paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
-
+        
         $proveedor->update($request->all());
 
         return redirect()->route('proveedor.index')
@@ -175,12 +167,7 @@ class ProveedorController extends Controller
         //
         $proveedor = Proveedor::find($id)->delete();
 
-
         return redirect('proveedor')
             ->with('mensaje', 'Proveedor eliminado con éxito.');
     }
-
-
-    
-
 }

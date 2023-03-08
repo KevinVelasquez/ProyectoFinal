@@ -5,105 +5,109 @@ Compra
 @endsection
 
 @section('content')
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="card">
-                <div class="card-header">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
+<div class="container">
+    <main role="main" class="pb-3">
+        <p>
+            <a class="mdi mdi-cart-outline" id="iconoadd" href="{{ route('compra.create') }}"></a>
+        </p>
 
-                        <span id="card_title">
-                            {{ __('Compra') }}
-                        </span>
-                        <div class="float-right">
-                            <a href="{{ route('compra.create') }}" class="btn btn-primary btn-sm float-right" data-placement="left">
-                                {{ __('Nueva Orden') }}
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                @if (session('status'))
-                @if(session('status') == '1')
-                <div class="alert alert-success">
-                    Se guardó
-                </div>
-                @else
-                <div class="alert alert-danger">
-                    {{session('status') }}
-                </div>
-                @endif
-                @endif
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover">
-                            <thead class="thead">
-                                <tr>
-                                    <th>ID</th>
+        <table id="compra" class="table table-striped dt-responsive nowrap table" style="width:100%">
+            <thead>
+                <tr>
+                    <th>N Orden</th>
+                    <th>Fecha Compra</th>
+                    <th>Total</th>
+                    <th>Proveedor</th>
+                    <th>Método Pago</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($compras as $compra)
+                <tr>
+                    <td>{{ $compra->n_orden }}</td>
+                    <td>{{ $compra->fecha_compra }}</td>
+                    <td>{{ $compra->total }}</td>
 
-                                    <th>N Orden</th>
-                                    <th>Fecha Compra</th>
-                                    <th>Proveedor</th>
-                                    <th>Metodo Pago</th>
-                                    <th>Estado</th>
+                    <td>
+                        {{ $compra->proveedor->nombre }}
+                    </td>
 
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($compras as $compra)
-                                <tr>
-                                    <td>{{ ++$i }}</td>
-                                    <td>{{ $compra->n_orden }}</td>
-                                    <td>{{ $compra->fecha_compra }}</td>
+                    <td>{{ $compra->metodo__pagos->nombre }}</td>
 
-                                    <td>
-                                        {{ $compra->proveedor->nombre }}
-                                    </td>
+                    <td>
+                        @if($compra->estado == 1)
+                        <button type="button" class="btn btn-sm btn-success">Activo</button>
+                        @else
+                        <button type="button" class="btn btn-sm btn-danger">Inactivo</button>
+                        @endif
+                    </td>
+                    <td>
+                        <form action="{{ route('compra.destroy',$compra->id) }}" method="POST">
+                            <a class="btn btn-primary btn-lg active" href="{{ route('compra.show',$compra->id) }}"><i class="fa fa-fw fa-eye"></i>Detalle</a>
 
-                                    <td>{{ $compra->metodo_pagos->nombre }}</td>
+                           @if($compra->anulado == 0)
+                            <a class="btn btn-primary btn-lg active" type="button" onclick="verDatosAbono('{{ $compra->id }}')" data-toggle="modal" data-target="#abonos">Abonos</a>
+                            @else
+                            <button type="button" class="btn btn-primary btn-lg active">Abonos</button>
+                            @endif 
 
-                                    <td>
-                                        @if($compra->estado == 1)
-                                        <button type="button" class="btn btn-sm btn-success">Activo</button>
-                                        @else
-                                        <button type="button" class="btn btn-sm btn-danger">Inactivo</button>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <form action="{{ route('compra.destroy',$compra->id) }}" method="POST">
-                                            <a class="btn btn-sm btn-primary " href="{{ route('compra.show',$compra->id) }}"><i class="fa fa-fw fa-eye"></i> Detalle</a>
-                                            <button onclick="verDatosAbono('{{ $compra->id }}')" class="mdi mdi-cash-usd" data-toggle="modal" data-target="#abonos">Abonos</button>
-                                            @csrf
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i>Anular</button>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                            @csrf
+                        </form>
+                    </td>
+                    <td>
+                        @if($compra->anulado == 0)
+                        <button onclick="anularCompra('{{ $compra->id }}')" type="submit" class="btn btn-primary btn-lg active" data-toggle="modal" data-target="#anularmodal"><i class="fa fa-fw fa-trash"></i>Anular</button>
+                        @else
+                        <button type="button" class="btn btn-sm btn-danger">Anulado</button>
+                        @endif
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </main>
+</div>
+<!-- modal anular -->
+<div class="modal fade" id="anularmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Anular Órden de Compra</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            {!! $compras->links() !!}
+            <div class="modal-body" style="text-align: center;">
+                <input type="hidden" name="estadoanular" id="estadoanular" />
+                <form method="POST" action="{{ route('compras.anularCompra') }}" class="form-sample" role="form" enctype="multipart/form-data">
+                    @method('PATCH')
+                    @csrf
+                    <div>¿Está seguro que desea anular la órden de compra?</div>
+                    <input type="hidden" name="idanular" id="idanular" />
+                    <input type="hidden" name="anulardato" value="2" />
+                    <button type="submit" class="btn btn-primary btn-lg active">Sí</button>
+                    <button type="button" class="btn btn-primary btn-lg active" data-dismiss="modal">No</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+<!-- modal abono -->
 <div class="modal fade" id="abonos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:42%;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitleAbono">Pedido</h5>
+                <h5 class="modal-title" id="exampleModalLongTitleAbono">Orden de Compra</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <input type="hidden" id="totalpedidoresta">
-                <form role="form" method="POST" action="{{ route('agregarAbono') }}" enctype="multipart/form-data" class="form-sample needs-validation" onsubmit="return validarMonto()" novalidate>
+                <input type="hidden" id="totalcompraresta">
+                <form role="form" method="POST" action="{{ route('agregarAbonoCompra') }}" enctype="multipart/form-data" class="form-sample needs-validation" onsubmit="return validarMonto()" novalidate>
                     @csrf
-                    <input type="hidden" name="id" id="idpedidoabonar" />
+                    <input type="hidden" name="id" id="idcomprabonar" />
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group row">
@@ -122,20 +126,10 @@ Compra
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <label class="col-sm-3 ">Medio de Pago</label>
-                        <div class="col-3">
-                            <select class="form-control" name="medioabono" required>
-                                <option value="1">Efectivo</option>
-                                <option value="2">Transferencia</option>
-                            </select>
-                        </div>
-
-                    </div>
             </div>
             <div class="botonestabla" style="text-align: center;">
                 <button type="submit" id="agregarAbono" class="btn btn-primary">Agregar</button>
-                <button type="button" class="btn btn-primary">Cancelar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancelar</button>
             </div>
             </form>
             <br>
@@ -152,9 +146,6 @@ Compra
                                 Abono
                             </th>
                             <th>
-                                Medio
-                            </th>
-                            <th>
                                 Acciones
                             </th>
                             <th id="ocultar" style="display: none">
@@ -166,7 +157,33 @@ Compra
                 </table>
                 <h5><span id="resta">Resta </span></h5>
                 <br>
-                <h5><span id="total"></span></h5>
+                <h5><span id="total">Total</span></h5>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal anular abono -->
+<div class="modal fade" id="anularabono" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitleanularabono"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <input type="hidden" name="estadoanularabono" id="estadoanularabono" />
+                <form method="POST" action="{{ route('anularAbono') }}" class="form-sample" role="form" enctype="multipart/form-data">
+                    @method('PUT')
+                    @csrf
+                    <div>¿Está seguro que desea anular el abono?</div>
+                    <input type="hidden" name="idanularabono" id="idanularabono" />
+                    <input type="hidden" name="idpedidoabono" id="idpedidoabono" />
+                    <input type="hidden" name="anulardato" value="2" />
+                    <button type="submit" class="btn btn-primary">Si</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                </form>
             </div>
         </div>
     </div>
@@ -181,5 +198,97 @@ Compra
             }
         });
     });
+    function verDatosAbono(id) {
+        $('#idcomprabonar').val(`${id}`)
+        let abonos = {!!$detalleabono!!}
+        let detalleabonos = abonos.filter(item => item.idcomprabono == id)
+        let resta = 0
+        $("#tablaabonos tbody").children().remove();
+        detalleabonos.forEach(function(value, index) {
+            console.log(detalleabonos)
+            resta = value.abono + resta
+            if (value.idcomprabono == id) {
+                let fila = `
+                   
+              <tr>
+                  <td>
+                    ${value.fechapago}
+                  </td>
+                  <td>
+                    ${value.abono}
+                  </td>
+                  <td>
+                    <button onclick="anularAbonoCompra(' ${value.idabono} ') " class="mdi mdi-block-helper" data-toggle="modal"
+                    data-target="#anularabono"></button>
+                    </td>
+                <td type="hidden" id="idcomprabonotabla" style="display: none">
+                    ${value.idcomprabono}
+                </td>
+                </tr>
+                
+              `
+                $('#exampleModalLongTitleAbono').text(`Compra #${value.idcomprabono}`)
+                $('#total').text(`TOTAL ${value.total}`)
+                $('#totalcompraresta').val(`${value.total}`)
+                let preciototal = `${value.total}`
+                let restatotal = preciototal - resta
+                $('#resta').text(`RESTA ${restatotal}`)
+                $('#agregarAbono').attr(`disabled`, !restatotal)
+                $('#resta').val(`${restatotal}`)
+                $("#tablaabonos tbody").append(fila)
+            }
+        })
+        var fila = document.getElementById("tablaabonos").rows[1];
+        var valor = fila.cells[4].innerHTML;
+        document.getElementById("idcomprabonar").value = valor;
+    }
+    function validarMonto() {
+        var input = document.getElementById("cantidadabono").value;
+        var resta = document.getElementById("resta").value
+        if (input > resta) {
+            alert("El abono no puede superar la cantidad de " + resta);
+            return false;
+        }
+        return true;
+    }
+    function anularAbonoCompra(id) {
+        let consulta = {!!$detalleabono!!}
+        let datos = consulta.find(item => item.idabono == id)
+        $('#exampleModalLongTitleanularabono').text(`Anular Abono `);
+        $('#idanularabono').val(`${datos.idabono}`);
+        $('#idcomprabono').val(`${datos.idcomprabono}`);
+        $('#estadoanularabaono').val(`${datos.estado}`);
+    }
+    document.getElementById("buscarAbono").addEventListener("keyup", function(event) {
+        if (event.key === "Enter") {
+            buscarTabla();
+        }
+    });
+    function anularCompra(id) {
+        let consulta = {!!$editarCompra!!}
+        let values = consulta.find(item => item.id == id)
+        $('#exampleModalLongTitleanular').text(`Anular Pedido #${values.id}`);
+        $('#idanular').val(`${values.id}`);
+        $('#estadoanular').val(`${values.estado}`);
+    }
+    function buscarTabla() {
+        var busqueda = document.getElementById("buscarAbono").value;
+        var filas = document.getElementById("tablaabonos").getElementsByTagName("tr");
+        for (var i = 0; i < filas.length; i++) {
+            var celdas = filas[i].getElementsByTagName("td");
+            var coincide = false;
+            for (var j = 0; j < celdas.length; j++) {
+                if (celdas[j].innerHTML.toUpperCase().indexOf(busqueda.toUpperCase()) > -1) {
+                    coincide = true;
+                    break;
+                }
+            }
+            if (coincide) {
+                filas[i].style.display = "";
+            } else {
+                filas[i].style.display = "none";
+            }
+        }
+    }
 </script>
 @endsection

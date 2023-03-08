@@ -6,14 +6,14 @@ Create Proveedor
 
 @section('content')
 <section class="content container-fluid">
-    <div class="row">
+    <div class="">
         <div class="col-md-12">
 
             @includeif('partials.errors')
 
             <div class="card card-default">
-                @if(Session::has('mensaje'))
-                {{Session::get('mensaje') }}
+                @if(Session::has('success'))
+                {{Session::get('success') }}
 
                 @endif
                 <div class="card-header">
@@ -21,7 +21,7 @@ Create Proveedor
                 </div>
                 <div class="card-body">
 
-                    <form action="{{ url('/proveedor') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ url('/proveedor') }}" method="POST" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
                         @csrf
 
                         @include('proveedor.form')
