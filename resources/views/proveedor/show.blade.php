@@ -52,7 +52,7 @@ Cliente
 
                         <!-- Button detalle factura -->
 
-                        <button type="button" class="mdi mdi-eye" data-toggle="modal" data-target="#verdetalle" onclick="verDatos ('{{ $compras->id }}')" ></button>
+                        <button type="button" class="mdi mdi-eye" data-toggle="modal" data-target="#verdetalle" onclick="verDatos ('{{ $compras->n_orden }}')" ></button>
                     </td>
 
 
@@ -66,7 +66,7 @@ Cliente
             <div class="modal-dialog modal-dialog-centered" role="document" id="modalactualizar" style="max-width: 63%;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">N° Factura {{ $compras->n_orden }}</h5>
+                        <h5 class="modal-title" id="titulomodal"></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -122,9 +122,6 @@ Cliente
                                                         <span class="text-600 text-90" id="n_orden">ID:</span> 
                                                     </div>
                                                     <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
-                                                        <span class="text-600 text-90" id="fecharegistro"></span>
-                                                    </div>
-                                                    <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
                                                         <span class="text-600 text-90" id="fechacompra"></span>
                                                     </div>
                                                     <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
@@ -151,7 +148,7 @@ Cliente
                                                             Precio Unitario
                                                         </th>
                                                         <th>
-                                                            Precio Total
+                                                            Sub Total
                                                         </th>
                                                     </tr>
                                                 </thead>
@@ -181,8 +178,9 @@ Cliente
                                             </div>
                                             
                                             <hr />
+                                            <input type="hidden"  id="iddescarga">
                                             <div>
-                                                <a href="{{ route('proveedor.pdf') }}" class="btn btn-primary " target="_blank">Descargar</a>
+                                                <a id="botonDescarga"  class="btn btn-primary " target="_blank">Descargar</a>
                                             </div>
                                         </div>
                                     </div>
@@ -211,21 +209,24 @@ Cliente
         });
     });
 
-    function verdetalleorden (id)
+    function verdetalleorden (n_orden)
     {
-        let consulta = {!! $compra !!}
-        let filtrocompra = consulta.find(item=>item.id==id)
+        let consulta = {!! $comprasss !!}
+        let filtrocompra = consulta.find(item=>item.n_orden==n_orden)
         $('#nombreproveedor').text(` ${filtrocompra.nombre}`)
         $('#ccproveedor').text(`C.C ${filtrocompra.cedula}`)
         $('#direccionproveedor').text(` ${filtrocompra.direccion}`)
         $('#municipio').text(` ${filtrocompra.nombremunicipio}`)
         $('#telefonoproveedor').text(` ${filtrocompra.telefono}`)
         $('#n_orden').text(`ID: ${filtrocompra.n_orden}`)
-        $('#fecharegistro').text(`Fecha Registro: ${filtrocompra.created_at}`)
         $('#fechacompra').text(`Fecha Compra: ${filtrocompra.fecha_compra}`)
         $('#metodopago').text(`Método Pago: ${filtrocompra.nombremetodopago}`)
         $('#preciototal').text(`Total: ${filtrocompra.total}`)
+        $('#titulomodal').text(`N° de Orden: ${filtrocompra.n_orden}`)
+        $('#iddescarga').val(`${filtrocompra.n_orden}`)
 
+
+        
 
         if (filtrocompra.estado == 0) {
                 $('#estadocompra').text(`Estado: Pendiente`)
@@ -238,24 +239,17 @@ Cliente
 
     }
 
-    function abonos(id){
-        let abonos = {!! $abono !!}   
-         let filtroabono = abonos.find(item=>item.id_compra = id)
-        $('#totalabono').text(` ${filtroabono.totalabonado}`)
-         console.log(abonos);
+    
 
-    }
-
-    function verDatos(id){
-        verdetalleorden (id)
-        abonos (id)
+    function verDatos(n_orden){
+        verdetalleorden (n_orden)
 
         let compradatos = {!! $detallecompra !!}
-        let detallecompras = compradatos.filter(item => item.id == id)
+        let detallecompras = compradatos.filter(item => item.n_orden == n_orden)
         $("#tabladetallecompraseleccionada tbody").children().remove();
         detallecompras.forEach(function(value, index){
-            console.log(detallecompras);
-            if (value.id == id){
+            
+            if (value.n_orden == n_orden){
                 let fila =` 
                 <tr>
                 <td>
@@ -263,6 +257,12 @@ Cliente
                 </td>
                 <td>
                 ${value.cantidad}
+                </td>
+                <td>
+                ${value.valor_unitario}
+                </td>
+                <td>
+                ${value.valor_unitario*value.cantidad}
                 </td>
                 </tr>
                 `;
@@ -274,6 +274,10 @@ Cliente
         
 
     }
+
+    $("#botonDescarga").on("click", (event) => {
+            window.open('/pdf?'+ 'id=' + $("#iddescarga").val());
+        })
 
 
 </script>
