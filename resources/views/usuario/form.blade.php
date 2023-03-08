@@ -41,6 +41,15 @@
                     </span>
                     @enderror
                 </div>
+                <div class="form-group col-6">
+                    <label for="">Rol</label>
+                    <select name="roles" class="form-control">
+                        <option value="">Seleccione</option>
+                        @foreach($id_roles as $id_roles)
+                        <option value="{{ $id_roles->id }}">{{ $id_roles->nombre }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
             <div class="col-6">
                 <div class="form-group col-12">Contraseña

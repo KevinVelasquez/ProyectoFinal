@@ -206,6 +206,11 @@ Compra
 
 <script>
     $(document).ready(function() {
+        let pathname = window.location.pathname;
+        if (pathname == "/compras") {
+            window.location.href = "/compra"
+        };
+
         $('#compra').DataTable({
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
@@ -314,5 +319,43 @@ Compra
             }
         }
     }
+
+    function buscarTabla() {
+            var busqueda = document.getElementById("buscarAbono").value;
+            var filas = document.getElementById("tablaabonos").getElementsByTagName("tr");
+            for (var i = 0; i < filas.length; i++) {
+                var celdas = filas[i].getElementsByTagName("td");
+                var coincide = false;
+                for (var j = 0; j < celdas.length; j++) {
+                    if (celdas[j].innerHTML.toUpperCase().indexOf(busqueda.toUpperCase()) > -1) {
+                        coincide = true;
+                        break;
+                    }
+                }
+                if (coincide) {
+                    filas[i].style.display = "";
+                } else {
+                    filas[i].style.display = "none";
+                }
+            }
+        }
+
+    (function() {
+            'use strict'
+
+            var forms = document.querySelectorAll('.needs-validation')
+
+            Array.prototype.slice.call(forms)
+                .forEach(function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
 </script>
 @endsection

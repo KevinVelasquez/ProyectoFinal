@@ -6,7 +6,7 @@
     <div class="card-header">
         <span class="card-title">Registrar Órden de Compra</span>
     </div>
-    <form method="POST" action="{{ route('compra.store') }}" class="form-sample needs-validation" novalidate role="form" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('compra.store') }}" class="form-sample needs-validation" novalidate role="form" enctype="multipart/form-data" novalidate>
         @csrf
         <div class="row">
             <div class="col-6" style="padding-top: 2%; padding-left: 2%;">
@@ -14,7 +14,7 @@
                     <div class="row card-body">
                         <div class="form-group col-6">
                             <label for="">Número Orden</label>
-                            <input type="number" class="form-control" name="n_orden">
+                            <input type="number" class="form-control" name="n_orden" required>
                             <div class="col-md-6">
                                 @error('n_orden')
                                 <span class="invalid-feedback" role="alert">
@@ -25,7 +25,7 @@
                         </div>
                         <div class="form-group col-6">
                             <label for="">Fecha de Compra</label>
-                            <input type="date" class="form-control" name="fecha_compra">
+                            <input type="date" class="form-control" name="fecha_compra" required>
                             <div class="col-md-6">
                                 @error('fecha_compra')
                                 <span class="invalid-feedback" role="alert">
@@ -107,13 +107,13 @@
                         <div class="col-3">
                             <div class="form-group">
                                 <label for="">Cantidad</label>
-                                <input type="number" name="cantidad" id="cantidad" class="form-control">
+                                <input type="number" name="cantidad" id="cantidad" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="form-group">
                                 <label for="">Precio Unitario</label>
-                                <input id="valor_unitario" type="text" class="form-control">
+                                <input id="valor_unitario" type="text" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-12">
@@ -143,7 +143,7 @@
             </div>
             <div class="col-2" style="padding-left: 2%;">
                 <label for="">Abono</label>
-                <input type="number" class="form-control" name="abono" id="abono">
+                <input type="number" class="form-control" name="abono" id="abono" required>
             </div>
             <div class="col-12" style="padding-left: 2%;">
                 <button type="submit" href="{{ route('compra.index')}}" class="btn btn-primary btn-lg active">Guardar</button>
@@ -204,6 +204,24 @@
         let total = $("#total").val() || 0;
         $("#total").val(parseInt(total) - subtotal);
     }
+
+    (function() {
+            'use strict'
+
+            var forms = document.querySelectorAll('.needs-validation')
+
+            Array.prototype.slice.call(forms)
+                .forEach(function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
 </script>
 
 @endsection

@@ -128,6 +128,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Registrar') }}
                                 </button>
+                                <a type="button" class="btn btn-primary btn-lg active" href="{{ route('login') }}">Regresar</a>
                             </div>
                         </div>
                     </form>
