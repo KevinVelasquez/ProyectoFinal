@@ -2,15 +2,46 @@
 
 namespace App\Http\Controllers;
 
-use PDF;
+use Illuminate\Http\Request;
+use App\Models\Compra;
+use App\Models\Proveedor;
+use App\Models\insumo;
+use App\Models\metodo_pagos;
+use App\Models\Detalle_compra;
+use App\Http\Controllers\App;
 use App\Models\Pedido;
 use App\Models\DetallePedido;
 use App\Models\Pago_Clientes;
-use Illuminate\Http\Request;
+use PDF;
 
-
-class PDFControllerdos extends Controller
+class PdfControllerdos extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function pdf(Request $request, $id)
+    {
+        $compra = Compra::paginate();
+        $proveedor = Proveedor::all();
+        $insumo = insumo::all();
+        $metodo_pagos = metodo_pagos::all();
+        $detalle = Detalle_compra::all();
+        $detalle = [];
+        if ($id != null) {
+            $detalle = Detalle_compra::select("detalle_compra.*")
+                ->where("detalle_compra.id_orden_compra", $id)
+                ->get();
+        }
+
+        $pdf = PDF::loadView('pdf', ['compra' => $compra]);
+        $pdf->loadHTML('<h1>Test</h1>');
+        return $pdf->stream();
+
+        // return view('compra.pdf', compact('compra', 'proveedor', 'insumo', 'metodo_pagos','detalle'));
+
+    }
     public function generatePDF()
     {
         $id = $_GET["id"];
@@ -38,8 +69,8 @@ class PDFControllerdos extends Controller
             "municipios.nombre AS nombremunicipio"
         )
             ->join("clientes", "pedidos.id_cliente", "=", "clientes.id")
-            ->join("metodo__pagos", "pedidos.id_metodo_pago", "=", "metodo__pagos.id")
-            ->join("metodo__entregas", "pedidos.id_metodo_entrega", "=", "metodo__entregas.id")
+            ->join("metodo_pagos", "pedidos.id_metodo_pago", "=", "metodo_pagos.id")
+            ->join("metodo_entregas", "pedidos.id_metodo_entrega", "=", "metodo_entregas.id")
             ->join("municipios", "pedidos.id_municipio", "=", "municipios.id")
             ->where("pedidos.id", "=", $id)
             ->get();
@@ -81,11 +112,11 @@ class PDFControllerdos extends Controller
 
 
         $acomulado = Pago_Clientes::select(Pago_Clientes::raw('SUM(pago__clientes.abono) as acomulado'))
-        ->join('pedidos','pago__clientes.id_pedido','=', 'pedidos.id')
-        ->where('pedidos.id',$idpedido)
-        ->where('pago__clientes.fecha','<=',$fecha)
-        ->where('pago__clientes.estado',1)
-        ->get();
+            ->join('pedidos', 'pago__clientes.id_pedido', '=', 'pedidos.id')
+            ->where('pedidos.id', $idpedido)
+            ->where('pago__clientes.fecha', '<=', $fecha)
+            ->where('pago__clientes.estado', 1)
+            ->get();
 
 
         $pdf = PDF::loadView('pedido.downloadabono', compact('detalleabono', 'acomulado'));
