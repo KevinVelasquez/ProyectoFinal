@@ -1,30 +1,30 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Create Usuario
+Create Usuario
 @endsection
 
 @section('content')
-    <section class="content container-fluid">
-        <div class="row">
-            <div class="col-md-12">
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            
+            @includeif('partials.errors')
 
-                @includeif('partials.errors')
+            <div class="card card-default">
+                <div class="card-header">
+                    <span class="card-title">Registrar Usuario</span>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('usuario.store') }}" class="form-sample needs-validation" novalidate role="form" enctype="multipart/form-data">
+                        @csrf
 
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">Create Usuario</span>
-                    </div>
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('usuario.store') }}"  role="form" enctype="multipart/form-data">
-                            @csrf
+                        @include('usuario.form')
 
-                            @include('usuario.form')
-
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 @endsection

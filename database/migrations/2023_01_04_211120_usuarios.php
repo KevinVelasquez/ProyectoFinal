@@ -18,10 +18,11 @@ return new class extends Migration
             $table->integer('cedula')->unique();  
             $table->string('nombre');
             $table->string('email');
-            $table->string('rol');
+            $table->bigInteger('id_rol')->unsigned();
             $table->string('contraseña');
             $table->integer('estado')->default(1);
             $table->timestamps();
+            $table->foreign('id_rol')->references('id')->on('roles');
         });
     }
 

@@ -6,85 +6,132 @@ Update Usuario
 
 @section('content')
 <section class="content container-fluid">
-    <div class="">
+    <div class="row">
         <div class="col-md-12">
 
             @includeif('partials.errors')
 
             <div class="card card-default">
                 <div class="card-header">
-                    <span class="card-title"> Editar Usuario</span>
+                    <span class="card-title">Actualizar Usuario</span>
                 </div>
                 <div class="card-body">
+                    {!!Form::model($user,['method'=>'PATCH','route'=>['usuario.update',$user->id]])
+                        !!}
+                    @csrf
+                    <div class="box box-info padding-1">
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group col-12">Cédula
+                                        <label for="cedula"></label>
+                                        <div class="form-group">
+                                            <input type="text" name="cedula" value="{{  isset($user->cedula)?$user->cedula:'' }}" id="cedula" class="form-control" required>
+                                        </div>
+                                        @error('cedula')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-12">Nombre
+                                        <label for="nombre"></label>
+                                        <div class="form-group">
+                                            <input type="text" name="nombre" value="{{  isset($user->nombre)?$user->nombre:'' }}" id="nombre" class="form-control" required>
+                                        </div>
+                                        @error('nombre')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-12">Correo Electrónico
+                                        <label for="email"></label>
+                                        <div class="form-group">
+                                            <input type="text" name="email" value="{{  isset($user->email)?$user->email:'' }}" id="email" class="form-control" required>
+                                        </div>
+                                        @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-12">Rol
+                                        <label for="rol"></label>
+                                        <div class="form-group">
+                                            <input type="text" name="rol" value="{{  isset($user->rol)?$user->rol:'' }}" id="rol" class="form-control" required>
+                                        </div>
+                                        @error('rol')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group col-12">Cambiar Contraseña
+                                        <label for="password"></label>
+                                        {!!Form::password('password',array('class'=>'form-control'))!!}
+                                        @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-12">Confirmar Contraseña
+                                        <label for="password-confirm"></label>
+                                        {!!Form::password('confirm-password',array('class'=>'form-control'))!!}
+                                    </div>
+                                    <div class="form-group col-12">Estado
+                                        <label for="estado" class="col-md-4 col-form-label text-md-end"></label>
+                                        <select name="estado" class="form-control">
+                                            <option value="1">Activo</option>
+                                            <option value="2">Inactivo</option>
+                                        </select>
+                                        <div class="form-group">
+                                            @error('estado')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-12">
 
-
-                    {!!Form::model($user,['method'=>'PATCH','route'=>['usuario.update',$user->id]] )!!}
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="cedula">Cédula</label>
-                                {!!Form::number('cedula',null,array('class'=>'form-control'))!!}
-                            </div>
-
-                            <div class="form-group">
-                                <label for="nombre">Nombre</label>
-                                {!!Form::text('nombre',null,array('class'=>'form-control'))!!}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="email">Correo Electrónico</label>
-                                {!!Form::email('email',null,array('class'=>'form-control'))!!}
-                            </div>
-                        </div>
-
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="rol">Rol</label>
-                                {!!Form::text('rol',null,array('class'=>'form-control'))!!}
-                            </div>
-                        </div>
-
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="password"> Cambiar Contraseña </label>
-                                {!!Form::password('password',array('class'=>'form-control'))!!}
-                            </div>
-                        </div>
-
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="confirm-password"> Confirmar contraseña </label>
-                                {!!Form::password('confirm-password',array('class'=>'form-control'))!!}
-                            </div>
-                        </div>
-
-                        <div class="col-md-12">
-                            <label for="estado" >Estado</label>
-                            <select name="estado" class="form-control">
-                                <option value="1">Activo</option>
-                                <option value="2">Inactivo</option>
-                            </select>
-                            <div class="col-md-6">
-                                @error('estado')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="col-md-12">
-                            <button onclick="history.back()" type="button" class="btn btn-primary float-right">Cancelar</button>
-                            <button type="submit" class="btn btn-primary float-left">Editar y Guardar</button>
+                        <div class="box-footer mt20">
+                            <button type="submit" class="btn btn-primary btn-lg active">Actualizar</button>
+                            <a onclick="history.back()" class="btn btn-primary btn-lg active" type="button">Cancelar</a>
                         </div>
                     </div>
-                    {!!Form::close()!!}
+
                 </div>
+                {!!Form::close()!!}
             </div>
         </div>
     </div>
-
+    </div>
 </section>
+<script>
+    (function() {
+        'use strict'
+
+        var forms = document.querySelectorAll('.needs-validation')
+
+        Array.prototype.slice.call(forms)
+            .forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
 @endsection

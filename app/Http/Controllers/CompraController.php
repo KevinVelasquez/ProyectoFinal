@@ -34,7 +34,7 @@ class CompraController extends Controller
 
         $detalleabono = PagoProveedore::select('pago_proveedores.fecha AS fechapago','pago_proveedores.id_compra AS idcomprabono','pago_proveedores.abono','pago_proveedores.id AS idabono',
         "compra.total","compra.id","compra.anulado")
-            ->join("compra", "pago_proveedores.id_compra", "=", "compra.id")
+            ->leftJoin("compra", "pago_proveedores.id_compra", "=", "compra.id")
             ->where("pago_proveedores.estado", 1)
             ->orderBy("pago_proveedores.fecha", "DESC")
             ->get();
@@ -188,6 +188,7 @@ class CompraController extends Controller
         return redirect()->route('compra.index')
             ->with('success', 'Status pedido successfully');
     }
+
 
     /**
      * @param int $id

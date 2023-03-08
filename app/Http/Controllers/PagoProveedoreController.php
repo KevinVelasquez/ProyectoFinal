@@ -34,7 +34,7 @@ class PagoProveedoreController extends Controller
             $this->abonoCancelado($input["id"]);
         } */
 
-        $compras = Compra::paginate();
+        $compras = Compra::all();
 
         $detallecompra = Detalle_compra::all();
 
@@ -45,7 +45,7 @@ class PagoProveedoreController extends Controller
         $editarCompra = Compra::all();
 
 
-        return view('compra.index', compact('compras',  'detallecompra', 'compraProveedor', 'detalleabono','editarCompra'));
+        return view('compra.index', compact('compras',  'detallecompra', 'compraProveedor', 'detalleabono','editarCompra', 'abono','totalabono'));
 
     }
 

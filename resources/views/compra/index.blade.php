@@ -116,6 +116,13 @@ Compra
                                     <input type="date" name="fechaabono" class="form-control" required>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                @error('fechaabono')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group row">
@@ -124,12 +131,19 @@ Compra
                                     <input type="number" id="cantidadabono" name="cantidadabono" class="form-control" required>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                @error('cantidadabono')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
                         </div>
                     </div>
             </div>
             <div class="botonestabla" style="text-align: center;">
-                <button type="submit" id="agregarAbono" class="btn btn-primary">Agregar</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                <button type="submit" id="agregarAbono" class="btn btn-primary btn-lg active">Agregar</button>
+                <button type="button" class="btn btn-primary btn-lg active" data-dismiss="modal" aria-label="Close">Cancelar</button>
             </div>
             </form>
             <br>
@@ -181,8 +195,8 @@ Compra
                     <input type="hidden" name="idanularabono" id="idanularabono" />
                     <input type="hidden" name="idpedidoabono" id="idpedidoabono" />
                     <input type="hidden" name="anulardato" value="2" />
-                    <button type="submit" class="btn btn-primary">Si</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-primary btn-lg active">Si</button>
+                    <button type="button" class="btn btn-primary btn-lg active" data-dismiss="modal">No</button>
                 </form>
             </div>
         </div>
@@ -192,6 +206,11 @@ Compra
 
 <script>
     $(document).ready(function() {
+        let pathname = window.location.pathname;
+        if (pathname == "/compras") {
+            window.location.href = "/compra"
+        };
+
         $('#compra').DataTable({
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
@@ -290,5 +309,43 @@ Compra
             }
         }
     }
+
+    function buscarTabla() {
+            var busqueda = document.getElementById("buscarAbono").value;
+            var filas = document.getElementById("tablaabonos").getElementsByTagName("tr");
+            for (var i = 0; i < filas.length; i++) {
+                var celdas = filas[i].getElementsByTagName("td");
+                var coincide = false;
+                for (var j = 0; j < celdas.length; j++) {
+                    if (celdas[j].innerHTML.toUpperCase().indexOf(busqueda.toUpperCase()) > -1) {
+                        coincide = true;
+                        break;
+                    }
+                }
+                if (coincide) {
+                    filas[i].style.display = "";
+                } else {
+                    filas[i].style.display = "none";
+                }
+            }
+        }
+
+    (function() {
+            'use strict'
+
+            var forms = document.querySelectorAll('.needs-validation')
+
+            Array.prototype.slice.call(forms)
+                .forEach(function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
 </script>
 @endsection

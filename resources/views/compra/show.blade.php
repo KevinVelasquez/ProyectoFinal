@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-{{ $compra->name ?? 'Show Compra' }}
+{{ $compra->id ?? 'Show Compra' }}
 @endsection
 
 @section('content')

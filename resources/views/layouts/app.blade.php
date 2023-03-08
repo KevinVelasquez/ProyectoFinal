@@ -146,7 +146,7 @@
         </div>
         </div>
     </header>
-    <footer class="footer">
+    <footer class="footer" style="width:100%;padding-left:20%;padding-right:0%">
         <div class="d-sm-flex justify-content-center justify-content-sm-between">
             <span class="text-center text-sm-left d-block d-sm-inline-block">Propiedad de FERRUM © 2020</span>
         </div>

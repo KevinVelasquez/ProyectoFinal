@@ -27,9 +27,15 @@ Usuarios
                     <td>{{ $user->cedula }}</td>
                     <td>{{ $user->nombre }}</td>
                     <td>{{ $user->email }}</td>
-                    <td>{{ $user->rol }}</td>
                     <td>
-                    @if($user->estado == 1)
+                        @if(!empty($user->getRoleNames()))
+                            @foreach($user->getRoleNames() as $rolName)
+                            <h5><span class="badge badge-dark">{{$rolName}}</span></h5>
+                            @endforeach
+                        @endif
+                    </td>
+                    <td>
+                        @if($user->estado == 1)
                         <button type="button" class="btn btn-sm btn-success">Activo</button>
                         @else
                         <button type="button" class="btn btn-sm btn-danger">Inactivo</button>

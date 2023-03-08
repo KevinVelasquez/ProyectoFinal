@@ -45,7 +45,8 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        return view('usuario.create');
+        $roles = Role::pluck('name','name')->all();
+        return view('usuario.create', compact('roles'));
     }
 
     /**
@@ -60,7 +61,7 @@ class UsuarioController extends Controller
             'cedula' => 'required|unique:users',
             'nombre' => 'required',
             'cedula' => 'required',
-            'rol' => 'required',
+            'id_rol' => 'required',
             'estado' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
@@ -70,7 +71,7 @@ class UsuarioController extends Controller
         $input['password'] = Hash::make($input['password']);
 
         $user = ModelsUser::create($input);
-        request()->validate(Usuario::$rules);
+        $user->assignRole($request->input('roles'));
         return redirect()->route('usuario.index')->with('success', 'Se registró correctamente');
     }
 
@@ -96,8 +97,10 @@ class UsuarioController extends Controller
     public function edit($id)
     {
         $user = ModelsUser::find($id);
+        $roles = Role::pluck('name', 'name')->all();
+        $userRole = $user->roles->pluck('name', 'name')->all();
 
-        return view('usuario.edit', compact('user'));
+        return view('usuario.edit', compact('user','roles','userRole'));
     }
 
     /**
@@ -113,6 +116,7 @@ class UsuarioController extends Controller
             'nombre' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'same:confirm-password',
+            'id_rol' => 'required',
         ]);
 
         $input = $request->all();
@@ -125,6 +129,9 @@ class UsuarioController extends Controller
 
         $user = ModelsUser::find($id);
         $user->update($input);
+
+        DB::table('model_has_roles')->where('model_id', $id)->delete();
+        $user->assingRole($request->input('id_rol'));
 
         return redirect()->route('usuario.index')
             ->with('success', 'Usuario Editado con éxito');
@@ -159,7 +166,7 @@ class UsuarioController extends Controller
         $cedula = $user->cedula;
         $nombre = $user->nombre;
         $email = $user->email;
-        $rol = $user->rol;
+        $id_rol = $user->id_rol;
         $contraseña = $user->password;
         $estado = $user->estado;
 
@@ -208,10 +215,10 @@ class UsuarioController extends Controller
             ->where('id', $user->id)
             ->update(['email' => $email]);
 
-        $rol = $request->rol;
+        $id_rol = $request->id_rol;
         $sqlBD = DB::table('users')
             ->where('id', $user->id)
-            ->update(['rol' => $rol]);
+            ->update(['id_rol' => $id_rol]);
 
         $estado = $request->estado;
         $sqlBD = DB::table('users')
@@ -236,3 +243,5 @@ class UsuarioController extends Controller
         return response()->json(['var'=>''.$newStatus.'']); */
     }
 }
+
+?>

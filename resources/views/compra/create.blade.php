@@ -4,21 +4,35 @@
 <section class="content container-fluid">
     @includeif('partials.errors')
     <div class="card-header">
-        <span class="card-title">Create Compra</span>
+        <span class="card-title">Registrar Órden de Compra</span>
     </div>
-    <form method="POST" action="{{ route('compra.store') }}">
+    <form method="POST" action="{{ route('compra.store') }}" class="form-sample needs-validation" novalidate role="form" enctype="multipart/form-data" novalidate>
         @csrf
         <div class="row">
-            <div class="col-6">
+            <div class="col-6" style="padding-top: 2%; padding-left: 2%;">
                 <div class="card">
                     <div class="row card-body">
                         <div class="form-group col-6">
                             <label for="">Número Orden</label>
-                            <input type="number" class="form-control" name="n_orden">
+                            <input type="number" class="form-control" name="n_orden" required>
+                            <div class="col-md-6">
+                                @error('n_orden')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
                         </div>
                         <div class="form-group col-6">
                             <label for="">Fecha de Compra</label>
-                            <input type="date" class="form-control" name="fecha_compra">
+                            <input type="date" class="form-control" name="fecha_compra" required>
+                            <div class="col-md-6">
+                                @error('fecha_compra')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
                         </div>
                         <div class="form-group col-6">
                             <label for="estado">Estado</label>
@@ -47,7 +61,7 @@
                                 </span>
                                 @enderror
                             </div>
-                        </div> 
+                        </div>
                         <div class="form-group col-6">
                             <label for="">Proveedor</label>
                             <select name="id_proveedor" class="form-control">
@@ -73,20 +87,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
-                    <label for="">Total Compra</label>
-                    <input type="number" class="form-control" name="total" id="total">
-                </div>
-                <div class="col-6">
-                    <label for="">Abono</label>
-                    <input type="number" class="form-control" name="abono" id="abono" >
-                </div>
-                <div class="col-12">
-                    <button  type="submit" class="btn btn-primary">Guardar</button>
-                    <a onclick="history.back()" type="button" class="btn btn-primary" style="color:white" >Cancelar</a>
-                </div>
             </div>
-            <div class="col-6">
+            <div class="col-6" style="padding-right: 3%;">
                 <div class="card">
                     <div class="card-head">
                         <h4 class="text-center">Info Insumos</h4>
@@ -105,17 +107,17 @@
                         <div class="col-3">
                             <div class="form-group">
                                 <label for="">Cantidad</label>
-                                <input type="number" name="cantidad" id="cantidad" class="form-control">
+                                <input type="number" name="cantidad" id="cantidad" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="form-group">
                                 <label for="">Precio Unitario</label>
-                                <input id="valor_unitario" type="text" class="form-control">
+                                <input id="valor_unitario" type="text" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-12">
-                            <button onclick="agregar_insumo()" type="button" class="btn btn-success float-right">Agregar Insumo</button>
+                            <button onclick="agregar_insumo()" type="button" class="btn btn-primary btn-lg active float-right">Agregar Insumo</button>
                         </div>
                     </div>
                     <table class="table">
@@ -133,6 +135,19 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+
+            <div class="col-2" style="padding-left: 2%;">
+                <label for="">Total Compra</label>
+                <input type="number" class="form-control" name="total" id="total">
+            </div>
+            <div class="col-2" style="padding-left: 2%;">
+                <label for="">Abono</label>
+                <input type="number" class="form-control" name="abono" id="abono" required>
+            </div>
+            <div class="col-12" style="padding-left: 2%;">
+                <button type="submit" href="{{ route('compra.index')}}" class="btn btn-primary btn-lg active">Guardar</button>
+                <a onclick="history.back()" type="button" class="btn btn-primary btn-lg active" style="color:white">Cancelar</a>
             </div>
         </div>
     </form>
@@ -179,5 +194,23 @@
         let total = $("#total").val() || 0;
         $("#total").val(parseInt(total) - subtotal);
     }
+
+    (function() {
+            'use strict'
+
+            var forms = document.querySelectorAll('.needs-validation')
+
+            Array.prototype.slice.call(forms)
+                .forEach(function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
 </script>
 
