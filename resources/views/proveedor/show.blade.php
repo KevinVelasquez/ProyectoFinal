@@ -41,16 +41,18 @@ Cliente
                     <td>Contado</td>
                     @endif
 
-                    @if ($compras->estado==1)
+                    @if ($compras->estado==0)
                     <td>Pendiente</td>
-                    @else
+                    @elseif ($compras->estado==1)
                     <td>Finalizada</td>
+                    @else
+                    <td>Anulado</td>
                     @endif
                     <td>
 
                         <!-- Button detalle factura -->
 
-                        <button type="button" class="mdi mdi-eye" data-toggle="modal" data-target="#verdetalle"></button>
+                        <button type="button" class="mdi mdi-eye" data-toggle="modal" data-target="#verdetalle" onclick="verDatos ('{{ $compras->id }}')" ></button>
                     </td>
 
 
@@ -73,6 +75,7 @@ Cliente
                         <div class="page-content container">
                             <div class="container px-0">
                                 <div class="row mt-4">
+                                
                                     <div class="col-12 col-lg-12">
                                         <div class="row">
                                             <div class="col-12">
@@ -84,27 +87,28 @@ Cliente
                                         </div>
                                         <!-- .row -->
                                         <br>
-                                        @foreach ($compra as $compras)
+                                        
                                         <hr class="row brc-default-l1 mx-n1 mb-4" />
-
+                                        
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div>
                                                     <span class="text-sm text-grey-m2 align-middle">Proveedor:</span>
-                                                    <span class="text-600 text-110 text-blue align-middle">{{ $compras->nombre }}</span>
+                                                    <span class="text-600 text-110 text-blue align-middle" id="nombreproveedor"></span>
                                                 </div>
                                                 <div class="text-grey-m2">
-                                                    <div class="my-1">
-                                                        Nit/CC: {{ $compras->cedula }}
+                                                    <div class="my-1" id="ccproveedor">
                                                     </div>
-                                                    <div class="my-1">
-                                                    {{ $compras->direccion }}
+                                                    <div class="my-1" id="direccionproveedor">
+                                                    
                                                     </div>
-                                                    <div class="my-1">
-                                                    {{ $compras->nombremunicipio }}
+                                                    <div class="my-1" id="municipio">
                                                     </div>
-                                                    <div class="my-1"><i class="fa fa-phone fa-flip-horizontal text-secondary"></i> <b class="text-600">{{ $compras->telefono }}</b></div>
-                                                </div>
+                                                <div class="my-1"><i
+                                                        class="fa fa-phone fa-flip-horizontal text-secondary"></i> <b
+                                                        class="text-600" id="telefonoproveedor"
+                                                        name="telefonoclientedetalle"></b></div>
+                                            </div>
                                             </div>
                                             <!-- /.col -->
 
@@ -115,24 +119,26 @@ Cliente
                                                     Factura
                                                     </div>
                                                     <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
-                                                        <span class="text-600 text-90">ID:</span> {{ $compras->n_orden }}
+                                                        <span class="text-600 text-90" id="n_orden">ID:</span> 
                                                     </div>
                                                     <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
-                                                        <span class="text-600 text-90">Fecha Registro:</span> Nov 23,2022
+                                                        <span class="text-600 text-90" id="fecharegistro"></span>
                                                     </div>
                                                     <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
-                                                        <span class="text-600 text-90">Fecha de Compra:</span> Nov 17,2022
+                                                        <span class="text-600 text-90" id="fechacompra"></span>
                                                     </div>
                                                     <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
-                                                        <span class="text-600 text-90">Estado:</span> <span>Cancelada</span>
+                                                        <span class="text-600 text-90" id="estadocompra"></span> <span>
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <!-- /.col -->
                                         </div>
-
+                                        
+                                        
                                         <div class="table-responsive pt-3" style="margin-bottom: 0%;">
-                                            <table class="table table-bordered">
+                                            <table class="table table-bordered" id="tabladetallecompraseleccionada" >
                                                 <thead>
                                                     <tr>
                                                         <th>
@@ -150,74 +156,39 @@ Cliente
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            Lámina 1/2
-                                                        </td>
-                                                        <td>
-                                                            3
-                                                        </td>
-                                                        <td>
-                                                            200.000
-                                                        </td>
-                                                        <td>
-                                                            600.000
-                                                        </td>
-
-                                                    </tr>
+                                                
                                                 </tbody>
                                             </table>
                                         </div>
-
+                                        
                                         <div class="mt-4">
 
 
                                             <div class="row mt-3">
                                                 <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
-                                                    <div class="my-1">
-                                                        Metodo de Pago: Credito
+                                                    <div class="my-1" id="metodopago" >
                                                     </div>
-                                                    <div class="my-1">
-                                                        Abono: 300.000
+                                                    <div class="my-1" id="totalabono">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
                                                     <div class="row my-2">
-                                                        <div class="col-7 text-right">
-                                                            Total
-                                                        </div>
+                                                         </div>
                                                         <div class="col-5">
-                                                            <span class="text-120 text-secondary-d1">600.000</span>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row my-2">
-                                                        <div class="col-7 text-right">
-                                                            Abono
-                                                        </div>
-                                                        <div class="col-5">
-                                                            <span class="text-110 text-secondary-d1">300.000</span>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row my-2 align-items-center bgc-primary-l3 p-2">
-                                                        <div class="col-7 text-right">
-                                                            Resta
-                                                        </div>
-                                                        <div class="col-5">
-                                                            <span class="text-150 text-success-d3 opacity-2">300.000</span>
+                                                            <span class="text-150 text-success-d3 opacity-2" id="preciototal"></span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            @endforeach
+                                            
                                             <hr />
                                             <div>
                                                 <a href="{{ route('proveedor.pdf') }}" class="btn btn-primary " target="_blank">Descargar</a>
                                             </div>
                                         </div>
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -242,7 +213,69 @@ Cliente
         });
     });
 
-    
+    function verdetalleorden (id)
+    {
+        let consulta = {!! $compra !!}
+        let filtrocompra = consulta.find(item=>item.id==id)
+        $('#nombreproveedor').text(` ${filtrocompra.nombre}`)
+        $('#ccproveedor').text(`C.C ${filtrocompra.cedula}`)
+        $('#direccionproveedor').text(` ${filtrocompra.direccion}`)
+        $('#municipio').text(` ${filtrocompra.nombremunicipio}`)
+        $('#telefonoproveedor').text(` ${filtrocompra.telefono}`)
+        $('#n_orden').text(`ID: ${filtrocompra.n_orden}`)
+        $('#fecharegistro').text(`Fecha Registro: ${filtrocompra.created_at}`)
+        $('#fechacompra').text(`Fecha Compra: ${filtrocompra.fecha_compra}`)
+        $('#metodopago').text(`Método Pago: ${filtrocompra.nombremetodopago}`)
+        $('#preciototal').text(`Total: ${filtrocompra.total}`)
+
+
+        if (filtrocompra.estado == 0) {
+                $('#estadocompra').text(`Estado: Pendiente`)
+            } else if (filtrocompra.estado == 1) {
+                $('#estadocompra').text(`Estado: Finalizado`)
+            } else {
+                $('#estadocompra').text(`Estado: Anulado`)
+            }
+
+
+    }
+
+    function abonos(id){
+        let abonos = {!! $abono !!}   
+         let filtroabono = abonos.find(item=>item.id_compra = id)
+        $('#totalabono').text(` ${filtroabono.totalabonado}`)
+         console.log(abonos);
+
+    }
+
+    function verDatos(id){
+        verdetalleorden (id)
+        abonos (id)
+
+        let compradatos = {!! $detallecompra !!}
+        let detallecompras = compradatos.filter(item => item.id == id)
+        $("#tabladetallecompraseleccionada tbody").children().remove();
+        detallecompras.forEach(function(value, index){
+            console.log(detallecompras);
+            if (value.id == id){
+                let fila =` 
+                <tr>
+                <td>
+                ${value.nombre}
+                </td>
+                <td>
+                ${value.cantidad}
+                </td>
+                </tr>
+                `;
+                $("#tabladetallecompraseleccionada tbody").append(fila)
+            }
+         
+        })
+
+        
+
+    }
 
 
 </script>

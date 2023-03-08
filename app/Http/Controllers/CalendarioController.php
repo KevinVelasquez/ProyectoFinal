@@ -46,7 +46,8 @@ class CalendarioController extends Controller
       $abono = Pago_Clientes::select('pago__clientes.id_pedido',Pago_Clientes::raw('SUM(pago__clientes.abono) as totalabonado')) 
       ->groupBy("pago__clientes.id_pedido")
       ->get();
-           
+
+          
 
       return view('calendario.Pindex',compact('detallepedido','pedidos','abono'));
 

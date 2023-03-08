@@ -12,9 +12,11 @@ use App\Http\Controllers\CalendarioController;
 
 //RUTAS HOME
 
-Route::get('/', function () {
-    return view('welcome');
-})->middleware('auth');
+
+Route::get('/', [App\Http\Controllers\CalendarioController::class, 'index'])->middleware('auth');
+
+
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('auth');
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.request');
 Route::resource('compra', App\Http\Controllers\CompraController::class)->middleware('auth');

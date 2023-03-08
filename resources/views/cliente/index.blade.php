@@ -132,7 +132,7 @@ Cliente
 </div>
 
 
-{!! $cliente->links() !!}
+
 
 
 <!-- scripts -->

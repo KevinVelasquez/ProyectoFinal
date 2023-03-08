@@ -15,6 +15,7 @@ use App\Models\Metodo_Pago;
 use App\Models\Compra;
 use App\Models\Insumo;
 use App\Models\PagoProveedore;
+use App\Models\Detalle_compra;
 use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Illuminate\Http\Request;
 use PDF;
@@ -85,16 +86,28 @@ class ProveedorController extends Controller
     public function show($id)
     {
         $proveedores = Proveedor::find($id);
+        $detallecompra = Detalle_compra::select("detalle_compra.cantidad","detalle_compra.valor_unitario","insumos.nombre","detalle_compra.id_orden_compra","detalle_compra.id" )
+        ->join("compra","compra.id", "=","detalle_compra.id_orden_compra")
+        ->join("insumos","detalle_compra.id_insumo", "=", "insumos.id",  )
+        ->get();
 
-        $compra = Compra::select("compra.n_orden","fecha_compra","id_metodo_pagos","proveedors.nombre","proveedors.cedula","proveedors.direccion","municipios.id  AS idmunicipio","municipios.nombre AS nombremunicipio","proveedors.telefono",)
+        
+        $compra = Compra::select("compra.n_orden","compra.id","compra.fecha_compra","compra.id_metodo_pagos","compra.total","proveedors.nombre", "compra.created_at","compra.estado","proveedors.cedula","proveedors.direccion","municipios.id  AS idmunicipio","municipios.nombre AS nombremunicipio","proveedors.telefono","metodo__pagos.id",
+        "metodo__pagos.nombre AS nombremetodopago",)
         ->join("proveedors","proveedors.id", "=","compra.id_proveedor")
         ->join("metodo__pagos", "compra.id_metodo_pagos", "=", "metodo__pagos.id")
         ->join("municipios", "proveedors.id_municipio", "=", "municipios.id")
-        
         ->where("proveedors.id", "=", $id)
         ->get();
 
-        return view('proveedor.show', compact('proveedores','compra') );
+
+        $abono = PagoProveedore::select('pago_proveedores.id_compra',PagoProveedore::raw('SUM(pago_proveedores.abono) as totalabonado'))
+        ->where("pago_proveedores.estado", "=", 1) 
+      ->groupBy("pago_proveedores.id_compra")
+      ->get();
+      
+
+        return view('proveedor.show', compact('proveedores','compra','detallecompra','abono') );
     }
 
     public function pdf()
