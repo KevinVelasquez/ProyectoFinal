@@ -122,7 +122,7 @@ class ProductoController extends Controller
         }
         if ($input['nombre'] !== $old_nombre) {
             $request->validate([
-                'nombre' => 'unique:productos'.$input["id"],
+                'nombre' => 'unique:productos,id,'.$producto->id,
             ]);
         }
         $producto->update($input);
