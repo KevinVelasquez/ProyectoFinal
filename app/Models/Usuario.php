@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Models\Role;
 
 /**
  * Class Usuario
@@ -27,7 +28,7 @@ class Usuario extends Model
 		'cedula' => 'required',
 		'nombre' => 'required',
 		'email' => 'required',
-		'rol' => 'required',
+		'id_rol' => 'required',
 		'contraseña' => 'required',
 		'estado' => 'required',
     ];
@@ -41,6 +42,13 @@ class Usuario extends Model
      */
     protected $fillable = ['cedula','nombre','email','rol','contraseña','estado'];
 
+    public function roles()
+    {
+        return $this->hasOne('Spatie\Permission\Models\Role', 'id', 'id_rol');
+    }
+
 
 
 }
+
+?>

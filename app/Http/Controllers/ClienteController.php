@@ -9,6 +9,9 @@ use App\Models\Regimen;
 use App\Models\Tipo_comercio;
 use App\Models\Tipo_persona;
 use App\Models\Cliente;
+use App\Models\Figura;
+use App\Models\Pedido;
+use App\Models\Pago_Clientes;
 use Illuminate\Http\Request;
 
 class ClienteController extends Controller
@@ -21,14 +24,19 @@ class ClienteController extends Controller
     public function index()
     {
         //
-        
-        // $datos ['clientes']= Cliente::paginate(5);
-        // return view('cliente.index',$datos);
-   
-        $clientes = Cliente::paginate();
 
-        return view('cliente.index', compact('clientes'))
-            ->with('i', (request()->input('page', 1) - 1) * $clientes->perPage());
+        $figuras = Figura::all();
+        $cliente = Cliente::paginate();
+        $clientes = Cliente::select('clientes.id', 'clientes.nombre', 'clientes.cedula', 'clientes.telefono', 'clientes.direccion', 'clientes.email', 'clientes.tipo_persona', 'clientes.estado', Pago_Clientes::raw('SUM(CASE WHEN pago__clientes.estado = 1 THEN pago__clientes.abono ELSE 0 END) as total_abonos'), Pedido::raw('(SELECT SUM(CASE WHEN pedidos.estado = 1 THEN pedidos.totalpedido ELSE 0 END) FROM pedidos WHERE pedidos.id_cliente = clientes.id) as total_pedido'))
+    ->leftJoin('pedidos', 'pedidos.id_cliente', '=', 'clientes.id')
+    ->leftJoin('pago__clientes', 'pago__clientes.id_pedido', '=', 'pedidos.id')
+    ->groupBy('clientes.id', 'clientes.nombre', 'clientes.cedula', 'clientes.telefono', 'clientes.direccion', 'clientes.email', 'clientes.tipo_persona', 'clientes.estado')
+    ->get();
+
+  
+        
+        return view('cliente.index', compact('cliente', 'figuras','clientes'))
+            ->with('i', (request()->input('page', 1) - 1) * $cliente->perPage());
     }
 
 
@@ -47,7 +55,7 @@ class ClienteController extends Controller
         $tipo_persona = Tipo_persona::all();
         $regimen = Regimen::all();
         $cliente = new Cliente();
-        return view('cliente.create', compact('cliente','paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
+        return view('cliente.create', compact('cliente', 'paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
     }
 
     /**
@@ -59,9 +67,8 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         //
-        // $datosCliente = request()->all();
 
-        $datosCliente = request()->except('_token','pais','departamento');
+        $datosCliente = request()->except('_token', 'pais', 'departamento');
         Cliente::insert($datosCliente);
 
         return redirect('cliente')
@@ -74,25 +81,8 @@ class ClienteController extends Controller
      * @param  \App\Models\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function updateStatusCliente(cliente $cliente)
-    {
-        //
 
-    if($cliente->estado == 1)  {
-        $cliente->update(['estado'=>0]);
-            return redirect()->back();
 
-        $cliente = '<br> <button type="button" class="btn btn-sm btn-danger">Inactivo</button>';
-
-    }else{
-        $cliente->update(['estado'=>1]);
-        return redirect()->back();
-
-        $cliente ='<br> <button type="button" class="btn btn-sm btn-success">Activo</button>';
-    }
-
-    }
-    
 
     /**
      * Show the form for editing the specified resource.
@@ -103,7 +93,7 @@ class ClienteController extends Controller
     public function edit($id)
     {
         //
-        
+
         $paises = Pais::all();
         $departamentos = Departamento::all();
         $municipios = Municipio::all();
@@ -111,9 +101,8 @@ class ClienteController extends Controller
         $tipo_persona = Tipo_persona::all();
         $regimen = Regimen::all();
         $clienteEstado = Cliente::find($id);
-        $cliente =Cliente::findOrFail($id);
-        return view('cliente.edit', compact('cliente','paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen','clienteEstado'));
-    
+        $cliente = Cliente::findOrFail($id);
+        return view('cliente.edit', compact('cliente', 'paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen', 'clienteEstado'));
     }
 
     /**
@@ -126,24 +115,11 @@ class ClienteController extends Controller
     public function update(Request $request, Cliente $cliente)
     {
         //
-        // $datosCliente = request()->except(['_token','pais','departamento','_method']);
-        // Cliente::where('id', '=', $id)->update($datosCliente);
-
-        // $paises = Pais::all();
-        // $departamentos = Departamento::all();
-        // $municipios = Municipio::all();
-        // $tipo_comercio = Tipo_comercio::all();
-        // $tipo_persona = Tipo_persona::all();
-        // $regimen = Regimen::all();
-        // $cliente =Cliente::findOrFail($id);
-        // return view('cliente.edit', compact ('cliente','paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen'));
 
         $cliente->update($request->all());
 
         return redirect()->route('cliente.index')
             ->with('success', 'Cliente updated successfully');
-            
-        
     }
 
     /**
@@ -155,12 +131,9 @@ class ClienteController extends Controller
     public function destroy($id)
     {
         //
-       // Cliente::destroy($id);
-        // return redirect('cliente');
+        $cliente = Cliente::find($id)->delete();
 
-       $cliente = Cliente::find($id)->delete();
-
-       return redirect('cliente')
-       ->with('mensaje', 'Proveedor eliminado con éxito.');
+        return redirect('cliente')
+            ->with('mensaje', 'Proveedor eliminado con éxito.');
     }
 }

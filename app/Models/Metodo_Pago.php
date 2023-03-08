@@ -18,4 +18,9 @@ class Metodo_Pago extends Model
     {
        return $this->hasMany(\App\Models\Pedido::class, 'id');
     }
+
+    public function compra()
+    {
+       return $this->hasMany(\App\Models\Compra::class, 'id');
+    }
 }

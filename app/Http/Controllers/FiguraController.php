@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Figura;
 use App\Models\Cliente;
+use App\Models\DetallePedido;
 use Illuminate\Http\Request;
 use Str;
 
@@ -13,6 +14,13 @@ use Str;
  */
 class FiguraController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:ver-figura|crear-figura|editar-figura|borrar-figura,', ['only'=>['index']]);
+        $this->middleware ('permission: crear-figura', ['only'=>['store']]);
+        $this->middleware ('permission: editar-figura', ['only'=>['update']]);
+        $this->middleware ('permission: borrar-figura', ['only'=>['eliminarfigura']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -64,6 +72,12 @@ class FiguraController extends Controller
         }
 
         Figura::create($input);
+        
+        if ($input['id_cliente'] !== 1) {
+            Figura::where('id_cliente', '!=', 1)->update(['estado' => 2]);
+        }
+        
+        
         return redirect()->route('figuras.index');
     }
 
@@ -140,6 +154,23 @@ class FiguraController extends Controller
     public function eliminarfigura(Request $request)
     {
         $input = $request->all();
+        $figuraeliminar = $input["ideliminar"];
+
+        $consultadetalle = DetallePedido::select(
+            "detalle_pedidos.imagen",
+        )->get();
+
+        
+        foreach ($consultadetalle as $valor) {
+               
+            if($figuraeliminar==$valor->imagen) {
+                
+                return redirect()->route('figuras.index')->with('mensaje', 'La figura no puede ser eliminada al estar asociada a un pedido.');;
+                
+            }
+        }
+
+
         Figura::find($input["ideliminar"])->delete();
 
         return redirect()->route('figuras.index');

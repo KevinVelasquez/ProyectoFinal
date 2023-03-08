@@ -13,7 +13,6 @@ Usuarios
         <table id="usuarios" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Cédula</th>
                     <th>Nombre</th>
                     <th>Correo Electrónico</th>
@@ -24,14 +23,19 @@ Usuarios
             <tbody>
                 @foreach ($users as $user)
                 <tr>
-                    <td>{{ $user->id }}</td>
 
                     <td>{{ $user->cedula }}</td>
                     <td>{{ $user->nombre }}</td>
                     <td>{{ $user->email }}</td>
-                    <td>{{ $user->rol }}</td>
                     <td>
-                    @if($user->estado == 1)
+                        @if(!empty($user->getRoleNames()))
+                            @foreach($user->getRoleNames() as $rolName)
+                            <h5><span class="badge badge-dark">{{$rolName}}</span></h5>
+                            @endforeach
+                        @endif
+                    </td>
+                    <td>
+                        @if($user->estado == 1)
                         <button type="button" class="btn btn-sm btn-success">Activo</button>
                         @else
                         <button type="button" class="btn btn-sm btn-danger">Inactivo</button>
@@ -39,7 +43,7 @@ Usuarios
                     </td>
                     <td>
                         <form action="{{ route('usuario.destroy',$user->id) }}" method="POST">
-                            <a class="btn btn-sm btn-success" href="{{ route('usuario.edit',$user->id) }}"><i class="fa fa-fw fa-edit"></i>Editar</a>
+                            <a class="btn btn-primary btn-lg active" href="{{ route('usuario.edit',$user->id) }}"><i class="fa fa-fw fa-edit"></i>Editar</a>
                         </form>
                     </td>
                 </tr>

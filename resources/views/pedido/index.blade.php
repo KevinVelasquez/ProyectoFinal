@@ -6,12 +6,15 @@
 
 @section('content')
     <div class="container">
+        
         <main role="main" class="pb-3">
+            @can('crear-pedido')
             <p>
                 <a class="mdi mdi-cart-outline" id="iconoadd" href="{{ route('pedidos.create') }}"></a>
             </p>
+            @endcan
 
-            <table id="pedidos" class="table table-striped dt-responsive nowrap table" style="width:100%">
+            <table id="pedidos" class="table table-striped dt-responsive nowrap table display mowrap"  cellspacing="0" style="width:100%"  >
                 <thead>
                     <tr>
                         <th># Pedido</th>
@@ -54,14 +57,18 @@
                                 echo 'Si';
                             } ?></td>
                             <td>
-                                <button onclick="verDatos('{{ $pedidos->id }}')" class="mdi mdi-format-align-justify"+
+                                <button onclick="verDatos('{{ $pedidos->id }}')" class="mdi mdi-format-align-justify "
                                     data-toggle="modal" data-target="#verdetalle"></button>
-                                <button onclick="verDatosAbono('{{ $pedidos->id }}')" class="mdi mdi-cash-usd"
-                                    data-toggle="modal" data-target="#abonos"></button>
+                                <button onclick="verDatosAbono('{{ $pedidos->id }}')" class="mdi mdi-cash-usd "
+                                    data-toggle="modal" data-target="#abonos" @if ($pedidos->estado !== 1)disabled @endif></button>
+                                @can('editar-pedido')
                                 <button onclick="editarPedido('{{ $pedidos->id }}')" class="mdi mdi-lead-pencil"
-                                    data-toggle="modal" data-target="#editarmodal"></button>
+                                    data-toggle="modal" data-target="#editarmodal"  @if ($pedidos->estado !== 1)disabled @endif></button>
+                                @endcan
+                                @can('anular-pedido')
                                 <button onclick="anularPedido('{{ $pedidos->id }}')" class="mdi mdi-block-helper"
-                                    data-toggle="modal" data-target="#anularmodal"></button>
+                                    data-toggle="modal" data-target="#anularmodal" @if ($pedidos->estado !== 1)disabled @endif></button>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach
@@ -181,7 +188,8 @@
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Actualizar</button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-danger" style="margin-top: 5%;"
+                                        data-dismiss="modal">Cancelar</button>
                                 </form>
                             </div>
                         </div>
@@ -212,7 +220,7 @@
                         <input type="hidden" name="idanular" id="idanular" />
                         <input type="hidden" name="anulardato" value="2" />
                         <button type="submit" class="btn btn-primary">Si</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-top:5%;">No</button>
                     </form>
                 </div>
             </div>
@@ -306,6 +314,8 @@
                                             <thead>
                                                 <tr>
                                                     <th>
+                                                    </th>
+                                                    <th>
                                                         Producto
                                                     </th>
                                                     <th>
@@ -380,7 +390,9 @@
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="totalpedidoresta">
-                    <form role="form" method="POST"  action="{{ route('agregarAbono') }}" enctype="multipart/form-data" class="form-sample needs-validation" onsubmit="return validarMonto()" novalidate>
+                    <form role="form" method="POST" action="{{ route('agregarAbono') }}"
+                        enctype="multipart/form-data" class="form-sample needs-validation"
+                        onsubmit="return validarMonto()" novalidate>
                         @csrf
                         <input type="hidden" name="id" id="idpedidoabonar" />
                         <div class="row">
@@ -415,7 +427,7 @@
                 </div>
                 <div class="botonestabla" style="text-align: center;">
                     <button type="submit" id="agregarAbono" class="btn btn-primary">Agregar</button>
-                    <button type="button" class="btn btn-primary">Cancelar</button>
+                    <button type="button" class="btn btn-danger" style="margin-top:5%;">Cancelar</button>
                 </div>
                 </form>
                 <br>
@@ -474,7 +486,8 @@
                         <input type="hidden" name="idpedidoabono" id="idpedidoabono" />
                         <input type="hidden" name="anulardato" value="2" />
                         <button type="submit" class="btn btn-primary">Si</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger"
+                            style="margin-top:5%;"data-dismiss="modal">No</button>
                     </form>
                 </div>
             </div>
@@ -489,8 +502,9 @@
                 window.location.href = "/pedidos"
             }
             $('#pedidos').DataTable({
+                responsive:false,
                 "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"   
                 }
             });
 
@@ -528,9 +542,18 @@
             let detallePedidos = pedidos.filter(item => item.id == id)
             $("#tablaDetallePedidoSeleccionado tbody").children().remove();
             detallePedidos.forEach(function(value, index) {
+                if(value.imagen === null){
+                    ruta = "";
+                }else{
+                    ruta = `<img src="http://127.0.0.1:8000/storage/images/figuras/${value.imagen}"/>`
+                }
+
                 if (value.id == id) {
                     let fila = `
               <tr>
+                <td id="imagen-ruta">
+                    ${ruta}
+                  </td>
                   <td>
                     ${value.nombreproducto}
                   </td>
@@ -587,7 +610,7 @@
                     let preciototal = `${value.totalpedido}`
                     let restatotal = preciototal - resta
                     $('#resta').text(`RESTA ${restatotal}`)
-                    $('#agregarAbono').attr(`disabled`,!restatotal)
+                    $('#agregarAbono').attr(`disabled`, !restatotal)
                     $('#resta').val(`${restatotal}`)
                     $("#tablaabonos tbody").append(fila)
                 }
@@ -615,6 +638,48 @@
             let idpedido = `${editardatos.id}`;
 
         }
+
+        // verificacion de proceso
+        var select = document.getElementById("editarproceso");
+        var inputs = document.querySelectorAll("#editardireccion, #editarfechaentrega, #editarmetodoentrega");
+
+        var selectValue = localStorage.getItem("editarproceso-value") || sessionStorage.getItem("editarproceso-value");
+        if (selectValue != null) {
+            select.value = selectValue;
+        }
+
+        if (select.value == null || select.value == 0) {
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].readOnly = false;
+            }
+        } else {
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].readOnly = true;
+            }
+        }
+
+        select.addEventListener("change", function() {
+            if (select.value == 0) {
+                for (var i = 0; i < inputs.length; i++) {
+                    inputs[i].readOnly = false;
+                }
+            } else {
+                for (var i = 0; i < inputs.length; i++) {
+                    inputs[i].readOnly = true;
+                }
+            }
+
+            if (typeof(Storage) !== "undefined") {
+                if (localStorage) {
+                    localStorage.setItem("editarproceso-value", select.value);
+                } else {
+                    sessionStorage.setItem("editarproceso-value", select.value);
+                }
+            }
+        });
+
+
+
 
         function anularPedido(id) {
             let consulta = {!! $editarpedido !!}
@@ -665,18 +730,19 @@
 
 
         function validarMonto() {
-            var input = document.getElementById("cantidadabono").value;
-            var resta = document.getElementById("resta").value
-                if (input > resta) {
-                    alert("El abono no puede superar la cantidad de " + resta);
-                    return false;
-                }
-                return true;
+            var input = parseInt(document.getElementById("cantidadabono").value);
+            var resta = parseInt(document.getElementById("resta").value)
+            if (input > resta) {
+                alert("El abono no puede superar la cantidad de " + resta);
+                return false;
+            }
+            return true;
         }
 
         function descargarAbonoPedido(idabono, idpedido, fecha) {
             window.open('abono-pdf?' + 'idabono=' + idabono + '&idpedido=' + idpedido + '&fecha=' + fecha);
         }
+
 
         (function() {
             'use strict'

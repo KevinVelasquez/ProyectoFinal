@@ -25,7 +25,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header">{{ __('Registrar') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
@@ -45,7 +45,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="cedula" class="col-md-4 col-form-label text-md-end">{{ __('Cedula') }}</label>
+                            <label for="cedula" class="col-md-4 col-form-label text-md-end">{{ __('Cédula') }}</label>
 
                             <div class="col-md-6">
                                 <input id="cedula" type="number" class="form-control @error('cedula') is-invalid @enderror" name="cedula" value="{{ old('cedula') }}" required autocomplete="cedula" autofocus>
@@ -111,10 +111,11 @@
 
                         <div class="row mb-3">
                             <label for="estado" class="col-md-4 col-form-label text-md-end">{{ __('Estado') }}</label>
-
+                            <select name="estado" class="form-control">
+                                <option value="1">Activo</option>
+                                <option value="2">Inactivo</option>
+                            </select>
                             <div class="col-md-6">
-                                <input id="estado" type="number" class="form-control @error('estado') is-invalid @enderror" name="estado" value="{{ old('estado') }}" required autocomplete="estado" autofocus>
-
                                 @error('estado')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -122,12 +123,12 @@
                                 @enderror
                             </div>
                         </div>
-
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Registrar') }}
                                 </button>
+                                <a type="button" class="btn btn-primary btn-lg active" href="{{ route('login') }}">Regresar</a>
                             </div>
                         </div>
                     </form>

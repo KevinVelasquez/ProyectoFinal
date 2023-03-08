@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('pago__clientes', function (Blueprint $table) {
             $table->id();
             $table->date('fecha');
-            $table->integer('abono');
+            $table->integer('abono')->nullable();
             $table->integer('estado')->default(1);
-            $table->bigInteger('id_medio_pago')->unsigned();
+            $table->bigInteger('id_medio_pago')->unsigned()->nullable();
             $table->bigInteger('id_pedido')->unsigned();
 
             $table->foreign('id_medio_pago')->references('id')->on('medio__pagos')->onDelete("cascade");

@@ -36,9 +36,7 @@ class Proveedor extends Model
 {
     use HasFactory;
 
-    // static $rules = [
-    //     'nombre'
-    // ];
+
     protected $perPage = 20;
     protected $fillable = ['cedula','nombre','telefono','direccion','email','estado','id_municipio','tipo_persona','regimen','tipo_comercio'];
 

@@ -1,5 +1,5 @@
 <h4>Información Cliente</h4>
-<input type="hidden" name="total" id="total" />
+
 <div class="row">
     <div class="col-md-3">
         <div class="form-group row">
@@ -48,7 +48,7 @@
         <div class="form-group row">
             <label class="control-label">País</label>
             <div class="col-sm-9">
-                <select class="form-control" name="pais" id="pais" onchange="filtrarDepartamentos()">
+                <select class="form-control" name="pais" id="pais" onchange="filtrarDepartamentos()" required>
                     <option selected disabled value="">Seleccione</option>
                     @forelse($paises  as $pais)
                         <option value="{{ $pais->id }}">
@@ -65,8 +65,14 @@
         <div class="form-group row">
             <label class="control-label">Departamento</label>
             <div class="col-sm-7">
-                <select class="form-control" name="departamento" id="departamento" onchange="filtrarMunicipios()">
+                <select class="form-control" name="departamento" id="departamento" onchange="filtrarMunicipios()" required>
                     <option selected disabled value="">Seleccione</option>
+                    @forelse($departamentos  as $departamento)
+                        <option value="{{ $departamento->id }}">
+                            {{ $departamento->nombre }}
+                        </option>
+                    @empty <option>No existen</option>
+                    @endforelse
                 </select>
             </div>
         </div>
@@ -75,8 +81,14 @@
         <div class="form-group row">
             <label class="control-label">Municipio</label>
             <div class="col-sm-8">
-                <select class="form-control" name="id_municipio" id="municipio">
+                <select class="form-control" name="id_municipio" id="municipio" required>
                     <option selected disabled value="">Seleccione</option>
+                    @forelse($municipios  as $municipio)
+                        <option value="{{ $municipio->id }}">
+                            {{ $municipio->nombre }}
+                        </option>
+                    @empty <option>No existen</option>
+                    @endforelse
                 </select>
             </div>
         </div>
@@ -153,7 +165,7 @@
         <div class="form-group row">
             <label class="control-label">Abono</label>
             <div class="col-sm-9">
-                <input type="number" name="abono" id="abono" class="form-control" required />
+                <input type="number"  name="abono" id="abono" class="form-control" required/>
             </div>
         </div>
     </div>
@@ -203,7 +215,7 @@
                     data-target="#verdiseños" disabled>Seleccione diseño</button>
             </div>
             <div class="col-sm-6">
-                <input id="imagen" class="form-control" style="border: 0;" readonly />
+                <input type="hidden" id="imagen" class="form-control" style="border: 0;" readonly />
             </div>
         </div>
     </div>
@@ -213,11 +225,11 @@
             <div class="col-sm-9">
                 <input id="descripcion" class="form-control" style="height:5%" />
                 <a type="button" class="mdi mdi-plus-circle" style="color:green;font-size:400%;margin-left:40%"
-                id="agregarprodu"></a>
+                    id="agregarprodu"></a>
             </div>
         </div>
     </div>
-    
+    <input type="hidden" name="total" id="total" />
 </div>
 
 
@@ -253,7 +265,7 @@
 
 </div>
 <div class="form-group" style="margin-top: 2%;margin-left: 39%;">
-    <button type="submit" class="btn btn-success" style="margin: 10px">Crear</button>
+    <button type="submit" class="btn btn-success" style="margin: 10px" >Crear</button>
     <a class="btn btn-primary " style="margin: 10px" onclick="resetForm('formpedidos')">Limpiar</a>
     <a class="btn btn-danger " href="{{ route('pedidos.index') }}" style="margin: 10px">Cancelar</a>
 </div>
@@ -356,15 +368,15 @@
         let nuevototal = (parseInt(preciototal) - subtotal);
         $("#totalpedido").val(nuevototal);
         document.getElementById('totalpedido').innerHTML = nuevototal;
+        document.getElementById('total').value = nuevototal;
+
     }
 
     function info() {
         let idseleccion = $("#id_cliente").val();
         if (idseleccion != 0) {
             let usuarioseleccion = [];
-
             let usuario = <?php echo $cliente; ?>;
-
             usuario.forEach(function(value, index) {
                 usuarioseleccion[index] = value;
 
@@ -377,14 +389,39 @@
                     if (usuarioseleccion[index].tipo_comercio == 2) {
                         $("#tipo_persona").val("Minorista");
                     }
+                    $("#municipio").val(usuarioseleccion[index].id_municipio);
+                    let idmunicipio = usuarioseleccion[index].id_municipio;
                     $("#direccion").val(usuarioseleccion[index].direccion);
+
+                    let todoMunicipios = <?php echo $municipios; ?>;
+                    let idDepartMunici = todoMunicipios.find(item => item.id == idmunicipio)
+                    let iddepartamento = `${idDepartMunici.id_departamentos}`
+                    let departament = <?php echo $departamentos; ?>;
+                    let depa = departament.find(item => item.id == iddepartamento)
+                    $('#departamento').val(`${depa.id}`);
+                    let idpaisdepa = `${depa.id_paises}`;
+                    let todoPaises = <?php echo $paises; ?>;
+                    let paises = todoPaises.find(item => item.id == idpaisdepa)
+                    $('#pais').val(`${paises.id}`);
+                    
+                    $('#fecha_entrega').val('');
+                    $('#id_metodo_entrega').val('');
+                    $('#id_medio_pago').val('');
+                    $('#id_metodo_pago').val('');
+                    $('#abono').val('');
+                    $('#datosresumen').text('');
+                    $('#datosresumen').val('');
+                    $('#totalpedido').text(''); 
+                    $('#totalpedido').val(''); 
+                    $('#total').val(''); 
+
+                     
                 }
             });
 
             listarFiguras(idseleccion);
 
         }
-
     }
 
     function listarFiguras(id) {
@@ -432,6 +469,7 @@
             paisseleccion[index] = value;
             if (paisseleccion[index].id_paises == pais) {
                 $("#departamento").append(`
+                <option selected disabled value="">Seleccione</option>
                     <option value="${paisseleccion[index].id}"/>${paisseleccion[index].nombre}
                     `);
             }
@@ -449,6 +487,7 @@
             departamentoseleccion[index] = value;
             if (departamentoseleccion[index].id_departamentos == departamento) {
                 $("#municipio").append(`
+                <option selected disabled value="">Seleccione</option>
                 <option value="${departamentoseleccion[index].id}"/>${departamentoseleccion[index].nombre}
                 `);
             }
@@ -484,6 +523,16 @@
 
     });
 
+    function validar_abono() {
+    var total = parseInt(document.getElementById("total").value);
+    var abono = parseInt(document.getElementById("abono").value);
+    if(abono > total){
+        alert("El abono no puede ser mayor a el total del pedido.")
+        return false;
+    }
+    return true;
+}
+
     (function() {
         'use strict'
 
@@ -501,7 +550,9 @@
                 }, false)
             })
     })()
+
+
     function resetForm(formpedidos) {
-    document.getElementById(formpedidos).reset();
-}
+        document.getElementById(formpedidos).reset();
+    }
 </script>

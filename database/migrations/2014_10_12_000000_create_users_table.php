@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer('estado')->default(1);
             $table->rememberToken();
             $table->timestamps();
+        
         });
     }
 

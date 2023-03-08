@@ -47,7 +47,7 @@
                                             <div class="col-md-2 p-1">
                                                 <div class="card">
                                                     <img class="card-img-top"
-                                                        src="{{ asset('/storage/images/productos/' . $producto->imagen)  }}"
+                                                    src="http://127.0.0.1:8000/storage/images/productos/{{$producto->imagen}}"
                                                         alt="Card image cap" 
                                                         data-bs-toggle="modal"data-bs-target="#modalimagen<?php echo $producto->id; ?>">
                                                     <div id="activ" class="dispop<?php echo $producto->estado; ?>"></div>
@@ -58,7 +58,7 @@
                                                         <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width: 445px;">
                                                             <div class="modal-content">
                                                                 <img 
-                                                                    src="{{asset('/storage/images/productos/' . $producto->imagen)  }}">
+                                                                    src="http://127.0.0.1:8000/storage/images/productos/{{$producto->imagen}}">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -86,6 +86,11 @@
                                 </tbody>
                             </table>
                             {{$productos->links()}}
+                            @if (session('error'))
+                                <div class="alert alert-danger" role="alert">
+                                {{ session('error') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </main>
@@ -111,8 +116,10 @@
                         @csrf
                         <div>¿Está seguro que desea eliminar el producto?</div>
                         <input type="hidden" name="ideliminar" id="ideliminar" />
-                        <button type="submit" class="btn btn-primary">Si</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-primary" style="background-color: #81242E;
+                            border-color: #81242E;">Si</button>
+                        <button type="button" class="btn btn-primary" style="background-color: #81242E;
+                            border-color: #81242E;" data-dismiss="modal">No</button>
                     </form>
                 </div>
             </div>

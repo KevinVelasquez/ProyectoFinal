@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class RolController extends Controller
 {
@@ -25,7 +26,7 @@ class RolController extends Controller
      */
     public function index()
     {
-        $roles = Role::paginate(5);
+        $roles = Role::paginate();
         $filtro = Role::all();
         return view('roles.index', compact('roles','filtro'));
     }
@@ -49,7 +50,7 @@ class RolController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['name'=>'required', 'permission'=>'required']);
+        $this->validate($request, ['name'=>'required|unique:roles,name', 'permission'=>'required']);
         $role = Role::create(['name'=> $request->input('name')]);
         $role->syncPermissions($request->input('permission'));
 
@@ -76,6 +77,7 @@ class RolController extends Controller
     public function edit($id)
     {
         $role = Role::find($id);
+        $rolestado= Role::find($id);
         $permission = Permission::get();
         $rolePermissions = DB::table('role_has_permissions')->where('role_has_permissions.role_id',$id)
         ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
@@ -93,14 +95,27 @@ class RolController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, ['name'=>'required', 'permission'=>'required']);
-
         $role = Role::find($id);
-        $role->name =$reuest->input('name');
-        $role->save();
+    $old_nombre = $role->nombre;
 
-        $role->syncPermissions($request->input('permission'));
-        return redirect()->route('roles.index');
+    $this->validate($request, [
+        'name' => 'required|unique:roles,name,' . $role->id,
+        'permission' => 'required',
+    ]);
+
+    $role->name = $request->input('name');
+    $role->estado = $request->input('estado');
+    $role->save();
+
+    if ($request->input('name') !== $old_nombre) {
+        $this->validate($request, [
+            'name' => 'unique:roles,name,' . $role->id,
+        ]);
+    }
+
+    $role->syncPermissions($request->input('permission'));
+
+    return redirect()->route('roles.index');
     }
 
     /**
@@ -111,11 +126,34 @@ class RolController extends Controller
      */
     public function eliminarRol(Request $request)
     {
-        $input=$request->all();
+        // $input=$request->all();
         
-        $role = Role::find($input["ideliminar"])->delete();
+        // $role = Role::find($input["ideliminar"]);
+        // if($role->name =='Administrador'){
+        //     $error = 'No se puede eliminar el rol de administrador.';
+        // return redirect()->route('roles.index')->with('error', $error);
+        // }
+        
+        $input = $request->all();
+            $role = $input["ideliminar"];
 
-        return redirect()->route('roles.index')
-            ->with('success', 'Rol deleted successfully');
+            $consultarol = User::select(
+                "users.rol",
+            )->get();
+
+            foreach ($consultarol as $valor) {
+               
+                if($role==$valor->rol) {
+                    
+                    return redirect()->route('roles.index')->with('error', 'No se puede eliminar el rol');
+                }
+            }
+                Role::find($input["ideliminar"])->delete();
+                return redirect()->route('roles.index');
+        
+        // $role->delete();
+
+        // return redirect()->route('roles.index')
+        //     ->with('success', 'Rol deleted successfully');
     }
 }
