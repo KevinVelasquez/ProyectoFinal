@@ -21,7 +21,7 @@
     <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
     <link href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap5.min.css">
 
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css' rel='stylesheet' /> -->
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@3.10.0/dist/fullcalendar.min.css">
@@ -132,7 +132,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="icons">
+                            <a class="nav-link"  href="{{ route('dashboard.index') }}">
                                 <i class="mdi mdi-google-analytics menu-icon"></i>
                                 <span class="menu-title">Dashboard</span>
                             </a>

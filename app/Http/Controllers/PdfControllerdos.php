@@ -69,8 +69,8 @@ class PdfControllerdos extends Controller
             "municipios.nombre AS nombremunicipio"
         )
             ->join("clientes", "pedidos.id_cliente", "=", "clientes.id")
-            ->join("metodo_pagos", "pedidos.id_metodo_pago", "=", "metodo_pagos.id")
-            ->join("metodo_entregas", "pedidos.id_metodo_entrega", "=", "metodo_entregas.id")
+            ->join("metodo__pagos", "pedidos.id_metodo_pago", "=", "metodo__pagos.id")
+            ->join("metodo__entregas", "pedidos.id_metodo_entrega", "=", "metodo__entregas.id")
             ->join("municipios", "pedidos.id_municipio", "=", "municipios.id")
             ->where("pedidos.id", "=", $id)
             ->get();

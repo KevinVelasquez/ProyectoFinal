@@ -9,11 +9,15 @@ use App\Http\Controllers\ClienteController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\CalendarioController;
+use App\Http\Controllers\DashboardController;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 //RUTAS HOME
 
-Auth::routes();
 Route::get('/', [App\Http\Controllers\CalendarioController::class, 'index'])->middleware('auth');
+
+Route::get('/home', [App\Http\Controllers\CalendarioController::class, 'index'])->middleware('auth');
 
 //RUTAS KEVIN
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.request');
@@ -33,6 +37,7 @@ Route::get('/CambioEstadoCompra', [CompraController::class,'CambioEstado'])->nam
 Route::get('/generarPDF/{id}', [App\Http\Controllers\CompraController::class,'generarPDF'])->name('generarPDF');
 Route::post('/store', [CompraController::class,'store'])->name('store');
 
+Auth::routes();
 //RUTAS SANTIAGO
 Route::resource('pedidos', App\Http\Controllers\PedidoController::class);
 Route::put('pedidos', [PedidoController::class, 'updatePedido'])->name('pedidos.updatePedido');
@@ -46,6 +51,10 @@ Route::get('abono-pdf', [App\Http\Controllers\PdfControllerdos::class, 'abonoPDF
 Route::delete('figuras', [App\Http\Controllers\FiguraController::class, 'eliminarfigura'])->name('figuras.eliminarfigura');
 Route::get('figuras/search', [App\Http\Controllers\FiguraController::class, 'search'])->name('figuras.search');
 Route::resource('figuras', App\Http\Controllers\FiguraController::class);
+
+Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.index');
+
+
 
 
 
@@ -90,3 +99,4 @@ Route:: group(['middleware' => ['auth'] ], function(){
     Route::resource('usuarios', UsuarioController::class);
 });
 
+?>
