@@ -32,9 +32,6 @@ class ProveedorController extends Controller
     public function index()
     {
         //
-
-        
-
         $proveedores = Proveedor::paginate();
 
         $proveedor = Proveedor::select('proveedors.id', 'proveedors.nombre', 'proveedors.cedula', 'proveedors.telefono', 'proveedors.direccion', 'proveedors.email', 'proveedors.tipo_persona', 'proveedors.estado', PagoProveedore::raw('SUM(CASE WHEN pago_proveedores.estado = 1 THEN pago_proveedores.abono ELSE 0 END) as total_abonos'), Compra::raw('(SELECT SUM(CASE WHEN compra.estado = 1 THEN compra.total ELSE 0 END) FROM compra WHERE compra.id_proveedor = proveedors.id) as total_compra'))
@@ -43,9 +40,6 @@ class ProveedorController extends Controller
         ->groupBy('proveedors.id', 'proveedors.nombre', 'proveedors.cedula', 'proveedors.telefono', 'proveedors.direccion', 'proveedors.email', 'proveedors.tipo_persona', 'proveedors.estado')
         ->get();
         
-
-
-
 
 
         return view('proveedor.index', compact('proveedores','proveedor'))
@@ -173,12 +167,29 @@ class ProveedorController extends Controller
      * @param  \App\Models\Proveedor  $proveedor
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    
+
+    public function eliminarProveedor(Request $request)
     {
         //
-        $proveedor = Proveedor::find($id)->delete();
+        $input = $request->all();
+            $proveedor = $input["ideliminar"];
 
-        return redirect('proveedor')
-            ->with('mensaje', 'Proveedor eliminado con éxito.');
+        $consultadetalle = Compra::select(
+            "compra.id_proveedor",
+        )->get();
+
+        foreach ($consultadetalle as $valor) {
+               
+            if($proveedor==$valor->id_proveedor) {
+                
+                return redirect()->route('proveedor.index')->with('error', 'No se puede eliminar el proveedor porque está asociado a una orden de compra');
+                
+            }
+        }
+
+        Proveedor::find($input["ideliminar"])->delete();
+
+        return redirect()->route('proveedor.index');
     }
 }

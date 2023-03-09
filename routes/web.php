@@ -55,6 +55,7 @@ Route::resource('figuras', App\Http\Controllers\FiguraController::class);
 //RUTAS CLIENTES
 Route::resource('cliente',ClienteController::class)->middleware('auth');
 Route::get('estadocliente',[App\Http\Controllers\ClienteController::class, 'updateStatusCliente'])->name('updateStatusCliente');
+Route::delete('cliente', [App\Http\Controllers\ClienteController::class, 'eliminarCliente'])->name('cliente.eliminarCliente');
 
 //RUTAS PROVEEDORES
 
@@ -62,6 +63,7 @@ Route::resource('proveedor',ProveedorController::class)->middleware('auth');
 Route::get('/detalleproveedor', [App\Http\Controllers\ProveedorController::class, 'show']);
 Route::get('pdf',[App\Http\Controllers\PdfControllerdos::class, 'pdfdetallecompra']);
 Route::get('estadoproveedor',[App\Http\Controllers\ProveedorController::class, 'updateStatusProveedor'])->name('proveedor.updateStatusProveedor');
+Route::delete('proveedor', [App\Http\Controllers\ProveedorController::class, 'eliminarProveedor'])->name('proveedor.eliminarProveedor');
 
 // RUTAS CALENDARIO
 Route::resource('calendario',CalendarioController::class);

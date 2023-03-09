@@ -61,44 +61,22 @@ Cliente
 
                         <button id="figura" type="button" class="mdi mdi-checkbox-multiple-blank" data-toggle="modal" data-target="#verdiseños" onclick="verdiseños('{{$cliente->id}}')"></button>
 
-                        <a data-toggle="modal" data-target="#eliminar"><button class="mdi mdi-trash-can-outline"></button></a>
+                       
                         
-                        <form action="{{ url('/cliente/'.$cliente->id) }}" method="POST">
+                        <button onclick="eliminarCliente('{{ $cliente->id }}')" class="mdi mdi-trash-can-outline"
+                                    data-toggle="modal" data-target="#eliminar"></button>
 
 
-                            @csrf
-                            {{ method_field('DELETE') }}
-                            
-
-                            <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Cliente</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            ¿Está seguro que desea eliminar el Cliente?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <input type="submit" value="Sí" class="btn btn-primary btn-lg active" role="button" aria-hidden="true">
-
-                                            <a href="{{ route('cliente.index') }}" class="btn btn-primary btn-lg active" role="button" data-dismiss="modal">No</a>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </form>
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
-
+        @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
 
         <!-- modal ver diseño -->
 
@@ -127,6 +105,36 @@ Cliente
             </div>
 
         </div>
+
+        <!-- modal eliminar -->
+     <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitleeliminar">Eliminar Cliente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="text-align: center;">
+                    <form method="POST" action="{{ route('cliente.eliminarCliente') }}" class="form-sample"
+                        role="form" enctype="multipart/form-data">
+                        @method('DELETE')
+                        @csrf
+                        <div>¿Está seguro que desea eliminar el cliente?</div>
+                        <input type="hidden" name="ideliminar" id="ideliminar" />
+                        <button type="submit" class="btn btn-primary" style="background-color: #81242E;
+                            border-color: #81242E;">Si</button>
+                        <button type="button" class="btn btn-primary" style="background-color: #81242E;
+                            border-color: #81242E;" data-dismiss="modal">No</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 
 </div>
@@ -178,6 +186,17 @@ Cliente
         });
 
     }
+
+
+    function eliminarCliente(id) {
+            let consulta = {!! $clientes !!}
+            let datos = consulta.find(item => item.id == id)
+            $('#exampleModalLongTitleanular').text(`Eliminar Insumo #${datos.id}`);
+            $('#ideliminar').val(`${datos.id}`);
+            
+        }
+
+
 
 </script>
 

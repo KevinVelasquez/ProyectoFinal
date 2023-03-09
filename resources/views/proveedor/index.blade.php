@@ -60,44 +60,49 @@ Proveedor
                         <!-- Button trigger modalvisualizar facturas -->
                         <a href="{{ route('proveedor.show', $proveedores->id) }}"><button class="mdi mdi-format-align-left"></button></a>
 
-                        <a data-toggle="modal" data-target="#eliminar"><button class="mdi mdi-trash-can-outline"></button></a>
-
-                        <form action="{{ url('/proveedor/'.$proveedores->id) }}" method="POST">
-
-
-                            @csrf
-                            {{ method_field('DELETE') }}
-                            
-
-                            <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Proveedor</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            ¿Está seguro que desea eliminar el proveedor?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <input type="submit" value="Sí" class="btn btn-primary btn-lg active" role="button" aria-hidden="true">
-
-                                            <a href="{{ route('proveedor.index') }}" class="btn btn-primary btn-lg active" role="button" data-dismiss="modal">No</a>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </form>
+                    
+                        <button onclick="eliminarCliente('{{ $proveedores->id }}')" class="mdi mdi-trash-can-outline"
+                                    data-toggle="modal" data-target="#eliminar"></button>
+                        
+                        
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
+        @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
 
+        <!-- modal eliminar -->
+     <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitleeliminar">Eliminar Proveedor</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="text-align: center;">
+                    <form method="POST" action="{{ route('proveedor.eliminarProveedor') }}" class="form-sample"
+                        role="form" enctype="multipart/form-data">
+                        @method('DELETE')
+                        @csrf
+                        <div>¿Está seguro que desea eliminar el proveedor?</div>
+                        <input type="hidden" name="ideliminar" id="ideliminar" />
+                        <button type="submit" class="btn btn-primary" style="background-color: #81242E;
+                            border-color: #81242E;">Si</button>
+                        <button type="button" class="btn btn-primary" style="background-color: #81242E;
+                            border-color: #81242E;" data-dismiss="modal">No</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 
@@ -115,6 +120,15 @@ Proveedor
             }
         });
     });
+
+    function eliminarCliente(id) {
+            let consulta = {!! $proveedor !!}
+            let datos = consulta.find(item => item.id == id)
+            $('#exampleModalLongTitleanular').text(`Eliminar Proveedor #${datos.id}`);
+            $('#ideliminar').val(`${datos.id}`);
+            
+        }
+
 </script>
 
 
