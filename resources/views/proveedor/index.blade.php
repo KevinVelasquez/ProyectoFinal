@@ -29,25 +29,25 @@ Proveedor
             </thead>
             <tbody>
 
-                @foreach ($proveedores as $proveedor)
+                @foreach ($proveedor as $proveedores)
                 <tr>
 
-                    <td>{{ $proveedor->cedula }}</td>
-                    <td>{{ $proveedor->nombre }}</td>
-                    <td>{{ $proveedor->telefono }}</td>
-                    <td>{{ $proveedor->direccion }}</td>
-                    <td>{{ $proveedor->email }}</td>
-                    @if ($proveedor->tipo_persona==1)
+                    <td>{{ $proveedores->cedula }}</td>
+                    <td>{{ $proveedores->nombre }}</td>
+                    <td>{{ $proveedores->telefono }}</td>
+                    <td>{{ $proveedores->direccion }}</td>
+                    <td>{{ $proveedores->email }}</td>
+                    @if ($proveedores->tipo_persona==1)
                     <td>Juridico</td>
                     @else
                     <td>Natural</td>
                     @endif
 
-                    <td>0</td>
+                    <td>{{ $proveedores->total_compra-$proveedores->total_abonos }}</td>
                    
 
                     <td>
-                        <?php if ($proveedor->estado == 1) {
+                        <?php if ($proveedores->estado == 1) {
                             echo 'Activo';
                         } else {
                             echo 'Inactivo';
@@ -55,14 +55,14 @@ Proveedor
                     
                     <td>
 
-                        <a href="{{ url('/proveedor/'.$proveedor->id.'/edit') }}"><button class="mdi mdi-lead-pencil"></button></a>
+                        <a href="{{ url('/proveedor/'.$proveedores->id.'/edit') }}"><button class="mdi mdi-lead-pencil"></button></a>
 
                         <!-- Button trigger modalvisualizar facturas -->
-                        <a href="{{ route('proveedor.show', $proveedor->id) }}"><button class="mdi mdi-format-align-left"></button></a>
+                        <a href="{{ route('proveedor.show', $proveedores->id) }}"><button class="mdi mdi-format-align-left"></button></a>
 
                         <a data-toggle="modal" data-target="#eliminar"><button class="mdi mdi-trash-can-outline"></button></a>
 
-                        <form action="{{ url('/proveedor/'.$proveedor->id) }}" method="POST">
+                        <form action="{{ url('/proveedor/'.$proveedores->id) }}" method="POST">
 
 
                             @csrf
@@ -102,7 +102,7 @@ Proveedor
 </div>
 
 
-{!! $proveedores->links() !!}
+
 
 
 <!-- scripts -->

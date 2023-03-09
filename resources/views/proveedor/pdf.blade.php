@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Descarga_Pedido_Detalle</title>
+    <title>Descarga_Detalle_Orden_de_Compra</title>
     <style>
         body {
             font-family: sans-serif;
