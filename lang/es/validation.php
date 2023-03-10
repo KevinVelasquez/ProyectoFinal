@@ -133,6 +133,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'cedula' => [
+            'unique' => 'El valor del campo :attribute ya está en uso.',
+        ],
     ],
 
     /*

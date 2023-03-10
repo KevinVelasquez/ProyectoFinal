@@ -128,12 +128,27 @@ class ClienteController extends Controller
      * @param  \App\Models\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function eliminarCliente(Request $request)
     {
         //
-        $cliente = Cliente::find($id)->delete();
+        $input = $request->all();
+            $cliente = $input["ideliminar"];
 
-        return redirect('cliente')
-            ->with('mensaje', 'Proveedor eliminado con éxito.');
+        $consultadetalle = Pedido::select(
+            "pedidos.id_cliente",
+        )->get();
+
+        foreach ($consultadetalle as $valor) {
+               
+            if($cliente==$valor->id_cliente) {
+                
+                return redirect()->route('cliente.index')->with('error', 'No se puede eliminar el cliente porque está asociado a un pedido');
+                
+            }
+        }
+
+        Cliente::find($input["ideliminar"])->delete();
+
+        return redirect()->route('cliente.index');
     }
 }

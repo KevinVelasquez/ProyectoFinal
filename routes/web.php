@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 //RUTAS HOME
 
+Auth::routes();
 Route::get('/', [App\Http\Controllers\CalendarioController::class, 'index'])->middleware('auth');
 
 Route::get('/home', [App\Http\Controllers\CalendarioController::class, 'index'])->middleware('auth');
@@ -38,8 +39,6 @@ Route::get('/CambioEstadoCompra', [CompraController::class,'CambioEstado'])->nam
 Route::get('/generarPDF/{id}', [App\Http\Controllers\CompraController::class,'generarPDF'])->name('generarPDF');
 Route::post('/store', [CompraController::class,'store'])->name('store');
 
-
-Auth::routes();
 //RUTAS SANTIAGO
 Route::resource('pedidos', App\Http\Controllers\PedidoController::class);
 Route::put('pedidos', [PedidoController::class, 'updatePedido'])->name('pedidos.updatePedido');
@@ -64,13 +63,15 @@ Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'index
 //RUTAS CLIENTES
 Route::resource('cliente',ClienteController::class)->middleware('auth');
 Route::get('estadocliente',[App\Http\Controllers\ClienteController::class, 'updateStatusCliente'])->name('updateStatusCliente');
+Route::delete('cliente', [App\Http\Controllers\ClienteController::class, 'eliminarCliente'])->name('cliente.eliminarCliente');
 
 //RUTAS PROVEEDORES
 
 Route::resource('proveedor',ProveedorController::class)->middleware('auth');
 Route::get('/detalleproveedor', [App\Http\Controllers\ProveedorController::class, 'show']);
-Route::get('detallefactura/pdf',[App\Http\Controllers\ProveedorController::class, 'pdf'])->name('proveedor.pdf');
+Route::get('pdf',[App\Http\Controllers\PdfControllerdos::class, 'pdfdetallecompra']);
 Route::get('estadoproveedor',[App\Http\Controllers\ProveedorController::class, 'updateStatusProveedor'])->name('proveedor.updateStatusProveedor');
+Route::delete('proveedor', [App\Http\Controllers\ProveedorController::class, 'eliminarProveedor'])->name('proveedor.eliminarProveedor');
 
 // RUTAS CALENDARIO
 Route::resource('calendario',CalendarioController::class);
