@@ -76,10 +76,6 @@ class PagoProveedoreController extends Controller
                 'estado' => 2
             ]);
 
-/*         Compra::where('id', $input["idpedidoabono"])
-            ->update([
-                'cancelado' => 0
-            ]); */
 
         return redirect()->route('compra.index')
             ->with('success', 'Status pedido successfully');

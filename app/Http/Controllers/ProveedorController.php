@@ -24,6 +24,13 @@ use Illuminate\Support\Facades\DB;
 
 class ProveedorController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:ver-proveedor|crear-proveedor|editar-proveedor|borrar-proveedor,', ['only'=>['index']]);
+        $this->middleware ('permission: crear-proveedor', ['only'=>['store']]);
+        $this->middleware ('permission: editar-proveedor', ['only'=>['update']]);
+        $this->middleware ('permission: borrar-proveedor', ['only'=>['eliminarProveedor']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -100,7 +107,7 @@ class ProveedorController extends Controller
      * @param  \App\Models\Proveedor  $proveedor
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function mostrar($id)
     {
         $proveedores = Proveedor::find($id);
         $detallecompra = Detalle_compra::select("detalle_compra.cantidad","detalle_compra.valor_unitario","insumos.nombre","detalle_compra.id_orden_compra","detalle_compra.id","compra.n_orden")

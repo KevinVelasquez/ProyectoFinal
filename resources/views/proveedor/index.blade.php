@@ -58,7 +58,7 @@ Proveedor
                         <a href="{{ url('/proveedor/'.$proveedores->id.'/edit') }}"><button class="mdi mdi-lead-pencil"></button></a>
 
                         <!-- Button trigger modalvisualizar facturas -->
-                        <a href="{{ route('proveedor.show', $proveedores->id) }}"><button class="mdi mdi-format-align-left"></button></a>
+                        <a href="{{ route('proveedor.mostrar', $proveedores->id) }}"><button class="mdi mdi-format-align-left"></button></a>
 
                     
                         <button onclick="eliminarCliente('{{ $proveedores->id }}')" class="mdi mdi-trash-can-outline"
