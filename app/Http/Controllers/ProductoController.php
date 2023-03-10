@@ -18,6 +18,13 @@ class ProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+        $this->middleware('permission:ver-producto|crear-producto|editar-producto|borrar-producto,', ['only'=>['index']]);
+        $this->middleware ('permission: crear-producto', ['only'=>['store']]);
+        $this->middleware ('permission: editar-producto', ['only'=>['update']]);
+        $this->middleware ('permission: borrar-producto', ['only'=>['eliminarProducto']]);
+    }
     public function index()
     {
         $productos = Producto::paginate(12);
