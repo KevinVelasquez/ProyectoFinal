@@ -69,8 +69,8 @@ class PdfControllerdos extends Controller
             "municipios.nombre AS nombremunicipio"
         )
             ->join("clientes", "pedidos.id_cliente", "=", "clientes.id")
-            ->join("metodo_pagos", "pedidos.id_metodo_pago", "=", "metodo_pagos.id")
-            ->join("metodo_entregas", "pedidos.id_metodo_entrega", "=", "metodo_entregas.id")
+            ->join("metodo__pagos", "pedidos.id_metodo_pago", "=", "metodo__pagos.id")
+            ->join("metodo__entregas", "pedidos.id_metodo_entrega", "=", "metodo__entregas.id")
             ->join("municipios", "pedidos.id_municipio", "=", "municipios.id")
             ->where("pedidos.id", "=", $id)
             ->get();
@@ -122,5 +122,46 @@ class PdfControllerdos extends Controller
         $pdf = PDF::loadView('pedido.downloadabono', compact('detalleabono', 'acomulado'));
 
         return $pdf->stream('PedidoDetalle.pdf');
+    }
+
+    public function pdfdetallecompra()
+    {
+        //
+        
+        $id = $_GET["id"];
+        $proveedor = Proveedor::paginate();
+
+        $compraproveedor = Compra::select(
+            "compra.n_orden",
+            "compra.fecha_compra",
+            "compra.estado",
+            "compra.id",
+            "compra.total",
+            "proveedors.id AS idproveedor",
+            "proveedors.nombre AS nombreproveedor",
+            "proveedors.cedula",
+            "proveedors.telefono",
+            "proveedors.direccion",
+            "municipios.id AS idmunicipio",
+            "municipios.nombre AS nombremunicipio"
+        )
+            ->join("proveedors", "proveedors.id", "=", "compra.id_proveedor")
+            ->join("municipios", "proveedors.id_municipio", "=", "municipios.id")
+            ->where("compra.n_orden", $id)
+            ->get();
+
+        
+
+
+            $detallecompra = Detalle_compra::select("detalle_compra.cantidad","detalle_compra.valor_unitario","insumos.nombre AS nombreinsumo","detalle_compra.id","compra.n_orden","compra.total")
+            ->join("compra","compra.id", "=","detalle_compra.id_orden_compra")
+            ->join("insumos","detalle_compra.id_insumo", "=", "insumos.id")
+            ->where("compra.n_orden", "=", $id)
+            ->get();
+           
+
+        $pdf = PDF::loadView('proveedor.pdf',compact('compraproveedor','proveedor','detallecompra'));
+
+        return $pdf->stream();
     }
 }

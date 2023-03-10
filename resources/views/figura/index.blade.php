@@ -5,11 +5,7 @@
 @endsection
 
 @section('content')
-<script>
-@if (session('mensaje'))
-    alert('La figura no puede ser eliminada al estar asociada a un pedido.')
-@endif
-</script>
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -20,11 +16,6 @@
                                 <a class="mdi mdi-shape-plus" id="iconoadd" href="{{ route('figuras.create') }}"></a>
                             </p>
                         @endcan
-                        @if ($message = Session::get('success'))
-                            <div class="alert alert-success">
-                                <p>{{ $message }}</p>
-                            </div>
-                        @endif
 
                         <div class="card-body">
                             <div class="table-responsive">
@@ -85,6 +76,11 @@
                                     </tbody>
                                 </table>
                                 {{ $figuras->links() }}
+                                @if (session('error'))
+                                <div class="alert alert-danger" role="alert">
+                                {{ session('error') }}
+                                </div>
+                                @endif
                             </div>
                         </div>
                 </div>

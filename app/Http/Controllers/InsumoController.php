@@ -104,12 +104,13 @@ class InsumoController extends Controller
 
     public function store(Request $request)
 {
-    $validatedData =$request->validate([
-        'nombre' => 'required|unique:insumos,nombre',
-        'id_medidas' => 'required',
+    $validatedData = $request->validate([
+        'nombre' => 'required|unique:insumos,nombre'
     ], [
-        'nombre.unique' => 'No se puede crear dos insumos con el mismo nombre',
+        'nombre.required' => '',
+        'nombre.unique' => 'No se puede crear dos insumos con el mismo nombre'
     ]);
+    
 
     $insumo = Insumo::create([
         "nombre" => $request->nombre,

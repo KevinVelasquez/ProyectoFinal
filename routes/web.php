@@ -9,11 +9,16 @@ use App\Http\Controllers\ClienteController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\CalendarioController;
+use App\Http\Controllers\DashboardController;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 //RUTAS HOME
 
-Auth::routes();
 Route::get('/', [App\Http\Controllers\CalendarioController::class, 'index'])->middleware('auth');
+
+Route::get('/home', [App\Http\Controllers\CalendarioController::class, 'index'])->middleware('auth');
+
 
 //RUTAS KEVIN
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.request');
@@ -33,6 +38,8 @@ Route::get('/CambioEstadoCompra', [CompraController::class,'CambioEstado'])->nam
 Route::get('/generarPDF/{id}', [App\Http\Controllers\CompraController::class,'generarPDF'])->name('generarPDF');
 Route::post('/store', [CompraController::class,'store'])->name('store');
 
+Auth::routes();
+
 //RUTAS SANTIAGO
 Route::resource('pedidos', App\Http\Controllers\PedidoController::class);
 Route::put('pedidos', [PedidoController::class, 'updatePedido'])->name('pedidos.updatePedido');
@@ -47,19 +54,25 @@ Route::delete('figuras', [App\Http\Controllers\FiguraController::class, 'elimina
 Route::get('figuras/search', [App\Http\Controllers\FiguraController::class, 'search'])->name('figuras.search');
 Route::resource('figuras', App\Http\Controllers\FiguraController::class);
 
+Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.index');
+
+
+
 
 
 //RUTAS KELY
 //RUTAS CLIENTES
 Route::resource('cliente',ClienteController::class)->middleware('auth');
 Route::get('estadocliente',[App\Http\Controllers\ClienteController::class, 'updateStatusCliente'])->name('updateStatusCliente');
+Route::delete('cliente', [App\Http\Controllers\ClienteController::class, 'eliminarCliente'])->name('cliente.eliminarCliente');
 
 //RUTAS PROVEEDORES
 
 Route::resource('proveedor',ProveedorController::class)->middleware('auth');
 Route::get('/detalleproveedor', [App\Http\Controllers\ProveedorController::class, 'show']);
-Route::get('detallefactura/pdf',[App\Http\Controllers\ProveedorController::class, 'pdf'])->name('proveedor.pdf');
+Route::get('pdf',[App\Http\Controllers\PdfControllerdos::class, 'pdfdetallecompra']);
 Route::get('estadoproveedor',[App\Http\Controllers\ProveedorController::class, 'updateStatusProveedor'])->name('proveedor.updateStatusProveedor');
+Route::delete('proveedor', [App\Http\Controllers\ProveedorController::class, 'eliminarProveedor'])->name('proveedor.eliminarProveedor');
 
 // RUTAS CALENDARIO
 Route::resource('calendario',CalendarioController::class);
@@ -90,3 +103,4 @@ Route:: group(['middleware' => ['auth'] ], function(){
     Route::resource('usuarios', UsuarioController::class);
 });
 
+?>

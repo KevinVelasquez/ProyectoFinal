@@ -165,7 +165,7 @@ class FiguraController extends Controller
                
             if($figuraeliminar==$valor->imagen) {
                 
-                return redirect()->route('figuras.index')->with('mensaje', 'La figura no puede ser eliminada al estar asociada a un pedido.');;
+                return redirect()->route('figuras.index')->with('error', 'La figura no puede ser eliminada al estar asociada a un pedido.');;
                 
             }
         }

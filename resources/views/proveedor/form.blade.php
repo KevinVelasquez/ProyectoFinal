@@ -122,7 +122,7 @@
                 <div class="form-group row">
                     <label for="pais">País</label>
                     <div class="col-sm-9">
-                        <select class="form-control" name="pais" id="pais" required>
+                        <select class="form-control" name="pais" id="pais" onchange="filtrarDepartamentos()" required>
                             <option selected disabled value="">Seleccione</option>
                             @forelse($paises as $pais)
                             <option value="{{$pais->id}}">
@@ -142,7 +142,7 @@
                 <div class="form-group row">
                     <label for="departamento">Departamento</label>
                     <div class="col-sm-7">
-                        <select class="form-control" name="departamento" id="departamento" required>
+                        <select class="form-control" name="departamento" id="departamento" onchange="filtrarMunicipios()" required>
                             <option selected disabled value="">Seleccione</option>
                             @forelse($departamentos as $departamento)
                             <option value="{{$departamento->id}}">
@@ -209,7 +209,11 @@
         <a href="{{ route('proveedor.index') }}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Cancelar</a>
     </div>
 
-
+    @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
 
 </div>
 
@@ -228,4 +232,42 @@
             }, false)
         })
 })()
+
+
+function filtrarDepartamentos() {
+
+var pais = document.getElementById("pais").value;
+var selectordepartamentos = document.getElementById("departamento");
+selectordepartamentos.innerHTML = "";
+let paisseleccion = [];
+let departamentos = <?php echo $departamentos; ?>;
+departamentos.forEach(function(value, index) {
+    paisseleccion[index] = value;
+    if (paisseleccion[index].id_paises == pais) {
+        $("#departamento").append(`
+        <option selected disabled value="">Seleccione</option>
+            <option value="${paisseleccion[index].id}"/>${paisseleccion[index].nombre}
+            `);
+    }
+});
+}
+
+function filtrarMunicipios() {
+
+var departamento = document.getElementById("departamento").value;
+var selectormunicipios = document.getElementById("municipio");
+selectormunicipios.innerHTML = "";
+let departamentoseleccion = [];
+let municipios = <?php echo $municipios; ?>;
+municipios.forEach(function(value, index) {
+    departamentoseleccion[index] = value;
+    if (departamentoseleccion[index].id_departamentos == departamento) {
+        $("#municipio").append(`
+        <option selected disabled value="">Seleccione</option>
+        <option value="${departamentoseleccion[index].id}"/>${departamentoseleccion[index].nombre}
+        `);
+    }
+});
+}
+
 </script>

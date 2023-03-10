@@ -13,11 +13,27 @@ use Str;
  */
 class ProductoController extends Controller
 {
+
+
+    function __construct()
+    {
+        $this->middleware('permission:ver-producto|crear-producto|editar-producto|borrar-producto,', ['only'=>['index']]);
+        $this->middleware ('permission: crear-producto', ['only'=>['store']]);
+        $this->middleware ('permission: editar-producto', ['only'=>['update']]);
+        $this->middleware ('permission: borrar-producto', ['only'=>['eliminarProducto']]);
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+        $this->middleware('permission:ver-producto|crear-producto|editar-producto|borrar-producto,', ['only'=>['index']]);
+        $this->middleware ('permission: crear-producto', ['only'=>['store']]);
+        $this->middleware ('permission: editar-producto', ['only'=>['update']]);
+        $this->middleware ('permission: borrar-producto', ['only'=>['eliminarProducto']]);
+    }
     public function index()
     {
         $productos = Producto::paginate(12);
@@ -122,7 +138,7 @@ class ProductoController extends Controller
         }
         if ($input['nombre'] !== $old_nombre) {
             $request->validate([
-                'nombre' => 'unique:productos'.$input["id"],
+                'nombre' => 'unique:productos,id,'.$producto->id,
             ]);
         }
         $producto->update($input);

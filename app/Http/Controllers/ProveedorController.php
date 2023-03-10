@@ -32,13 +32,17 @@ class ProveedorController extends Controller
     public function index()
     {
         //
-
-        // $datos ['proveedores']= Proveedor::paginate(5);
-        // return view('proveedor.index',$datos);
-
         $proveedores = Proveedor::paginate();
 
-        return view('proveedor.index', compact('proveedores'))
+        $proveedor = Proveedor::select('proveedors.id', 'proveedors.nombre', 'proveedors.cedula', 'proveedors.telefono', 'proveedors.direccion', 'proveedors.email', 'proveedors.tipo_persona', 'proveedors.estado', PagoProveedore::raw('SUM(CASE WHEN pago_proveedores.estado = 1 THEN pago_proveedores.abono ELSE 0 END) as total_abonos'), Compra::raw('(SELECT SUM(CASE WHEN compra.estado = 1 THEN compra.total ELSE 0 END) FROM compra WHERE compra.id_proveedor = proveedors.id) as total_compra'))
+        ->leftJoin('compra', 'compra.id_proveedor', '=', 'proveedors.id')
+        ->leftJoin('pago_proveedores', 'pago_proveedores.id_compra', '=', 'compra.id')
+        ->groupBy('proveedors.id', 'proveedors.nombre', 'proveedors.cedula', 'proveedors.telefono', 'proveedors.direccion', 'proveedors.email', 'proveedors.tipo_persona', 'proveedors.estado')
+        ->get();
+        
+
+
+        return view('proveedor.index', compact('proveedores','proveedor'))
             ->with('i', (request()->input('page', 1) - 1) * $proveedores->perPage());
     }
 
@@ -70,8 +74,21 @@ class ProveedorController extends Controller
     public function store(Request $request)
     {
 
+
         $datosProveedor = request()->except('_token', 'pais', 'departamento');
-        Proveedor::insert($datosProveedor);
+        
+        
+
+        try {
+            Proveedor::insert($datosProveedor);
+            // Código para guardar datos en la base de datos
+        } catch (\Illuminate\Database\QueryException $e) {
+            if ($e->errorInfo[1] == 1062) { // Verificar si es un error de clave duplicada
+                if (strpos($e->getMessage(), 'proveedors_cedula_unique') !== false) { // Verificar si la clave duplicada es para el campo 'cedula'
+                    throw new \Exception('El número de cédula ya existe en la base de datos'); // Lanzar una excepción con el mensaje de validación
+                }
+            }
+        }
 
         return redirect('proveedor')
             ->with('mensaje', 'Proveedor creado con éxito.');
@@ -86,13 +103,13 @@ class ProveedorController extends Controller
     public function show($id)
     {
         $proveedores = Proveedor::find($id);
-        $detallecompra = Detalle_compra::select("detalle_compra.cantidad","detalle_compra.valor_unitario","insumos.nombre","detalle_compra.id_orden_compra","detalle_compra.id" )
+        $detallecompra = Detalle_compra::select("detalle_compra.cantidad","detalle_compra.valor_unitario","insumos.nombre","detalle_compra.id_orden_compra","detalle_compra.id","compra.n_orden")
         ->join("compra","compra.id", "=","detalle_compra.id_orden_compra")
         ->join("insumos","detalle_compra.id_insumo", "=", "insumos.id",  )
         ->get();
 
         
-        $compra = Compra::select("compra.n_orden","compra.id","compra.fecha_compra","compra.id_metodo_pagos","compra.total","proveedors.nombre", "compra.created_at","compra.estado","proveedors.cedula","proveedors.direccion","municipios.id  AS idmunicipio","municipios.nombre AS nombremunicipio","proveedors.telefono","metodo__pagos.id",
+        $compra = Compra::select("compra.n_orden","compra.id","compra.fecha_compra","compra.id_metodo_pagos","compra.total","proveedors.nombre","compra.estado","proveedors.cedula","proveedors.direccion","municipios.id  AS idmunicipio","municipios.nombre AS nombremunicipio","proveedors.telefono","metodo__pagos.id",
         "metodo__pagos.nombre AS nombremetodopago",)
         ->join("proveedors","proveedors.id", "=","compra.id_proveedor")
         ->join("metodo__pagos", "compra.id_metodo_pagos", "=", "metodo__pagos.id")
@@ -100,6 +117,13 @@ class ProveedorController extends Controller
         ->where("proveedors.id", "=", $id)
         ->get();
 
+        $comprasss = Compra::select("compra.n_orden","compra.fecha_compra","compra.id_metodo_pagos","compra.total","proveedors.nombre","compra.estado","proveedors.cedula","proveedors.direccion","municipios.id  AS idmunicipio","municipios.nombre AS nombremunicipio","proveedors.telefono","metodo__pagos.id",
+        "metodo__pagos.nombre AS nombremetodopago",)
+        ->join("proveedors","proveedors.id", "=","compra.id_proveedor")
+        ->join("metodo__pagos", "compra.id_metodo_pagos", "=", "metodo__pagos.id")
+        ->join("municipios", "proveedors.id_municipio", "=", "municipios.id")
+        
+        ->get();
 
         $abono = PagoProveedore::select('pago_proveedores.id_compra',PagoProveedore::raw('SUM(pago_proveedores.abono) as totalabonado'))
         ->where("pago_proveedores.estado", "=", 1) 
@@ -107,16 +131,10 @@ class ProveedorController extends Controller
       ->get();
       
 
-        return view('proveedor.show', compact('proveedores','compra','detallecompra','abono') );
+        return view('proveedor.show', compact('proveedores','compra','detallecompra','abono','comprasss') );
     }
 
-    public function pdf()
-    {
-        //
-        $proveedor = Proveedor::paginate();
-        $pdf = PDF::loadView('proveedor.pdf', ['proveedor' => $proveedor]);
-        return $pdf->stream();
-    }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -162,12 +180,29 @@ class ProveedorController extends Controller
      * @param  \App\Models\Proveedor  $proveedor
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    
+
+    public function eliminarProveedor(Request $request)
     {
         //
-        $proveedor = Proveedor::find($id)->delete();
+        $input = $request->all();
+            $proveedor = $input["ideliminar"];
 
-        return redirect('proveedor')
-            ->with('mensaje', 'Proveedor eliminado con éxito.');
+        $consultadetalle = Compra::select(
+            "compra.id_proveedor",
+        )->get();
+
+        foreach ($consultadetalle as $valor) {
+               
+            if($proveedor==$valor->id_proveedor) {
+                
+                return redirect()->route('proveedor.index')->with('error', 'No se puede eliminar el proveedor porque está asociado a una orden de compra');
+                
+            }
+        }
+
+        Proveedor::find($input["ideliminar"])->delete();
+
+        return redirect()->route('proveedor.index');
     }
 }
