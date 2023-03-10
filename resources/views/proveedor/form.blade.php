@@ -243,9 +243,11 @@ let paisseleccion = [];
 let departamentos = <?php echo $departamentos; ?>;
 departamentos.forEach(function(value, index) {
     paisseleccion[index] = value;
+    console.log(value)
     if (paisseleccion[index].id_paises == pais) {
-        $("#departamento").append(`
+        $("#departamento").append(
         <option selected disabled value="">Seleccione</option>
+        `
             <option value="${paisseleccion[index].id}"/>${paisseleccion[index].nombre}
             `);
     }

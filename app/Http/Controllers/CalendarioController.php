@@ -34,6 +34,7 @@ class CalendarioController extends Controller
       $pedidos = Pedido::select('pedidos.id','pedidos.fecha_entrega','clientes.nombre','clientes.cedula','pedidos.direccion','clientes.telefono','pedidos.id_municipio','pedidos.fecha_registro','pedidos.fecha_entrega','pedidos.proceso','pedidos.id_metodo_pago','pedidos.id_metodo_entrega','pedidos.totalpedido','metodo__entregas.nombre AS nombremetodoentrega','metodo__pagos.nombre AS nombremetodopago','municipios.nombre AS municipio')->join('clientes','clientes.id','=','pedidos.id_cliente')
       ->join('metodo__entregas','metodo__entregas.id','=','pedidos.id_metodo_entrega')
       ->join('metodo__pagos','metodo__pagos.id','=','pedidos.id_metodo_pago')
+      ->where('pedidos.estado',1)
       ->join('municipios','municipios.id','=','pedidos.id_municipio')
 
       ->get();

@@ -16,6 +16,13 @@ use Illuminate\Http\Request;
 
 class ClienteController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:ver-cliente|crear-cliente|editar-cliente|borrar-cliente,', ['only'=>['index']]);
+        $this->middleware ('permission: crear-cliente', ['only'=>['store']]);
+        $this->middleware ('permission: editar-cliente', ['only'=>['update']]);
+        $this->middleware ('permission: borrar-cliente', ['only'=>['eliminarCliente']]);
+    }
     /**
      * Display a listing of the resource.
      *

@@ -132,14 +132,14 @@ class PedidoController extends Controller
     public function create()
     {
 
-        $cliente = Cliente::all();
+        $cliente = DB::table('clientes')->where('estado',1)->get();
         $paises = DB::table('Pais') -> orderBy ('nombre')->get();
         $departamentos = DB::table('Departamentos') -> orderBy ('nombre')->get();
         $municipios = Municipio::all();
         $metodo_entrega = Metodo_Entrega::all();
         $medio_pago = Medio_Pago::all();
         $metodo_pago = Metodo_Pago::all();
-        $producto = producto::all();
+        $producto = DB::table('productos')->where('estado',1)->get();
         $pedido = new Pedido();
         $figuras = Figura::all();
 

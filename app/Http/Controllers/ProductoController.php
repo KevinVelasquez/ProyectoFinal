@@ -14,19 +14,6 @@ use Str;
 class ProductoController extends Controller
 {
 
-
-    function __construct()
-    {
-        $this->middleware('permission:ver-producto|crear-producto|editar-producto|borrar-producto,', ['only'=>['index']]);
-        $this->middleware ('permission: crear-producto', ['only'=>['store']]);
-        $this->middleware ('permission: editar-producto', ['only'=>['update']]);
-        $this->middleware ('permission: borrar-producto', ['only'=>['eliminarProducto']]);
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     function __construct()
     {
         $this->middleware('permission:ver-producto|crear-producto|editar-producto|borrar-producto,', ['only'=>['index']]);
