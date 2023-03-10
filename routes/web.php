@@ -40,7 +40,6 @@ Route::post('/store', [CompraController::class,'store'])->name('store');
 
 Auth::routes();
 
-Auth::routes();
 //RUTAS SANTIAGO
 Route::resource('pedidos', App\Http\Controllers\PedidoController::class);
 Route::put('pedidos', [PedidoController::class, 'updatePedido'])->name('pedidos.updatePedido');
