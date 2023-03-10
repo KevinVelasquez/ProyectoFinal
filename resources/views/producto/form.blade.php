@@ -9,7 +9,7 @@
                 <input type="text" name="nombre" id="nombre" class="form-control @error('nombre') is-invalid @enderror" required />
                 @error('nombre')
                 <span class="invalid-feedback" role="alert">
-                    <strong>No se puede crear 2 productos con el mismo nombre</strong>
+                    <strong>No se puede crear dos productos con el mismo nombre</strong>
                 </span>
                 @enderror
             </div>
