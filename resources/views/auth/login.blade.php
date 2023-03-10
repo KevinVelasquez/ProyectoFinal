@@ -76,7 +76,6 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Ingresar') }}
                                 </button>
-                                <a href="{{ route('register') }}" class="btn btn-primary">Registrar</a>
                             </div>
                             <div class="col-md-8 offset-md-4" style="padding-top: 2%;">
                                 @if (Route::has('password.request'))

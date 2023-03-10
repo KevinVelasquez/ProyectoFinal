@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use SuperAdminSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,5 +23,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call(SeederTablaPermisos::class);
+        $this->call(SuperAdminSeeder::class);
+
     }
 }

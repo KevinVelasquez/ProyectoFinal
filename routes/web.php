@@ -19,6 +19,7 @@ Route::get('/', [App\Http\Controllers\CalendarioController::class, 'index'])->mi
 
 Route::get('/home', [App\Http\Controllers\CalendarioController::class, 'index'])->middleware('auth');
 
+
 //RUTAS KEVIN
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.request');
 Route::resource('compra', App\Http\Controllers\CompraController::class)->middleware('auth');
@@ -36,6 +37,7 @@ Route::get('/CambioEstado', [UsuarioController::class,'CambioEstado'])->name('Ca
 Route::get('/CambioEstadoCompra', [CompraController::class,'CambioEstado'])->name('CambioEstado');
 Route::get('/generarPDF/{id}', [App\Http\Controllers\CompraController::class,'generarPDF'])->name('generarPDF');
 Route::post('/store', [CompraController::class,'store'])->name('store');
+
 
 Auth::routes();
 //RUTAS SANTIAGO
