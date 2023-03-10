@@ -12,8 +12,8 @@ use App\Http\Controllers\CalendarioController;
 
 //RUTAS HOME
 
-Auth::routes();
 Route::get('/', [App\Http\Controllers\CalendarioController::class, 'index'])->middleware('auth');
+Route::get('/home', [App\Http\Controllers\CalendarioController::class, 'index'])->middleware('auth');
 
 //RUTAS KEVIN
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.request');
@@ -32,7 +32,7 @@ Route::get('/CambioEstado', [UsuarioController::class,'CambioEstado'])->name('Ca
 Route::get('/CambioEstadoCompra', [CompraController::class,'CambioEstado'])->name('CambioEstado');
 Route::get('/generarPDF/{id}', [App\Http\Controllers\CompraController::class,'generarPDF'])->name('generarPDF');
 Route::post('/store', [CompraController::class,'store'])->name('store');
-
+Auth::routes();
 //RUTAS SANTIAGO
 Route::resource('pedidos', App\Http\Controllers\PedidoController::class);
 Route::put('pedidos', [PedidoController::class, 'updatePedido'])->name('pedidos.updatePedido');
@@ -90,3 +90,4 @@ Route:: group(['middleware' => ['auth'] ], function(){
     Route::resource('usuarios', UsuarioController::class);
 });
 
+?>

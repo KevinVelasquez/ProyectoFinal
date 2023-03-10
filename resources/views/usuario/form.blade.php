@@ -32,26 +32,15 @@
                         @enderror
                     </div>
                 </div>
-                <div class="form-group col-12">Rol
-                    <input id="id_rol" type="text" class="form-control @error('rol') is-invalid @enderror" name="rol" value="{{ old('rol') }}" required autocomplete="rol" autofocus>
 
-                    @error('rol')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
-                <div class="form-group col-6">
-                    <label for="">Rol</label>
-                    <select name="roles" class="form-control">
-                        <option value="">Seleccione</option>
-                        @foreach($id_roles as $id_roles)
-                        <option value="{{ $id_roles->id }}">{{ $id_roles->nombre }}</option>
-                        @endforeach
-                    </select>
-                </div>
             </div>
             <div class="col-6">
+                <div class="form-group col-12">
+                    <div class="form-group">Rol
+                        <label for="" class="col-md-4 col-form-label text-md-end"></label>
+                        {!!Form::select('roles[]', $roles,[], array('class' => 'form-control'))!!}
+                    </div>
+                </div>
                 <div class="form-group col-12">Contraseña
                     <label for="password" class="col-md-4 col-form-label text-md-end"></label>
 
@@ -69,20 +58,6 @@
 
                     <div class="form-group">
                         <input id="password-confirm" type="password" class="form-control" name="confirm-password" required autocomplete="new-password">
-                    </div>
-                </div>
-                <div class="form-group col-12">Estado
-                    <label for="estado" class="col-md-4 col-form-label text-md-end"></label>
-                    <select name="estado" class="form-control">
-                        <option value="1">Activo</option>
-                        <option value="2">Inactivo</option>
-                    </select>
-                    <div class="col-md-6">
-                        @error('estado')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
                     </div>
                 </div>
                 <div class="form-group col-12">

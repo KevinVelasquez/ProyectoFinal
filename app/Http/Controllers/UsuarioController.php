@@ -35,7 +35,7 @@ class UsuarioController extends Controller
             return view('usuario.index', compact('users'))
                 ->with('i', (request()->input('page', 1) - 1) * $users->perPage());
         }
-        return view('usuario.index');
+        return view('usuario.index', compact('users'));
     }
 
     /**
@@ -60,11 +60,9 @@ class UsuarioController extends Controller
         $this->validate($request, [
             'cedula' => 'required|unique:users',
             'nombre' => 'required',
-            'cedula' => 'required',
-            'id_rol' => 'required',
-            'estado' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
+            'roles' => 'required',
         ]);
 
         $input = $request->all();
@@ -83,7 +81,7 @@ class UsuarioController extends Controller
      */
     public function show($id)
     {
-        $user = Usuario::findOrFail($id);
+        $user = ModelsUser::findOrFail($id);
 
         return view('usuario.show', compact('user'));
     }
@@ -114,9 +112,10 @@ class UsuarioController extends Controller
     {
         $this->validate($request, [
             'nombre' => 'required',
+            'cedula' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'same:confirm-password',
-            'id_rol' => 'required',
+            'rol' => 'required',
         ]);
 
         $input = $request->all();
@@ -131,7 +130,7 @@ class UsuarioController extends Controller
         $user->update($input);
 
         DB::table('model_has_roles')->where('model_id', $id)->delete();
-        $user->assingRole($request->input('id_rol'));
+        $user->assingRole($request->input('rol'));
 
         return redirect()->route('usuario.index')
             ->with('success', 'Usuario Editado con éxito');
@@ -166,9 +165,7 @@ class UsuarioController extends Controller
         $cedula = $user->cedula;
         $nombre = $user->nombre;
         $email = $user->email;
-        $id_rol = $user->id_rol;
         $contraseña = $user->password;
-        $estado = $user->estado;
 
         if ($request->password_actual != "") {
             $NuewPass = $request->password;
@@ -215,22 +212,12 @@ class UsuarioController extends Controller
             ->where('id', $user->id)
             ->update(['email' => $email]);
 
-        $id_rol = $request->id_rol;
-        $sqlBD = DB::table('users')
-            ->where('id', $user->id)
-            ->update(['id_rol' => $id_rol]);
-
-        $estado = $request->estado;
-        $sqlBD = DB::table('users')
-            ->where('id', $user->id)
-            ->update(['estado' => $estado]);
-
         return redirect()->back()->with('nombre', 'Editado con éxito');
     }
 
     public function CambioEstado(Request $request)
     {
-        $users = Usuario::find($request->id);
+        $users = ModelsUser::find($request->id);
         $users->estado = $request->estado;
         $users->save();
 
@@ -243,5 +230,4 @@ class UsuarioController extends Controller
         return response()->json(['var'=>''.$newStatus.'']); */
     }
 }
-
 ?>

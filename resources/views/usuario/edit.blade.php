@@ -17,7 +17,7 @@ Update Usuario
                 </div>
                 <div class="card-body">
                     {!!Form::model($user,['method'=>'PATCH','route'=>['usuario.update',$user->id]])
-                        !!}
+                    !!}
                     @csrf
                     <div class="box box-info padding-1">
                         <div class="box-body">
@@ -56,16 +56,11 @@ Update Usuario
                                         </span>
                                         @enderror
                                     </div>
-                                    <div class="form-group col-12">Rol
-                                        <label for="rol"></label>
-                                        <div class="form-group">
-                                            <input type="text" name="rol" value="{{  isset($user->rol)?$user->rol:'' }}" id="rol" class="form-control" required>
+                                    <div class="form-group col-12">
+                                        <div class="form-group">Rol
+                                            <label for="" class="col-md-4 col-form-label text-md-end"></label>
+                                            {!!Form::select('roles[]', $roles,[], array('class' => 'form-control'))!!}
                                         </div>
-                                        @error('rol')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-6">

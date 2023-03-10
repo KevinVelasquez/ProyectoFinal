@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('compra', function (Blueprint $table) {
             $table->id();
-            $table->string('n_orden');
+            $table->integer('n_orden')->unique();
             $table->date('fecha_compra');
             $table->integer('total');
             $table->integer('estado')->default(1);

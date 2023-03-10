@@ -29,9 +29,9 @@ Usuarios
                     <td>{{ $user->email }}</td>
                     <td>
                         @if(!empty($user->getRoleNames()))
-                            @foreach($user->getRoleNames() as $rolName)
-                            <h5><span class="badge badge-dark">{{$rolName}}</span></h5>
-                            @endforeach
+                        @foreach($user->getRoleNames() as $rolName)
+                        <h5><span class="role-label">{{$rolName}}</span></h5>
+                        @endforeach
                         @endif
                     </td>
                     <td>
