@@ -15,7 +15,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 //RUTAS HOME
 
-Auth::routes();
 Route::get('/', [App\Http\Controllers\CalendarioController::class, 'index'])->middleware('auth');
 
 Route::get('/home', [App\Http\Controllers\CalendarioController::class, 'index'])->middleware('auth');
@@ -39,6 +38,7 @@ Route::get('/CambioEstadoCompra', [CompraController::class,'CambioEstado'])->nam
 Route::get('/generarPDF/{id}', [App\Http\Controllers\CompraController::class,'generarPDF'])->name('generarPDF');
 Route::post('/store', [CompraController::class,'store'])->name('store');
 
+Auth::routes();
 //RUTAS SANTIAGO
 Route::resource('pedidos', App\Http\Controllers\PedidoController::class);
 Route::put('pedidos', [PedidoController::class, 'updatePedido'])->name('pedidos.updatePedido');
