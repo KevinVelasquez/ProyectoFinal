@@ -26,7 +26,7 @@ Update Usuario
                                     <div class="form-group col-12">Cédula
                                         <label for="cedula"></label>
                                         <div class="form-group">
-                                            <input type="text" name="cedula" value="{{  isset($user->cedula)?$user->cedula:'' }}" id="cedula" class="form-control" required>
+                                            <input type="text" name="cedula" value="{{  isset($user->cedula)?$user->cedula:'' }}" id="cedula" class="form-control" readonly>
                                         </div>
                                         @error('cedula')
                                         <span class="invalid-feedback" role="alert">
@@ -59,7 +59,11 @@ Update Usuario
                                     <div class="form-group col-12">
                                         <div class="form-group">Rol
                                             <label for="" class="col-md-4 col-form-label text-md-end"></label>
-                                            {!!Form::select('roles[]', $roles,[], array('class' => 'form-control'))!!}
+                                            <select class="form-control" name="roles[]" id="rol">
+                                                @foreach ($roles as $nombreRol => $nombreRolMostrable)
+                                                <option value="{{ $nombreRol }}" {{ in_array($nombreRol, $selectedRoles) ? 'selected' : '' }}>{{ $nombreRolMostrable }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -81,7 +85,7 @@ Update Usuario
                                         <label for="estado" class="col-md-4 col-form-label text-md-end"></label>
                                         <select name="estado" class="form-control">
                                             <option value="1">Activo</option>
-                                            <option value="2">Inactivo</option>
+                                            <option value="0">Inactivo</option>
                                         </select>
                                         <div class="form-group">
                                             @error('estado')
@@ -99,7 +103,7 @@ Update Usuario
                         </div>
                         <div class="box-footer mt20">
                             <button type="submit" class="btn btn-primary btn-lg active">Actualizar</button>
-                            <a onclick="history.back()" class="btn btn-primary btn-lg active" type="button">Cancelar</a>
+                            <a href="{{ route('usuario.index') }}" class="btn btn-primary btn-lg active" type="button">Cancelar</a>
                         </div>
                     </div>
 
@@ -107,7 +111,6 @@ Update Usuario
                 {!!Form::close()!!}
             </div>
         </div>
-    </div>
     </div>
 </section>
 <script>

@@ -44,8 +44,10 @@ class PagoProveedoreController extends Controller
 
         $editarCompra = Compra::all();
 
+        $pedidoproveedor = Compra::all();
 
-        return view('compra.index', compact('compras',  'detallecompra', 'compraProveedor', 'detalleabono','editarCompra', 'abono','totalabono'));
+
+        return view('compra.index', compact('pedidoproveedor','compras',  'detallecompra', 'compraProveedor', 'detalleabono','editarCompra', 'abono','totalabono'));
 
     }
 
@@ -68,7 +70,7 @@ class PagoProveedoreController extends Controller
             ]);
     }
 
-    public function anularAbono(Request $request)
+    public function anularAbonoCompra(Request $request)
     {
         $input = $request->all();
         PagoProveedore::where('id', $input["idanularabono"])
