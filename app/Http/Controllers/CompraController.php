@@ -20,7 +20,7 @@ class CompraController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:Ordenes-de-Compra');
+        $this->middleware('permission:Ordenes-de-Compras');
     }
     /**
      * Display a listing of the resource.
