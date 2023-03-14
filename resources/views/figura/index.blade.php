@@ -11,12 +11,9 @@
             <div class="col-sm-12">
                 <div class="container">
                     <main role="main" class="pb-3">
-                        @can('crear-figura')
                             <p>
                                 <a class="mdi mdi-shape-plus" id="iconoadd" href="{{ route('figuras.create') }}"></a>
                             </p>
-                        @endcan
-
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover">
@@ -55,17 +52,13 @@
                                                             <div class="card-body" style="padding: 0rem">
                                                                 <p class="card-text">{{ $figura->etiqueta }}</p>
                                                                 <div>
-                                                                    @can('editar-figura')
                                                                         <a class="mdi mdi-lead-pencil"
                                                                             style="height: 28%;width: 17%;color:black"
                                                                             href="{{ route('figuras.edit', $figura->id) }}"></a>
-                                                                    @endcan
-                                                                    @can('borrar-figura')
                                                                         <button onclick="eliminarFigura('{{ $figura->id }}')"
                                                                             style="height: 28%;width: 17%;border: none;background-color: white;"
                                                                             class="mdi mdi-delete" data-toggle="modal"
                                                                             data-target="#eliminarmodal"></button>
-                                                                    @endcan
                                                                 </div>
                                                             </div>
                                                         </div>

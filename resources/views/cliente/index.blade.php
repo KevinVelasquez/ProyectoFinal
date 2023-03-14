@@ -10,7 +10,6 @@ Cliente
         <p>
             <a class="mdi mdi-cart-outline" id="iconoadd" href="{{ route('cliente.create') }}"></a>
         </p>
-
         <table id="clientes" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>

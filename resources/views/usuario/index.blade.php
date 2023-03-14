@@ -30,26 +30,33 @@ Usuarios
                     <td>
                         @if(!empty($user->getRoleNames()))
                         @foreach($user->getRoleNames() as $rolName)
-                        <h5><span class="role-label">{{$rolName}}</span></h5>
+                        {{$rolName}}
                         @endforeach
                         @endif
                     </td>
                     <td>
+                        <!-- 1->Activo-0->Inactivo -->
                         @if($user->estado == 1)
-                        <button type="button" class="btn btn-sm btn-success">Activo</button>
+                        Activo
                         @else
-                        <button type="button" class="btn btn-sm btn-danger">Inactivo</button>
+                        Inactivo
                         @endif
                     </td>
                     <td>
-                        <form action="{{ route('usuario.destroy',$user->id) }}" method="POST">
-                            <a class="btn btn-primary btn-lg active" href="{{ route('usuario.edit',$user->id) }}"><i class="fa fa-fw fa-edit"></i>Editar</a>
-                        </form>
+                        
+                            <a href="{{ route('usuario.edit',$user->id) }}"><button class="mdi mdi-lead-pencil"></button></a>
+
+                        
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
+        @if (session('error'))
+        <div class="alert alert-danger" role="alert">
+            {{ session('error') }}
+        </div>
+        @endif
     </main>
 </div>
 <script>

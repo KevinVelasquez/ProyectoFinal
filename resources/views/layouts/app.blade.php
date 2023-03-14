@@ -84,18 +84,23 @@
                                 <span class="menu-title">Calendario</span>
                             </a>
                         </li>
+                        @can('Configuración')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('roles.index') }}">
                                 <i class="mdi mdi-settings menu-icon"></i>
                                 <span class="menu-title">Configuración</span>
                             </a>
                         </li>
+                        @endcan
+                        @can('Usuarios')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('usuario.index') }}">
                                 <i class="mdi mdi-account-circle menu-icon"></i>
                                 <span class="menu-title">Usuarios</span>
                             </a>
                         </li>
+                        @endcan
+                        @can('Menu-Compras')
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                                 <i class="mdi mdi-wallet-travel menu-icon"></i>
@@ -104,13 +109,21 @@
                             </a>
                             <div class="collapse" id="ui-basic">
                                 <ul class="nav flex-column ">
+                                    @can('Proveedores')
                                     <li class="nav-item"> <a class="nav-link" href="{{ route('proveedor.index') }}">Proveedores</a></li>
+                                    @endcan
+                                    @can('Insumos')
                                     <li class="nav-item"> <a class="nav-link" href="{{ route('insumos.index') }}">Insumos</a></li>
+                                    @endcan
+                                    @can('Ordenes-de-Compras')
                                     <li class="nav-item"> <a class="nav-link" href="{{ route('compra.index') }}">Ordenes de
                                             Compra</a></li>
+                                            @endcan
                                 </ul>
                             </div>
                         </li>
+                        @endcan
+                        @can('Menu-Ventas')
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
                                 <i class="mdi mdi-trending-up menu-icon"></i>
@@ -119,18 +132,27 @@
                             </a>
                             <div class="collapse" id="form-elements">
                                 <ul class="nav flex-column ">
+                                @can('Clientes')
                                     <li class="nav-item"><a class="nav-link" href="{{ route('cliente.index') }}">Clientes</a></li>
+                                    @endcan
+                                    @can('Productos')
                                     <li class="nav-item"><a class="nav-link" href="{{ route('productos.index') }}">Productos</a></li>
+                                    @endcan
+                                    @can('Pedidos')
                                     <li class="nav-item"><a class="nav-link" href="{{ route('pedidos.index') }}">Pedidos</a></li>
+                                    @endcan
                                 </ul>
                             </div>
                         </li>
+                        @endcan
+                        @can('Figuras')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('figuras.index') }}">
                                 <i class="mdi mdi-panorama menu-icon"></i>
                                 <span class="menu-title">Figuras Predefinidas</span>
                             </a>
                         </li>
+                        @endcan
                         <li class="nav-item">
                             <a class="nav-link"  href="{{ route('dashboard.index') }}">
                                 <i class="mdi mdi-google-analytics menu-icon"></i>

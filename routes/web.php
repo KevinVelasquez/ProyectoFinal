@@ -23,11 +23,13 @@ Route::get('/home', [App\Http\Controllers\CalendarioController::class, 'index'])
 //RUTAS KEVIN
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.request');
 Route::resource('compra', App\Http\Controllers\CompraController::class)->middleware('auth');
+Route::put('compra', [CompraController::class, 'updateCompra'])->name('compra.updateCompra');
+Route::patch('compra', [CompraController::class, 'anularCompra'])->name('compra.anularCompra');
 Route::resource('pago-proveedore', App\Http\Controllers\PagoProveedoreController::class)->middleware('auth');
 Route::resource('usuario', App\Http\Controllers\UsuarioController::class)->middleware('auth');
 Route::resource('/login', App\Http\Controllers\CompraController::class)->middleware('auth');
 Route::post('compras', [App\Http\Controllers\PagoProveedoreController::class,'agregarAbonoCompra'])->name('agregarAbonoCompra');
-Route::put('compras', [App\Http\Controllers\PagoProveedoreController::class,'anularAbono'])->name('anularAbono');
+Route::put('compras', [App\Http\Controllers\PagoProveedoreController::class,'anularAbonoCompra'])->name('anularAbonoCompra');
 Route::patch('compras', [CompraController::class, 'anularCompra'])->name('compras.anularCompra');
 Route::post('recuperarClave', [App\Http\Controllers\UsuarioController::class, 'recuperarClave'])->name('recuperarClave');
 Route::resource('insumos', App\Http\Controllers\InsumoController::class);

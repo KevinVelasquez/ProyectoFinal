@@ -8,11 +8,9 @@
     <div class="container">
         
         <main role="main" class="pb-3">
-            @can('crear-pedido')
             <p>
                 <a class="mdi mdi-cart-outline" id="iconoadd" href="{{ route('pedidos.create') }}"></a>
             </p>
-            @endcan
 
             <table id="pedidos" class="table table-striped dt-responsive nowrap table display mowrap"  cellspacing="0" style="width:100%"  >
                 <thead>
@@ -61,14 +59,10 @@
                                     data-toggle="modal" data-target="#verdetalle"></button>
                                 <button onclick="verDatosAbono('{{ $pedidos->id }}')" class="mdi mdi-cash-usd "
                                     data-toggle="modal" data-target="#abonos" @if ($pedidos->estado !== 1)disabled @endif></button>
-                                @can('editar-pedido')
                                 <button onclick="editarPedido('{{ $pedidos->id }}')" class="mdi mdi-lead-pencil"
                                     data-toggle="modal" data-target="#editarmodal"  @if ($pedidos->estado !== 1)disabled @endif></button>
-                                @endcan
-                                @can('anular-pedido')
                                 <button onclick="anularPedido('{{ $pedidos->id }}')" class="mdi mdi-block-helper"
                                     data-toggle="modal" data-target="#anularmodal" @if ($pedidos->estado !== 1)disabled @endif></button>
-                                @endcan
                             </td>
                         </tr>
                     @endforeach

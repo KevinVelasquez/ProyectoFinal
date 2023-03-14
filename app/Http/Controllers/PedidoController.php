@@ -28,10 +28,7 @@ class PedidoController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:ver-pedido|crear-pedido|editar-pedido|borrar-pedido,', ['only'=>['index']]);
-        $this->middleware ('permission: crear-pedido', ['only'=>['store']]);
-        $this->middleware ('permission: editar-pedido', ['only'=>['updatePedido']]);
-        $this->middleware ('permission: anular-pedido', ['only'=>['anularPedido']]);
+        $this->middleware('permission:Pedidos');
     }
     /**
      * Display a listing of the resource.
