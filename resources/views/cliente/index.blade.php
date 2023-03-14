@@ -16,7 +16,7 @@ Cliente
                 <tr>
 
 
-                    <th>Cédula</th>
+                    <th>Cédula/Nit</th>
                     <th>Nombre</th>
                     <th>Teléfono</th>
                     <th>Dirección</th>

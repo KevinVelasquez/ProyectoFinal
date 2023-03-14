@@ -87,7 +87,7 @@ class ProveedorController extends Controller
         
 
         try {
-            Proveedor::insert($datosProveedor);
+            
             // Código para guardar datos en la base de datos
         } catch (\Illuminate\Database\QueryException $e) {
             if ($e->errorInfo[1] == 1062) { // Verificar si es un error de clave duplicada
@@ -96,6 +96,7 @@ class ProveedorController extends Controller
                 }
             }
         }
+        Proveedor::insert($datosProveedor);
 
         return redirect('proveedor')
             ->with('mensaje', 'Proveedor creado con éxito.');
@@ -122,13 +123,17 @@ class ProveedorController extends Controller
         ->join("metodo__pagos", "compra.id_metodo_pagos", "=", "metodo__pagos.id")
         ->join("municipios", "proveedors.id_municipio", "=", "municipios.id")
         ->where("proveedors.id", "=", $id)
+        ->where('compra.anulado', 0)
+
         ->get();
 
-        $comprasss = Compra::select("compra.n_orden","compra.fecha_compra","compra.id_metodo_pagos","compra.total","proveedors.nombre","compra.estado","proveedors.cedula","proveedors.direccion","municipios.id  AS idmunicipio","municipios.nombre AS nombremunicipio","proveedors.telefono","metodo__pagos.id",
+
+        $comprasss = Compra::select("compra.n_orden","compra.fecha_compra","compra.id_metodo_pagos","compra.total","proveedors.nombre","compra.estado","compra.anulado","proveedors.cedula","proveedors.direccion","municipios.id  AS idmunicipio","municipios.nombre AS nombremunicipio","proveedors.telefono","metodo__pagos.id",
         "metodo__pagos.nombre AS nombremetodopago",)
         ->join("proveedors","proveedors.id", "=","compra.id_proveedor")
         ->join("metodo__pagos", "compra.id_metodo_pagos", "=", "metodo__pagos.id")
         ->join("municipios", "proveedors.id_municipio", "=", "municipios.id")
+        ->where('compra.anulado', 0)
         
         ->get();
 

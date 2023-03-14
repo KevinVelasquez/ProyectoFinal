@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use SuperAdminSeeder;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,9 +21,25 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-
-        $this->call(SeederTablaPermisos::class);
         $this->call(SuperAdminSeeder::class);
+        $this->call(SeederTablaPermisos::class);
+        $this->call(MedioPagosSeeder::class);  
+        $this->call(MetodoEntregaSeeder::class);  
+        $this->call(MetodoPagoSeeder::class);  
+        $this->call(RegimenSeeder::class);   
+        $this->call(TipoComercioSeeder::class);   
+        $this->call(TipoPersonaSeeder::class);   
+        $this->call(PaisSeeder::class);   
+        $this->call(DepartamentoSeeder::class);   
+        $this->call(MunicipioSeeder::class);   
+
+
+
+
+
+
+
+
 
     }
 }
