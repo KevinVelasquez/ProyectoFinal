@@ -14,12 +14,9 @@ Insumo
             </div>
           </div>
     </div>
-    @can('crear-insumo')
         <p>
             <a class="mdi mdi-plus-circle-multiple-outline" id="iconoadd" data-toggle="modal" data-target="#crearmodal" ></a>
         </p>
-        @endcan
-
         <table id="insumos" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>
@@ -42,16 +39,10 @@ Insumo
                                             echo 'No Disponible';
                                             }  ?></td>
                                             <td>
-                                                @can('editar-insumo')
                                 <button onclick="editarInsumo('{{ $insumos->id }}')" class="mdi mdi-lead-pencil"
                                     data-toggle="modal" data-target="#editarmodal"></button>
-                                    @endcan
-                                <!-- <button onclick="anularInsumo('{{ $insumos->id }}')" class="mdi mdi-block-helper"
-                                    data-toggle="modal" data-target="#anularmodal"></button> -->
-                                    @can('borrar-insumo')
                                     <button onclick="eliminarInsumo('{{ $insumos->id }}')" class="mdi mdi-trash-can-outline"
                                     data-toggle="modal" data-target="#eliminarmodal"></button>
-                                    @endcan
                             </td>
                         </tr>
                 @endforeach

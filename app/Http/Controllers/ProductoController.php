@@ -16,10 +16,7 @@ class ProductoController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:ver-producto|crear-producto|editar-producto|borrar-producto,', ['only'=>['index']]);
-        $this->middleware ('permission: crear-producto', ['only'=>['store']]);
-        $this->middleware ('permission: editar-producto', ['only'=>['update']]);
-        $this->middleware ('permission: borrar-producto', ['only'=>['eliminarProducto']]);
+        $this->middleware('permission:Productos');
     }
     public function index()
     {

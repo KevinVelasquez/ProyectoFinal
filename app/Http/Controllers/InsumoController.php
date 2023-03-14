@@ -14,10 +14,7 @@ class InsumoController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:ver-insumo|crear-insumo|editar-insumo|borrar-insumo,', ['only'=>['index']]);
-        $this->middleware ('permission: crear-insumo', ['only'=>['store']]);
-        $this->middleware ('permission: editar-insumo', ['only'=>['updateInsumos']]);
-        $this->middleware ('permission: borrar-insumo', ['only'=>['eliminarInsumo']]);
+        $this->middleware('permission:Insumos');
     }
    
     /**

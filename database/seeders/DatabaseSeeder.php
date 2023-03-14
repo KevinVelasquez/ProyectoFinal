@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call(SeederTablaPermisos::class);
         $this->call(SuperAdminSeeder::class);
+        
+        
 
     }
 }

@@ -26,10 +26,7 @@ class ProveedorController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:ver-proveedor|crear-proveedor|editar-proveedor|borrar-proveedor,', ['only'=>['index']]);
-        $this->middleware ('permission: crear-proveedor', ['only'=>['store']]);
-        $this->middleware ('permission: editar-proveedor', ['only'=>['update']]);
-        $this->middleware ('permission: borrar-proveedor', ['only'=>['eliminarProveedor']]);
+        $this->middleware('permission:Proveedores');
     }
     /**
      * Display a listing of the resource.
