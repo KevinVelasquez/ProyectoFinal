@@ -27,16 +27,19 @@
                 <div>
                     <canvas id="grafica-pedidos"></canvas>
                 </div>
+                <a href="{{ route('dashboard.pedidosmes') }}" target="_blank" class="btn btn-primary">Ver en PDF</a>
             </div>
             <div class="col-md-3">
                 <div style="width:100%;height: 21em;">
                     <canvas id="proceso-pedidos"></canvas>
                 </div>
+                <a href="{{ route('dashboard.pedidosproceso') }}" target="_blank" class="btn btn-primary">Ver en PDF</a>
             </div>
             <div class="col-md-3">
                 <div style="width:100%;height: 21em;">
                     <canvas id="productosvendidos"></canvas>
                 </div>
+                <a href="" target="_blank" class="btn btn-primary">Ver en PDF</a>
             </div>
         </div>
         <br>

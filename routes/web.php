@@ -55,6 +55,10 @@ Route::get('figuras/search', [App\Http\Controllers\FiguraController::class, 'sea
 Route::resource('figuras', App\Http\Controllers\FiguraController::class);
 
 Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.index');
+Route::get('dashboard/pedidosmes', [App\Http\Controllers\DashboardController::class, 'pedidosmes'])->name('dashboard.pedidosmes');
+Route::get('dashboard/pedidosproceso', [App\Http\Controllers\DashboardController::class, 'pedidosproceso'])->name('dashboard.pedidosproceso');
+
+
 
 
 
