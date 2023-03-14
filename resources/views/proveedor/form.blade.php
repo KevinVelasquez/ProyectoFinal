@@ -7,9 +7,7 @@
                     <label for="nombre">Nombre</label>
                     <div class="col-sm-9">
                         <input type="text" name="nombre" value="{{ isset($proveedor->nombre)?$proveedor->nombre:'' }}" id="nombre" class="form-control" required>
-                        <div class="invalid-feedback">
-                            El nombre es requerido
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -17,12 +15,10 @@
 
             <div class="col-md-6">
                 <div class="form-group row">
-                    <label for="cedula">Cédula</label>
+                    <label for="cedula">Cédula/Nit</label>
                     <div class="col-sm-9">
                         <input type="text" name="cedula" value="{{  isset($proveedor->cedula)?$proveedor->cedula:'' }}" id="cedula" class="form-control" required>
-                        <div class="invalid-feedback">
-                            La cédula es requerida
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -33,9 +29,7 @@
                     <label for="telefono">Teléfono</label>
                     <div class="col-sm-9">
                         <input type="text" name="telefono" value="{{ isset($proveedor->telefono)?$proveedor->telefono:'' }}" id="telefono" class="form-control" required>
-                        <div class="invalid-feedback">
-                            El teléfono es requerido
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -46,9 +40,7 @@
                     <label for="email">Correo</label>
                     <div class="col-sm-9">
                         <input type="text" name="email" value="{{ isset($proveedor->email)?$proveedor->email:'' }}" id="email" class="form-control" required>
-                        <div class="invalid-feedback">
-                            El correo es requerido
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -67,9 +59,7 @@
                             @empty <option>No existen</option>
                             @endforelse
                         </select>
-                        <div class="invalid-feedback">
-                            Seleccione una opción
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -89,9 +79,7 @@
                             @empty <option>No existen</option>
                             @endforelse
                         </select>
-                        <div class="invalid-feedback">
-                            Seleccione una opción
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -110,9 +98,7 @@
                             @empty <option>No existen</option>
                             @endforelse
                         </select>
-                        <div class="invalid-feedback">
-                            Seleccione una opción
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -131,9 +117,7 @@
                             @empty <option>No existen</option>
                             @endforelse
                         </select>
-                        <div class="invalid-feedback">
-                            Seleccione una opción
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -151,9 +135,7 @@
                             @empty <option>No existen</option>
                             @endforelse
                         </select>
-                        <div class="invalid-feedback">
-                            Seleccione una opción
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -173,9 +155,7 @@
                             @empty <option>No existen</option>
                             @endforelse
                         </select>
-                        <div class="invalid-feedback">
-                            Seleccione una opción
-                        </div>
+                       
                     </div>
                 </div>
             </div>
@@ -186,9 +166,7 @@
                     <label for="direccion">Dirección</label>
                     <div class="col-sm-9">
                         <input type="text" name="direccion" value="{{ isset($proveedor->direccion)?$proveedor->direccion:'' }}" id="direccion" class="form-control" required>
-                        <div class="invalid-feedback">
-                            La dirección es requerida
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -209,11 +187,7 @@
         <a href="{{ route('proveedor.index') }}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Cancelar</a>
     </div>
 
-    @if (session('error'))
-            <div class="alert alert-danger" role="alert">
-                {{ session('error') }}
-            </div>
-        @endif
+
 
 </div>
 
@@ -234,42 +208,5 @@
 })()
 
 
-function filtrarDepartamentos() {
-
-var pais = document.getElementById("pais").value;
-var selectordepartamentos = document.getElementById("departamento");
-selectordepartamentos.innerHTML = "";
-let paisseleccion = [];
-let departamentos = <?php echo $departamentos; ?>;
-departamentos.forEach(function(value, index) {
-    paisseleccion[index] = value;
-    console.log(value)
-    if (paisseleccion[index].id_paises == pais) {
-        $("#departamento").append(
-        <option selected disabled value="">Seleccione</option>
-        `
-            <option value="${paisseleccion[index].id}"/>${paisseleccion[index].nombre}
-            `);
-    }
-});
-}
-
-function filtrarMunicipios() {
-
-var departamento = document.getElementById("departamento").value;
-var selectormunicipios = document.getElementById("municipio");
-selectormunicipios.innerHTML = "";
-let departamentoseleccion = [];
-let municipios = <?php echo $municipios; ?>;
-municipios.forEach(function(value, index) {
-    departamentoseleccion[index] = value;
-    if (departamentoseleccion[index].id_departamentos == departamento) {
-        $("#municipio").append(`
-        <option selected disabled value="">Seleccione</option>
-        <option value="${departamentoseleccion[index].id}"/>${departamentoseleccion[index].nombre}
-        `);
-    }
-});
-}
 
 </script>

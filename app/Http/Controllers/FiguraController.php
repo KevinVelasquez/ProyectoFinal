@@ -16,10 +16,7 @@ class FiguraController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:ver-figura|crear-figura|editar-figura|borrar-figura,', ['only'=>['index']]);
-        $this->middleware ('permission: crear-figura', ['only'=>['store']]);
-        $this->middleware ('permission: editar-figura', ['only'=>['update']]);
-        $this->middleware ('permission: borrar-figura', ['only'=>['eliminarfigura']]);
+        $this->middleware('permission:Figuras');
     }
     /**
      * Display a listing of the resource.

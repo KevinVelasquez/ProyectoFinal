@@ -41,9 +41,7 @@ Update Proveedor
                                         <label for="nombre">Nombre</label>
                                         <div class="col-sm-9">
                                             <input type="text" name="nombre" value="{{ isset($proveedor->nombre)?$proveedor->nombre:'' }}" id="nombre" class="form-control" required>
-                                            <div class="invalid-feedback">
-                            El nombre es requerido
-                        </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -51,12 +49,10 @@ Update Proveedor
 
                                 <div class="col-md-6">
                                     <div class="form-group row">
-                                        <label for="cedula">Cédula</label>
+                                        <label for="cedula">Cédula/Nit</label>
                                         <div class="col-sm-9">
                                             <input type="text" name="cedula" value="{{  isset($proveedor->cedula)?$proveedor->cedula:'' }}" id="cedula" class="form-control" required>
-                                            <div class="invalid-feedback">
-                            La cédula es requerida
-                        </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -67,9 +63,7 @@ Update Proveedor
                                         <label for="telefono">Teléfono</label>
                                         <div class="col-sm-9">
                                             <input type="text" name="telefono" value="{{ isset($proveedor->telefono)?$proveedor->telefono:'' }}" id="telefono" class="form-control" required>
-                                            <div class="invalid-feedback">
-                            El teléfono es requerido
-                        </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -79,9 +73,7 @@ Update Proveedor
                                         <label for="email">Correo</label>
                                         <div class="col-sm-9">
                                             <input type="text" name="email" value="{{ isset($proveedor->email)?$proveedor->email:'' }}" id="email" class="form-control" required>
-                                            <div class="invalid-feedback">
-                            El correo es requerido
-                        </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -99,9 +91,7 @@ Update Proveedor
                                                 @empty <option>No existen</option>
                                                 @endforelse
                                             </select>
-                                            <div class="invalid-feedback">
-                            Seleccione una opción
-                        </div>
+                                            
 
                                         </div>
                                     </div>
@@ -121,9 +111,7 @@ Update Proveedor
                                                 @empty <option>No existen</option>
                                                 @endforelse
                                             </select>
-                                            <div class="invalid-feedback">
-                            Seleccione una opción
-                        </div>
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -141,9 +129,7 @@ Update Proveedor
                                                 @empty <option>No existen</option>
                                                 @endforelse
                                             </select>
-                                            <div class="invalid-feedback">
-                            Seleccione una opción
-                        </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -162,9 +148,7 @@ Update Proveedor
                                                 @empty <option>No existen</option>
                                                 @endforelse
                                             </select>
-                                            <div class="invalid-feedback">
-                            Seleccione una opción
-                        </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -182,9 +166,7 @@ Update Proveedor
                                                 @empty <option>No existen</option>
                                                 @endforelse
                                             </select>
-                                            <div class="invalid-feedback">
-                            Seleccione una opción
-                        </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -204,9 +186,7 @@ Update Proveedor
                                                 @empty <option>No existen</option>
                                                 @endforelse
                                             </select>
-                                            <div class="invalid-feedback">
-                            Seleccione una opción
-                        </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -216,9 +196,7 @@ Update Proveedor
                                         <label for="direccion">Dirección</label>
                                         <div class="col-sm-9">
                                             <input type="text" name="direccion" value="{{ isset($proveedor->direccion)?$proveedor->direccion:'' }}" id="direccion" class="form-control" required>
-                                            <div class="invalid-feedback">
-                            La dirección es requerida
-                        </div>
+                                            
                                         </div>
                                     </div>
                                 </div>

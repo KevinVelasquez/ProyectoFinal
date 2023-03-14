@@ -13,7 +13,9 @@ Proveedor
         <table id="proveedores" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>
-                    <th>Cédula</th>
+
+
+                    <th>Cédula/Nit</th>
                     <th>Nombre</th>
                     <th>Teléfono</th>
                     <th>Dirección</th>

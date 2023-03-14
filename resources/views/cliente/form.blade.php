@@ -6,9 +6,7 @@
                 <label for="nombre">Nombre</label>
                 <div class="col-sm-9">
                     <input type="text" name="nombre" value="{{ isset($cliente->nombre)?$cliente->nombre:'' }}" id="nombre" class="form-control" required>
-                    <div class="invalid-feedback">
-                        El nombre es requerido
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -16,12 +14,10 @@
 
         <div class="col-md-6">
             <div class="form-group row">
-                <label for="cedula">Cédula</label>
+                <label for="cedula">Cédula/Nit</label>
                 <div class="col-sm-9">
                     <input type="text" name="cedula" value="{{ isset($cliente->cedula)?$cliente->cedula:'' }}" id=" cedula" class="form-control" required>
-                    <div class="invalid-feedback">
-                        La cédula es requerida
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -32,9 +28,7 @@
                 <label for="telefono">Teléfono</label>
                 <div class="col-sm-9">
                     <input type="text" name="telefono" value="{{ isset($cliente->telefono)?$cliente->telefono:'' }}" id=" telefono" class="form-control" required>
-                    <div class="invalid-feedback">
-                        El teléfono es requerido
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -45,9 +39,7 @@
                 <label for="email">Correo</label>
                 <div class="col-sm-9">
                     <input type="text" name="email" value="{{ isset($cliente->email)?$cliente->email:'' }}" id=" email" class="form-control" required>
-                    <div class="invalid-feedback">
-                        El correo es requerido
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -66,9 +58,7 @@
                         @empty <option>No existen</option>
                         @endforelse
                     </select>
-                    <div class="invalid-feedback">
-                        Seleccione una opción
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -88,9 +78,7 @@
                         @empty <option>No existen</option>
                         @endforelse
                     </select>
-                    <div class="invalid-feedback">
-                        Seleccione una opción
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -109,9 +97,7 @@
                         @empty <option>No existen</option>
                         @endforelse
                     </select>
-                    <div class="invalid-feedback">
-                        Seleccione una opción
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -130,9 +116,7 @@
                         @empty <option>No existen</option>
                         @endforelse
                     </select>
-                    <div class="invalid-feedback">
-                        Seleccione una opción
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -151,9 +135,7 @@
                         @empty <option>No existen</option>
                         @endforelse
                     </select>
-                    <div class="invalid-feedback">
-                        Seleccione una opción
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -172,9 +154,7 @@
                         @empty <option>No existen</option>
                         @endforelse
                     </select>
-                    <div class="invalid-feedback">
-                        Seleccione una opción
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -185,9 +165,7 @@
                 <label for="direccion">Dirección</label>
                 <div class="col-sm-9">
                     <input type="text" name="direccion" value="{{ isset($cliente->direccion)?$cliente->direccion:'' }}" id=" direccion" class="form-control" required>
-                    <div class="invalid-feedback">
-                        La dirección es requerida
-                    </div>
+                    
                 </div>
             </div>
         </div>

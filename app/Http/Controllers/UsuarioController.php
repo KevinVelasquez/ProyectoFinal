@@ -26,10 +26,8 @@ class UsuarioController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:ver-usuario|crear-usuario|editar-usuario|borrar-usuario,', ['only'=>['index']]);
-        $this->middleware ('permission: crear-usuario', ['only'=>['store']]);
-        $this->middleware ('permission: editar-usuario', ['only'=>['update']]);
-        $this->middleware ('permission: estado-usuario', ['only'=>[' CambioEstado']]);
+        $this->middleware('permission:Usuarios|Menu-Compras|Menu-Ventas');
+        
     }
     /**
      * Display a listing of the resource.

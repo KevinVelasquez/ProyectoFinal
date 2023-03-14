@@ -20,10 +20,7 @@ class CompraController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:ver-compra|crear-compra|editar-compra|borrar-compra,', ['only'=>['index']]);
-        $this->middleware ('permission: crear-compra', ['only'=>['store']]);
-        $this->middleware ('permission: editar-compra', ['only'=>['update']]);
-        $this->middleware ('permission: borrar-compra', ['only'=>['anularCompra']]);
+        $this->middleware('permission:Ordenes-de-Compras');
     }
     /**
      * Display a listing of the resource.

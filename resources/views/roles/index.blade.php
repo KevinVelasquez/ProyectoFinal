@@ -14,11 +14,9 @@ Rol
                 </div>
             </div>
         </div>
-        @can('crear-rol')
         <p> 
             <a class="mdi mdi-account-multiple-plus-outline" id="iconoadd" href="{{ route('roles.create') }}" ></a>
         </p>
-        @endcan
         <table id="roles" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>
@@ -37,13 +35,9 @@ Rol
                                 echo 'No Disponible';
                             } ?></td>
                     <td>
-                        @can('editar-rol')
                         <a href="{{ route('roles.edit',$role->id) }}"><button class="mdi mdi-lead-pencil"></button></a>
-                        @endcan
-                        @can('borrar-rol')
                         <button onclick="eliminarRol('{{ $role->id }}')" class="mdi mdi-trash-can-outline"
                             data-toggle="modal" data-target="#eliminarmodal"></button>
-                            @endcan
                     </td>
                 </tr>
                 @endforeach
