@@ -157,13 +157,7 @@ class UsuarioController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy($id)
-    {
 
-        DB::table('users')->where('id', $id)->delete();
-        return redirect()->route('usuario.index')
-            ->with('success', 'Usuario deleted successfully');
-    }
 
     public function VistaPefil()
     {
@@ -175,18 +169,26 @@ class UsuarioController extends Controller
         return view('recuperarContraseña/recuperarClave');
     }
 
-    public function EditarPerfil(Request $request)
+    public function editPerfil()
     {
         $user = Auth::user();
-        $cedula = $user->cedula;
-        $nombre = $user->nombre;
-        $email = $user->email;
+        return view('perfil.edit', compact('user'));
+    }
+
+    public function EditarPerfil(Request $request)
+    {
+
+        $user = Auth::user();
+        $user->nombre = $request->nombre;
+        $user->email = $request->email;
+
+        $user->save();
+
         $contraseña = $user->password;
 
         if ($request->password_actual != "") {
             $NuewPass = $request->password;
             $confirPass = $request->confirm_password;
-            $nombre = $request->nombre;
 
             //Verifico si la clave actual es igual a la clave del usuario en session
             if (Hash::check($request->password_actual, $contraseña)) {
@@ -213,25 +215,18 @@ class UsuarioController extends Controller
         } else {
             //
         }
+
         
-        ModelsUser::where('nombre', $nombre)->update(['nombre' => $nombre]);
 
-        $nombre = $request->nombre;
-        $sqlBD = DB::table('users')
-            ->where('id', $user->id)
-            ->update(['nombre' => $nombre]);
+        return redirect()->route('VistaPefil')->with('success', 'Perfil actualizado con éxito');
+    }
 
-        $cedula = $request->cedula;
-        $sqlBD = DB::table('users')
-            ->where('id', $user->id)
-            ->update(['cedula' => $cedula]);
+    public function destroy($id)
+    {
 
-        $email = $request->email;
-        $sqlBD = DB::table('users')
-            ->where('id', $user->id)
-            ->update(['email' => $email]);
-
-        return redirect()->with('nombre', 'Editado con éxito');
+        DB::table('users')->where('id', $id)->delete();
+        return redirect()->route('usuario.index')
+            ->with('success', 'Usuario deleted successfully');
     }
 
     public function CambioEstado(Request $request)

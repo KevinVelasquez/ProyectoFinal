@@ -28,11 +28,11 @@ class PagoProveedoreController extends Controller
 
         $totalabono = $this->verificarAbono($input["id"]);
 
-/* 
+ 
         if ($totalabono <= 0) {
 
             $this->abonoCancelado($input["id"]);
-        } */
+        } 
 
         $compras = Compra::all();
 
@@ -66,7 +66,7 @@ class PagoProveedoreController extends Controller
 
         Compra::where('id', $id)
             ->update([
-                'cancelada' => 1
+                'estado' => 0
             ]);
     }
 
@@ -82,18 +82,7 @@ class PagoProveedoreController extends Controller
         return redirect()->route('compra.index')
             ->with('success', 'Status pedido successfully');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $pagoProveedores = PagoProveedore::paginate();
 
-        return view('pago-proveedore.index', compact('pagoProveedores'))
-            ->with('i', (request()->input('page', 1) - 1) * $pagoProveedores->perPage());
-    }
 
     /**
      * Show the form for creating a new resource.

@@ -1,18 +1,22 @@
 @extends('layouts.app')
 
+@section('template_title')
+Nueva Compra
+@endsection
+
 @section('content')
 <section class="content container-fluid">
     @includeif('partials.errors')
 
-    @if(Session::has('success'))
-        {{Session::get('success') }}
+        @if(Session::has('success'))
+            {{Session::get('success') }}
 
-    @endif
+        @endif
 
     <div class="card-header">
         <span class="card-title">Registrar Orden de Compra</span>
     </div>
-    <form method="POST" action="{{ route('compra.store') }}" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
+    <form method="POST" action="{{ route('compra.store') }}" enctype="multipart/form-data" class="form-sample needs-validation" novalidate>
         @csrf
         <div class="row">
             <div class="col-6" style="padding-top: 2%; padding-left: 2%;">
@@ -42,7 +46,7 @@
                         </div>
                         <div class="form-group col-6">
                             <label for="">Proveedor</label>
-                            <select name="id_proveedor" class="form-control">
+                            <select name="id_proveedor" class="form-control" required>
                                 <option value="">Seleccione</option>
                                 @foreach($id_proveedor as $id_proveedor)
                                 <option value="{{ $id_proveedor->id }}">{{ $id_proveedor->nombre }}</option>
@@ -52,8 +56,8 @@
                         <div class="form-group col-6">
                             <label for="id_metodo_pagos">Método de Pago</label>
                             <div class="col-sm-7">
-                                <select class="form-control" name="id_metodo_pagos" id="id_metodo_pagos">
-                                    <option value="0">Seleccione</option>
+                                <select class="form-control" name="id_metodo_pagos" id="id_metodo_pagos" required>
+                                    <option value="">Seleccione</option>
                                     @forelse($metodo__pagos as $metodo_pagos)
                                     <option value="{{$metodo_pagos->id}}">
                                         {{ $metodo_pagos->nombre}}
@@ -117,23 +121,21 @@
 
             <div class="col-2" style="padding-left: 2%;">
                 <label for="">Total Compra</label>
-                <input type="number" class="form-control" name="total" id="total">
+                <input type="number" class="form-control" name="total" id="total" required>
             </div>
             <div class="col-2" style="padding-left: 2%;">
                 <label for="">Abono</label>
                 <input type="number" class="form-control" name="abono" id="abono" required>
             </div>
             <div class="col-12" style="padding-left: 2%;">
-                <button type="submit"class="btn btn-primary btn-lg active">Guardar</button>
+                <button type="submit" class="btn btn-primary btn-lg active">Guardar</button>
                 <a href="{{ route('compra.index') }}" class="btn btn-primary btn-lg active" type="button">Cancelar</a>
             </div>
-
-
         </div>
-        @if (session('error'))
-            <div class="alert alert-danger" role="alert">
-                {{ session('error') }}
-            </div>
+           @if (session('error'))
+                <div class="alert alert-danger" role="alert">
+                    {{ session('error') }}
+                </div>
             @endif
     </form>
 </section>
@@ -199,4 +201,6 @@
     })()
 
 </script>
+
+@endsection
 

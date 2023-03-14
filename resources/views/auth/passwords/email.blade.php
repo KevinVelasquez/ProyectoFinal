@@ -116,7 +116,7 @@
                 <button type="submit" class="btn btn-primary btn-lg active">
                     {{ __('Siguiente') }}
                 </button>
-                <a type="button" class="btn btn-primary btn-lg active" href="{{ route('login') }}">Regresar</a>
+                <a type="button" style="font-size: 14px;" class="btn btn-primary btn-lg active" href="{{ route('login') }}">Regresar</a>
             </div>
         </form>
     </div>
