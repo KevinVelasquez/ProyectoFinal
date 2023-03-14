@@ -55,8 +55,9 @@ Cliente
 
                     <td>
 
-                        <a href="{{ url('/cliente/'.$cliente->id.'/edit') }}"><button class="mdi mdi-lead-pencil"></button></a>
+                         <a href="{{ url('/cliente/'.$cliente->id.'/edit') }}"><button class="mdi mdi-lead-pencil"></button></a> 
 
+                        
 
                         <button id="figura" type="button" class="mdi mdi-checkbox-multiple-blank" data-toggle="modal" data-target="#verdiseños" onclick="verdiseños('{{$cliente->id}}')"></button>
 
@@ -194,6 +195,9 @@ Cliente
             $('#ideliminar').val(`${datos.id}`);
             
         }
+
+
+    
 
 
 

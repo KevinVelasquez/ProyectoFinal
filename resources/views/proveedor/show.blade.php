@@ -23,7 +23,7 @@
                     <th>N° Factura</th>
                     <th>Fecha Compra</th>
                     <th>Método Pago</th>
-                    <th>Estado</th>
+                    <th>Cancelado</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -41,12 +41,10 @@
                     <td>Contado</td>
                     @endif
 
-                    @if ($compras->estado==0)
-                    <td>Pendiente</td>
-                    @elseif ($compras->estado==1)
-                    <td>Finalizada</td>
+                    @if ($compras->estado==1)
+                    <td>No</td>
                     @else
-                    <td>Anulado</td>
+                    <td>Sí</td>
                     @endif
                     <td>
 
@@ -228,12 +226,10 @@
 
         
 
-        if (filtrocompra.estado == 0) {
-                $('#estadocompra').text(`Estado: Pendiente`)
-            } else if (filtrocompra.estado == 1) {
-                $('#estadocompra').text(`Estado: Finalizado`)
+        if (filtrocompra.estado == 1) {
+                $('#estadocompra').text(`Cancelado: No`)
             } else {
-                $('#estadocompra').text(`Estado: Anulado`)
+                $('#estadocompra').text(`Cancelado: Sí`)
             }
 
 
