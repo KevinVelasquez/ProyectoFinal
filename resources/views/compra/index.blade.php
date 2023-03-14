@@ -11,7 +11,7 @@ Compra
             <a class="mdi mdi-cart-outline" id="iconoadd" href="{{ route('compra.create') }}"></a>
         </p>
 
-        <table id="compra" class="table table-striped dt-responsive nowrap table display mowrap" style="width:100%">
+        <table id="compras" class="table table-striped dt-responsive nowrap table display mowrap" style="width:100%">
             <thead>
                 <tr>
                     <th>N Orden</th>
@@ -20,6 +20,8 @@ Compra
                     <th>Proveedor</th>
                     <th>Método Pago</th>
                     <th>Estado</th>
+                    <th>Cancelado</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,10 +38,17 @@ Compra
                     <td>{{ $compra->metodo__pagos->nombre }}</td>
 
                     <td>
-                        @if($compra->estado == 1)
-                            Pendiente
+                        @if($compra->anulado == 0)
+                            Activo
                         @else
-                            Finalizada
+                            Anulado
+                        @endif
+                    </td>
+                    <td>
+                        @if($compra->estado == 1)
+                            No
+                        @else
+                            Si
                         @endif
                     </td>
                     <td>
@@ -54,14 +63,10 @@ Compra
                             
 
                             @csrf
-                       
-                    </td>
-                    <td>
-                        @if($compra->anulado == 0)
-                        <button onclick="anularCompra('{{ $compra->id }}')" type="submit" class="btn btn-primary btn-lg active" data-toggle="modal" data-target="#anularmodal"><i class="fa fa-fw fa-trash"></i>Anular</button>
-                        @else
-                        <button type="button" class="btn btn-sm btn-danger">Anulado</button>
-                        @endif
+                    
+                        <button onclick="anularCompra('{{ $compra->id }}')" class="mdi mdi-block-helper"
+                                    data-toggle="modal" data-target="#anularmodal"></button>
+
                     </td>
                 </tr>
                 @endforeach
@@ -348,6 +353,15 @@ Compra
 
 
 <script>
+    
+    $(document).ready(function() {
+        $('#compras').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            }
+        });
+    });
+
     $(document).ready(function() {
         let pathname = window.location.pathname;
         if (pathname == "/compras") {
@@ -544,6 +558,7 @@ Compra
                         form.classList.add('was-validated')
                     }, false)
                 })
-        })()
+        })();
+
 </script>
 @endsection

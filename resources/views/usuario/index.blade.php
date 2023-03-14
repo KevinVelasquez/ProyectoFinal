@@ -18,6 +18,7 @@ Usuarios
                     <th>Correo Electrónico</th>
                     <th>Rol</th>
                     <th>Estado</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
