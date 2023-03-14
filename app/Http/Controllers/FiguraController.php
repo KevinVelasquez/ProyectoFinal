@@ -41,7 +41,7 @@ class FiguraController extends Controller
     public function create()
     {
         $figura = new Figura();
-        $cliente = Cliente::all();
+        $cliente = Cliente::select('*')->where('estado',1)->get();
         return view('figura.create', compact('figura', 'cliente'));
     }
 

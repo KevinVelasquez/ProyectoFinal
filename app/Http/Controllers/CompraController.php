@@ -233,8 +233,8 @@ class CompraController extends Controller
             ->with('success', 'Compra deleted successfully');
     }
 
-    public function generarPDF($id){
-       
+    public function generarPDF(){
+        $id = $_GET["id"];
         $compra = Compra::select('*')->where('compra.id',$id)->get();
         $detalle = Detalle_compra::select('*')->where('detalle_compra.id_orden_compra',$id)->get();
         $pdf = PDF::loadView('compra.pdf', compact('compra','detalle'));

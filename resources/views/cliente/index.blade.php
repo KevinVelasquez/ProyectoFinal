@@ -38,9 +38,9 @@ Cliente
                     <td>{{ $cliente->direccion }}</td>
                     <td>{{ $cliente->email }}</td>
                     @if ($cliente->tipo_persona==1)
-                    <td>Juridico</td>
-                    @else
                     <td>Natural</td>
+                    @else
+                    <td>Juridica</td>
                     @endif
 
                     <td>{{ $cliente->total_pedido-$cliente->total_abonos }}</td>

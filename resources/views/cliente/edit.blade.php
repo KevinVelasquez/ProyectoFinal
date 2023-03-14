@@ -77,14 +77,14 @@ Update Cliente
                                         <label for="tipo_persona">Tipo persona</label>
                                         <div class="col-sm-7">
                                             <select class="form-control" name="tipo_persona" id="tipo_persona" required>
-                                                <option  value="">Seleccione</option>
                                                 @forelse($tipo_persona as $tipo_personas)
-                                                <option value="{{$tipo_personas->id}}" selected>
-                                                    {{ $tipo_personas->nombre}}
-                                                </option>
-                                                @empty <option>No existen</option>
+                                                    <option value="{{$tipo_personas->id}}" {{ $tipo_personas->id == $cliente->tipo_persona ? 'selected' : '' }}>
+                                                        {{ $tipo_personas->nombre }}
+                                                    </option>                                                
+                                                @empty
+                                                    <option>No existen</option>
                                                 @endforelse
-                                            </select>
+                                            </select> 
                                            
                                         </div>
                                     </div>
@@ -97,14 +97,14 @@ Update Cliente
                                         <div class="col-sm-7">
 
                                             <select class="form-control" name="regimen" id="regimen" required>
-                                                <option value="">Seleccione</option>
-                                                @forelse($regimen as $regimens)
-                                                <option value="{{$regimens->id}}" selected>
-                                                    {{ $regimens->nombre}}
-                                                </option>
-                                                @empty <option>No existen</option>
+                                                @forelse($regimen as $regi)
+                                                    <option value="{{$regi->id}}" {{ $regi->id == $cliente->regimen ? 'selected' : '' }}>
+                                                        {{ $regi->nombre }}
+                                                    </option>                                                
+                                                @empty
+                                                    <option>No existen</option>
                                                 @endforelse
-                                            </select>
+                                            </select> 
                                             
                                         </div>
                                     </div>
@@ -114,15 +114,15 @@ Update Cliente
                                     <div class="form-group row">
                                         <label for="tipo_comercio">Tipo comercio</label>
                                         <div class="col-sm-7">
-                                            <select class="form-control" name="tipo_comercio" id="tipo_comercio"required>
-                                                <option value="">Seleccione</option>
-                                                @forelse($tipo_comercio as $tipo_comercios)
-                                                <option value="{{$tipo_comercios->id}}" selected>
-                                                    {{ $tipo_comercios->nombre}}
-                                                </option>
-                                                @empty <option>No existen</option>
+                                            <select class="form-control" name="tipo_comercio" id="tipo_comercio" required>
+                                                @forelse($tipo_comercio as $tipocomercio)
+                                                    <option value="{{$tipocomercio->id}}" {{ $tipocomercio->id == $cliente->tipo_comercio ? 'selected' : '' }}>
+                                                        {{ $tipocomercio->nombre }}
+                                                    </option>                                                
+                                                @empty
+                                                    <option>No existen</option>
                                                 @endforelse
-                                            </select>
+                                            </select> 
                                             
                                         </div>
                                     </div>

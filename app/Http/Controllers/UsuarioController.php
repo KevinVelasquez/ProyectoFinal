@@ -51,7 +51,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        $roles = Role::pluck('name','name')->all();
+        $roles = Role::select('roles.name')->where('roles.estado',1)->get();
         return view('usuario.create', compact('roles'));
     }
 

@@ -37,7 +37,7 @@ Route::get('/VistaPefil',  [UsuarioController::class,'VistaPefil'])->name('Vista
 Route::post('/EditarPerfil',  [UsuarioController::class,'EditarPerfil'])->name('EditarPerfil');
 Route::get('/CambioEstado', [UsuarioController::class,'CambioEstado'])->name('CambioEstado');
 Route::get('/CambioEstadoCompra', [CompraController::class,'CambioEstado'])->name('CambioEstado');
-Route::get('/generarPDF/{id}', [App\Http\Controllers\CompraController::class,'generarPDF'])->name('generarPDF');
+Route::get('/generarPDF', [App\Http\Controllers\CompraController::class,'generarPDF'])->name('generarPDF');
 Route::post('/store', [CompraController::class,'store'])->name('store');
 
 Auth::routes();

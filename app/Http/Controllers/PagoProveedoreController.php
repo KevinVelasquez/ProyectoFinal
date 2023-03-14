@@ -55,9 +55,11 @@ class PagoProveedoreController extends Controller
     public function verificarAbono($id)
     {
 
-        $totalabonocompra = PagoProveedore::all();
+        $totalabonocompra = PagoProveedore::select('compra.total', PagoProveedore::raw('SUM(pago_proveedores.abono) as totalabonado'))
+            ->join("compra", "compra.id", "=", "pago_proveedores.id_compra")->where([["pago_proveedores.estado", 1], ["compra.id", $id]])->groupBy("pago_proveedores.id_compra", "compra.total")
+            ->get();
 
-        return $totalabonocompra[0]->totalcompra - $totalabonocompra[0]->totalabonado;
+        return $totalabonocompra[0]->total - $totalabonocompra[0]->totalabonado;
     }
 
 
@@ -75,7 +77,12 @@ class PagoProveedoreController extends Controller
         $input = $request->all();
         PagoProveedore::where('id', $input["idanularabono"])
             ->update([
-                'estado' => 2
+                'anulado' => 1
+            ]);
+
+            Compra::where('id', $input["idcomprabono"])
+            ->update([
+                'estado' => 1
             ]);
 
 

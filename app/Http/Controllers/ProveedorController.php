@@ -38,14 +38,12 @@ class ProveedorController extends Controller
         //
         $proveedores = Proveedor::paginate();
 
-        $proveedor = Proveedor::select('proveedors.id', 'proveedors.nombre', 'proveedors.cedula', 'proveedors.telefono', 'proveedors.direccion', 'proveedors.email', 'proveedors.tipo_persona', 'proveedors.estado', PagoProveedore::raw('SUM(CASE WHEN pago_proveedores.estado = 1 THEN pago_proveedores.abono ELSE 0 END) as total_abonos'), Compra::raw('(SELECT SUM(CASE WHEN compra.estado = 1 THEN compra.total ELSE 0 END) FROM compra WHERE compra.id_proveedor = proveedors.id) as total_compra'))
-        ->leftJoin('compra', 'compra.id_proveedor', '=', 'proveedors.id')
-        ->leftJoin('pago_proveedores', 'pago_proveedores.id_compra', '=', 'compra.id')
-        ->groupBy('proveedors.id', 'proveedors.nombre', 'proveedors.cedula', 'proveedors.telefono', 'proveedors.direccion', 'proveedors.email', 'proveedors.tipo_persona', 'proveedors.estado')
-        ->get();
-        
-
-
+        $proveedor = Proveedor::select('proveedors.id', 'proveedors.nombre', 'proveedors.cedula', 'proveedors.telefono', 'proveedors.direccion', 'proveedors.email', 'proveedors.tipo_persona', 'proveedors.estado', PagoProveedore::raw('SUM(CASE WHEN pago_proveedores.estado = 1 THEN pago_proveedores.abono ELSE 0 END) as total_abonos'), Compra::raw('(SELECT SUM(CASE WHEN compra.anulado = 0 THEN compra.total ELSE 0 END) FROM compra WHERE compra.id_proveedor = proveedors.id) as total_compra'))
+            ->leftJoin('compra', 'compra.id_proveedor', '=', 'proveedors.id')
+            ->leftJoin('pago_proveedores', 'pago_proveedores.id_compra', '=', 'compra.id')
+            ->groupBy('proveedors.id', 'proveedors.nombre', 'proveedors.cedula', 'proveedors.telefono', 'proveedors.direccion', 'proveedors.email', 'proveedors.tipo_persona', 'proveedors.estado')
+            ->get();
+ 
         return view('proveedor.index', compact('proveedores','proveedor'))
             ->with('i', (request()->input('page', 1) - 1) * $proveedores->perPage());
     }
@@ -163,6 +161,7 @@ class ProveedorController extends Controller
         $regimen = Regimen::all();
         $proveedorEstado = Proveedor::find($id);
         $proveedor = Proveedor::findOrFail($id);
+
         return view('proveedor.edit', compact('proveedor', 'paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen', 'proveedorEstado'));
     }
 

@@ -31,15 +31,18 @@ class ClienteController extends Controller
 
         $figuras = Figura::all();
         $cliente = Cliente::paginate();
-        $clientes = Cliente::select('clientes.id', 'clientes.nombre', 'clientes.cedula', 'clientes.telefono', 'clientes.direccion', 'clientes.email', 'clientes.tipo_persona', 'clientes.estado', Pago_Clientes::raw('SUM(CASE WHEN pago__clientes.estado = 1 THEN pago__clientes.abono ELSE 0 END) as total_abonos'), Pedido::raw('(SELECT SUM(CASE WHEN pedidos.estado = 1 THEN pedidos.totalpedido ELSE 0 END) FROM pedidos WHERE pedidos.id_cliente = clientes.id) as total_pedido'))
-    ->leftJoin('pedidos', 'pedidos.id_cliente', '=', 'clientes.id')
-    ->leftJoin('pago__clientes', 'pago__clientes.id_pedido', '=', 'pedidos.id')
-    ->groupBy('clientes.id', 'clientes.nombre', 'clientes.cedula', 'clientes.telefono', 'clientes.direccion', 'clientes.email', 'clientes.tipo_persona', 'clientes.estado')
-    ->get();
 
-  
-        
-        return view('cliente.index', compact('cliente', 'figuras','clientes'))
+        $clientes = Cliente::select('clientes.id', 'clientes.nombre', 'clientes.cedula', 'clientes.telefono', 'clientes.direccion', 'clientes.email', 'clientes.tipo_persona', 'clientes.estado', Pago_Clientes::raw('SUM(CASE WHEN pago__clientes.estado = 1 THEN pago__clientes.abono ELSE 0 END) as total_abonos'), Pedido::raw('(SELECT SUM(CASE WHEN pedidos.estado = 1 THEN pedidos.totalpedido ELSE 0 END) FROM pedidos WHERE pedidos.id_cliente = clientes.id) as total_pedido'))
+            ->leftJoin('pedidos', 'pedidos.id_cliente', '=', 'clientes.id')
+            ->leftJoin('pago__clientes', 'pago__clientes.id_pedido', '=', 'pedidos.id')
+            ->groupBy('clientes.id', 'clientes.nombre', 'clientes.cedula', 'clientes.telefono', 'clientes.direccion', 'clientes.email', 'clientes.tipo_persona', 'clientes.estado')
+            ->get();
+
+            
+
+
+
+        return view('cliente.index', compact('cliente', 'figuras', 'clientes'))
             ->with('i', (request()->input('page', 1) - 1) * $cliente->perPage());
     }
 
@@ -136,18 +139,18 @@ class ClienteController extends Controller
     {
         //
         $input = $request->all();
-            $cliente = $input["ideliminar"];
+        $cliente = $input["ideliminar"];
 
         $consultadetalle = Pedido::select(
             "pedidos.id_cliente",
         )->get();
 
         foreach ($consultadetalle as $valor) {
-               
-            if($cliente==$valor->id_cliente) {
-                
+
+            if ($cliente == $valor->id_cliente) {
+
                 return redirect()->route('cliente.index')->with('error', 'No se puede eliminar el cliente porque está asociado a un pedido');
-                
+
             }
         }
 

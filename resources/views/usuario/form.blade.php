@@ -28,7 +28,15 @@
                 <div class="form-group col-12">
                     <div class="form-group">Rol
                         <label for="" class="col-md-4 col-form-label text-md-end"></label>
-                        {!!Form::select('roles[]', $roles,[], array('class' => 'form-control'))!!}
+                        <select class="form-control" name="roles" id="roles"  required>
+                            <option selected disabled value="">Seleccione</option>
+                            @forelse($roles  as $role)
+                                <option value="{{ $role->name }}">
+                                    {{ $role->name }}
+                                </option>
+                            @empty <option>No existen</option>
+                            @endforelse
+                        </select>
                     </div>
                 </div>
                 <div class="form-group col-12">Contraseña

@@ -37,9 +37,9 @@ Proveedor
                     <td>{{ $proveedores->direccion }}</td>
                     <td>{{ $proveedores->email }}</td>
                     @if ($proveedores->tipo_persona==1)
-                    <td>Juridico</td>
-                    @else
                     <td>Natural</td>
+                    @else
+                    <td>Juridico</td>
                     @endif
 
                     <td>{{ $proveedores->total_compra-$proveedores->total_abonos }}</td>

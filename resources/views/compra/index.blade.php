@@ -203,7 +203,7 @@ Compra
                                         <hr />
                                         <input type="hidden" id="iddescarga">
                                         <div>
-                                            <a class="btn btn-primary btn-lg active " href="{{route('generarPDF', $compra->id)}}" target="_blank"><i class="fa fa-fw fa-eye"></i> Descargar PDF</a>
+                                            <a type="button" id="botonDescarga" class="btn btn-primary  btn-lg active" target="_blank"><i class="fa fa-fw fa-eye"></i>Descargar</a>
                                         </div>
                                     </div>
                                 </div>
@@ -473,6 +473,11 @@ Compra
         var valor = fila.cells[4].innerHTML;
         document.getElementById("idcomprabonar").value = valor;
     }
+
+    $("#botonDescarga").on("click", (event) => {
+            window.open('generarPDF?' + 'id=' + $("#iddescarga").val());
+        })
+
     function validarMonto() {
         var input = parseInt(document.getElementById("cantidadabono").value);
         var resta = parseInt(document.getElementById("resta").value);
