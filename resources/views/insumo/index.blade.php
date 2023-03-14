@@ -101,6 +101,7 @@ Insumo
                                                         <option selected disabled value="">Seleccione</option>
                                                         <option value="Metros">Metros</option>
                                                         <option value="Centimetros">Centimetros</option>
+                                                        <option value="Unidades">Unidades</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -164,6 +165,7 @@ Insumo
                                                         id="editarmedidas" required>
                                                         <option value="Metros">Metros</option>
                                                         <option value="Centimetros">Centimetros</option>
+                                                        <option value="Unidades">Unidades</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -198,33 +200,6 @@ Insumo
         </form>
     </div>
 
-     <!-- modal anular -->
-     <div class="modal fade" id="anularmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitleanular"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="text-align: center;">
-                    <input type="hidden" name="estadoanular" id="estadoanular" />
-                    <form method="POST" action="{{ route('insumos.anularInsumo') }}" class="form-sample"
-                        role="form" enctype="multipart/form-data">
-                        @method('PATCH')
-                        @csrf
-                        <div>¿Está seguro que desea anular el insumo?</div>
-                        <input type="hidden" name="idanular" id="idanular" />
-                        <input type="hidden" name="anulardato" value="2" />
-                        <button type="submit" class="btn btn-primary">Si</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
      <!-- modal eliminar -->
      <div class="modal fade" id="eliminarmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -332,14 +307,7 @@ Insumo
         });
     });
 
-        function anularInsumo(id) {
-            let consulta = {!! $editarinsumo !!}
-            let datos = consulta.find(item => item.id == id)
-            $('#exampleModalLongTitleanular').text(`Anular Insumo #${datos.id}`);
-            $('#idanular').val(`${datos.id}`);
-            $('#estadoanular').val(`${datos.estado}`);
-
-        }
+       
 
         function eliminarInsumo(id) {
             let consulta = {!! $editarinsumo !!}

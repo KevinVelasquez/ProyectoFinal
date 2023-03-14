@@ -72,32 +72,6 @@ class InsumoController extends Controller
     }
 
 
-    public function anularInsumo(Request $request)
-    {
-        $input = $request->all();
-        Insumo::where('id', $input["idanular"])
-            ->update([
-                'estado' => 0
-            ]);
-        return redirect()->route('insumos.index')
-            ->with('success', 'Status insumo successfully');
-    }
-
-
-   
-    // public function store(Request $request)
-    // {
-        
-    //     //request()->validate(Insumo::$rules);
-    //     $input=$request->all();
-    //     $insumo = Insumo::create([
-    //         "nombre"=>$input["nombre"],
-    //         "medidas"=>$input["id_medidas"]
-    //     ]);
-
-    //     return redirect()->route('insumos.index')
-    //         ->with('success', 'Insumo created successfully.');
-    // }
 
     public function store(Request $request)
 {

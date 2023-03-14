@@ -143,51 +143,6 @@ class RolController extends Controller
         return redirect()->route('roles.index');
         
       
-        
-
-
-//         $input = $request->all(); // Esta línea obtiene todos los valores de entrada de la solicitud.
-
-// $user = ModelsUser::find($input["ideliminar"]); // Esta línea recupera todos los registros de usuario de la base de datos.
-
-// $roles = Role::pluck('name', 'name')->all(); // Esta línea recupera todos los roles de la base de datos y crea una colección con nombres de roles como claves y valores.
-// print_r($roles);
-//         exit;
-// $userRole = $user->$roles->pluck('name', 'name')->all();
-        
-       
-       
-       
-
-
-        // $input=$request->all();
-        
-        // $role = Role::find($input["ideliminar"]);
-        // if($role->name =='Administrador'){
-        //     $error = 'No se puede eliminar el rol de administrador.';
-        // return redirect()->route('roles.index')->with('error', $error);
-        // }
-        
-        // $input = $request->all();
-        //     $role = $input["ideliminar"];
-
-        //     $consultarol = User::select(
-        //         "users.roles",
-        //     )->get();
-
-        //     foreach ($consultarol as $valor) {
-               
-        //         if($role==$valor->rol) {
-                    
-        //             return redirect()->route('roles.index')->with('error', 'No se puede eliminar el rol');
-        //         }
-        //     }
-        //         Role::find($input["ideliminar"])->delete();
-        //         return redirect()->route('roles.index');
-        
-        // $role->delete();
-
-        // return redirect()->route('roles.index')
-        //     ->with('success', 'Rol deleted successfully');
+    
     }
 }
