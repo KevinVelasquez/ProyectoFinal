@@ -3,10 +3,16 @@
 @section('content')
 <section class="content container-fluid">
     @includeif('partials.errors')
+
+    @if(Session::has('success'))
+        {{Session::get('success') }}
+
+    @endif
+
     <div class="card-header">
-        <span class="card-title">Registrar Órden de Compra</span>
+        <span class="card-title">Registrar Orden de Compra</span>
     </div>
-    <form method="POST" action="{{ route('compra.store') }}" class="form-sample needs-validation" novalidate role="form" enctype="multipart/form-data" novalidate>
+    <form method="POST" action="{{ route('compra.store') }}" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
         @csrf
         <div class="row">
             <div class="col-6" style="padding-top: 2%; padding-left: 2%;">
@@ -28,34 +34,6 @@
                             <input type="date" class="form-control" name="fecha_compra" required>
                             <div class="col-md-6">
                                 @error('fecha_compra')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group col-6">
-                            <label for="estado">Estado</label>
-                            <select name="estado" class="form-control">
-                                <option value="1">Activa</option>
-                                <option value="2">Inactiva</option>
-                            </select>
-                            <div class="col-md-6">
-                                @error('estado')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group col-6">
-                            <label for="anulado">Anular</label>
-                            <select name="anulado" class="form-control">
-                                <option value="0">No Anulado</option>
-                                <option value="1">Anulado</option>
-                            </select>
-                            <div class="col-md-6">
-                                @error('anulado')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -88,7 +66,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6" style="padding-right: 3%;">
+            <div class="col-6" style="padding-right: 3%;padding-top: 2%;">
                 <div class="card">
                     <div class="card-head">
                         <h4 class="text-center">Info Insumos</h4>
@@ -146,10 +124,17 @@
                 <input type="number" class="form-control" name="abono" id="abono" required>
             </div>
             <div class="col-12" style="padding-left: 2%;">
-                <button type="submit" href="{{ route('compra.index')}}" class="btn btn-primary btn-lg active">Guardar</button>
-                <a onclick="history.back()" type="button" class="btn btn-primary btn-lg active" style="color:white">Cancelar</a>
+                <button type="submit"class="btn btn-primary btn-lg active">Guardar</button>
+                <a href="{{ route('compra.index') }}" class="btn btn-primary btn-lg active" type="button">Cancelar</a>
             </div>
+
+
         </div>
+        @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+            @endif
     </form>
 </section>
 @endsection
@@ -196,21 +181,22 @@
     }
 
     (function() {
-            'use strict'
+        'use strict'
 
-            var forms = document.querySelectorAll('.needs-validation')
+        var forms = document.querySelectorAll('.needs-validation')
 
-            Array.prototype.slice.call(forms)
-                .forEach(function(form) {
-                    form.addEventListener('submit', function(event) {
-                        if (!form.checkValidity()) {
-                            event.preventDefault()
-                            event.stopPropagation()
-                        }
+        Array.prototype.slice.call(forms)
+            .forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
 
-                        form.classList.add('was-validated')
-                    }, false)
-                })
-        })()
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+
 </script>
 

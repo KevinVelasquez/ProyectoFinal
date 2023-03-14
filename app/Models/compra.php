@@ -31,9 +31,7 @@ class Compra extends Model
     static $rules = [
 		'n_orden' => 'required',
 		'fecha_compra' => 'required',
-		'anulado' => 'required',
 		'total' => 'required',
-		'estado' => 'required',
 		'id_proveedor' => 'required',
 		'id_metodo_pagos' => 'required',
     ];
@@ -46,7 +44,7 @@ class Compra extends Model
      *
      * @var array
      */
-    protected $fillable = ['n_orden','fecha_compra','anulado','total','estado','id_proveedor','id_metodo_pagos'];
+    protected $fillable = ['n_orden','fecha_compra','total','id_proveedor','id_metodo_pagos'];
 
 
     /**

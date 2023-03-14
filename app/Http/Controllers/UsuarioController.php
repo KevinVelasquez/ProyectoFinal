@@ -16,6 +16,7 @@ use Illuminate\support\Facades\DB;
 use Illuminate\support\Facades\Host;
 use Illuminate\support\Arr;
 use App\Http\Models\User;
+use Illuminate\Support\Facades\Session;
 
 /**
  * Class UsuarioController
@@ -100,10 +101,16 @@ class UsuarioController extends Controller
     public function edit($id)
     {
         $user = ModelsUser::find($id);
+
+        if ($user->hasRole('Administrador')) {
+            return redirect()->back()->with('error', 'No puedes editar al super administrador');
+        }
+
         $roles = Role::pluck('name', 'name')->all();
         $userRole = $user->roles->pluck('name', 'name')->all();
+        $selectedRoles = $user->roles()->pluck('name')->toArray();
 
-        return view('usuario.edit', compact('user','roles','userRole'));
+        return view('usuario.edit', compact('user','roles','userRole','selectedRoles'));
     }
 
     /**
@@ -115,30 +122,32 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = ModelsUser::find($id);
+
         $this->validate($request, [
             'nombre' => 'required',
             'cedula' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
-            'password' => 'same:confirm-password',
-            'rol' => 'required',
+            'estado' => 'required',
         ]);
+
 
         $input = $request->all();
         if (!empty($input['password'])) {
-
             $input['password'] = Hash::make($input['password']);
         } else {
             $input = Arr::except($input, array('password'));
         }
-
-        $user = ModelsUser::find($id);
+        $user->syncRoles($request->input('roles'));
         $user->update($input);
 
-        DB::table('model_has_roles')->where('model_id', $id)->delete();
-        $user->assingRole($request->input('rol'));
+        ModelsUser::where('id', $id)
+        ->update(['estado'=>$input["estado"]]);
 
-        return redirect()->route('usuario.index')
-            ->with('success', 'Usuario Editado con éxito');
+ /*        DB::table('model_has_roles')->where('model_id', $id)->delete();
+        $user->assingRole($request->input('roles')); */
+        Session::flash('success', 'Se actualizó correctamente');
+        return redirect()->route('usuario.index');
     }
 
     /**
@@ -202,6 +211,9 @@ class UsuarioController extends Controller
         } else {
             //
         }
+        
+        ModelsUser::where('nombre', $nombre)->update(['nombre' => $nombre]);
+
         $nombre = $request->nombre;
         $sqlBD = DB::table('users')
             ->where('id', $user->id)
@@ -217,7 +229,7 @@ class UsuarioController extends Controller
             ->where('id', $user->id)
             ->update(['email' => $email]);
 
-        return redirect()->back()->with('nombre', 'Editado con éxito');
+        return redirect()->with('nombre', 'Editado con éxito');
     }
 
     public function CambioEstado(Request $request)
