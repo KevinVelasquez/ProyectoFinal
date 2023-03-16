@@ -22,7 +22,7 @@ Update Cliente
 
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('cliente.update', $cliente->id) }}" role="form" enctype="multipart/form-data"  class="row g-3 needs-validation" novalidate>
+                    <form method="POST" action="{{ route('cliente.update', $cliente->id) }}" role="form" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
                         @csrf
                         {{ method_field('PATCH') }}
 
@@ -35,7 +35,7 @@ Update Cliente
                                         <label for="nombre">Nombre</label>
                                         <div class="col-sm-9">
                                             <input type="text" name="nombre" value="{{ isset($cliente->nombre)?$cliente->nombre:'' }}" id="nombre" class="form-control" required>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -46,7 +46,7 @@ Update Cliente
                                         <label for="cedula">Cédula/Nit</label>
                                         <div class="col-sm-9">
                                             <input type="text" name="cedula" value="{{ isset($cliente->cedula)?$cliente->cedula:'' }}" id=" cedula" class="form-control" required>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -57,7 +57,7 @@ Update Cliente
                                         <label for="telefono">Teléfono</label>
                                         <div class="col-sm-9">
                                             <input type="text" name="telefono" value="{{ isset($cliente->telefono)?$cliente->telefono:'' }}" id=" telefono" class="form-control" required>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -67,7 +67,7 @@ Update Cliente
                                         <label for="email">Correo</label>
                                         <div class="col-sm-9">
                                             <input type="text" name="email" value="{{ isset($cliente->email)?$cliente->email:'' }}" id=" email" class="form-control" required>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -78,14 +78,14 @@ Update Cliente
                                         <div class="col-sm-7">
                                             <select class="form-control" name="tipo_persona" id="tipo_persona" required>
                                                 @forelse($tipo_persona as $tipo_personas)
-                                                    <option value="{{$tipo_personas->id}}" {{ $tipo_personas->id == $cliente->tipo_persona ? 'selected' : '' }}>
-                                                        {{ $tipo_personas->nombre }}
-                                                    </option>                                                
+                                                <option value="{{$tipo_personas->id}}" {{ $tipo_personas->id == $cliente->tipo_persona ? 'selected' : '' }}>
+                                                    {{ $tipo_personas->nombre }}
+                                                </option>
                                                 @empty
-                                                    <option>No existen</option>
+                                                <option>No existen</option>
                                                 @endforelse
-                                            </select> 
-                                           
+                                            </select>
+
                                         </div>
                                     </div>
                                 </div>
@@ -98,14 +98,14 @@ Update Cliente
 
                                             <select class="form-control" name="regimen" id="regimen" required>
                                                 @forelse($regimen as $regi)
-                                                    <option value="{{$regi->id}}" {{ $regi->id == $cliente->regimen ? 'selected' : '' }}>
-                                                        {{ $regi->nombre }}
-                                                    </option>                                                
+                                                <option value="{{$regi->id}}" {{ $regi->id == $cliente->regimen ? 'selected' : '' }}>
+                                                    {{ $regi->nombre }}
+                                                </option>
                                                 @empty
-                                                    <option>No existen</option>
+                                                <option>No existen</option>
                                                 @endforelse
-                                            </select> 
-                                            
+                                            </select>
+
                                         </div>
                                     </div>
                                 </div>
@@ -116,14 +116,14 @@ Update Cliente
                                         <div class="col-sm-7">
                                             <select class="form-control" name="tipo_comercio" id="tipo_comercio" required>
                                                 @forelse($tipo_comercio as $tipocomercio)
-                                                    <option value="{{$tipocomercio->id}}" {{ $tipocomercio->id == $cliente->tipo_comercio ? 'selected' : '' }}>
-                                                        {{ $tipocomercio->nombre }}
-                                                    </option>                                                
+                                                <option value="{{$tipocomercio->id}}" {{ $tipocomercio->id == $cliente->tipo_comercio ? 'selected' : '' }}>
+                                                    {{ $tipocomercio->nombre }}
+                                                </option>
                                                 @empty
-                                                    <option>No existen</option>
+                                                <option>No existen</option>
                                                 @endforelse
-                                            </select> 
-                                            
+                                            </select>
+
                                         </div>
                                     </div>
                                 </div>
@@ -131,36 +131,36 @@ Update Cliente
 
                                 <div class="col-md-4">
                                     <div class="form-group row">
-                                        <label for="">País</label>
+                                        <label for="pais">País</label>
                                         <div class="col-sm-7">
                                             <select class="form-control" name="pais" id="pais" required>
-                                                <option value="">Seleccione</option>
                                                 @forelse($paises as $pais)
+
+
                                                 <option value="{{$pais->id}}" selected>
-                                                    {{ $pais->nombre}}
+                                                    {{ $pais->nombre }}
                                                 </option>
                                                 @empty <option>No existen</option>
                                                 @endforelse
                                             </select>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group row">
-                                        <label for="">Departamento</label>
+                                        <label for="departamento">Departamento</label>
                                         <div class="col-sm-7">
                                             <select class="form-control" name="departamento" id="departamento" required>
-                                                <option value="">Seleccione</option>
                                                 @forelse($departamentos as $departamento)
                                                 <option value="{{$departamento->id}}" selected>
-                                                    {{ $departamento->nombre}}
-                                                </option>
+                                                        {{ $departamento->nombre }}
+                                                    </option>
                                                 @empty <option>No existen</option>
                                                 @endforelse
                                             </select>
-                                           
+
                                         </div>
                                     </div>
                                 </div>
@@ -171,15 +171,14 @@ Update Cliente
                                         <label for="id_municipio">Municipio</label>
                                         <div class="col-sm-7">
                                             <select class="form-control" name="id_municipio" id="id_municipio" required>
-                                                <option value="">Seleccione</option>
                                                 @forelse($municipios as $municipio)
-                                                <option value="{{$municipio->id}}" selected>
-                                                    {{ $municipio->nombre}}
+                                                <option value="{{$municipio->id}}" {{ $municipio->id == $cliente->id_municipio ? 'selected' : '' }}>
+                                                    {{ $municipio->nombre }}
                                                 </option>
                                                 @empty <option>No existen</option>
                                                 @endforelse
                                             </select>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -189,7 +188,7 @@ Update Cliente
                                         <label for="direccion">Dirección</label>
                                         <div class="col-sm-9">
                                             <input type="text" name="direccion" value="{{ isset($cliente->direccion)?$cliente->direccion:'' }}" id=" direccion" class="form-control" required>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -226,27 +225,27 @@ Update Cliente
 
     <script>
         $(document).ready(function() {
-            let cliente = {!!$clienteEstado->estado!!}
+            let cliente = { !!$clienteEstado - > estado!! }
             $('#editarEstado').val(`${cliente}`)
         })
     </script>
 
-<script>
-    (function() {
-    'use strict'
-    var forms = document.querySelectorAll('.needs-validation')
-    Array.prototype.slice.call(forms)
-        .forEach(function(form) {
-            form.addEventListener('submit', function(event) {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                }
-                form.classList.add('was-validated')
-            }, false)
-        })
-})()
-</script>
+    <script>
+        (function() {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
 
 </section>
 @endsection

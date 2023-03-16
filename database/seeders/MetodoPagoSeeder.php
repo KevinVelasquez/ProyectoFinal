@@ -24,7 +24,7 @@ class MetodoPagoSeeder extends Seeder
 
         DB::table('metodo__pagos')->insert([
             'id' => 2,
-            'nombre' => 'Credito',
+            'nombre' => 'Crédito',
         ]);
     }
 }
