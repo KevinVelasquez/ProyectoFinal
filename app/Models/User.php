@@ -24,6 +24,7 @@ class User extends Authenticatable
         'nombre',
         'cedula',
         'email',
+        'estado',
         'password',
     ];
 
