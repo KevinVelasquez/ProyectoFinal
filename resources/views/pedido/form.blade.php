@@ -459,35 +459,34 @@
 
 
     function filtrarDepartamentos() {
+    var pais = document.getElementById("pais").value;
+    var selectordepartamentos = document.getElementById("departamento");
+    selectordepartamentos.innerHTML = "<option value='' selected disabled>Seleccione</option>";
+    let paisseleccion = [];
+    let departamentos = <?php echo $departamentos; ?>;
+    departamentos.forEach(function(value, index) {
+        paisseleccion[index] = value;
+        if (paisseleccion[index].id_paises == pais) {
+            $("#departamento").append(`
+                <option value="${paisseleccion[index].id}">${paisseleccion[index].nombre}</option>
+            `);
+        }
+    });
+}
 
-        var pais = document.getElementById("pais").value;
-        var selectordepartamentos = document.getElementById("departamento");
-        selectordepartamentos.innerHTML = "";
-        let paisseleccion = [];
-        let departamentos = <?php echo $departamentos; ?>;
-        departamentos.forEach(function(value, index) {
-            paisseleccion[index] = value;
-            if (paisseleccion[index].id_paises == pais) {
-                $("#departamento").append(`
-                <option selected disabled value="">Seleccione</option>
-                    <option value="${paisseleccion[index].id}"/>${paisseleccion[index].nombre}
-                    `);
-            }
-        });
-    }
 
     function filtrarMunicipios() {
 
         var departamento = document.getElementById("departamento").value;
         var selectormunicipios = document.getElementById("municipio");
-        selectormunicipios.innerHTML = "";
+        selectormunicipios.innerHTML = "<option value='' selected disabled>Seleccione</option>";
         let departamentoseleccion = [];
         let municipios = <?php echo $municipios; ?>;
         municipios.forEach(function(value, index) {
             departamentoseleccion[index] = value;
             if (departamentoseleccion[index].id_departamentos == departamento) {
-                $("#municipio").append(`
-                <option selected disabled value="">Seleccione</option>
+                $("#municipio").append(    
+                `
                 <option value="${departamentoseleccion[index].id}"/>${departamentoseleccion[index].nombre}
                 `);
             }

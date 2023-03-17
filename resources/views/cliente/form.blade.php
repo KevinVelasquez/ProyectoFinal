@@ -107,7 +107,7 @@
             <div class="form-group row">
                 <label for="">País</label>
                 <div class="col-sm-9">
-                    <select class="form-control" name="pais" id="pais" required>
+                    <select class="form-control" name="pais" id="pais" onchange="filtrarDepartamentos()" required>
                         <option selected disabled value="">Seleccione</option>
                         @forelse($paises as $pais)
                         <option value="{{$pais->id}}">
@@ -126,7 +126,7 @@
             <div class="form-group row">
                 <label for="">Departamento</label>
                 <div class="col-sm-7">
-                    <select class="form-control" name="departamento" id="departamento" required>
+                    <select class="form-control" name="departamento" id="departamento" onchange="filtrarMunicipios()" required>
                         <option selected disabled value="">Seleccione</option>
                         @forelse($departamentos as $departamento)
                         <option value="{{$departamento->id}}">
@@ -170,8 +170,7 @@
             </div>
         </div>
     </div>
-    <!-- <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">Submit</button> -->
+
 </div>
 
 <div class="box-footer mt20">
@@ -198,4 +197,40 @@
             }, false)
         })
 })()
+
+function filtrarDepartamentos() {
+    var pais = document.getElementById("pais").value;
+    var selectordepartamentos = document.getElementById("departamento");
+    selectordepartamentos.innerHTML = "<option value='' selected disabled>Seleccione</option>";
+    let paisseleccion = [];
+    let departamentos = <?php echo $departamentos; ?>;
+    departamentos.forEach(function(value, index) {
+        paisseleccion[index] = value;
+        if (paisseleccion[index].id_paises == pais) {
+            $("#departamento").append(`
+                <option value="${paisseleccion[index].id}">${paisseleccion[index].nombre}</option>
+            `);
+        }
+    });
+}
+
+
+    function filtrarMunicipios() {
+
+        var departamento = document.getElementById("departamento").value;
+        var selectormunicipios = document.getElementById("id_municipio");
+        selectormunicipios.innerHTML = "<option value='' selected disabled>Seleccione</option>";
+        let departamentoseleccion = [];
+        let municipios = <?php echo $municipios; ?>;
+        console.log(departamento)
+        municipios.forEach(function(value, index) {
+            departamentoseleccion[index] = value;
+            if (departamentoseleccion[index].id_departamentos == departamento) {
+                $("#id_municipio").append(    
+                `
+                <option value="${departamentoseleccion[index].id}"/>${departamentoseleccion[index].nombre}
+                `);
+            }
+        });
+    }
 </script>

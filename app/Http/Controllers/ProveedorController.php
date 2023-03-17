@@ -161,6 +161,8 @@ class ProveedorController extends Controller
         $regimen = Regimen::all();
         $proveedorEstado = Proveedor::find($id);
         $proveedor = Proveedor::findOrFail($id);
+        // print($proveedor);
+        // exit;
 
         return view('proveedor.edit', compact('proveedor', 'paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen', 'proveedorEstado'));
     }
