@@ -74,6 +74,13 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+            'cedula' => 'required|unique:clientes',
+            'nombre' => 'required',
+            'email' => 'required|email|unique:clientes,email',
+            'telefono' => 'required',
+            'direccion' => 'required',
+        ]);
 
         $datosCliente = request()->except('_token', 'pais', 'departamento');
         Cliente::insert($datosCliente);
@@ -122,7 +129,7 @@ class ClienteController extends Controller
     public function update(Request $request, Cliente $cliente)
     {
         //
-
+        
         $cliente->update($request->all());
 
         return redirect()->route('cliente.index')

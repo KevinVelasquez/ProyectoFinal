@@ -76,21 +76,18 @@ class ProveedorController extends Controller
     public function store(Request $request)
     {
 
+        $this->validate($request, [
+            'cedula' => 'required|unique:proveedors',
+            'nombre' => 'required',
+            'email' => 'required|email|unique:proveedors,email',
+            'telefono' => 'required',
+            'direccion' => 'required',
+        ]);
+
 
         $datosProveedor = request()->except('_token', 'pais', 'departamento');
         
         
-
-        try {
-            
-            // Código para guardar datos en la base de datos
-        } catch (\Illuminate\Database\QueryException $e) {
-            if ($e->errorInfo[1] == 1062) { // Verificar si es un error de clave duplicada
-                if (strpos($e->getMessage(), 'proveedors_cedula_unique') !== false) { // Verificar si la clave duplicada es para el campo 'cedula'
-                    throw new \Exception('El número de cédula ya existe en la base de datos'); // Lanzar una excepción con el mensaje de validación
-                }
-            }
-        }
         Proveedor::insert($datosProveedor);
 
         return redirect('proveedor')

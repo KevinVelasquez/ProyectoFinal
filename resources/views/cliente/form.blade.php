@@ -16,8 +16,12 @@
             <div class="form-group row">
                 <label for="cedula">Cédula/Nit</label>
                 <div class="col-sm-9">
-                    <input type="text" name="cedula" value="{{ isset($cliente->cedula)?$cliente->cedula:'' }}" id=" cedula" class="form-control" required>
-                    
+                    <input id="cedula" type="text" class="form-control @error('cedula') is-invalid @enderror" name="cedula" value="{{ old('cedula') }}" required autocomplete="cedula">
+                    @error('cedula')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
             </div>
         </div>
@@ -38,8 +42,12 @@
             <div class="form-group row">
                 <label for="email">Correo</label>
                 <div class="col-sm-9">
-                    <input type="text" name="email" value="{{ isset($cliente->email)?$cliente->email:'' }}" id=" email" class="form-control" required>
-                    
+                    <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                    @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
             </div>
         </div>
