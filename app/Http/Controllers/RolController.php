@@ -79,7 +79,7 @@ class RolController extends Controller
         $role = Role::find($id);
         $role = DB::table('roles')->where('id', $id)->first();
         if ($role->name == 'Administrador') {
-            return redirect()->route('roles.index')->with('error', 'No se puede editar el rol de administrador')->with('reload', true);
+            return redirect()->route('roles.index')->with('error', 'No se puede editar el rol de administrador');
         }
         $rolestado= Role::find($id);
         $permission = Permission::get();
