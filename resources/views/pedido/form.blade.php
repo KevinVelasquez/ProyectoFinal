@@ -273,9 +273,9 @@
 
 </div>
 <div class="form-group" style="margin-top: 2%;margin-left: 39%;">
-    <button type="submit" class="btn btn-success" style="margin: 10px" >Crear</button>
-    <a class="btn btn-primary " style="margin: 10px" onclick="resetForm('formpedidos')">Limpiar</a>
-    <a class="btn btn-danger " href="{{ route('pedidos.index') }}" style="margin: 10px">Cancelar</a>
+    <button type="submit" class="btn btn-success" style="margin: 10px;background-color:#81242E;border:#81242E" >Crear</button>
+    <a class="btn btn-success " style="margin: 10px;background-color:#B0B0B0;border:#B0B0B0" onclick="resetForm('formpedidos')">Limpiar</a> 
+    <a class="btn btn-success" href="{{ route('pedidos.index') }}" style="margin: 10px;background-color:#565656;border:#565656">Cancelar</a>
 </div>
 
 <!-- modal diseños -->
@@ -345,7 +345,7 @@
                                 <td>${precio}</td>
                                 <td>${parseInt(cantidad) * parseInt(precio)}</td>
                                 <td>${descripcion}</td>
-                                <td><a type="button" class="mdi mdi-close-circle" style="color:red;font-size:100%" id="eliminar" onclick="eliminarclick(${producto_id},
+                                <td><a type="button" class="mdi mdi-close-circle" style="color:red;font-size:30px" id="eliminar" onclick="eliminarclick(${producto_id},
                                     ${parseInt(cantidad)*parseInt(precio)})"></a></td>     
                                 </tr>
 

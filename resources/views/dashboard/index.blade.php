@@ -20,27 +20,26 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" style="margin-top: 0%">Generar gráfico</button>
+            <button type="submit" class="btn btn-primary" style="margin-top: 0%;background-color:#81242E;border:#81242E">Generar gráfico</button>
         </form>
         <div class="row">
             <div class="col-md-6">
                 <div>
                     <canvas id="grafica-pedidos"></canvas>
                 </div>
-                <button class="btn btn-primary" onclick="descargargraficapedidos()">Descargar</button>
+                <button class="btn btn-primary" onclick="descargargraficapedidos()" style="background-color:#81242E;border:#81242E"><i class="mdi mdi-download"></i> Descargar</button>
             </div>
             <div class="col-md-3">
                 <div style="width:100%;height: 21em;">
                     <canvas id="proceso-pedidos"></canvas>
                 </div>
-                <button class="btn btn-primary" onclick="descargarprocesopedidos()">Descargar</button>
-
+                <button class="btn btn-primary" onclick="descargarprocesopedidos()"style="background-color:#81242E;border:#81242E"><i class="mdi mdi-download"></i> Descargar</button>
             </div>
             <div class="col-md-3">
                 <div style="width:100%;height: 21em;">
                     <canvas id="productosvendidos"></canvas>
                 </div>
-                <button class="btn btn-primary" onclick="descargarproductosvendidos()">Descargar</button>
+                <button class="btn btn-primary" onclick="descargarproductosvendidos()"style="background-color:#81242E;border:#81242E"><i class="mdi mdi-download"></i> Descargar</button>
             </div>
         </div>
         <br>
@@ -51,13 +50,13 @@
                 <div>
                     <canvas id="frecuencia-clientes"></canvas>
                 </div>
-                <button class="btn btn-primary" onclick="descargarfrecuenciaclientes()">Descargar</button>
+                <button class="btn btn-primary" onclick="descargarfrecuenciaclientes()"style="background-color:#81242E;border:#81242E"><i class="mdi mdi-download"></i> Descargar</button>
             </div>
             <div class="col-md-6">
                 <div>
                     <canvas id="frecuencia-proveedores"></canvas>
                 </div>
-                <button class="btn btn-primary" onclick="descargarfrecuenciaproveedores()">Descargar</button>
+                <button class="btn btn-primary" onclick="descargarfrecuenciaproveedores()"style="background-color:#81242E;border:#81242E"><i class="mdi mdi-download"></i> Descargar</button>
             </div>
         </div>
         <br>
@@ -68,19 +67,19 @@
                 <div style="width:100%;height: 21em;">
                     <canvas id="metodo_entregas"></canvas>
                 </div>
-                <button class="btn btn-primary" onclick="descargarmetodoentregas()">Descargar</button>
+                <button class="btn btn-primary" onclick="descargarmetodoentregas()"style="background-color:#81242E;border:#81242E"><i class="mdi mdi-download"></i> Descargar</button>
             </div>
             <div class="col-md-4">
                 <div style="width:100%;height: 21em;">
                     <canvas id="metodo_pagos"></canvas>
                 </div>
-                <button class="btn btn-primary" onclick="descargarmetodopagos()">Descargar</button>
+                <button class="btn btn-primary" onclick="descargarmetodopagos()"style="background-color:#81242E;border:#81242E"><i class="mdi mdi-download"></i> Descargar</button>
             </div>
             <div class="col-md-4">
                 <div style="width:100%;height: 21em;">
                     <canvas id="tipoclientes"></canvas>
                 </div>
-                <button class="btn btn-primary" onclick="descargartipoclientes()">Descargar</button>
+                <button class="btn btn-primary" onclick="descargartipoclientes()"style="background-color:#81242E;border:#81242E"><i class="mdi mdi-download"></i> Descargar</button>
             </div>
         </div>
         <br>
@@ -90,7 +89,7 @@
                 <div>
                     <canvas id="balance"></canvas>
                 </div>
-                <button class="btn btn-primary" onclick="descargarbalance()">Descargar</button>
+                <button class="btn btn-primary" onclick="descargarbalance()" style="background-color:#81242E;border:#81242E"><i class="mdi mdi-download"></i> Descargar</button>
             </div>
         </div>
     </div>
