@@ -8,6 +8,13 @@
     <div class="container">
         
         <main role="main" class="pb-3">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-sm-6" id="tituloinicial">
+                        <h3 class="mb-0 font-weight-bold">Pedidos</h3>
+                    </div>
+                </div>
+            </div>
             <p>
                 <a class="mdi mdi-cart-plus" id="iconoadd" href="{{ route('pedidos.create') }}"></a>
             </p>
@@ -33,9 +40,13 @@
                             <td>{{ $pedidos->cedula }}</td>
                             <td>{{ $pedidos->nombre }}</td>
 
-                            <td>{{ ucwords(\Carbon\Carbon::parse($pedidos->fecha_registro)->locale('es_MX', 'es_MX.utf8')->isoFormat('dddd[,] D [de] MMMM [del] Y')) }}
+                            <td>{{-- {{ ucwords(\Carbon\Carbon::parse( --}}
+                                {{$pedidos->fecha_registro}}
+                                {{-- )->locale('es_MX', 'es_MX.utf8')->isoFormat('dddd[,] D [de] MMMM [del] Y')) }} --}}
                             </td>
-                            <td>{{ ucwords(\Carbon\Carbon::parse($pedidos->fecha_entrega)->locale('es_MX', 'es_MX.utf8')->isoFormat('dddd[,] D [de] MMMM [del] Y')) }}
+                            <td>{{-- {{ ucwords(\Carbon\Carbon::parse( --}}
+                                {{$pedidos->fecha_entrega}}
+                                {{-- )->locale('es_MX', 'es_MX.utf8')->isoFormat('dddd[,] D [de] MMMM [del] Y')) }} --}}
                             </td>
                             <td><?php if ($pedidos->estado == 1) {
                                 echo 'Activo';
@@ -57,7 +68,7 @@
                             <td>
                                 <button onclick="verDatos('{{ $pedidos->id }}')" class="mdi mdi-format-align-justify "
                                     data-toggle="modal" data-target="#verdetalle"></button>
-                                <button onclick="verDatosAbono('{{ $pedidos->id }}')" class="mdi mdi-cash-usd "
+                                <button onclick="verDatosAbono('{{ $pedidos->id }}')" class="mdi mdi-cash-multiple"
                                     data-toggle="modal" data-target="#abonos" @if ($pedidos->estado !== 1)disabled @endif></button>
                                 <button onclick="editarPedido('{{ $pedidos->id }}')" class="mdi mdi-lead-pencil"
                                     data-toggle="modal" data-target="#editarmodal"  @if ($pedidos->estado !== 1)disabled @endif></button>
@@ -181,8 +192,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Actualizar</button>
-                                    <button type="button" class="btn btn-danger" style="margin-top: 5%;"
+                                    <button type="submit" class="btn btn-primary" style="background-color:#81242E;border:#81242E">Actualizar</button>
+                                    <button type="button" class="btn btn-primary" style="margin-top: 5%;background-color:#565656;border:#565656"
                                         data-dismiss="modal">Cancelar</button>
                                 </form>
                             </div>
@@ -213,8 +224,8 @@
                         <div>¿Está seguro que desea anular el pedido?</div>
                         <input type="hidden" name="idanular" id="idanular" />
                         <input type="hidden" name="anulardato" value="2" />
-                        <button type="submit" class="btn btn-primary">Si</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-top:5%;">No</button>
+                        <button type="submit" class="btn btn-primary" style="background-color:#81242E;border:#81242E">Si</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" style="margin-top:5%;background-color:#565656;border:#565656">No</button>
                     </form>
                 </div>
             </div>
@@ -358,7 +369,7 @@
                                         <hr />
                                         <input type="hidden" id="iddescarga">
                                         <div>
-                                            <a type="button" id="botonDescarga" class="btn btn-primary">Descargar</a>
+                                            <a type="button" id="botonDescarga" class="btn btn-primary" style="background-color:#81242E;border:#81242E;color:white"><i class="mdi mdi-download"></i> Descargar</a>
                                         </div>
                                     </div>
                                 </div>
@@ -423,8 +434,8 @@
                         </div>
                 </div>
                 <div class="botonestabla" style="text-align: center;">
-                    <button type="submit" id="agregarAbono" class="btn btn-primary">Agregar</button>
-                    <button type="button" class="btn btn-danger" style="margin-top:5%;">Cancelar</button>
+                    <button type="submit" id="agregarAbono" class="btn btn-primary" style="background-color:#81242E;border:#81242E">Agregar</button>
+                    <button type="button" class="btn btn-primary" style="margin-top:5%;background-color:#565656;border:#565656" data-dismiss="modal" aria-label="Close">Cancelar</button>
                 </div>
                 </form>
                 <br>
@@ -482,9 +493,9 @@
                         <input type="hidden" name="idanularabono" id="idanularabono" />
                         <input type="hidden" name="idpedidoabono" id="idpedidoabono" />
                         <input type="hidden" name="anulardato" value="2" />
-                        <button type="submit" class="btn btn-primary">Si</button>
-                        <button type="button" class="btn btn-danger"
-                            style="margin-top:5%;"data-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-primary" style="background-color:#81242E;border:#81242E">Si</button>
+                        <button type="button" class="btn btn-primary"
+                            style="margin-top:5%;background-color:#565656;border:#565656" data-dismiss="modal">No</button>
                     </form>
                 </div>
             </div>
