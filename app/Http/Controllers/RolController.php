@@ -49,7 +49,8 @@ class RolController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['name'=>'required|unique:roles,name', 'permission'=>'required']);
+        $this->validate($request, ['name'=>'required|unique:roles,name', 'permission'=>'required'],
+        ['name.required' => 'El campo Nombre es requerido.',]);
         $role = Role::create(['name'=> $request->input('name')]);
         $role->syncPermissions($request->input('permission'));
 
@@ -76,6 +77,10 @@ class RolController extends Controller
     public function edit($id)
     {
         $role = Role::find($id);
+        $role = DB::table('roles')->where('id', $id)->first();
+        if ($role->name == 'Administrador') {
+            return redirect()->route('roles.index')->with('error', 'No se puede editar el rol de administrador');
+        }
         $rolestado= Role::find($id);
         $permission = Permission::get();
         $rolePermissions = DB::table('role_has_permissions')->where('role_has_permissions.role_id',$id)

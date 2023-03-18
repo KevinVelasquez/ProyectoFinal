@@ -109,7 +109,10 @@
         <div class="form-group row">
             <label class="control-label">Fecha de Entrega</label>
             <div class="col-sm-7">
-                <input type="date" name="fecha_entrega" id="fecha_entrega" class="form-control" required />
+            <?php
+            $fechamin = date('Y-m-d');
+            ?>
+                <input type="date" min="<?=$fechamin;?>" name="fecha_entrega" id="fecha_entrega" class="form-control" required />
             </div>
         </div>
     </div>

@@ -394,7 +394,10 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">Fecha</label>
                                     <div class="col-sm-9">
-                                        <input type="date" name="fechaabono" class="form-control" required>
+                                    <?php
+                                    $fechamax = date('Y-m-d');
+                                    ?>
+                                        <input type="date" name="fechaabono" max="<?=$fechamax;?>" class="form-control" required>
                                     </div>
                                 </div>
                             </div>

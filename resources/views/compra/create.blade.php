@@ -35,7 +35,10 @@ Nueva Compra
                         </div>
                         <div class="form-group col-6">
                             <label for="">Fecha de Compra</label>
-                            <input type="date" class="form-control" name="fecha_compra" required>
+                                <?php
+                                $fechamax = date('Y-m-d');
+                                ?>
+                            <input type="date" class="form-control" max="<?=$fechamax;?>" name="fecha_compra" required>
                             <div class="col-md-6">
                                 @error('fecha_compra')
                                 <span class="invalid-feedback" role="alert">
@@ -153,25 +156,43 @@ Nueva Compra
         let insumo_text = $("#id_insumo option:selected").text();
         let cantidad = $("#cantidad").val();
         let valor_unitario = $("#valor_unitario").val();
+
+
+        let filas = document.getElementById('tblInsumos').rows;
+        let insumoEncontrado = false;
+
         if (cantidad > 0 && valor_unitario > 0) {
-            $("#tblInsumos").append(`
-                <tr id="tr-${id_insumo}">
-                    <td>
-                    <input type="hidden" name="id_insumo[]" value="${id_insumo}"/>
-                    <input type="hidden" name="cantidades[]" value="${cantidad}"/>
-                    <input type="hidden" name="valor_unitario[]" value="${valor_unitario}"/>
-                    ${insumo_text}
-                    </td>
-                    <td>${cantidad}</td>
-                    <td>${valor_unitario}</td>
-                    <td>${parseInt(cantidad) * parseInt(valor_unitario)}</td>
-                    <td>
-                    <button type="button" class="btn btn-danger" onclick="eliminar_insumo(${id_insumo}, ${parseInt(cantidad) * parseInt(valor_unitario)})">X</button>
-                    </td>
-                </tr>
-                `);
-            let total = $("#total").val() || 0;
-            $("#total").val(parseInt(total) + parseInt(cantidad) * parseInt(valor_unitario));
+
+            for (let i = 0; i < filas.length; i++) {
+                    let idInsumoTabla = filas[i].cells[0].innerText;
+                        if (id_insumo == idInsumoTabla) {
+                            alert('Este insumo ya está en la lista.');
+                        insumoEncontrado = true;
+                        break;
+                        }
+            }
+
+            if (!insumoEncontrado) {
+                $("#tblInsumos").append(`
+                    <tr id="tr-${id_insumo}">
+                        <td>${id_insumo}</td>
+                        <td>
+                        <input type="hidden" name="id_insumo[]" value="${id_insumo}"/>
+                        <input type="hidden" name="cantidades[]" value="${cantidad}"/>
+                        <input type="hidden" name="valor_unitario[]" value="${valor_unitario}"/>
+                        ${insumo_text}
+                        </td>
+                        <td>${cantidad}</td>
+                        <td>${valor_unitario}</td>
+                        <td>${parseInt(cantidad) * parseInt(valor_unitario)}</td>
+                        <td>
+                        <button type="button" class="btn btn-danger" onclick="eliminar_insumo(${id_insumo}, ${parseInt(cantidad) * parseInt(valor_unitario)})">X</button>
+                        </td>
+                    </tr>
+                    `);
+                let total = $("#total").val() || 0;
+                $("#total").val(parseInt(total) + parseInt(cantidad) * parseInt(valor_unitario));
+            }
         } else {
             alert("Se debe ingresar una cantidad o precio válido");
         }
