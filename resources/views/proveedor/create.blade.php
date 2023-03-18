@@ -5,33 +5,35 @@ Create Proveedor
 @endsection
 
 @section('content')
-<section class="content container-fluid">
-    <div class="">
-        <div class="col-md-12">
 
-            @includeif('partials.errors')
-
-            <div class="card card-default">
-                @if(Session::has('success'))
-                {{Session::get('success') }}
-
-                @endif
-                <div class="card-header">
-                    <span class="card-title">Registrar Proveedor</span>
-                </div>
-                <div class="card-body">
-
-                    <form action="{{ url('/proveedor') }}" method="POST" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
-                        @csrf
-
-                        @include('proveedor.form')
+<div class="container">
+    <main role="main" class="pb-3">
 
 
-                    </form>
+        @includeif('partials.errors')
 
-                </div>
-            </div>
+
+        @if(Session::has('success'))
+        {{Session::get('success') }}
+
+        @endif
+
+        <h1>Registrar Proveedor</h1>
+        <hr />
+        <div class="card-body">
+
+            <form action="{{ url('/proveedor') }}" method="POST" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
+                @csrf
+
+                @include('proveedor.form')
+
+
+            </form>
         </div>
-    </div>
-</section>
+    </main>
+</div>
+
+
+
+
 @endsection

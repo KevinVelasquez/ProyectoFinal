@@ -216,11 +216,12 @@
 
                             <div class="box-footer mt20">
 
-                                <button type="submit" class="btn btn-primary">Actualizar</button>
+                                <button type="submit" class="btn btn-primary" style="background-color: #81242E;
+                            border-color: #81242E;" >Actualizar</button>
 
-                                <a href="{{ route('cliente.index') }}" class="btn btn-primary btn-lg active"
-                                    role="button" aria-pressed="true">Cancelar</a>
-
+                                
+                                    <a class="btn btn-primary" href="{{ route('cliente.index') }}" style="background-color: #565656;
+                            border-color: #565656; margin: 10px;  margin-top: 6%;">Cancelar</a>
                             </div>
 
                         </form>

@@ -181,12 +181,15 @@
 
 </div>
 
-<div class="box-footer mt20">
+<div class="form-group" style="margin-top: 2%;margin-left: 35%;">
 
-    <button type="submit" class="btn btn-primary">Registrar</button>
-    <button type="reset" value="Borrar" class="btn btn-primary">Limpiar</button>
+    <button type="submit" class="btn btn-primary" style="background-color: #81242E;
+                            border-color: #81242E; margin: 10px;  margin-top: 6%;""  >Registrar</button>
+    <button type="reset" value="Borrar" class="btn btn-primary" style="background-color: #B0B0B0;
+                            border-color: #B0B0B0;">Limpiar</button>
 
-    <a href="{{ route('cliente.index') }}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Cancelar</a>
+    <a class="btn btn-primary" href="{{ route('cliente.index') }}" style="background-color: #565656;
+                            border-color: #565656; margin: 10px;  margin-top: 6%;">Cancelar</a>
 
 </div>
 
