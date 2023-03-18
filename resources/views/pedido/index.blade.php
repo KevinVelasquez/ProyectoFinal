@@ -435,7 +435,7 @@
                 </div>
                 <div class="botonestabla" style="text-align: center;">
                     <button type="submit" id="agregarAbono" class="btn btn-primary" style="background-color:#81242E;border:#81242E">Agregar</button>
-                    <button type="button" class="btn btn-primary" style="margin-top:5%;background-color:#565656;border:#565656">Cancelar</button>
+                    <button type="button" class="btn btn-primary" style="margin-top:5%;background-color:#565656;border:#565656" data-dismiss="modal" aria-label="Close">Cancelar</button>
                 </div>
                 </form>
                 <br>
