@@ -261,7 +261,10 @@ Compra
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Fecha</label>
                                 <div class="col-sm-9">
-                                    <input type="date" name="fechaabono" class="form-control" required>
+                                <?php
+                                $fechamax = date('Y-m-d');
+                                ?>
+                                    <input type="date" name="fechaabono" max="<?=$fechamax;?>" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -341,7 +344,7 @@ Compra
                     @csrf
                     <div>¿Está seguro que desea anular el abono?</div>
                     <input type="hidden" name="idanularabono" id="idanularabono" />
-                    <input type="hidden" name="idpedidoabono" id="idpedidoabono" />
+                    <input type="hidden" name="idcomprabono" id="idcomprabono" />
                     <input type="hidden" name="anulardato" value="2" />
                     <button type="submit" class="btn btn-primary btn-lg active">Si</button>
                     <button type="button" class="btn btn-primary btn-lg active" data-dismiss="modal">No</button>

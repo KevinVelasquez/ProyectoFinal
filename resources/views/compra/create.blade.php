@@ -35,7 +35,10 @@ Nueva Compra
                         </div>
                         <div class="form-group col-6">
                             <label for="">Fecha de Compra</label>
-                            <input type="date" class="form-control" name="fecha_compra" required>
+                                <?php
+                                $fechamax = date('Y-m-d');
+                                ?>
+                            <input type="date" class="form-control" max="<?=$fechamax;?>" name="fecha_compra" required>
                             <div class="col-md-6">
                                 @error('fecha_compra')
                                 <span class="invalid-feedback" role="alert">

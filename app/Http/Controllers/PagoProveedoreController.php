@@ -77,7 +77,7 @@ class PagoProveedoreController extends Controller
         $input = $request->all();
         PagoProveedore::where('id', $input["idanularabono"])
             ->update([
-                'anulado' => 1
+                'estado' => 2
             ]);
 
             Compra::where('id', $input["idcomprabono"])
