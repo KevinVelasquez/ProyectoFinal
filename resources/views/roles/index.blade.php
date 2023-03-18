@@ -15,7 +15,7 @@ Rol
             </div>
         </div>
         <p> 
-            <a class="mdi mdi-account-multiple-plus-outline" id="iconoadd" href="{{ route('roles.create') }}" ></a>
+            <a class="mdi mdi-lock-plus-outline" id="iconoadd" href="{{ route('roles.create') }}" ></a>
         </p>
         <table id="roles" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>

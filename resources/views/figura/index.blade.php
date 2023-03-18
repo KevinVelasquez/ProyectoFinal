@@ -12,7 +12,7 @@
                 <div class="container">
                     <main role="main" class="pb-3">
                             <p>
-                                <a class="mdi mdi-shape-plus" id="iconoadd" href="{{ route('figuras.create') }}"></a>
+                                <a class="mdi mdi-camera-plus-outline" id="iconoadd" href="{{ route('figuras.create') }}"></a>
                             </p>
                         <div class="card-body">
                             <div class="table-responsive">

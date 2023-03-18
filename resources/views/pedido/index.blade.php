@@ -9,7 +9,7 @@
         
         <main role="main" class="pb-3">
             <p>
-                <a class="mdi mdi-cart-outline" id="iconoadd" href="{{ route('pedidos.create') }}"></a>
+                <a class="mdi mdi-cart-plus" id="iconoadd" href="{{ route('pedidos.create') }}"></a>
             </p>
 
             <table id="pedidos" class="table table-striped dt-responsive nowrap table display mowrap"  cellspacing="0" style="width:100%"  >

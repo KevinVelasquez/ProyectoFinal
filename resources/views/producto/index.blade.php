@@ -17,7 +17,7 @@
                         </div>
                     </div>
                         <p>
-                            <a class="mdi mdi-plus-circle-multiple-outline" id="iconoadd"
+                            <a class="mdi mdi-tag-plus-outline " id="iconoadd"
                             href="{{ route('productos.create') }}"></a>
                         </p>
 

@@ -31,12 +31,12 @@
                 <img src="{{ asset('images/logoFerrum.png') }}" alt="Logo Ferrum">
             </div>
             <div class="col-md-6 login-form">
-                <form method="POST" action="{{ route('login') }}" style="width: 100%;">
+                <form method="POST" action="{{ route('login') }}" style="width: 100%;" enctype="multipart/form-data" class="form-sample needs-validation" novalidate>
                     @csrf
                     <div class="form-group">
                         <label for="email" style="padding-left: 0%;" class="col-md-4 col-form-label text-md-end">{{ __('Correo Electrónico') }}</label>
 
-                        <input id="email" type="email" style="width: 60%;" s class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                        <input id="email" type="email" style="width: 60%;" s class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" required>
                         @if(session('error'))
                         <div class="font-medium text-red-600" style="color: red;" role="alert">
                             {{ session('error')}}
@@ -51,7 +51,7 @@
                     <div class="form-group">
                         <label for="password" style="padding-left: 0%;" class="col-md-4 col-form-label text-md-end">{{ __('Contraseña') }}</label>
 
-                        <input id="password" type="password" style="width: 60%;" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                        <input id="password" type="password" style="width: 60%;" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" required>
                         @error('password')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -81,4 +81,23 @@
     </div>
 </body>
 
-<script src="assets/js/jquery-3.3.1.min.js"></script>
+<script src="assets/js/jquery-3.3.1.min.js">
+
+(function() {
+        'use strict'
+
+        var forms = document.querySelectorAll('.needs-validation')
+
+        Array.prototype.slice.call(forms)
+            .forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>

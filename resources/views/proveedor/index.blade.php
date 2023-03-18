@@ -8,7 +8,7 @@ Proveedor
 <div class="container">
     <main role="main" class="pb-3">
         <p>
-            <a class="mdi mdi-cart-outline" id="iconoadd" href="{{ route('proveedor.create') }}"></a>
+            <a class="mdi mdi-account-plus-outline" id="iconoadd" href="{{ route('proveedor.create') }}"></a>
         </p>
         <table id="proveedores" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>

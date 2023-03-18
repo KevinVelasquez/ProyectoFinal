@@ -7,8 +7,15 @@ Usuarios
 @section('content')
 <div class="container">
     <main role="main" class="pb-3">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-sm-6" id="tituloinicial">
+                    <h3 class="mb-0 font-weight-bold">Usuarios</h3>
+                </div>
+            </div>
+        </div>
         <p>
-            <a class="mdi mdi-account-plus" id="iconoadd" href="{{ route('usuario.create') }}"></a>
+            <a class="mdi mdi-account-multiple-plus-outline" id="iconoadd" href="{{ route('usuario.create') }}"></a>
         </p>
         <table id="usuarios" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
@@ -44,10 +51,10 @@ Usuarios
                         @endif
                     </td>
                     <td>
-                        
-                            <a href="{{ route('usuario.edit',$user->id) }}"><button class="mdi mdi-lead-pencil"></button></a>
 
-                        
+                        <a href="{{ route('usuario.edit',$user->id) }}"><button class="mdi mdi-lead-pencil"></button></a>
+
+
                     </td>
                 </tr>
                 @endforeach
