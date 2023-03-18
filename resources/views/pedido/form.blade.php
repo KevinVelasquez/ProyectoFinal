@@ -209,8 +209,17 @@
     </div>
     <div class="col-md-6">
         <div class="form-group row">
+            <label class="control-label">Descripción</label>
+            <div class="col-sm-9">
+                <input id="descripcion" class="form-control" style="height:5%" />
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group row">
             <label class="control-label">Diseño</label>
-            <div class="col-sm-3">
+            <div class="col-sm-6">
                 <button id="figura" type="button" class="form-control btn btn-success" data-toggle="modal"
                     data-target="#verdiseños" disabled>Seleccione diseño</button>
             </div>
@@ -219,16 +228,12 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="form-group row">
-            <label class="control-label">Descripción</label>
-            <div class="col-sm-9">
-                <input id="descripcion" class="form-control" style="height:5%" />
-                <a type="button" class="mdi mdi-plus-circle" style="color:green;font-size:400%;margin-left:40%"
+    <div class="col-md-1">
+    <a type="button" class="mdi mdi-plus-circle" style="color:green;font-size:400%;margin-left:40%"
                     id="agregarprodu"></a>
-            </div>
-        </div>
     </div>
+    <br>
+    <hr>
     <input type="hidden" name="total" id="total" />
 </div>
 

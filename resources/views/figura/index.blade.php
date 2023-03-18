@@ -31,11 +31,11 @@
                                             <div class="row">
                                                 @foreach ($figuras as $figura)
                                                     <div class="col-md-2 p-1">
-                                                        <div class="card">
-                                                            <img class="card-img-top"
+                                                        <div class="card card-fixed-height" style="height: 290px">
+                                                            <img class="card-img-top" 
                                                                 src="http://127.0.0.1:8000/storage/images/figuras/{{ $figura->imagen }}"
                                                                 {{-- src="{{ asset('/storage/images/figuras/' . $figura->imagen) }}" --}} alt="Card image cap"
-                                                                data-bs-toggle="modal"data-bs-target="#modalimagen<?php echo $figura->id; ?>">
+                                                                data-bs-toggle="modal"data-bs-target="#modalimagen<?php echo $figura->id; ?>" >
                                                             <div id="activ" class="dispo<?php echo $figura->estado; ?>"></div>
                                                             <div tabindex="-1"
                                                                 aria-labelledby="modalimagen<?php echo $figura->id; ?>"
