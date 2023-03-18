@@ -5,29 +5,26 @@
 @endsection
 
 @section('content')
-    <section class="content container-fluid">
-        <div class="">
-            <div class="col-md-12">
+<div class="container">
+    <main role="main" class="pb-3">
 
                 @includeif('partials.errors')
-
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">Actualizar Cliente</span>
 
                         @if (Session::has('mensaje'))
                             {{ Session::get('mensaje') }}
                         @endif
 
-                </div>
+                        <h1>Actualizar Cliente</h1>
+        <hr />
+                
                 <div class="card-body">
                     <form method="POST" action="{{ route('cliente.update', $cliente->id) }}" role="form" enctype="multipart/form-data"  class="row g-3 needs-validation" novalidate>
                         @csrf
                         {{ method_field('PATCH') }}
 
 
-                            <div class="box box-info padding-1">
-                                <div class="row">
+                        <div class="box box-info padding-1">
+                            <div class="row">
 
                                 <div class="col-md-6">
                                     <div class="form-group row">
@@ -95,19 +92,19 @@
                                             <label for="regimen">Régimen</label>
                                             <div class="col-sm-7">
 
-                                            <select class="form-control" name="regimen" id="regimen" required>
-                                                @forelse($regimen as $regi)
-                                                    <option value="{{$regi->id}}" {{ $regi->id == $cliente->regimen ? 'selected' : '' }}>
-                                                        {{ $regi->nombre }}
-                                                    </option>                                                
-                                                @empty
-                                                    <option>No existen</option>
-                                                @endforelse
-                                            </select> 
+                                                <select class="form-control" name="regimen" id="regimen" required>
+                                                    @forelse($regimen as $regi)
+                                                        <option value="{{$regi->id}}" {{ $regi->id == $cliente->regimen ? 'selected' : '' }}>
+                                                            {{ $regi->nombre }}
+                                                        </option>                                                
+                                                    @empty
+                                                        <option>No existen</option>
+                                                    @endforelse
+                                                </select> 
                                             
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group row">
@@ -210,25 +207,32 @@
                                         </div>
                                     </div>
 
-                                </div>
-
+                                    @if (session('error'))
+                                    <div class="alert alert-danger" role="alert">
+                                    {{ session('error') }}
+                                    </div>
+        @endif
                             </div>
 
-                            <div class="box-footer mt20">
+                        </div>
+
+                            <div class="form-group" style="margin-top: 2%;margin-left: 35%;">
 
                                 <button type="submit" class="btn btn-primary" style="background-color: #81242E;
-                            border-color: #81242E;" >Actualizar</button>
+                                border-color: #81242E;" >Actualizar</button>
 
                                 
                                     <a class="btn btn-primary" href="{{ route('cliente.index') }}" style="background-color: #565656;
-                            border-color: #565656; margin: 10px;  margin-top: 6%;">Cancelar</a>
+                                border-color: #565656; margin: 10px;  margin-top: 6%;">Cancelar</a>
                             </div>
 
-                        </form>
-                    </div>
+                    </form>
                 </div>
-            </div>
-        </div>
+                
+            
+
+        </main>
+</div>
 
         <script>
             $(document).ready(function() {

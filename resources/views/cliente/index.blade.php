@@ -67,8 +67,6 @@ Cliente
                         
 
                         <button id="figura" type="button" class="mdi mdi-checkbox-multiple-blank" data-toggle="modal" data-target="#verdiseños" onclick="verdiseños('{{$cliente->id}}')"></button>
-
-                       
                         
                         <button onclick="eliminarCliente('{{ $cliente->id }}')" class="mdi mdi-trash-can-outline"
                                     data-toggle="modal" data-target="#eliminar"></button>
@@ -112,6 +110,8 @@ Cliente
             </div>
 
         </div>
+
+
 
         <!-- modal eliminar -->
      <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -193,6 +193,8 @@ Cliente
         });
 
     }
+
+    
 
 
     function eliminarCliente(id) {
