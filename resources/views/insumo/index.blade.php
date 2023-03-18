@@ -112,8 +112,8 @@ Insumo
                         <div class="modal-footer">
                             <button type="submit" id="crear-insumo" class="btn btn-primary" style="background-color: #81242E;
                             border-color: #81242E;" >Crear</button>
-                            <a class="btn btn-primary" href="{{ route('insumos.index')}}" style="margin: 10px; background-color: #81242E;
-                            border-color: #81242E;">Cancelar</a>
+                            <a class="btn btn-primary" href="{{ route('insumos.index')}}" style="margin: 10px; background-color: #565656;
+                            border-color: #565656;">Cancelar</a>
                         </div>
                     </div>
                 </div>
@@ -191,7 +191,7 @@ Insumo
                             <button type="submit" class="btn btn-primary" style="background-color: #81242E;
                             border-color: #81242E;">Actualizar</button>
                             <a class="btn btn-primary" href="{{ route('insumos.index')}}" style="margin: 10px; 
-                            background-color: #81242E; border-color: #81242E;">Cancelar</a>
+                            background-color: #565656; border-color: #565656;">Cancelar</a>
                         </div>
                     </div>
                 </div>
@@ -221,8 +221,8 @@ Insumo
                         <input type="hidden" name="ideliminar" id="ideliminar" />
                         <button type="submit" class="btn btn-primary" style="background-color: #81242E;
                             border-color: #81242E;">Si</button>
-                        <button type="button" class="btn btn-primary" style="background-color: #81242E;
-                            border-color: #81242E;" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary" style="background-color: #565656;
+                            border-color: #565656;" data-dismiss="modal">No</button>
                     </form>
                 </div>
             </div>

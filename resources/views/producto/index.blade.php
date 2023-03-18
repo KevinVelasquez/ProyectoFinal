@@ -37,12 +37,12 @@
                                     <div class="container">
                                         <div class="row">
                                             @foreach ($productos as $producto)
-                                            <div class="col-md-2 p-1">
-                                                <div class="card">
+                                            <div class="col-md-2 p-1" >
+                                                <div class="card card-fixed-height" style="height: 290px">
                                                     <img class="card-img-top"
                                                     src="http://127.0.0.1:8000/storage/images/productos/{{$producto->imagen}}"
                                                         alt="Card image cap" 
-                                                        data-bs-toggle="modal"data-bs-target="#modalimagen<?php echo $producto->id; ?>">
+                                                        data-bs-toggle="modal"data-bs-target="#modalimagen<?php echo $producto->id; ?>" >
                                                     <div id="activ" class="dispop<?php echo $producto->estado; ?>"></div>
                                                     <div tabindex="-1"
                                                         aria-labelledby="modalimagen <?php echo $producto->id; ?>"
@@ -107,8 +107,8 @@
                         <input type="hidden" name="ideliminar" id="ideliminar" />
                         <button type="submit" class="btn btn-primary" style="background-color: #81242E;
                             border-color: #81242E;">Si</button>
-                        <button type="button" class="btn btn-primary" style="background-color: #81242E;
-                            border-color: #81242E;" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary" style="background-color: #565656;
+                            border-color: #565656;" data-dismiss="modal">No</button>
                     </form>
                 </div>
             </div>
