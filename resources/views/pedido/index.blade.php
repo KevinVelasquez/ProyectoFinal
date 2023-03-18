@@ -40,9 +40,13 @@
                             <td>{{ $pedidos->cedula }}</td>
                             <td>{{ $pedidos->nombre }}</td>
 
-                            <td>{{ ucwords(\Carbon\Carbon::parse($pedidos->fecha_registro)->locale('es_MX', 'es_MX.utf8')->isoFormat('dddd[,] D [de] MMMM [del] Y')) }}
+                            <td>{{-- {{ ucwords(\Carbon\Carbon::parse( --}}
+                                {{$pedidos->fecha_registro}}
+                                {{-- )->locale('es_MX', 'es_MX.utf8')->isoFormat('dddd[,] D [de] MMMM [del] Y')) }} --}}
                             </td>
-                            <td>{{ ucwords(\Carbon\Carbon::parse($pedidos->fecha_entrega)->locale('es_MX', 'es_MX.utf8')->isoFormat('dddd[,] D [de] MMMM [del] Y')) }}
+                            <td>{{-- {{ ucwords(\Carbon\Carbon::parse( --}}
+                                {{$pedidos->fecha_entrega}}
+                                {{-- )->locale('es_MX', 'es_MX.utf8')->isoFormat('dddd[,] D [de] MMMM [del] Y')) }} --}}
                             </td>
                             <td><?php if ($pedidos->estado == 1) {
                                 echo 'Activo';

@@ -20,26 +20,32 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" style="margin-top: 0%;background-color:#81242E;border:#81242E">Generar gráfico</button>
+            <button type="submit" class="btn btn-primary"
+                style="margin-top: 0%;background-color:#81242E;border:#81242E">Generar gráfico</button>
         </form>
         <div class="row">
             <div class="col-md-6">
                 <div>
                     <canvas id="grafica-pedidos"></canvas>
                 </div>
-                <button class="btn btn-primary" onclick="descargargraficapedidos()" style="background-color:#81242E;border:#81242E"><i class="mdi mdi-download"></i> Descargar</button>
+                <button class="btn btn-primary" onclick="descargargraficapedidos()"
+                    style="background-color:#81242E;border:#81242E"><i class="mdi mdi-download"></i> Descargar</button>
             </div>
             <div class="col-md-3">
                 <div style="width:100%;height: 21em;">
                     <canvas id="proceso-pedidos"></canvas>
                 </div>
-                <button class="btn btn-primary" onclick="descargarprocesopedidos()"style="background-color:#81242E;border:#81242E"><i class="mdi mdi-download"></i> Descargar</button>
+                <button class="btn btn-primary"
+                    onclick="descargarprocesopedidos()"style="background-color:#81242E;border:#81242E"><i
+                        class="mdi mdi-download"></i> Descargar</button>
             </div>
             <div class="col-md-3">
                 <div style="width:100%;height: 21em;">
                     <canvas id="productosvendidos"></canvas>
                 </div>
-                <button class="btn btn-primary" onclick="descargarproductosvendidos()"style="background-color:#81242E;border:#81242E"><i class="mdi mdi-download"></i> Descargar</button>
+                <button class="btn btn-primary"
+                    onclick="descargarproductosvendidos()"style="background-color:#81242E;border:#81242E"><i
+                        class="mdi mdi-download"></i> Descargar</button>
             </div>
         </div>
         <br>
@@ -50,13 +56,17 @@
                 <div>
                     <canvas id="frecuencia-clientes"></canvas>
                 </div>
-                <button class="btn btn-primary" onclick="descargarfrecuenciaclientes()"style="background-color:#81242E;border:#81242E"><i class="mdi mdi-download"></i> Descargar</button>
+                <button class="btn btn-primary"
+                    onclick="descargarfrecuenciaclientes()"style="background-color:#81242E;border:#81242E"><i
+                        class="mdi mdi-download"></i> Descargar</button>
             </div>
             <div class="col-md-6">
                 <div>
                     <canvas id="frecuencia-proveedores"></canvas>
                 </div>
-                <button class="btn btn-primary" onclick="descargarfrecuenciaproveedores()"style="background-color:#81242E;border:#81242E"><i class="mdi mdi-download"></i> Descargar</button>
+                <button class="btn btn-primary"
+                    onclick="descargarfrecuenciaproveedores()"style="background-color:#81242E;border:#81242E"><i
+                        class="mdi mdi-download"></i> Descargar</button>
             </div>
         </div>
         <br>
@@ -67,19 +77,25 @@
                 <div style="width:100%;height: 21em;">
                     <canvas id="metodo_entregas"></canvas>
                 </div>
-                <button class="btn btn-primary" onclick="descargarmetodoentregas()"style="background-color:#81242E;border:#81242E"><i class="mdi mdi-download"></i> Descargar</button>
+                <button class="btn btn-primary"
+                    onclick="descargarmetodoentregas()"style="background-color:#81242E;border:#81242E"><i
+                        class="mdi mdi-download"></i> Descargar</button>
             </div>
             <div class="col-md-4">
                 <div style="width:100%;height: 21em;">
                     <canvas id="metodo_pagos"></canvas>
                 </div>
-                <button class="btn btn-primary" onclick="descargarmetodopagos()"style="background-color:#81242E;border:#81242E"><i class="mdi mdi-download"></i> Descargar</button>
+                <button class="btn btn-primary"
+                    onclick="descargarmetodopagos()"style="background-color:#81242E;border:#81242E"><i
+                        class="mdi mdi-download"></i> Descargar</button>
             </div>
             <div class="col-md-4">
                 <div style="width:100%;height: 21em;">
                     <canvas id="tipoclientes"></canvas>
                 </div>
-                <button class="btn btn-primary" onclick="descargartipoclientes()"style="background-color:#81242E;border:#81242E"><i class="mdi mdi-download"></i> Descargar</button>
+                <button class="btn btn-primary"
+                    onclick="descargartipoclientes()"style="background-color:#81242E;border:#81242E"><i
+                        class="mdi mdi-download"></i> Descargar</button>
             </div>
         </div>
         <br>
@@ -89,7 +105,8 @@
                 <div>
                     <canvas id="balance"></canvas>
                 </div>
-                <button class="btn btn-primary" onclick="descargarbalance()" style="background-color:#81242E;border:#81242E"><i class="mdi mdi-download"></i> Descargar</button>
+                <button class="btn btn-primary" onclick="descargarbalance()"
+                    style="background-color:#81242E;border:#81242E"><i class="mdi mdi-download"></i> Descargar</button>
             </div>
         </div>
     </div>
@@ -124,7 +141,15 @@
             options: {
                 title: {
                     display: true,
-                    text: ['Pedidos del ', fechaI + ' al ' + fechaF ]
+                    text: ['Pedidos del ', fechaI + ' al ' + fechaF]
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1 
+                        }
+                    }]
                 }
             }
         });
@@ -146,7 +171,7 @@
                 maintainAspectRatio: false,
                 title: {
                     display: true,
-                    text: ['Pedidos por proceso del ' , fechaI + ' al ' + fechaF ]
+                    text: ['Pedidos por proceso del ', fechaI + ' al ' + fechaF]
                 }
             }
         });
@@ -181,7 +206,7 @@
                 maintainAspectRatio: false,
                 title: {
                     display: true,
-                    text: ['Cantidad productos vendidos del ', fechaI + ' al ' + fechaF ]
+                    text: ['Cantidad productos vendidos del ', fechaI + ' al ' + fechaF]
                 }
             }
         });
@@ -211,13 +236,16 @@
             },
             options: {
                 scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1 
+                        }
+                    }]
                 },
                 title: {
                     display: true,
-                    text: ['Total de pedidos por cliente del ' , fechaI + ' al ' + fechaF ]
+                    text: ['Total de pedidos por cliente del ', fechaI + ' al ' + fechaF]
                 }
             }
         });
@@ -248,13 +276,16 @@
             },
             options: {
                 scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1 
+                        }
+                    }]
                 },
                 title: {
                     display: true,
-                    text: ['Total de compras por proveedor del ' , fechaI + ' al ' + fechaF ]
+                    text: ['Total de compras por proveedor del ', fechaI + ' al ' + fechaF]
                 }
             }
         });
@@ -287,7 +318,7 @@
                 maintainAspectRatio: false,
                 title: {
                     display: true,
-                    text: ['Cantidad de pedidos por lugar de entrega del ' , fechaI + ' al ' + fechaF ]
+                    text: ['Cantidad de pedidos por lugar de entrega del ', fechaI + ' al ' + fechaF]
                 }
             }
         });
@@ -320,7 +351,7 @@
                 maintainAspectRatio: false,
                 title: {
                     display: true,
-                    text: ['Cantidad de pedidos por metodo de pago del ' , fechaI + ' al ' + fechaF ]
+                    text: ['Cantidad de pedidos por metodo de pago del ', fechaI + ' al ' + fechaF]
                 }
             }
         });
@@ -353,7 +384,7 @@
                 maintainAspectRatio: false,
                 title: {
                     display: true,
-                    text: ['Tipos de Cliente del ' , fechaI + ' al ' + fechaF ]
+                    text: ['Tipos de Cliente del ', fechaI + ' al ' + fechaF]
                 }
             }
         });
@@ -392,7 +423,7 @@
             options: {
                 title: {
                     display: true,
-                    text: ['Balance entradas y salidas del ' , fechaI + ' al ' + fechaF ]
+                    text: ['Balance entradas y salidas del ', fechaI + ' al ' + fechaF]
                 }
             }
         });
@@ -646,6 +677,5 @@
             }
             image.src = imgData2;
         }
- 
     </script>
 @endsection
