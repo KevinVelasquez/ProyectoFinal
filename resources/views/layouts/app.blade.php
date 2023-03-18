@@ -20,7 +20,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
     <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
     <link href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap5.min.css">
-
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.9.55/css/materialdesignicons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://pictogrammers.github.io/@mdi/font/5.4.55/">
     <!-- <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css' rel='stylesheet' /> -->

@@ -70,9 +70,6 @@
             cursor: pointer;
         }
 
-        .recuperar button[type="submit"]:hover {
-            background-color: #3e8e41;
-        }
 
         .recuperar a[type="button"] {
             padding: 9px;
@@ -84,9 +81,10 @@
             cursor: pointer;
         }
 
-        .recuperar a[type="button"]:hover {
-            background-color: #3e8e41;
+        #boton-regresar{
+            background-color: #565656;
         }
+
 
         .buton {
             padding-top: 5%;
@@ -113,10 +111,10 @@
             </span>
             @enderror
             <div class="buton">
-                <button type="submit" class="btn btn-primary btn-lg active">
+                <button type="submit" class="btn btn-primary ">
                     {{ __('Siguiente') }}
                 </button>
-                <a type="button" style="font-size: 14px;" class="btn btn-primary btn-lg active" href="{{ route('login') }}">Regresar</a>
+                <a type="button" id="boton-regresar" style="font-size: 14px;" class="btn btn-primary " href="{{ route('login') }}">Regresar</a>
             </div>
         </form>
     </div>

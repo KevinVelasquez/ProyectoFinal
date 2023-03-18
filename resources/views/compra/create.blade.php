@@ -175,7 +175,7 @@ Nueva Compra
             if (!insumoEncontrado) {
                 $("#tblInsumos").append(`
                     <tr id="tr-${id_insumo}">
-                        <td>${id_insumo}</td>
+                        <td style="display:none">${id_insumo}</td>
                         <td>
                         <input type="hidden" name="id_insumo[]" value="${id_insumo}"/>
                         <input type="hidden" name="cantidades[]" value="${cantidad}"/>

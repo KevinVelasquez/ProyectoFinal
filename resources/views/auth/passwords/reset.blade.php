@@ -22,7 +22,7 @@
     <link href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap5.min.css">
 
 </head>
-<div class="container">
+<div class="container-login">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">

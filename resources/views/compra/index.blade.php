@@ -7,8 +7,15 @@ Compra
 @section('content')
 <div class="container">
     <main role="main" class="pb-3">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-sm-6" id="tituloinicial">
+                <h3 class="mb-0 font-weight-bold">Ordenes de Compra</h3>
+                </div>
+            </div>
+        </div>
         <p>
-            <a class="mdi mdi-cart-outline" id="iconoadd" href="{{ route('compra.create') }}"></a>
+            <a class="mdi mdi-store-plus" id="iconoadd" href="{{ route('compra.create') }}"></a>
         </p>
 
         <table id="compras" class="table table-striped dt-responsive nowrap table display mowrap" style="width:100%">
@@ -58,7 +65,7 @@ Compra
 
                            
                             <!-- <a class="btn btn-primary btn-lg active" type="button" onclick="verDatosAbono('{{ $compra->id }}')" data-toggle="modal" data-target="#abonos">Abonos</a> -->
-                            <button onclick="verDatosAbono('{{ $compra->id }}')" class="mdi mdi-cash-usd "
+                            <button onclick="verDatosAbono('{{ $compra->id }}')" class="mdi mdi-cash-multiple"
                                     data-toggle="modal" data-target="#abonos" @if ($compra->anulado !== 0)disabled @endif></button>
                             
 
