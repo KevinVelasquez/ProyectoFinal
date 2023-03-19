@@ -298,7 +298,7 @@
 
                             </div>
                             <button id="acceptBtn" class="btn btn-primary" data-dismiss="modal"
-                                aria-label="Close">Aceptar</button>
+                                aria-label="Close" style="background-color:#81242E;border:#81242E">Aceptar</button>
                         </form>
                     </div>
                 </div>

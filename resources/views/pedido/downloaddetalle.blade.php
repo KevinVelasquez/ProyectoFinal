@@ -55,7 +55,7 @@
                                     <span class="titulo">Cédula:<span class="texto">{{ $pedidocliente[0]->cedula }}</span><br>
                                     <span class="titulo">Dirección:<span class="texto">{{ $pedidocliente[0]->direccion }}</span><br>
                                     <span class="texto">{{ $pedidocliente[0]->nombremunicipio}} </span><br>
-                                    <span class="titulo">Telefono:<span class="texto">{{ $pedidocliente[0]->telefono }}</span><br>
+                                    <span class="titulo">Teléfono:<span class="texto">{{ $pedidocliente[0]->telefono }}</span><br>
                                 </div>
                                 <div style="padding: 10px; float: right; width: 45%; text-align: justify;">
                                     <span class="titulo">N° Pedido:<span class="texto">{{ $pedidocliente[0]->id }}</span><br>

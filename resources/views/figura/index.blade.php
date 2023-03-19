@@ -38,7 +38,7 @@
                                             <div class="row">
                                                 @foreach ($figuras as $figura)
                                                     <div class="col-md-2 p-1">
-                                                        <div class="card card-fixed-height" style="height: 290px">
+                                                        <div class="card card-fixed-height">
                                                             <img class="card-img-top" 
                                                                 src="http://127.0.0.1:8000/storage/images/figuras/{{ $figura->imagen }}"
                                                                 {{-- src="{{ asset('/storage/images/figuras/' . $figura->imagen) }}" --}} alt="Card image cap"

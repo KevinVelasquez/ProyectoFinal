@@ -537,8 +537,8 @@
             } else {
                 $('#procesopedidodetalle').text(`Estado: Entregado`)
             }
-            $('#metodoentregapedidodetalle').text(`Metodo Entrega:  ${detalledatos.nombremetodoentrega}`)
-            $('#metodopagopedidodetalle').text(`Metodo Pago:  ${detalledatos.nombremetodopago}`)
+            $('#metodoentregapedidodetalle').text(`Método Entrega:  ${detalledatos.nombremetodoentrega}`)
+            $('#metodopagopedidodetalle').text(`Método Pago:  ${detalledatos.nombremetodopago}`)
             $('#totalpedidodetalle').text(`${detalledatos.totalpedido}`)
 
             $('#iddescarga').val(`${detalledatos.id}`)
