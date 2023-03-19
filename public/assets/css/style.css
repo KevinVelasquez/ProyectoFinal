@@ -12956,7 +12956,7 @@ input[type="button"].btn-block {
 .dropdown-item:active {
     color: #fff;
     text-decoration: none;
-    background-color: #007bff;
+    background-color: #81242E;
 }
 
 .dropdown-item.disabled,
@@ -27912,7 +27912,7 @@ iframe {
 
 .container-login {
     margin-top: 50px;
-    background-image: url('images/fondoLogin.png');
+    background-image: url('images/fondoensayo.png');
 }
 
 .login-image img {
@@ -28067,4 +28067,9 @@ body {
 .modal-lg,
 .modal-xl {
     max-width: 445px;
+}
+
+#boton-regresar {
+    background-color: #565656;
+    border-color: #565656;
 }

@@ -5,32 +5,27 @@ Create Usuario
 @endsection
 
 @section('content')
-<section class="content container-fluid">
-    <div class="">
-        <div class="col-md-12">
 
-            @includeif('partials.errors')
 
-            <div class="card card-default">
-                @if(Session::has('success'))
-                {{Session::get('success') }}
+@includeif('partials.errors')
 
-                @endif
+@if(Session::has('success'))
+{{Session::get('success') }}
 
-                <div class="card-header">
-                    <span class="card-title">Registrar Usuario</span>
-                </div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('usuario.store') }}" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
-                        @csrf
+@endif
 
-                        @include('usuario.form')
+<div class="container" style="width:90%;margin-left: 4%;">
+    <main role="main" class="pb-3" >
+        <h1>Crear Usuario</h1>
+        <hr />
+        <form method="POST" action="{{ route('usuario.store') }}" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
+            @csrf
 
-                    </form>
-                </div>
+            @include('usuario.form')
 
-            </div>
-        </div>
-    </div>
-</section>
+        </form>
+    </main>
+</div>
+
+
 @endsection

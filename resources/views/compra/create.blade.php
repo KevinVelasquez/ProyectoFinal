@@ -5,7 +5,6 @@ Nueva Compra
 @endsection
 
 @section('content')
-<section class="content container-fluid">
     @includeif('partials.errors')
 
         @if(Session::has('success'))
@@ -13,14 +12,14 @@ Nueva Compra
 
         @endif
 
-    <div class="card-header">
-        <span class="card-title">Registrar Orden de Compra</span>
-    </div>
+<div class="container" style="width:90%;margin-left: 4%;">
+    <main role="main" class="pb-3" >
+            <h1>Registrar Compra</h1>
+            <hr />
     <form method="POST" action="{{ route('compra.store') }}" enctype="multipart/form-data" class="form-sample needs-validation" novalidate>
         @csrf
-        <div class="row">
-            <div class="col-6" style="padding-top: 2%; padding-left: 2%;">
-                <div class="card">
+            <div class="col-12" >
+                
                     <div class="row card-body">
                         <div class="form-group col-6">
                             <label for="">Número Orden</label>
@@ -58,7 +57,7 @@ Nueva Compra
                         </div>
                         <div class="form-group col-6">
                             <label for="id_metodo_pagos">Método de Pago</label>
-                            <div class="col-sm-7">
+                            
                                 <select class="form-control" name="id_metodo_pagos" id="id_metodo_pagos" required>
                                     <option value="">Seleccione</option>
                                     @forelse($metodo__pagos as $metodo_pagos)
@@ -68,18 +67,18 @@ Nueva Compra
                                     @empty <option>No existen</option>
                                     @endforelse
                                 </select>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-6" style="padding-right: 3%;padding-top: 2%;">
-                <div class="card">
-                    <div class="card-head">
-                        <h4 class="text-center">Info Insumos</h4>
+            <div class="col-12" style="padding-right: 6%; padding-left: 6%;">
+                
+                    <div class="card-head" style="padding-bottom: 3%;">
+                        <h3 class="text-center">Información de Insumos</h3>
                     </div>
                     <div class="row card-body">
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="form-group">
                                 <label for="">Insumo</label>
                                 <select name="id_insumo" id="id_insumo" class="form-control">
@@ -89,59 +88,71 @@ Nueva Compra
                                 </select>
                             </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-4">
                             <div class="form-group">
                                 <label for="">Cantidad</label>
                                 <input type="number" name="cantidad" id="cantidad" class="form-control" required>
                             </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-4">
                             <div class="form-group">
                                 <label for="">Precio Unitario</label>
                                 <input id="valor_unitario" type="text" class="form-control" required>
                             </div>
                         </div>
-                        <div class="col-12">
-                            <button onclick="agregar_insumo()" type="button" class="btn btn-primary btn-lg active float-right">Agregar Insumo</button>
-                        </div>
+                        <a type="button" class="mdi mdi-plus-circle" style="color:green;font-size:400%;float: left;"
+                        onclick="agregar_insumo()"></a>
                     </div>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Cantidad</th>
-                                <th>Precio</th>
-                                <th>Sub Total</th>
-                                <th>Opciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tblInsumos">
+                    <div class="table-insumos" style="padding-left: 2%;padding-right: 2%;">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th>Sub Total</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblInsumos">
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-
-            <div class="col-2" style="padding-left: 2%;">
-                <label for="">Total Compra</label>
-                <input type="number" class="form-control" name="total" id="total" required>
+            <div class="col-12" style="padding-top: 2%; padding-left: 2%;">
+                <div class="row card-body" style="padding-left: 23%;padding-top: 6%;">
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="">Total Compra</label>
+                                <input type="number" class="form-control" name="total" id="total" readonly>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="">Abono</label>
+                                <input type="number" class="form-control" name="abono" id="abono" required>
+                            </div>
+                        </div>
+                </div>
+                </div>
+        
+            <div class="col-12" style="padding-bottom: 5%;">
+                <div class="col-6" style="padding-left:24%;">
+                    <button type="submit" class="btn btn-primary btn-lg active">Guardar</button>
+                    <a href="{{ route('compra.index') }}" id="boton-regresar" class="btn btn-primary btn-lg active" type="button">Cancelar</a>
+                </div>
             </div>
-            <div class="col-2" style="padding-left: 2%;">
-                <label for="">Abono</label>
-                <input type="number" class="form-control" name="abono" id="abono" required>
-            </div>
-            <div class="col-12" style="padding-left: 2%;">
-                <button type="submit" class="btn btn-primary btn-lg active">Guardar</button>
-                <a href="{{ route('compra.index') }}" class="btn btn-primary btn-lg active" type="button">Cancelar</a>
-            </div>
-        </div>
+        
            @if (session('error'))
                 <div class="alert alert-danger" role="alert">
                     {{ session('error') }}
                 </div>
             @endif
     </form>
-</section>
+</main>
+
 @endsection
 
 @section("script")

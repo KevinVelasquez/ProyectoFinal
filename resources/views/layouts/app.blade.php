@@ -55,12 +55,12 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                                 <a class="dropdown-item" href="{{ route('VistaPefil') }}">
-                                    <i class="mdi mdi-face text-primary"></i>
+                                    <i class="mdi mdi-face" style="color:#81242E"></i>
                                     Perfil
                                 </a>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="mdi mdi-login text-primary"></i>
+                                    <i class="mdi mdi-login"  style="color:#81242E"></i>
                                     Cerrar Sesión
                                 </a>
                             </div>
