@@ -11,7 +11,7 @@ Mostrar Ordenes de Compra
     <div class="content-wrapper">
           <div class="row">
             <div class="col-sm-6" id="tituloinicial">
-              <h3 class="mb-0 font-weight-bold">Ordenes de compra Proveedor</h3>
+              <h3 class="mb-0 font-weight-bold">Ordenes de compra del Proveedor</h3>
             </div>
           </div>
     </div>

@@ -6,7 +6,7 @@
                 <label for="nombre">Nombre</label>
                 <div class="col-sm-9">
                     <input type="text" name="nombre" value="{{ isset($cliente->nombre)?$cliente->nombre:'' }}" id="nombre" class="form-control" required>
-                    
+                     
                 </div>
             </div>
         </div>
