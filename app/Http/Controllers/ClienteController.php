@@ -129,13 +129,38 @@ class ClienteController extends Controller
     public function update(Request $request, Cliente $cliente)
     {
         //
-        
-        $cliente->update($request->all());
+        $saldoPendiente = 0;
 
-        return redirect()->route('cliente.index')
-            ->with('success', 'Cliente updated successfully');
+    // Validar saldo pendiente solo si el estado se está actualizando
+    if ($request->has('estado') && $cliente->estado != $request->estado) {
+        $saldoPendiente = $this->validarSaldoPendiente($cliente->id);
     }
 
+    if ($saldoPendiente > 0) {
+        return redirect()->back()
+            ->with('error', 'No se puede inactivar el cliente porque tiene un saldo pendiente.');
+    }
+
+    // Actualizar cliente
+    $cliente->update($request->all());
+
+    return redirect()->route('cliente.index')
+        ->with('success', 'Cliente actualizado exitosamente');
+    }
+
+    private function validarSaldoPendiente($clienteId)
+{
+    $saldoPendiente = Cliente::select(Pedido::raw('(SELECT SUM(CASE WHEN pedidos.estado = 1 THEN pedidos.totalpedido ELSE 0 END) FROM pedidos WHERE pedidos.id_cliente = clientes.id) - SUM(CASE WHEN pago__clientes.estado = 1 THEN pago__clientes.abono ELSE 0 END) as saldo_pendiente'))
+        ->leftJoin('pedidos', 'pedidos.id_cliente', '=', 'clientes.id')
+        ->leftJoin('pago__clientes', 'pago__clientes.id_pedido', '=', 'pedidos.id')
+        ->where('clientes.id', $clienteId)
+        ->groupBy('clientes.id')
+        ->first();
+
+    return $saldoPendiente ? $saldoPendiente->saldo_pendiente : 0;
+}
+
+    
     /**
      * Remove the specified resource from storage.
      *

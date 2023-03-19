@@ -7,24 +7,19 @@
 
 
 @section('content')
-    <section class="content container-fluid">
-        <div class="">
-            <div class="col-md-12">
-                <section class="content container-fluid">
-                    <div class="">
-                        <div class="col-md-12">
+<div class="container">
+    <main role="main" class="pb-3">
+            
 
                             @includeif('partials.errors')
-
-                            <div class="card card-default">
-
-                                <div class="card-header">
-                                    <span class="card-title">Actualizar Proveedor</span>
 
                                     @if (Session::has('mensaje'))
                                         {{ Session::get('mensaje') }}
                                     @endif
-                                </div>
+
+                                    <h1>Actualizar Proveedor</h1>
+        <hr />
+                                
                                 <div class="card-body">
                                     <form method="POST" action="{{ route('proveedor.update', $proveedor->id) }}"
                                         role="form" enctype="multipart/form-data" class="row g-3 needs-validation"
@@ -235,25 +230,25 @@
 
                                         </div>
 
-                                        <div class="box-footer mt20">
+                                        <div class="form-group" style="margin-top: 2%;margin-left: 35%;">
 
-                                            <button type="submit" class="btn btn-primary">Actualizar</button>
+                                            <button type="submit" class="btn btn-primary" style="background-color: #81242E;
+                            border-color: #81242E;" >Actualizar</button>
 
-                                            <a href="{{ route('proveedor.index') }}"
-                                                class="btn btn-primary btn-lg active" role="button"
-                                                aria-pressed="true">Cancelar</a>
-
-
+                                            
+                                                <a class="btn btn-primary" href="{{ route('proveedor.index') }}" style="background-color: #565656;
+                            border-color: #565656; margin: 10px;  margin-top: 6%;">Cancelar</a>
                                         </div>
                                     </form>
                                 </div>
 
 
-                            </div>
+                            
+                                </main>
+</div>
 
-
-                        </div>
-                    </div>
+                        
+                    
 
 
                     <script>

@@ -7,6 +7,13 @@ Cliente
 @section('content')
 <div class="container">
     <main role="main" class="pb-3">
+    <div class="content-wrapper">
+          <div class="row">
+            <div class="col-sm-6" id="tituloinicial">
+              <h3 class="mb-0 font-weight-bold">Clientes</h3>
+            </div>
+          </div>
+    </div>
         <p>
             <a class="mdi mdi-account-plus-outline" id="iconoadd" href="{{ route('cliente.create') }}"></a>
         </p>
@@ -60,8 +67,6 @@ Cliente
                         
 
                         <button id="figura" type="button" class="mdi mdi-checkbox-multiple-blank" data-toggle="modal" data-target="#verdiseños" onclick="verdiseños('{{$cliente->id}}')"></button>
-
-                       
                         
                         <button onclick="eliminarCliente('{{ $cliente->id }}')" class="mdi mdi-trash-can-outline"
                                     data-toggle="modal" data-target="#eliminar"></button>
@@ -106,6 +111,8 @@ Cliente
 
         </div>
 
+
+
         <!-- modal eliminar -->
      <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
@@ -126,8 +133,8 @@ Cliente
                         <input type="hidden" name="ideliminar" id="ideliminar" />
                         <button type="submit" class="btn btn-primary" style="background-color: #81242E;
                             border-color: #81242E;">Si</button>
-                        <button type="button" class="btn btn-primary" style="background-color: #81242E;
-                            border-color: #81242E;" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary" style="background-color: #565656;
+                            border-color: #565656;" data-dismiss="modal">No</button>
                     </form>
                 </div>
             </div>
@@ -186,6 +193,8 @@ Cliente
         });
 
     }
+
+    
 
 
     function eliminarCliente(id) {

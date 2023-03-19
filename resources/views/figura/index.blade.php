@@ -11,6 +11,13 @@
             <div class="col-sm-12">
                 <div class="container">
                     <main role="main" class="pb-3">
+                        <div class="content-wrapper">
+                            <div class="row">
+                                <div class="col-sm-6" id="tituloinicial">
+                                    <h3 class="mb-0 font-weight-bold">Figuras Predefinidas</h3>
+                                </div>
+                            </div>
+                        </div>
                             <p>
                                 <a class="mdi mdi-camera-plus-outline" id="iconoadd" href="{{ route('figuras.create') }}"></a>
                             </p>
@@ -31,7 +38,7 @@
                                             <div class="row">
                                                 @foreach ($figuras as $figura)
                                                     <div class="col-md-2 p-1">
-                                                        <div class="card card-fixed-height" style="height: 290px">
+                                                        <div class="card card-fixed-height">
                                                             <img class="card-img-top" 
                                                                 src="http://127.0.0.1:8000/storage/images/figuras/{{ $figura->imagen }}"
                                                                 {{-- src="{{ asset('/storage/images/figuras/' . $figura->imagen) }}" --}} alt="Card image cap"
@@ -97,8 +104,8 @@
                             @csrf
                             <div>¿Está seguro que desea eliminar la figura?</div>
                             <input type="hidden" name="ideliminar" id="ideliminar" />
-                            <button type="submit" class="btn btn-primary">Si</button>
-                            <button type="button" class="btn btn-danger" style="margin-top:5%"
+                            <button type="submit" class="btn btn-primary" style="background-color:#81242E;border:#81242E">Si</button>
+                            <button type="button" class="btn btn-primary" style="margin-top:5%;background-color:#565656;border:#565656"
                                 data-dismiss="modal">No</button>
                         </form>
                     </div>

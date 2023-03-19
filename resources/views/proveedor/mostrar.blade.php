@@ -1,19 +1,23 @@
 @extends('layouts.app')
 
 @section('template_title')
-
+Mostrar Ordenes de Compra
 @endsection
 
 @section('content')
 
 <div class="container">
     <main role="main" class="pb-3">
-    <p>
-    <div class="card-header">
-        <span class="card-title">Ordenes de compra</span>
-
+    <div class="content-wrapper">
+          <div class="row">
+            <div class="col-sm-6" id="tituloinicial">
+              <h3 class="mb-0 font-weight-bold">Ordenes de compra del Proveedor</h3>
+            </div>
+          </div>
     </div>
-    </p>
+    
+    
+   
     
 
         <table id="factproveedor" class="table table-striped dt-responsive nowrap table" style="width:100%">
@@ -178,7 +182,9 @@
                                             <hr />
                                             <input type="hidden"  id="iddescarga">
                                             <div>
-                                                <a id="botonDescarga"  class="btn btn-primary " target="_blank">Descargar</a>
+                                            <a type="button" id="botonDescarga"  class="btn btn-primary " target="_blank"  style="background-color:#81242E;border:#81242E"><i
+                        class="mdi mdi-download"></i>Descargar</a>
+                            
                                             </div>
                                         </div>
                                     </div>
