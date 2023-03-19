@@ -135,7 +135,7 @@ class ProveedorController extends Controller
       ->get();
       
 
-        return view('proveedor.show', compact('proveedores','compra','detallecompra','abono','comprasss') );
+        return view('proveedor.mostrar', compact('proveedores','compra','detallecompra','abono','comprasss') );
     }
 
     

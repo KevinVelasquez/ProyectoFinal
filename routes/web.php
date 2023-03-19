@@ -67,6 +67,7 @@ Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'index
 Route::resource('cliente',ClienteController::class)->middleware('auth');
 Route::get('estadocliente',[App\Http\Controllers\ClienteController::class, 'updateStatusCliente'])->name('updateStatusCliente');
 Route::delete('cliente', [App\Http\Controllers\ClienteController::class, 'eliminarCliente'])->name('cliente.eliminarCliente');
+Route::patch('cliente', [ClienteController::class, 'inactivarCliente'])->name('cliente.inactivarCliente');
 
 //RUTAS PROVEEDORES
 

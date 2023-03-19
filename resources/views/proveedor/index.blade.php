@@ -7,6 +7,13 @@ Proveedor
 @section('content')
 <div class="container">
     <main role="main" class="pb-3">
+    <div class="content-wrapper">
+          <div class="row">
+            <div class="col-sm-6" id="tituloinicial">
+              <h3 class="mb-0 font-weight-bold">Proveedores</h3>
+            </div>
+          </div>
+    </div>
         <p>
             <a class="mdi mdi-account-plus-outline" id="iconoadd" href="{{ route('proveedor.create') }}"></a>
         </p>
@@ -95,8 +102,8 @@ Proveedor
                         <input type="hidden" name="ideliminar" id="ideliminar" />
                         <button type="submit" class="btn btn-primary" style="background-color: #81242E;
                             border-color: #81242E;">Si</button>
-                        <button type="button" class="btn btn-primary" style="background-color: #81242E;
-                            border-color: #81242E;" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary" style="background-color: #565656;
+                            border-color: #565656;" data-dismiss="modal">No</button>
                     </form>
                 </div>
             </div>
