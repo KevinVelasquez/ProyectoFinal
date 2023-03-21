@@ -210,7 +210,7 @@ Compra
                                         <hr />
                                         <input type="hidden" id="iddescarga">
                                         <div>
-                                            <a type="button" id="botonDescarga" class="btn btn-primary  btn-lg active" target="_blank"><i class="fa fa-fw fa-eye"></i>Descargar</a>
+                                            <a type="button" id="botonDescarga" class="btn btn-primary  btn-lg active" target="_blank"><i class="mdi mdi-download"></i> Descargar</a>
                                         </div>
                                     </div>
                                 </div>
@@ -242,7 +242,7 @@ Compra
                     <input type="hidden" name="idanular" id="idanular" />
                     <input type="hidden" name="anulardato" value="2" />
                     <button type="submit" class="btn btn-primary btn-lg active">Sí</button>
-                    <button type="button" class="btn btn-primary btn-lg active" data-dismiss="modal">No</button>
+                    <button type="button" id="boton-regresar" class="btn btn-primary btn-lg active" data-dismiss="modal">No</button>
                 </form>
             </div>
         </div>
@@ -301,7 +301,7 @@ Compra
             </div>
             <div class="botonestabla" style="text-align: center;">
                 <button type="submit" id="agregarAbono" class="btn btn-primary btn-lg active">Agregar</button>
-                <button type="button" class="btn btn-primary btn-lg active" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                <button type="button" id="boton-regresar" class="btn btn-primary btn-lg active" data-dismiss="modal" aria-label="Close">Cancelar</button>
             </div>
             </form>
             <br>
@@ -354,7 +354,7 @@ Compra
                     <input type="hidden" name="idcomprabono" id="idcomprabono" />
                     <input type="hidden" name="anulardato" value="2" />
                     <button type="submit" class="btn btn-primary btn-lg active">Si</button>
-                    <button type="button" class="btn btn-primary btn-lg active" data-dismiss="modal">No</button>
+                    <button type="button" id="boton-regresar" class="btn btn-primary btn-lg active" data-dismiss="modal">No</button>
                 </form>
             </div>
         </div>
