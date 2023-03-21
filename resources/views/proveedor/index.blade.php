@@ -17,6 +17,11 @@ Proveedor
         <p>
             <a class="mdi mdi-account-plus-outline" id="iconoadd" href="{{ route('proveedor.create') }}"></a>
         </p>
+        @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
         <table id="proveedores" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>
@@ -76,11 +81,7 @@ Proveedor
                 @endforeach
             </tbody>
         </table>
-        @if (session('error'))
-            <div class="alert alert-danger" role="alert">
-                {{ session('error') }}
-            </div>
-        @endif
+        
 
         <!-- modal eliminar -->
      <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"

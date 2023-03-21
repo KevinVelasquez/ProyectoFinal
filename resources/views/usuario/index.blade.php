@@ -17,6 +17,11 @@ Usuarios
         <p>
             <a class="mdi mdi-account-multiple-plus-outline" id="iconoadd" href="{{ route('usuario.create') }}"></a>
         </p>
+        @if (session('error'))
+        <div class="alert alert-danger" role="alert">
+            {{ session('error') }}
+        </div>
+        @endif
         <table id="usuarios" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>
@@ -60,11 +65,7 @@ Usuarios
                 @endforeach
             </tbody>
         </table>
-        @if (session('error'))
-        <div class="alert alert-danger" role="alert">
-            {{ session('error') }}
-        </div>
-        @endif
+        
     </main>
 </div>
 <script>

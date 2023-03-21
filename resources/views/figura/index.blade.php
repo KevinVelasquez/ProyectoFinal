@@ -23,6 +23,11 @@
                             </p>
                         <div class="card-body">
                             <div class="table-responsive">
+                            @if (session('error'))
+                                <div class="alert alert-danger" role="alert">
+                                {{ session('error') }}
+                                </div>
+                                @endif
                                 <table class="table table-striped table-hover">
                                     <form action="{{ route('figuras.search') }}" method="GET">
                                         <div class="form-group" id="formsearch">
@@ -76,11 +81,7 @@
                                     </tbody>
                                 </table>
                                 {{ $figuras->links() }}
-                                @if (session('error'))
-                                <div class="alert alert-danger" role="alert">
-                                {{ session('error') }}
-                                </div>
-                                @endif
+                                
                             </div>
                         </div>
                 </div>

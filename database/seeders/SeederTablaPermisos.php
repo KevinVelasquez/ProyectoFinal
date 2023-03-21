@@ -18,9 +18,6 @@ class SeederTablaPermisos extends Seeder
     public function run()
     {
         $permisos=[
-            //Menús
-            'Menu-Compras',
-            'Menu-Ventas',
             
             //permisos roles
             'Configuración',
@@ -28,6 +25,7 @@ class SeederTablaPermisos extends Seeder
             //permisos insumos
             'Usuarios',
 
+            'Menu-Compras',
             //permisos proveedores
             'Proveedores',
 
@@ -37,6 +35,7 @@ class SeederTablaPermisos extends Seeder
             //permisos ordenes de compra
             'Ordenes-de-Compras',
 
+            'Menu-Ventas',
             //permisos clientes
             'Clientes',
         
