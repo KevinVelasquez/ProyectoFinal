@@ -198,7 +198,7 @@ Nueva Compra
                         <td>${valor_unitario}</td>
                         <td>${parseInt(cantidad) * parseInt(valor_unitario)}</td>
                         <td>
-                        <button type="button" class="btn btn-danger" onclick="eliminar_insumo(${id_insumo}, ${parseInt(cantidad) * parseInt(valor_unitario)})">X</button>
+                        <a type="button" class="mdi mdi-close-circle" style="color:red;font-size:30px" onclick="eliminar_insumo(${id_insumo}, ${parseInt(cantidad) * parseInt(valor_unitario)})"></a>
                         </td>
                     </tr>
                     `);
