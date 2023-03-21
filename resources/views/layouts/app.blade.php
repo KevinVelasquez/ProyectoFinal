@@ -46,7 +46,7 @@
                     <ul class="navbar-nav navbar-nav-right">
 
                         <li class="nav-item d-none d-lg-flex  mr-2">
-                            <a class="nav-link" href="{{ route('ayuda.index') }}">
+                            <a class="nav-link" href="https://youtube.com/playlist?list=PLEddzahFLbGjRnNeaOul20pJfkQoIS3b8" target="_blank" >
                                 Ayuda
                             </a>
                         </li>

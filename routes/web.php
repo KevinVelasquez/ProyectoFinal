@@ -80,11 +80,6 @@ Route::delete('proveedor', [App\Http\Controllers\ProveedorController::class, 'el
 // RUTAS CALENDARIO
 Route::resource('calendario',CalendarioController::class);
 
-// RUTAS AYUDA
-
-Route::resource('ayuda',HomeController::class);
-
-
 
 //RUTAS CATHE
 
