@@ -14,11 +14,21 @@ Rol
                 </div>
             </div>
         </div>
-        @can('crear-rol')
         <p> 
-            <a class="mdi mdi-account-multiple-plus-outline" id="iconoadd" href="{{ route('roles.create') }}" ></a>
+            <a class="mdi mdi-lock-plus-outline" id="iconoadd" href="{{ route('roles.create') }}" ></a>
         </p>
-        @endcan
+        @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+
+        @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
         <table id="roles" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>
@@ -37,23 +47,15 @@ Rol
                                 echo 'No Disponible';
                             } ?></td>
                     <td>
-                        @can('editar-rol')
                         <a href="{{ route('roles.edit',$role->id) }}"><button class="mdi mdi-lead-pencil"></button></a>
-                        @endcan
-                        @can('borrar-rol')
                         <button onclick="eliminarRol('{{ $role->id }}')" class="mdi mdi-trash-can-outline"
                             data-toggle="modal" data-target="#eliminarmodal"></button>
-                            @endcan
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
-        @if (session('error'))
-            <div class="alert alert-danger" role="alert">
-                {{ session('error') }}
-            </div>
-        @endif
+        
     </main>
 </div>
 
@@ -77,8 +79,8 @@ Rol
                         <input type="hidden" name="ideliminar" id="ideliminar" />
                         <button type="submit" class="btn btn-primary" style="background-color: #81242E;
                             border-color: #81242E;">Si</button>
-                        <button type="button" class="btn btn-primary" style="background-color: #81242E;
-                            border-color: #81242E;" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary" style="background-color: #565656;
+                            border-color: #565656;" data-dismiss="modal">No</button>
                     </form>
                 </div>
             </div>

@@ -28,11 +28,11 @@ class PagoProveedoreController extends Controller
 
         $totalabono = $this->verificarAbono($input["id"]);
 
-/* 
+ 
         if ($totalabono <= 0) {
 
             $this->abonoCancelado($input["id"]);
-        } */
+        } 
 
         $compras = Compra::all();
 
@@ -44,8 +44,10 @@ class PagoProveedoreController extends Controller
 
         $editarCompra = Compra::all();
 
+        $pedidoproveedor = Compra::all();
 
-        return view('compra.index', compact('compras',  'detallecompra', 'compraProveedor', 'detalleabono','editarCompra', 'abono','totalabono'));
+
+        return view('compra.index', compact('pedidoproveedor','compras',  'detallecompra', 'compraProveedor', 'detalleabono','editarCompra', 'abono','totalabono'));
 
     }
 
@@ -53,9 +55,11 @@ class PagoProveedoreController extends Controller
     public function verificarAbono($id)
     {
 
-        $totalabonocompra = PagoProveedore::all();
+        $totalabonocompra = PagoProveedore::select('compra.total', PagoProveedore::raw('SUM(pago_proveedores.abono) as totalabonado'))
+            ->join("compra", "compra.id", "=", "pago_proveedores.id_compra")->where([["pago_proveedores.estado", 1], ["compra.id", $id]])->groupBy("pago_proveedores.id_compra", "compra.total")
+            ->get();
 
-        return $totalabonocompra[0]->totalcompra - $totalabonocompra[0]->totalabonado;
+        return $totalabonocompra[0]->total - $totalabonocompra[0]->totalabonado;
     }
 
 
@@ -64,11 +68,11 @@ class PagoProveedoreController extends Controller
 
         Compra::where('id', $id)
             ->update([
-                'cancelada' => 1
+                'estado' => 0
             ]);
     }
 
-    public function anularAbono(Request $request)
+    public function anularAbonoCompra(Request $request)
     {
         $input = $request->all();
         PagoProveedore::where('id', $input["idanularabono"])
@@ -76,22 +80,16 @@ class PagoProveedoreController extends Controller
                 'estado' => 2
             ]);
 
+            Compra::where('id', $input["idcomprabono"])
+            ->update([
+                'estado' => 1
+            ]);
+
 
         return redirect()->route('compra.index')
             ->with('success', 'Status pedido successfully');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $pagoProveedores = PagoProveedore::paginate();
 
-        return view('pago-proveedore.index', compact('pagoProveedores'))
-            ->with('i', (request()->input('page', 1) - 1) * $pagoProveedores->perPage());
-    }
 
     /**
      * Show the form for creating a new resource.

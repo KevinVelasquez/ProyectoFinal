@@ -7,16 +7,33 @@ Cliente
 @section('content')
 <div class="container">
     <main role="main" class="pb-3">
+    <div class="content-wrapper">
+          <div class="row">
+            <div class="col-sm-6" id="tituloinicial">
+              <h3 class="mb-0 font-weight-bold">Clientes</h3>
+            </div>
+          </div>
+    </div>
         <p>
-            <a class="mdi mdi-cart-outline" id="iconoadd" href="{{ route('cliente.create') }}"></a>
+            <a class="mdi mdi-account-plus-outline" id="iconoadd" href="{{ route('cliente.create') }}"></a>
         </p>
+        @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 
+        @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
         <table id="clientes" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>
 
 
-                    <th>Cédula</th>
+                    <th>Cédula/Nit</th>
                     <th>Nombre</th>
                     <th>Teléfono</th>
                     <th>Dirección</th>
@@ -39,9 +56,9 @@ Cliente
                     <td>{{ $cliente->direccion }}</td>
                     <td>{{ $cliente->email }}</td>
                     @if ($cliente->tipo_persona==1)
-                    <td>Juridico</td>
-                    @else
                     <td>Natural</td>
+                    @else
+                    <td>Juridica</td>
                     @endif
 
                     <td>{{ $cliente->total_pedido-$cliente->total_abonos }}</td>
@@ -56,12 +73,11 @@ Cliente
 
                     <td>
 
-                        <a href="{{ url('/cliente/'.$cliente->id.'/edit') }}"><button class="mdi mdi-lead-pencil"></button></a>
+                         <a href="{{ url('/cliente/'.$cliente->id.'/edit') }}"><button class="mdi mdi-lead-pencil"></button></a> 
 
+                        
 
                         <button id="figura" type="button" class="mdi mdi-checkbox-multiple-blank" data-toggle="modal" data-target="#verdiseños" onclick="verdiseños('{{$cliente->id}}')"></button>
-
-                       
                         
                         <button onclick="eliminarCliente('{{ $cliente->id }}')" class="mdi mdi-trash-can-outline"
                                     data-toggle="modal" data-target="#eliminar"></button>
@@ -72,11 +88,7 @@ Cliente
                 @endforeach
             </tbody>
         </table>
-        @if (session('error'))
-            <div class="alert alert-danger" role="alert">
-                {{ session('error') }}
-            </div>
-        @endif
+        
 
         <!-- modal ver diseño -->
 
@@ -106,6 +118,8 @@ Cliente
 
         </div>
 
+
+
         <!-- modal eliminar -->
      <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
@@ -126,8 +140,8 @@ Cliente
                         <input type="hidden" name="ideliminar" id="ideliminar" />
                         <button type="submit" class="btn btn-primary" style="background-color: #81242E;
                             border-color: #81242E;">Si</button>
-                        <button type="button" class="btn btn-primary" style="background-color: #81242E;
-                            border-color: #81242E;" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary" style="background-color: #565656;
+                            border-color: #565656;" data-dismiss="modal">No</button>
                     </form>
                 </div>
             </div>
@@ -187,6 +201,8 @@ Cliente
 
     }
 
+    
+
 
     function eliminarCliente(id) {
             let consulta = {!! $clientes !!}
@@ -195,6 +211,9 @@ Cliente
             $('#ideliminar').val(`${datos.id}`);
             
         }
+
+
+    
 
 
 

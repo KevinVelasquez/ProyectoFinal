@@ -55,7 +55,7 @@
                                     <span class="titulo">Cédula:<span class="texto">{{$compraproveedor[0]->cedula }}</span><br>
                                     <span class="titulo">Dirección:<span class="texto">{{$compraproveedor[0]->direccion }}, {{$compraproveedor[0]->nombremunicipio }}</span><br>
                                     <span class="texto"></span>
-                                    <span class="titulo">Telefono:<span class="texto">{{$compraproveedor[0]->telefono }}</span><br>
+                                    <span class="titulo">Teléfono:<span class="texto">{{$compraproveedor[0]->telefono }}</span><br>
                                 </div>
                                 <div style="padding: 10px; float: right; width: 45%; text-align: justify;">
                                     <span class="titulo">N° de Orden:<span class="texto">{{$compraproveedor[0]->n_orden }}</span><br>

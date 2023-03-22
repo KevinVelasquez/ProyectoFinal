@@ -109,7 +109,10 @@
         <div class="form-group row">
             <label class="control-label">Fecha de Entrega</label>
             <div class="col-sm-7">
-                <input type="date" name="fecha_entrega" id="fecha_entrega" class="form-control" required />
+            <?php
+            $fechamin = date('Y-m-d');
+            ?>
+                <input type="date" min="<?=$fechamin;?>" name="fecha_entrega" id="fecha_entrega" class="form-control" required />
             </div>
         </div>
     </div>
@@ -209,8 +212,17 @@
     </div>
     <div class="col-md-6">
         <div class="form-group row">
+            <label class="control-label">Descripción</label>
+            <div class="col-sm-9">
+                <input id="descripcion" class="form-control" style="height:5%" />
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group row">
             <label class="control-label">Diseño</label>
-            <div class="col-sm-3">
+            <div class="col-sm-6">
                 <button id="figura" type="button" class="form-control btn btn-success" data-toggle="modal"
                     data-target="#verdiseños" disabled>Seleccione diseño</button>
             </div>
@@ -219,16 +231,12 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="form-group row">
-            <label class="control-label">Descripción</label>
-            <div class="col-sm-9">
-                <input id="descripcion" class="form-control" style="height:5%" />
-                <a type="button" class="mdi mdi-plus-circle" style="color:green;font-size:400%;margin-left:40%"
+    <div class="col-md-1">
+    <a type="button" class="mdi mdi-plus-circle" style="color:green;font-size:400%;margin-left:40%"
                     id="agregarprodu"></a>
-            </div>
-        </div>
     </div>
+    <br>
+    <hr>
     <input type="hidden" name="total" id="total" />
 </div>
 
@@ -265,9 +273,9 @@
 
 </div>
 <div class="form-group" style="margin-top: 2%;margin-left: 39%;">
-    <button type="submit" class="btn btn-success" style="margin: 10px" >Crear</button>
-    <a class="btn btn-primary " style="margin: 10px" onclick="resetForm('formpedidos')">Limpiar</a>
-    <a class="btn btn-danger " href="{{ route('pedidos.index') }}" style="margin: 10px">Cancelar</a>
+    <button type="submit" class="btn btn-success" style="margin: 10px;background-color:#81242E;border:#81242E" >Crear</button>
+    <a class="btn btn-success " style="margin: 10px;background-color:#B0B0B0;border:#B0B0B0" onclick="resetForm('formpedidos')">Limpiar</a> 
+    <a class="btn btn-success" href="{{ route('pedidos.index') }}" style="margin: 10px;background-color:#565656;border:#565656">Cancelar</a>
 </div>
 
 <!-- modal diseños -->
@@ -290,7 +298,7 @@
 
                             </div>
                             <button id="acceptBtn" class="btn btn-primary" data-dismiss="modal"
-                                aria-label="Close">Aceptar</button>
+                                aria-label="Close" style="background-color:#81242E;border:#81242E">Aceptar</button>
                         </form>
                     </div>
                 </div>
@@ -337,7 +345,7 @@
                                 <td>${precio}</td>
                                 <td>${parseInt(cantidad) * parseInt(precio)}</td>
                                 <td>${descripcion}</td>
-                                <td><a type="button" class="mdi mdi-close-circle" style="color:red;font-size:100%" id="eliminar" onclick="eliminarclick(${producto_id},
+                                <td><a type="button" class="mdi mdi-close-circle" style="color:red;font-size:30px" id="eliminar" onclick="eliminarclick(${producto_id},
                                     ${parseInt(cantidad)*parseInt(precio)})"></a></td>     
                                 </tr>
 
@@ -459,35 +467,34 @@
 
 
     function filtrarDepartamentos() {
+    var pais = document.getElementById("pais").value;
+    var selectordepartamentos = document.getElementById("departamento");
+    selectordepartamentos.innerHTML = "<option value='' selected disabled>Seleccione</option>";
+    let paisseleccion = [];
+    let departamentos = <?php echo $departamentos; ?>;
+    departamentos.forEach(function(value, index) {
+        paisseleccion[index] = value;
+        if (paisseleccion[index].id_paises == pais) {
+            $("#departamento").append(`
+                <option value="${paisseleccion[index].id}">${paisseleccion[index].nombre}</option>
+            `);
+        }
+    });
+}
 
-        var pais = document.getElementById("pais").value;
-        var selectordepartamentos = document.getElementById("departamento");
-        selectordepartamentos.innerHTML = "";
-        let paisseleccion = [];
-        let departamentos = <?php echo $departamentos; ?>;
-        departamentos.forEach(function(value, index) {
-            paisseleccion[index] = value;
-            if (paisseleccion[index].id_paises == pais) {
-                $("#departamento").append(`
-                <option selected disabled value="">Seleccione</option>
-                    <option value="${paisseleccion[index].id}"/>${paisseleccion[index].nombre}
-                    `);
-            }
-        });
-    }
 
     function filtrarMunicipios() {
 
         var departamento = document.getElementById("departamento").value;
         var selectormunicipios = document.getElementById("municipio");
-        selectormunicipios.innerHTML = "";
+        selectormunicipios.innerHTML = "<option value='' selected disabled>Seleccione</option>";
         let departamentoseleccion = [];
         let municipios = <?php echo $municipios; ?>;
         municipios.forEach(function(value, index) {
             departamentoseleccion[index] = value;
             if (departamentoseleccion[index].id_departamentos == departamento) {
-                $("#municipio").append(`
-                <option selected disabled value="">Seleccione</option>
+                $("#municipio").append(    
+                `
                 <option value="${departamentoseleccion[index].id}"/>${departamentoseleccion[index].nombre}
                 `);
             }

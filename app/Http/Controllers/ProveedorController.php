@@ -26,10 +26,7 @@ class ProveedorController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:ver-proveedor|crear-proveedor|editar-proveedor|borrar-proveedor,', ['only'=>['index']]);
-        $this->middleware ('permission: crear-proveedor', ['only'=>['store']]);
-        $this->middleware ('permission: editar-proveedor', ['only'=>['update']]);
-        $this->middleware ('permission: borrar-proveedor', ['only'=>['eliminarProveedor']]);
+        $this->middleware('permission:Proveedores');
     }
     /**
      * Display a listing of the resource.
@@ -41,14 +38,12 @@ class ProveedorController extends Controller
         //
         $proveedores = Proveedor::paginate();
 
-        $proveedor = Proveedor::select('proveedors.id', 'proveedors.nombre', 'proveedors.cedula', 'proveedors.telefono', 'proveedors.direccion', 'proveedors.email', 'proveedors.tipo_persona', 'proveedors.estado', PagoProveedore::raw('SUM(CASE WHEN pago_proveedores.estado = 1 THEN pago_proveedores.abono ELSE 0 END) as total_abonos'), Compra::raw('(SELECT SUM(CASE WHEN compra.estado = 1 THEN compra.total ELSE 0 END) FROM compra WHERE compra.id_proveedor = proveedors.id) as total_compra'))
-        ->leftJoin('compra', 'compra.id_proveedor', '=', 'proveedors.id')
-        ->leftJoin('pago_proveedores', 'pago_proveedores.id_compra', '=', 'compra.id')
-        ->groupBy('proveedors.id', 'proveedors.nombre', 'proveedors.cedula', 'proveedors.telefono', 'proveedors.direccion', 'proveedors.email', 'proveedors.tipo_persona', 'proveedors.estado')
-        ->get();
-        
-
-
+        $proveedor = Proveedor::select('proveedors.id', 'proveedors.nombre', 'proveedors.cedula', 'proveedors.telefono', 'proveedors.direccion', 'proveedors.email', 'proveedors.tipo_persona', 'proveedors.estado', PagoProveedore::raw('SUM(CASE WHEN pago_proveedores.estado = 1 THEN pago_proveedores.abono ELSE 0 END) as total_abonos'), Compra::raw('(SELECT SUM(CASE WHEN compra.anulado = 0 THEN compra.total ELSE 0 END) FROM compra WHERE compra.id_proveedor = proveedors.id) as total_compra'))
+            ->leftJoin('compra', 'compra.id_proveedor', '=', 'proveedors.id')
+            ->leftJoin('pago_proveedores', 'pago_proveedores.id_compra', '=', 'compra.id')
+            ->groupBy('proveedors.id', 'proveedors.nombre', 'proveedors.cedula', 'proveedors.telefono', 'proveedors.direccion', 'proveedors.email', 'proveedors.tipo_persona', 'proveedors.estado')
+            ->get();
+ 
         return view('proveedor.index', compact('proveedores','proveedor'))
             ->with('i', (request()->input('page', 1) - 1) * $proveedores->perPage());
     }
@@ -81,24 +76,22 @@ class ProveedorController extends Controller
     public function store(Request $request)
     {
 
+        $this->validate($request, [
+            'cedula' => 'required|unique:proveedors',
+            'nombre' => 'required',
+            'email' => 'required|email|unique:proveedors,email',
+            'telefono' => 'required',
+            'direccion' => 'required',
+        ]);
+
 
         $datosProveedor = request()->except('_token', 'pais', 'departamento');
         
         
-
-        try {
-            Proveedor::insert($datosProveedor);
-            // Código para guardar datos en la base de datos
-        } catch (\Illuminate\Database\QueryException $e) {
-            if ($e->errorInfo[1] == 1062) { // Verificar si es un error de clave duplicada
-                if (strpos($e->getMessage(), 'proveedors_cedula_unique') !== false) { // Verificar si la clave duplicada es para el campo 'cedula'
-                    throw new \Exception('El número de cédula ya existe en la base de datos'); // Lanzar una excepción con el mensaje de validación
-                }
-            }
-        }
+        Proveedor::insert($datosProveedor);
 
         return redirect('proveedor')
-            ->with('mensaje', 'Proveedor creado con éxito.');
+            ->with('success', 'Proveedor registrado exitosamente.');
     }
 
     /**
@@ -122,13 +115,17 @@ class ProveedorController extends Controller
         ->join("metodo__pagos", "compra.id_metodo_pagos", "=", "metodo__pagos.id")
         ->join("municipios", "proveedors.id_municipio", "=", "municipios.id")
         ->where("proveedors.id", "=", $id)
+        ->where('compra.anulado', 0)
+
         ->get();
 
-        $comprasss = Compra::select("compra.n_orden","compra.fecha_compra","compra.id_metodo_pagos","compra.total","proveedors.nombre","compra.estado","proveedors.cedula","proveedors.direccion","municipios.id  AS idmunicipio","municipios.nombre AS nombremunicipio","proveedors.telefono","metodo__pagos.id",
+
+        $comprasss = Compra::select("compra.n_orden","compra.fecha_compra","compra.id_metodo_pagos","compra.total","proveedors.nombre","compra.estado","compra.anulado","proveedors.cedula","proveedors.direccion","municipios.id  AS idmunicipio","municipios.nombre AS nombremunicipio","proveedors.telefono","metodo__pagos.id",
         "metodo__pagos.nombre AS nombremetodopago",)
         ->join("proveedors","proveedors.id", "=","compra.id_proveedor")
         ->join("metodo__pagos", "compra.id_metodo_pagos", "=", "metodo__pagos.id")
         ->join("municipios", "proveedors.id_municipio", "=", "municipios.id")
+        ->where('compra.anulado', 0)
         
         ->get();
 
@@ -138,7 +135,7 @@ class ProveedorController extends Controller
       ->get();
       
 
-        return view('proveedor.show', compact('proveedores','compra','detallecompra','abono','comprasss') );
+        return view('proveedor.mostrar', compact('proveedores','compra','detallecompra','abono','comprasss') );
     }
 
     
@@ -161,6 +158,9 @@ class ProveedorController extends Controller
         $regimen = Regimen::all();
         $proveedorEstado = Proveedor::find($id);
         $proveedor = Proveedor::findOrFail($id);
+        // print($proveedor);
+        // exit;
+
         return view('proveedor.edit', compact('proveedor', 'paises', 'departamentos', 'municipios', 'tipo_comercio', 'tipo_persona', 'regimen', 'proveedorEstado'));
     }
 
@@ -178,7 +178,7 @@ class ProveedorController extends Controller
         $proveedor->update($request->all());
 
         return redirect()->route('proveedor.index')
-            ->with('success', 'Proveedor updated successfully');
+            ->with('success', 'Proveedor actualizado exitosamente');
     }
 
     /**
@@ -210,6 +210,6 @@ class ProveedorController extends Controller
 
         Proveedor::find($input["ideliminar"])->delete();
 
-        return redirect()->route('proveedor.index');
+        return redirect()->route('proveedor.index')->with('success', 'Proveedor eliminado exitosamente');
     }
 }

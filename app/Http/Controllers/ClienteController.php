@@ -18,10 +18,7 @@ class ClienteController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:ver-cliente|crear-cliente|editar-cliente|borrar-cliente,', ['only'=>['index']]);
-        $this->middleware ('permission: crear-cliente', ['only'=>['store']]);
-        $this->middleware ('permission: editar-cliente', ['only'=>['update']]);
-        $this->middleware ('permission: borrar-cliente', ['only'=>['eliminarCliente']]);
+        $this->middleware('permission:Clientes');
     }
     /**
      * Display a listing of the resource.
@@ -34,15 +31,18 @@ class ClienteController extends Controller
 
         $figuras = Figura::all();
         $cliente = Cliente::paginate();
-        $clientes = Cliente::select('clientes.id', 'clientes.nombre', 'clientes.cedula', 'clientes.telefono', 'clientes.direccion', 'clientes.email', 'clientes.tipo_persona', 'clientes.estado', Pago_Clientes::raw('SUM(CASE WHEN pago__clientes.estado = 1 THEN pago__clientes.abono ELSE 0 END) as total_abonos'), Pedido::raw('(SELECT SUM(CASE WHEN pedidos.estado = 1 THEN pedidos.totalpedido ELSE 0 END) FROM pedidos WHERE pedidos.id_cliente = clientes.id) as total_pedido'))
-    ->leftJoin('pedidos', 'pedidos.id_cliente', '=', 'clientes.id')
-    ->leftJoin('pago__clientes', 'pago__clientes.id_pedido', '=', 'pedidos.id')
-    ->groupBy('clientes.id', 'clientes.nombre', 'clientes.cedula', 'clientes.telefono', 'clientes.direccion', 'clientes.email', 'clientes.tipo_persona', 'clientes.estado')
-    ->get();
 
-  
-        
-        return view('cliente.index', compact('cliente', 'figuras','clientes'))
+        $clientes = Cliente::select('clientes.id', 'clientes.nombre', 'clientes.cedula', 'clientes.telefono', 'clientes.direccion', 'clientes.email', 'clientes.tipo_persona', 'clientes.estado', Pago_Clientes::raw('SUM(CASE WHEN pago__clientes.estado = 1 THEN pago__clientes.abono ELSE 0 END) as total_abonos'), Pedido::raw('(SELECT SUM(CASE WHEN pedidos.estado = 1 THEN pedidos.totalpedido ELSE 0 END) FROM pedidos WHERE pedidos.id_cliente = clientes.id) as total_pedido'))
+            ->leftJoin('pedidos', 'pedidos.id_cliente', '=', 'clientes.id')
+            ->leftJoin('pago__clientes', 'pago__clientes.id_pedido', '=', 'pedidos.id')
+            ->groupBy('clientes.id', 'clientes.nombre', 'clientes.cedula', 'clientes.telefono', 'clientes.direccion', 'clientes.email', 'clientes.tipo_persona', 'clientes.estado')
+            ->get();
+
+            
+
+
+
+        return view('cliente.index', compact('cliente', 'figuras', 'clientes'))
             ->with('i', (request()->input('page', 1) - 1) * $cliente->perPage());
     }
 
@@ -74,12 +74,19 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+            'cedula' => 'required|unique:clientes',
+            'nombre' => 'required',
+            'email' => 'required|email|unique:clientes,email',
+            'telefono' => 'required',
+            'direccion' => 'required',
+        ]);
 
         $datosCliente = request()->except('_token', 'pais', 'departamento');
         Cliente::insert($datosCliente);
 
         return redirect('cliente')
-            ->with('mensaje', 'cliente creado con éxito.');
+        ->with('success', 'Cliente registrado exitosamente.');
     }
 
     /**
@@ -122,13 +129,38 @@ class ClienteController extends Controller
     public function update(Request $request, Cliente $cliente)
     {
         //
+        $saldoPendiente = 0;
 
-        $cliente->update($request->all());
-
-        return redirect()->route('cliente.index')
-            ->with('success', 'Cliente updated successfully');
+    // Validar saldo pendiente solo si el estado se está actualizando
+    if ($request->has('estado') && $cliente->estado != $request->estado) {
+        $saldoPendiente = $this->validarSaldoPendiente($cliente->id);
     }
 
+    if ($saldoPendiente > 0) {
+        return redirect()->back()
+            ->with('error', 'No se puede inactivar el cliente porque tiene un saldo pendiente.');
+    }
+
+    // Actualizar cliente
+    $cliente->update($request->all());
+
+    return redirect()->route('cliente.index')
+        ->with('success', 'Cliente actualizado exitosamente');
+    }
+
+    private function validarSaldoPendiente($clienteId)
+{
+    $saldoPendiente = Cliente::select(Pedido::raw('(SELECT SUM(CASE WHEN pedidos.estado = 1 THEN pedidos.totalpedido ELSE 0 END) FROM pedidos WHERE pedidos.id_cliente = clientes.id) - SUM(CASE WHEN pago__clientes.estado = 1 THEN pago__clientes.abono ELSE 0 END) as saldo_pendiente'))
+        ->leftJoin('pedidos', 'pedidos.id_cliente', '=', 'clientes.id')
+        ->leftJoin('pago__clientes', 'pago__clientes.id_pedido', '=', 'pedidos.id')
+        ->where('clientes.id', $clienteId)
+        ->groupBy('clientes.id')
+        ->first();
+
+    return $saldoPendiente ? $saldoPendiente->saldo_pendiente : 0;
+}
+
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -139,23 +171,23 @@ class ClienteController extends Controller
     {
         //
         $input = $request->all();
-            $cliente = $input["ideliminar"];
+        $cliente = $input["ideliminar"];
 
         $consultadetalle = Pedido::select(
             "pedidos.id_cliente",
         )->get();
 
         foreach ($consultadetalle as $valor) {
-               
-            if($cliente==$valor->id_cliente) {
-                
+
+            if ($cliente == $valor->id_cliente) {
+
                 return redirect()->route('cliente.index')->with('error', 'No se puede eliminar el cliente porque está asociado a un pedido');
-                
+
             }
         }
 
         Cliente::find($input["ideliminar"])->delete();
 
-        return redirect()->route('cliente.index');
+        return redirect()->route('cliente.index')->with('success', 'Cliente eliminado exitosamente.');
     }
 }

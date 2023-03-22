@@ -1,19 +1,23 @@
 @extends('layouts.app')
 
 @section('template_title')
-Cliente
+Mostrar Ordenes de Compra
 @endsection
 
 @section('content')
 
 <div class="container">
     <main role="main" class="pb-3">
-    <p>
-    <div class="card-header">
-        <span class="card-title">Ordenes de compra</span>
-
+    <div class="content-wrapper">
+          <div class="row">
+            <div class="col-sm-6" id="tituloinicial">
+              <h3 class="mb-0 font-weight-bold">Ordenes de compra del Proveedor</h3>
+            </div>
+          </div>
     </div>
-    </p>
+    
+    
+   
     
 
         <table id="factproveedor" class="table table-striped dt-responsive nowrap table" style="width:100%">
@@ -23,7 +27,7 @@ Cliente
                     <th>N° Factura</th>
                     <th>Fecha Compra</th>
                     <th>Método Pago</th>
-                    <th>Estado</th>
+                    <th>Cancelado</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -41,12 +45,10 @@ Cliente
                     <td>Contado</td>
                     @endif
 
-                    @if ($compras->estado==0)
-                    <td>Pendiente</td>
-                    @elseif ($compras->estado==1)
-                    <td>Finalizada</td>
+                    @if ($compras->estado==1)
+                    <td>No</td>
                     @else
-                    <td>Anulado</td>
+                    <td>Sí</td>
                     @endif
                     <td>
 
@@ -180,7 +182,9 @@ Cliente
                                             <hr />
                                             <input type="hidden"  id="iddescarga">
                                             <div>
-                                                <a id="botonDescarga"  class="btn btn-primary " target="_blank">Descargar</a>
+                                            <a type="button" id="botonDescarga"  class="btn btn-primary " target="_blank"  style="background-color:#81242E;border:#81242E"><i
+                        class="mdi mdi-download"></i>Descargar</a>
+                            
                                             </div>
                                         </div>
                                     </div>
@@ -228,12 +232,10 @@ Cliente
 
         
 
-        if (filtrocompra.estado == 0) {
-                $('#estadocompra').text(`Estado: Pendiente`)
-            } else if (filtrocompra.estado == 1) {
-                $('#estadocompra').text(`Estado: Finalizado`)
+        if (filtrocompra.estado == 1) {
+                $('#estadocompra').text(`Cancelado: No`)
             } else {
-                $('#estadocompra').text(`Estado: Anulado`)
+                $('#estadocompra').text(`Cancelado: Sí`)
             }
 
 

@@ -20,8 +20,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
     <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
     <link href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap5.min.css">
-
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.9.55/css/materialdesignicons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://pictogrammers.github.io/@mdi/font/5.4.55/">
     <!-- <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css' rel='stylesheet' /> -->
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@3.10.0/dist/fullcalendar.min.css">
@@ -45,7 +46,7 @@
                     <ul class="navbar-nav navbar-nav-right">
 
                         <li class="nav-item d-none d-lg-flex  mr-2">
-                            <a class="nav-link" href="{{ route('ayuda.index') }}">
+                            <a class="nav-link" href="https://youtube.com/playlist?list=PLEddzahFLbGjRnNeaOul20pJfkQoIS3b8" target="_blank" >
                                 Ayuda
                             </a>
                         </li>
@@ -55,12 +56,12 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                                 <a class="dropdown-item" href="{{ route('VistaPefil') }}">
-                                    <i class="mdi mdi-face text-primary"></i>
+                                    <i class="mdi mdi-face" style="color:#81242E"></i>
                                     Perfil
                                 </a>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="mdi mdi-login text-primary"></i>
+                                    <i class="mdi mdi-login"  style="color:#81242E"></i>
                                     Cerrar Sesión
                                 </a>
                             </div>
@@ -84,18 +85,23 @@
                                 <span class="menu-title">Calendario</span>
                             </a>
                         </li>
+                        @can('Configuración')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('roles.index') }}">
                                 <i class="mdi mdi-settings menu-icon"></i>
                                 <span class="menu-title">Configuración</span>
                             </a>
                         </li>
+                        @endcan
+                        @can('Usuarios')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('usuario.index') }}">
                                 <i class="mdi mdi-account-circle menu-icon"></i>
                                 <span class="menu-title">Usuarios</span>
                             </a>
                         </li>
+                        @endcan
+                        @can('Menu-Compras')
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                                 <i class="mdi mdi-wallet-travel menu-icon"></i>
@@ -104,13 +110,21 @@
                             </a>
                             <div class="collapse" id="ui-basic">
                                 <ul class="nav flex-column ">
+                                    @can('Proveedores')
                                     <li class="nav-item"> <a class="nav-link" href="{{ route('proveedor.index') }}">Proveedores</a></li>
+                                    @endcan
+                                    @can('Insumos')
                                     <li class="nav-item"> <a class="nav-link" href="{{ route('insumos.index') }}">Insumos</a></li>
+                                    @endcan
+                                    @can('Ordenes-de-Compras')
                                     <li class="nav-item"> <a class="nav-link" href="{{ route('compra.index') }}">Ordenes de
                                             Compra</a></li>
+                                            @endcan
                                 </ul>
                             </div>
                         </li>
+                        @endcan
+                        @can('Menu-Ventas')
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
                                 <i class="mdi mdi-trending-up menu-icon"></i>
@@ -119,18 +133,27 @@
                             </a>
                             <div class="collapse" id="form-elements">
                                 <ul class="nav flex-column ">
+                                @can('Clientes')
                                     <li class="nav-item"><a class="nav-link" href="{{ route('cliente.index') }}">Clientes</a></li>
+                                    @endcan
+                                    @can('Productos')
                                     <li class="nav-item"><a class="nav-link" href="{{ route('productos.index') }}">Productos</a></li>
+                                    @endcan
+                                    @can('Pedidos')
                                     <li class="nav-item"><a class="nav-link" href="{{ route('pedidos.index') }}">Pedidos</a></li>
+                                    @endcan
                                 </ul>
                             </div>
                         </li>
+                        @endcan
+                        @can('Figuras')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('figuras.index') }}">
                                 <i class="mdi mdi-panorama menu-icon"></i>
                                 <span class="menu-title">Figuras Predefinidas</span>
                             </a>
                         </li>
+                        @endcan
                         <li class="nav-item">
                             <a class="nav-link"  href="{{ route('dashboard.index') }}">
                                 <i class="mdi mdi-google-analytics menu-icon"></i>

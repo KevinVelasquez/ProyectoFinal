@@ -23,11 +23,13 @@ Route::get('/home', [App\Http\Controllers\CalendarioController::class, 'index'])
 //RUTAS KEVIN
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.request');
 Route::resource('compra', App\Http\Controllers\CompraController::class)->middleware('auth');
+Route::put('compra', [CompraController::class, 'updateCompra'])->name('compra.updateCompra');
+Route::patch('compra', [CompraController::class, 'anularCompra'])->name('compra.anularCompra');
 Route::resource('pago-proveedore', App\Http\Controllers\PagoProveedoreController::class)->middleware('auth');
 Route::resource('usuario', App\Http\Controllers\UsuarioController::class)->middleware('auth');
 Route::resource('/login', App\Http\Controllers\CompraController::class)->middleware('auth');
 Route::post('compras', [App\Http\Controllers\PagoProveedoreController::class,'agregarAbonoCompra'])->name('agregarAbonoCompra');
-Route::put('compras', [App\Http\Controllers\PagoProveedoreController::class,'anularAbono'])->name('anularAbono');
+Route::put('compras', [App\Http\Controllers\PagoProveedoreController::class,'anularAbonoCompra'])->name('anularAbonoCompra');
 Route::patch('compras', [CompraController::class, 'anularCompra'])->name('compras.anularCompra');
 Route::post('recuperarClave', [App\Http\Controllers\UsuarioController::class, 'recuperarClave'])->name('recuperarClave');
 Route::resource('insumos', App\Http\Controllers\InsumoController::class);
@@ -35,7 +37,7 @@ Route::get('/VistaPefil',  [UsuarioController::class,'VistaPefil'])->name('Vista
 Route::post('/EditarPerfil',  [UsuarioController::class,'EditarPerfil'])->name('EditarPerfil');
 Route::get('/CambioEstado', [UsuarioController::class,'CambioEstado'])->name('CambioEstado');
 Route::get('/CambioEstadoCompra', [CompraController::class,'CambioEstado'])->name('CambioEstado');
-Route::get('/generarPDF/{id}', [App\Http\Controllers\CompraController::class,'generarPDF'])->name('generarPDF');
+Route::get('/generarPDF', [App\Http\Controllers\CompraController::class,'generarPDF'])->name('generarPDF');
 Route::post('/store', [CompraController::class,'store'])->name('store');
 
 Auth::routes();
@@ -69,6 +71,7 @@ Route::get('dashboard/pedidosproceso', [App\Http\Controllers\DashboardController
 Route::resource('cliente',ClienteController::class)->middleware('auth');
 Route::get('estadocliente',[App\Http\Controllers\ClienteController::class, 'updateStatusCliente'])->name('updateStatusCliente');
 Route::delete('cliente', [App\Http\Controllers\ClienteController::class, 'eliminarCliente'])->name('cliente.eliminarCliente');
+Route::patch('cliente', [ClienteController::class, 'inactivarCliente'])->name('cliente.inactivarCliente');
 
 //RUTAS PROVEEDORES
 
@@ -80,11 +83,6 @@ Route::delete('proveedor', [App\Http\Controllers\ProveedorController::class, 'el
 
 // RUTAS CALENDARIO
 Route::resource('calendario',CalendarioController::class);
-
-// RUTAS AYUDA
-
-Route::resource('ayuda',HomeController::class);
-
 
 
 //RUTAS CATHE

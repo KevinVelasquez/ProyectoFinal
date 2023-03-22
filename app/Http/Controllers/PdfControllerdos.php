@@ -21,8 +21,9 @@ class PdfControllerdos extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function pdf(Request $request, $id)
+    public function pdf()
     {
+        $id = $_GET["id"];
         $compra = Compra::paginate();
         $proveedor = Proveedor::all();
         $insumo = insumo::all();

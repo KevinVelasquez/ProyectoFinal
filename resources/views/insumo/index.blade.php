@@ -14,12 +14,21 @@ Insumo
             </div>
           </div>
     </div>
-    @can('crear-insumo')
         <p>
             <a class="mdi mdi-plus-circle-multiple-outline" id="iconoadd" data-toggle="modal" data-target="#crearmodal" ></a>
         </p>
-        @endcan
+        @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 
+
+        @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
         <table id="insumos" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>
@@ -42,26 +51,16 @@ Insumo
                                             echo 'No Disponible';
                                             }  ?></td>
                                             <td>
-                                                @can('editar-insumo')
                                 <button onclick="editarInsumo('{{ $insumos->id }}')" class="mdi mdi-lead-pencil"
                                     data-toggle="modal" data-target="#editarmodal"></button>
-                                    @endcan
-                                <!-- <button onclick="anularInsumo('{{ $insumos->id }}')" class="mdi mdi-block-helper"
-                                    data-toggle="modal" data-target="#anularmodal"></button> -->
-                                    @can('borrar-insumo')
                                     <button onclick="eliminarInsumo('{{ $insumos->id }}')" class="mdi mdi-trash-can-outline"
                                     data-toggle="modal" data-target="#eliminarmodal"></button>
-                                    @endcan
                             </td>
                         </tr>
                 @endforeach
             </tbody>
         </table>
-        @if (session('error'))
-            <div class="alert alert-danger" role="alert">
-                {{ session('error') }}
-            </div>
-        @endif
+        
      </main>     
 </div>
 
@@ -110,6 +109,7 @@ Insumo
                                                         <option selected disabled value="">Seleccione</option>
                                                         <option value="Metros">Metros</option>
                                                         <option value="Centimetros">Centimetros</option>
+                                                        <option value="Unidades">Unidades</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -120,8 +120,8 @@ Insumo
                         <div class="modal-footer">
                             <button type="submit" id="crear-insumo" class="btn btn-primary" style="background-color: #81242E;
                             border-color: #81242E;" >Crear</button>
-                            <a class="btn btn-primary" href="{{ route('insumos.index')}}" style="margin: 10px; background-color: #81242E;
-                            border-color: #81242E;">Cancelar</a>
+                            <a class="btn btn-primary" href="{{ route('insumos.index')}}" style="margin: 10px; background-color: #565656;
+                            border-color: #565656;">Cancelar</a>
                         </div>
                     </div>
                 </div>
@@ -173,6 +173,7 @@ Insumo
                                                         id="editarmedidas" required>
                                                         <option value="Metros">Metros</option>
                                                         <option value="Centimetros">Centimetros</option>
+                                                        <option value="Unidades">Unidades</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -198,7 +199,7 @@ Insumo
                             <button type="submit" class="btn btn-primary" style="background-color: #81242E;
                             border-color: #81242E;">Actualizar</button>
                             <a class="btn btn-primary" href="{{ route('insumos.index')}}" style="margin: 10px; 
-                            background-color: #81242E; border-color: #81242E;">Cancelar</a>
+                            background-color: #565656; border-color: #565656;">Cancelar</a>
                         </div>
                     </div>
                 </div>
@@ -207,33 +208,6 @@ Insumo
         </form>
     </div>
 
-     <!-- modal anular -->
-     <div class="modal fade" id="anularmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitleanular"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="text-align: center;">
-                    <input type="hidden" name="estadoanular" id="estadoanular" />
-                    <form method="POST" action="{{ route('insumos.anularInsumo') }}" class="form-sample"
-                        role="form" enctype="multipart/form-data">
-                        @method('PATCH')
-                        @csrf
-                        <div>¿Está seguro que desea anular el insumo?</div>
-                        <input type="hidden" name="idanular" id="idanular" />
-                        <input type="hidden" name="anulardato" value="2" />
-                        <button type="submit" class="btn btn-primary">Si</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
      <!-- modal eliminar -->
      <div class="modal fade" id="eliminarmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -255,8 +229,8 @@ Insumo
                         <input type="hidden" name="ideliminar" id="ideliminar" />
                         <button type="submit" class="btn btn-primary" style="background-color: #81242E;
                             border-color: #81242E;">Si</button>
-                        <button type="button" class="btn btn-primary" style="background-color: #81242E;
-                            border-color: #81242E;" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary" style="background-color: #565656;
+                            border-color: #565656;" data-dismiss="modal">No</button>
                     </form>
                 </div>
             </div>
@@ -341,14 +315,7 @@ Insumo
         });
     });
 
-        function anularInsumo(id) {
-            let consulta = {!! $editarinsumo !!}
-            let datos = consulta.find(item => item.id == id)
-            $('#exampleModalLongTitleanular').text(`Anular Insumo #${datos.id}`);
-            $('#idanular').val(`${datos.id}`);
-            $('#estadoanular').val(`${datos.estado}`);
-
-        }
+       
 
         function eliminarInsumo(id) {
             let consulta = {!! $editarinsumo !!}

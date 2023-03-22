@@ -7,9 +7,27 @@ Usuarios
 @section('content')
 <div class="container">
     <main role="main" class="pb-3">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-sm-6" id="tituloinicial">
+                    <h3 class="mb-0 font-weight-bold">Usuarios</h3>
+                </div>
+            </div>
+        </div>
         <p>
-            <a class="mdi mdi-account-plus" id="iconoadd" href="{{ route('usuario.create') }}"></a>
+            <a class="mdi mdi-account-multiple-plus-outline" id="iconoadd" href="{{ route('usuario.create') }}"></a>
         </p>
+        @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+        @if (session('error'))
+        <div class="alert alert-danger" role="alert">
+            {{ session('error') }}
+        </div>
+        @endif
         <table id="usuarios" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>
@@ -18,6 +36,7 @@ Usuarios
                     <th>Correo Electrónico</th>
                     <th>Rol</th>
                     <th>Estado</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,26 +49,29 @@ Usuarios
                     <td>
                         @if(!empty($user->getRoleNames()))
                         @foreach($user->getRoleNames() as $rolName)
-                        <h5><span class="role-label">{{$rolName}}</span></h5>
+                        {{$rolName}}
                         @endforeach
                         @endif
                     </td>
                     <td>
+                        <!-- 1->Activo-0->Inactivo -->
                         @if($user->estado == 1)
-                        <button type="button" class="btn btn-sm btn-success">Activo</button>
+                        Activo
                         @else
-                        <button type="button" class="btn btn-sm btn-danger">Inactivo</button>
+                        Inactivo
                         @endif
                     </td>
                     <td>
-                        <form action="{{ route('usuario.destroy',$user->id) }}" method="POST">
-                            <a class="btn btn-primary btn-lg active" href="{{ route('usuario.edit',$user->id) }}"><i class="fa fa-fw fa-edit"></i>Editar</a>
-                        </form>
+
+                        <a href="{{ route('usuario.edit',$user->id) }}"><button class="mdi mdi-lead-pencil"></button></a>
+
+
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
+        
     </main>
 </div>
 <script>

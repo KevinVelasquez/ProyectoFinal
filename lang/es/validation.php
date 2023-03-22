@@ -96,7 +96,7 @@ return [
     'password'             => 'La contraseña es incorrecta.',
     'present'              => 'El campo :attribute debe estar presente.',
     'regex'                => 'El formato del campo :attribute es inválido.',
-    'required'             => 'El campo :attribute es obligatorio.',
+    'required'             => ' ',
     'required_if'          => 'El campo :attribute es obligatorio cuando el campo :other es :value.',
     'required_unless'      => 'El campo :attribute es requerido a menos que :other se encuentre en :values.',
     'required_with'        => 'El campo :attribute es obligatorio cuando :values está presente.',
@@ -113,7 +113,7 @@ return [
     'starts_with'          => 'El campo :attribute debe comenzar con uno de los siguientes valores: :values',
     'string'               => 'El campo :attribute debe ser una cadena de caracteres.',
     'timezone'             => 'El campo :attribute debe ser una zona horaria válida.',
-    'unique'               => 'El valor del campo :attribute ya está en uso.',
+    'unique'               => 'El valor del campo ya está en uso.',
     'uploaded'             => 'El campo :attribute no se pudo subir.',
     'url'                  => 'El formato del campo :attribute es inválido.',
     'uuid'                 => 'El campo :attribute debe ser un UUID válido.',
@@ -129,14 +129,7 @@ return [
     |
     */
 
-    'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
-        'cedula' => [
-            'unique' => 'El valor del campo :attribute ya está en uso.',
-        ],
-    ],
+    
 
     /*
     |--------------------------------------------------------------------------

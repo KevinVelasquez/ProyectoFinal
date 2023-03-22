@@ -18,35 +18,37 @@ class SeederTablaPermisos extends Seeder
     public function run()
     {
         $permisos=[
+            
             //permisos roles
-            'ver-rol',
-            'crear-rol',
-            'editar-rol',
-            'borrar-rol',
-
-            //permisos productos
-            'ver-producto',
-            'crear-producto',
-            'editar-producto',
-            'borrar-producto',
+            'Configuración',
 
             //permisos insumos
-            'ver-insumo',
-            'crear-insumo',
-            'editar-insumo',
-            'borrar-insumo',
+            'Usuarios',
 
-            //permisos figuras
-            'ver-figura',
-            'crear-figura',
-            'editar-figura',
-            'borrar-figura',
+            'Menu-Compras',
+            //permisos proveedores
+            'Proveedores',
 
+            //permisos insumos
+            'Insumos',
+
+            //permisos ordenes de compra
+            'Ordenes-de-Compras',
+
+            'Menu-Ventas',
+            //permisos clientes
+            'Clientes',
+        
+            //permisos productos
+            'Productos',
+            
             //permisos pedidos
-            'ver-pedido',
-            'crear-pedido',
-            'editar-pedido',
-            'anular-pedido',
+            'Pedidos',
+            
+            //permisos figuras
+            'Figuras',
+
+            
         ];
         
         foreach($permisos as $permiso){

@@ -25,6 +25,9 @@
     <style>
         body {
             font-family: sans-serif;
+            background-image: url('/images/logoEnsayo.jpeg');
+            background-repeat: no-repeat;
+            background-size: cover;
         }
 
         #titulo {
@@ -70,23 +73,20 @@
             cursor: pointer;
         }
 
-        .recuperar button[type="submit"]:hover {
-            background-color: #3e8e41;
-        }
 
         .recuperar a[type="button"] {
             padding: 9px;
             font-size: small;
-            background-color: #81242E;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
 
-        .recuperar a[type="button"]:hover {
-            background-color: #3e8e41;
+        #boton-regresar {
+            background-color: #565656;
         }
+
 
         .buton {
             padding-top: 5%;
@@ -113,10 +113,10 @@
             </span>
             @enderror
             <div class="buton">
-                <button type="submit" class="btn btn-primary btn-lg active">
+                <button type="submit" class="btn btn-primary ">
                     {{ __('Siguiente') }}
                 </button>
-                <a type="button" class="btn btn-primary btn-lg active" href="{{ route('login') }}">Regresar</a>
+                <a type="button" id="boton-regresar" style="font-size: 14px;" class="btn btn-primary " href="{{ route('login') }}">{{ __('Regresar') }}</a>
             </div>
         </form>
     </div>

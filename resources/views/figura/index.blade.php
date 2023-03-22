@@ -11,14 +11,30 @@
             <div class="col-sm-12">
                 <div class="container">
                     <main role="main" class="pb-3">
-                        @can('crear-figura')
+                        <div class="content-wrapper">
+                            <div class="row">
+                                <div class="col-sm-6" id="tituloinicial">
+                                    <h3 class="mb-0 font-weight-bold">Figuras Predefinidas</h3>
+                                </div>
+                            </div>
+                        </div>
                             <p>
-                                <a class="mdi mdi-shape-plus" id="iconoadd" href="{{ route('figuras.create') }}"></a>
+                                <a class="mdi mdi-camera-plus-outline" id="iconoadd" href="{{ route('figuras.create') }}"></a>
                             </p>
-                        @endcan
-
                         <div class="card-body">
                             <div class="table-responsive">
+
+                            @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+                            @if (session('error'))
+                                <div class="alert alert-danger" role="alert">
+                                {{ session('error') }}
+                                </div>
+                                @endif
                                 <table class="table table-striped table-hover">
                                     <form action="{{ route('figuras.search') }}" method="GET">
                                         <div class="form-group" id="formsearch">
@@ -34,11 +50,11 @@
                                             <div class="row">
                                                 @foreach ($figuras as $figura)
                                                     <div class="col-md-2 p-1">
-                                                        <div class="card">
-                                                            <img class="card-img-top"
+                                                        <div class="card card-fixed-height">
+                                                            <img class="card-img-top" 
                                                                 src="http://127.0.0.1:8000/storage/images/figuras/{{ $figura->imagen }}"
                                                                 {{-- src="{{ asset('/storage/images/figuras/' . $figura->imagen) }}" --}} alt="Card image cap"
-                                                                data-bs-toggle="modal"data-bs-target="#modalimagen<?php echo $figura->id; ?>">
+                                                                data-bs-toggle="modal"data-bs-target="#modalimagen<?php echo $figura->id; ?>" >
                                                             <div id="activ" class="dispo<?php echo $figura->estado; ?>"></div>
                                                             <div tabindex="-1"
                                                                 aria-labelledby="modalimagen<?php echo $figura->id; ?>"
@@ -55,17 +71,13 @@
                                                             <div class="card-body" style="padding: 0rem">
                                                                 <p class="card-text">{{ $figura->etiqueta }}</p>
                                                                 <div>
-                                                                    @can('editar-figura')
                                                                         <a class="mdi mdi-lead-pencil"
                                                                             style="height: 28%;width: 17%;color:black"
                                                                             href="{{ route('figuras.edit', $figura->id) }}"></a>
-                                                                    @endcan
-                                                                    @can('borrar-figura')
                                                                         <button onclick="eliminarFigura('{{ $figura->id }}')"
                                                                             style="height: 28%;width: 17%;border: none;background-color: white;"
                                                                             class="mdi mdi-delete" data-toggle="modal"
                                                                             data-target="#eliminarmodal"></button>
-                                                                    @endcan
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -76,11 +88,7 @@
                                     </tbody>
                                 </table>
                                 {{ $figuras->links() }}
-                                @if (session('error'))
-                                <div class="alert alert-danger" role="alert">
-                                {{ session('error') }}
-                                </div>
-                                @endif
+                                
                             </div>
                         </div>
                 </div>
@@ -104,8 +112,8 @@
                             @csrf
                             <div>¿Está seguro que desea eliminar la figura?</div>
                             <input type="hidden" name="ideliminar" id="ideliminar" />
-                            <button type="submit" class="btn btn-primary">Si</button>
-                            <button type="button" class="btn btn-danger" style="margin-top:5%"
+                            <button type="submit" class="btn btn-primary" style="background-color:#81242E;border:#81242E">Si</button>
+                            <button type="button" class="btn btn-primary" style="margin-top:5%;background-color:#565656;border:#565656"
                                 data-dismiss="modal">No</button>
                         </form>
                     </div>

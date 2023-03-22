@@ -16,15 +16,26 @@
                             </div>
                         </div>
                     </div>
-                    @can('crear-producto')
                         <p>
-                            <a class="mdi mdi-plus-circle-multiple-outline" id="iconoadd"
+                            <a class="mdi mdi-tag-plus-outline " id="iconoadd"
                             href="{{ route('productos.create') }}"></a>
                         </p>
-                        @endcan
 
                     <div class="card-body">
                         <div class="table-responsive">
+
+                        @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+
+                        @if (session('error'))
+                                <div class="alert alert-danger" role="alert">
+                                {{ session('error') }}
+                                </div>
+                            @endif
                             <table class="table table-striped table-hover">
                                 <form action="{{ route('productos.search') }}" method="GET">
                                     <div class="form-group" id="formsearch">
@@ -39,12 +50,12 @@
                                     <div class="container">
                                         <div class="row">
                                             @foreach ($productos as $producto)
-                                            <div class="col-md-2 p-1">
-                                                <div class="card">
+                                            <div class="col-md-2 p-1" >
+                                                <div class="card card-fixed-height" style="height: 290px">
                                                     <img class="card-img-top"
                                                     src="http://127.0.0.1:8000/storage/images/productos/{{$producto->imagen}}"
                                                         alt="Card image cap" 
-                                                        data-bs-toggle="modal"data-bs-target="#modalimagen<?php echo $producto->id; ?>">
+                                                        data-bs-toggle="modal"data-bs-target="#modalimagen<?php echo $producto->id; ?>" >
                                                     <div id="activ" class="dispop<?php echo $producto->estado; ?>"></div>
                                                     <div tabindex="-1"
                                                         aria-labelledby="modalimagen <?php echo $producto->id; ?>"
@@ -60,17 +71,13 @@
                                                     <div class="card-body" style="padding: 0rem">
                                                         <p class="card-text">{{ $producto->nombre }}</p>
                                                         <div>
-                                                            @can('editar-producto')
                                                             <a class="mdi mdi-lead-pencil"
                                                                 style="height: 28%;width: 17%;color:black"
                                                                 href="{{ route('productos.edit',$producto->id) }}"></a>
-                                                                @endcan
-                                                                @can('borrar-producto')
                                                             <button onclick="eliminarProducto('{{ $producto->id }}')"
                                                                 style="height: 28%;width: 17%;border: none;background-color: white;"
                                                                 class="mdi mdi-delete" data-toggle="modal"
                                                                 data-target="#eliminarmodal"></button>
-                                                                @endcan
                                                         </div>
                                                     </div>
                                                 </div>
@@ -81,11 +88,7 @@
                                 </tbody>
                             </table>
                             {{$productos->links()}}
-                            @if (session('error'))
-                                <div class="alert alert-danger" role="alert">
-                                {{ session('error') }}
-                                </div>
-                            @endif
+                            
                         </div>
                     </div>
                 </main>
@@ -113,8 +116,8 @@
                         <input type="hidden" name="ideliminar" id="ideliminar" />
                         <button type="submit" class="btn btn-primary" style="background-color: #81242E;
                             border-color: #81242E;">Si</button>
-                        <button type="button" class="btn btn-primary" style="background-color: #81242E;
-                            border-color: #81242E;" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary" style="background-color: #565656;
+                            border-color: #565656;" data-dismiss="modal">No</button>
                     </form>
                 </div>
             </div>

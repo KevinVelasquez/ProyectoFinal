@@ -16,10 +16,7 @@ class FiguraController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:ver-figura|crear-figura|editar-figura|borrar-figura,', ['only'=>['index']]);
-        $this->middleware ('permission: crear-figura', ['only'=>['store']]);
-        $this->middleware ('permission: editar-figura', ['only'=>['update']]);
-        $this->middleware ('permission: borrar-figura', ['only'=>['eliminarfigura']]);
+        $this->middleware('permission:Figuras');
     }
     /**
      * Display a listing of the resource.
@@ -44,7 +41,7 @@ class FiguraController extends Controller
     public function create()
     {
         $figura = new Figura();
-        $cliente = Cliente::all();
+        $cliente = Cliente::select('*')->where('estado',1)->get();
         return view('figura.create', compact('figura', 'cliente'));
     }
 
@@ -78,7 +75,7 @@ class FiguraController extends Controller
         }
         
         
-        return redirect()->route('figuras.index');
+        return redirect()->route('figuras.index')->with('success', 'Figura registrada exitosamente.');
     }
 
     /**
@@ -143,7 +140,7 @@ class FiguraController extends Controller
         }
 
 
-        return redirect()->route('figuras.index');
+        return redirect()->route('figuras.index')->with('success', 'Figura actualizada exitosamente.');
     }
 
     /**
@@ -173,7 +170,7 @@ class FiguraController extends Controller
 
         Figura::find($input["ideliminar"])->delete();
 
-        return redirect()->route('figuras.index');
+        return redirect()->route('figuras.index')->with('success', 'Figura eliminada exitosamente.');
     }
 
     public function search(Request $request)

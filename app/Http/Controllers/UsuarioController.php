@@ -16,6 +16,7 @@ use Illuminate\support\Facades\DB;
 use Illuminate\support\Facades\Host;
 use Illuminate\support\Arr;
 use App\Http\Models\User;
+use Illuminate\Support\Facades\Session;
 
 /**
  * Class UsuarioController
@@ -25,10 +26,8 @@ class UsuarioController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:ver-usuario|crear-usuario|editar-usuario|borrar-usuario,', ['only'=>['index']]);
-        $this->middleware ('permission: crear-usuario', ['only'=>['store']]);
-        $this->middleware ('permission: editar-usuario', ['only'=>['update']]);
-        $this->middleware ('permission: estado-usuario', ['only'=>[' CambioEstado']]);
+        $this->middleware('permission:Usuarios|Menu-Compras|Menu-Ventas');
+        
     }
     /**
      * Display a listing of the resource.
@@ -52,7 +51,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        $roles = Role::pluck('name','name')->all();
+        $roles = Role::select('roles.name')->where('roles.estado',1)->get();
         return view('usuario.create', compact('roles'));
     }
 
@@ -77,7 +76,7 @@ class UsuarioController extends Controller
 
         $user = ModelsUser::create($input);
         $user->assignRole($request->input('roles'));
-        return redirect()->route('usuario.index')->with('success', 'Se registró correctamente');
+        return redirect()->route('usuario.index')->with('success', 'Usuario creado exitosamente');
     }
 
     /**
@@ -102,10 +101,16 @@ class UsuarioController extends Controller
     public function edit($id)
     {
         $user = ModelsUser::find($id);
+
+        if ($user->hasRole('Administrador')) {
+            return redirect()->back()->with('error', 'No puedes editar al super administrador');
+        }
+
         $roles = Role::pluck('name', 'name')->all();
         $userRole = $user->roles->pluck('name', 'name')->all();
+        $selectedRoles = $user->roles()->pluck('name')->toArray();
 
-        return view('usuario.edit', compact('user','roles','userRole'));
+        return view('usuario.edit', compact('user','roles','userRole','selectedRoles'));
     }
 
     /**
@@ -117,30 +122,32 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = ModelsUser::find($id);
+
         $this->validate($request, [
             'nombre' => 'required',
             'cedula' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
-            'password' => 'same:confirm-password',
-            'rol' => 'required',
+            'estado' => 'required',
         ]);
+
 
         $input = $request->all();
         if (!empty($input['password'])) {
-
             $input['password'] = Hash::make($input['password']);
         } else {
             $input = Arr::except($input, array('password'));
         }
-
-        $user = ModelsUser::find($id);
+        $user->syncRoles($request->input('roles'));
         $user->update($input);
 
-        DB::table('model_has_roles')->where('model_id', $id)->delete();
-        $user->assingRole($request->input('rol'));
+        ModelsUser::where('id', $id)
+        ->update(['estado'=>$input["estado"]]);
 
-        return redirect()->route('usuario.index')
-            ->with('success', 'Usuario Editado con éxito');
+ /*        DB::table('model_has_roles')->where('model_id', $id)->delete();
+        $user->assingRole($request->input('roles')); */
+        Session::flash('success', 'Se actualizó correctamente');
+        return redirect()->route('usuario.index')->with('success', 'Usuario actualizado exitosamente');
     }
 
     /**
@@ -148,13 +155,7 @@ class UsuarioController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy($id)
-    {
 
-        DB::table('users')->where('id', $id)->delete();
-        return redirect()->route('usuario.index')
-            ->with('success', 'Usuario deleted successfully');
-    }
 
     public function VistaPefil()
     {
@@ -166,18 +167,26 @@ class UsuarioController extends Controller
         return view('recuperarContraseña/recuperarClave');
     }
 
-    public function EditarPerfil(Request $request)
+    public function editPerfil()
     {
         $user = Auth::user();
-        $cedula = $user->cedula;
-        $nombre = $user->nombre;
-        $email = $user->email;
+        return view('perfil.edit', compact('user'));
+    }
+
+    public function EditarPerfil(Request $request)
+    {
+
+        $user = Auth::user();
+        $user->nombre = $request->nombre;
+        $user->email = $request->email;
+
+        $user->save();
+
         $contraseña = $user->password;
 
         if ($request->password_actual != "") {
             $NuewPass = $request->password;
             $confirPass = $request->confirm_password;
-            $nombre = $request->nombre;
 
             //Verifico si la clave actual es igual a la clave del usuario en session
             if (Hash::check($request->password_actual, $contraseña)) {
@@ -204,22 +213,18 @@ class UsuarioController extends Controller
         } else {
             //
         }
-        $nombre = $request->nombre;
-        $sqlBD = DB::table('users')
-            ->where('id', $user->id)
-            ->update(['nombre' => $nombre]);
 
-        $cedula = $request->cedula;
-        $sqlBD = DB::table('users')
-            ->where('id', $user->id)
-            ->update(['cedula' => $cedula]);
+        
 
-        $email = $request->email;
-        $sqlBD = DB::table('users')
-            ->where('id', $user->id)
-            ->update(['email' => $email]);
+        return redirect()->route('VistaPefil')->with('success', 'Perfil actualizado exitosamente');
+    }
 
-        return redirect()->back()->with('nombre', 'Editado con éxito');
+    public function destroy($id)
+    {
+
+        DB::table('users')->where('id', $id)->delete();
+        return redirect()->route('usuario.index')
+        ->with('success', 'Usuario eliminado exitosamente');
     }
 
     public function CambioEstado(Request $request)

@@ -7,16 +7,35 @@ Proveedor
 @section('content')
 <div class="container">
     <main role="main" class="pb-3">
+    <div class="content-wrapper">
+          <div class="row">
+            <div class="col-sm-6" id="tituloinicial">
+              <h3 class="mb-0 font-weight-bold">Proveedores</h3>
+            </div>
+          </div>
+    </div>
         <p>
-            <a class="mdi mdi-cart-outline" id="iconoadd" href="{{ route('proveedor.create') }}"></a>
+            <a class="mdi mdi-account-plus-outline" id="iconoadd" href="{{ route('proveedor.create') }}"></a>
         </p>
 
+        @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+
+        @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
         <table id="proveedores" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>
 
 
-                    <th>Cédula</th>
+                    <th>Cédula/Nit</th>
                     <th>Nombre</th>
                     <th>Teléfono</th>
                     <th>Dirección</th>
@@ -38,9 +57,9 @@ Proveedor
                     <td>{{ $proveedores->direccion }}</td>
                     <td>{{ $proveedores->email }}</td>
                     @if ($proveedores->tipo_persona==1)
-                    <td>Juridico</td>
-                    @else
                     <td>Natural</td>
+                    @else
+                    <td>Juridico</td>
                     @endif
 
                     <td>{{ $proveedores->total_compra-$proveedores->total_abonos }}</td>
@@ -70,11 +89,7 @@ Proveedor
                 @endforeach
             </tbody>
         </table>
-        @if (session('error'))
-            <div class="alert alert-danger" role="alert">
-                {{ session('error') }}
-            </div>
-        @endif
+        
 
         <!-- modal eliminar -->
      <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -96,8 +111,8 @@ Proveedor
                         <input type="hidden" name="ideliminar" id="ideliminar" />
                         <button type="submit" class="btn btn-primary" style="background-color: #81242E;
                             border-color: #81242E;">Si</button>
-                        <button type="button" class="btn btn-primary" style="background-color: #81242E;
-                            border-color: #81242E;" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary" style="background-color: #565656;
+                            border-color: #565656;" data-dismiss="modal">No</button>
                     </form>
                 </div>
             </div>

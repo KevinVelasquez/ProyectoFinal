@@ -45,8 +45,8 @@
                     </select>
                 </div>
                 <div class="box-footer mt20" style="margin-top: 2%;">
-                    <button type="submit" class="btn btn-success">Actualizar</button>
-                    <a class="btn btn-danger " href="{{ route('figuras.index') }}" style="margin: 10px">Cancelar</a>
+                    <button type="submit" class="btn btn-success" style="background-color:#81242E;border:#81242E">Actualizar</button>
+                    <a class="btn btn-success " href="{{ route('figuras.index') }}" style="margin: 10px;background-color:#565656;border:#565656">Cancelar</a>
 
                 </div>
             </form>

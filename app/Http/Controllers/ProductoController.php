@@ -16,10 +16,7 @@ class ProductoController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:ver-producto|crear-producto|editar-producto|borrar-producto,', ['only'=>['index']]);
-        $this->middleware ('permission: crear-producto', ['only'=>['store']]);
-        $this->middleware ('permission: editar-producto', ['only'=>['update']]);
-        $this->middleware ('permission: borrar-producto', ['only'=>['eliminarProducto']]);
+        $this->middleware('permission:Productos');
     }
     public function index()
     {
@@ -69,7 +66,7 @@ class ProductoController extends Controller
         }
 
         Producto::create($input);
-        return redirect()->route('productos.index');
+        return redirect()->route('productos.index')->with('success', 'Producto registrado exitosamente.');
 
         //return redirect()->route('productos.index')
             //->with('success', 'Producto created successfully.');
@@ -130,7 +127,7 @@ class ProductoController extends Controller
         }
         $producto->update($input);
         session()->flash('message',$input['nombre']. 'succesfully save');
-        return redirect()->route('productos.index');
+        return redirect()->route('productos.index')->with('success', 'Producto actualizado exitosamente.');
 
     }
 
@@ -156,7 +153,7 @@ class ProductoController extends Controller
                 }
             }
                 Producto::find($input["ideliminar"])->delete();
-                return redirect()->route('productos.index');
+                return redirect()->route('productos.index')->with('success', 'Producto eliminado exitosamente.');
     }
 
     public function search(Request $request)
