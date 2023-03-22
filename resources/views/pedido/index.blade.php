@@ -18,7 +18,11 @@
             <p>
                 <a class="mdi mdi-cart-plus" id="iconoadd" href="{{ route('pedidos.create') }}"></a>
             </p>
-
+            @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
             <table id="pedidos" class="table table-striped dt-responsive nowrap table display mowrap"  cellspacing="0" style="width:100%"  >
                 <thead>
                     <tr>

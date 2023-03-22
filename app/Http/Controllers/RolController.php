@@ -54,7 +54,7 @@ class RolController extends Controller
         $role = Role::create(['name'=> $request->input('name')]);
         $role->syncPermissions($request->input('permission'));
 
-        return redirect()->route('roles.index');
+        return redirect()->route('roles.index')->with('success', 'Rol creado exitosamente');
     }
 
     /**
@@ -119,7 +119,7 @@ class RolController extends Controller
 
     $role->syncPermissions($request->input('permission'));
 
-    return redirect()->route('roles.index');
+    return redirect()->route('roles.index')->with('success', 'Rol actualizado exitosamente');
     }
 
     /**
@@ -145,7 +145,7 @@ class RolController extends Controller
         }
 
         Role::find($input["ideliminar"])->delete();
-        return redirect()->route('roles.index');
+        return redirect()->route('roles.index')->with('success', 'Rol actualizado exitosamente');
         
       
     

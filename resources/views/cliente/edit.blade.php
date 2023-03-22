@@ -24,6 +24,11 @@
 
 
                         <div class="box box-info padding-1">
+                        @if (session('error'))
+                                    <div class="alert alert-danger" role="alert">
+                                    {{ session('error') }}
+                                    </div>
+        @endif
                             <div class="row">
 
                                 <div class="col-md-6">
@@ -207,11 +212,7 @@
                                         </div>
                                     </div>
 
-                                    @if (session('error'))
-                                    <div class="alert alert-danger" role="alert">
-                                    {{ session('error') }}
-                                    </div>
-        @endif
+                                    
                             </div>
 
                         </div>

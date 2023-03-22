@@ -28,24 +28,30 @@
                 <div>
                     <canvas id="grafica-pedidos"></canvas>
                 </div>
+
                 <button class="btn btn-primary" onclick="descargargraficapedidos()"
                     style="background-color:#81242E;border:#81242E"><i class="mdi mdi-download"></i> Descargar</button>
+
             </div>
             <div class="col-md-3">
                 <div style="width:100%;height: 21em;">
                     <canvas id="proceso-pedidos"></canvas>
                 </div>
+
                 <button class="btn btn-primary"
                     onclick="descargarprocesopedidos()"style="background-color:#81242E;border:#81242E"><i
                         class="mdi mdi-download"></i> Descargar</button>
+
             </div>
             <div class="col-md-3">
                 <div style="width:100%;height: 21em;">
                     <canvas id="productosvendidos"></canvas>
                 </div>
+
                 <button class="btn btn-primary"
                     onclick="descargarproductosvendidos()"style="background-color:#81242E;border:#81242E"><i
                         class="mdi mdi-download"></i> Descargar</button>
+
             </div>
         </div>
         <br>

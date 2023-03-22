@@ -75,7 +75,7 @@ class FiguraController extends Controller
         }
         
         
-        return redirect()->route('figuras.index');
+        return redirect()->route('figuras.index')->with('success', 'Figura registrada exitosamente.');
     }
 
     /**
@@ -140,7 +140,7 @@ class FiguraController extends Controller
         }
 
 
-        return redirect()->route('figuras.index');
+        return redirect()->route('figuras.index')->with('success', 'Figura actualizada exitosamente.');
     }
 
     /**
@@ -170,7 +170,7 @@ class FiguraController extends Controller
 
         Figura::find($input["ideliminar"])->delete();
 
-        return redirect()->route('figuras.index');
+        return redirect()->route('figuras.index')->with('success', 'Figura eliminada exitosamente.');
     }
 
     public function search(Request $request)

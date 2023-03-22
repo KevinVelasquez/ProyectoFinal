@@ -9,7 +9,7 @@
 <div class="content-wrapper">
     <div class="row">
         <div class="col-sm-6" id="tituloinicial2">
-            <h3 class="mb-0 font-weight-bold">Perfil</h3>
+            <h3 style="margin-left: 16%;" class="mb-0 font-weight-bold">Perfil</h3>
         </div>
     </div>
 </div>
@@ -55,7 +55,7 @@
 
         <div class="content-wrapper">
             <div class="row">
-                <div class="col-sm-6" id="tituloinicial2">
+                <div class="col-sm-12" id="tituloinicial2" style="margin-left: 35%;">
                     <h3 class="mb-0 font-weight-bold">Actualizar Contraseña</h3>
                 </div>
             </div>

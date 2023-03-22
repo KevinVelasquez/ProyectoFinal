@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pedido;
 use DB;
+use PDF;
+use Dompdf\Dompdf;
 
 class DashboardController extends Controller
 {
@@ -240,6 +242,26 @@ class DashboardController extends Controller
             ->get();
 
         return $abonosPorMesProveedor;
+    }
+
+    // PDFS
+
+    public function pedidosmes(Request $request)
+    {
+
+
+        $pdf = PDF::loadView('dashboard.downloadpedidosmes');
+
+        return $pdf->stream('pedidosmes');
+
+    }
+
+    public function pedidosproceso()
+    {
+
+        $pdf = PDF::loadView('dashboard.downloadpedidosproceso', );
+        return $pdf->stream();
+
     }
 
 }

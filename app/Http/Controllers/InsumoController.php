@@ -67,7 +67,7 @@ class InsumoController extends Controller
             
             ]);
         return redirect()->route('insumos.index')
-            ->with('success', 'Insumo update successfully');
+            ->with('success', 'Insumo actualizado exitosamente');
 
     }
 
@@ -89,7 +89,7 @@ class InsumoController extends Controller
     ]);
 
     return redirect()->route('insumos.index')
-        ->with('success', 'Insumo created successfully.');
+        ->with('success', 'Insumo registrado exitosamente.');
 }
 
 
@@ -112,6 +112,6 @@ class InsumoController extends Controller
                 }
             }
                 Insumo::find($input["ideliminar"])->delete();
-                return redirect()->route('insumos.index');
+                return redirect()->route('insumos.index')->with('success', 'Insumo eliminado exitosamente.');
     }
 }

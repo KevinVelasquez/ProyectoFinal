@@ -86,7 +86,7 @@ class ClienteController extends Controller
         Cliente::insert($datosCliente);
 
         return redirect('cliente')
-            ->with('mensaje', 'cliente creado con éxito.');
+        ->with('success', 'Cliente registrado exitosamente.');
     }
 
     /**
@@ -188,6 +188,6 @@ class ClienteController extends Controller
 
         Cliente::find($input["ideliminar"])->delete();
 
-        return redirect()->route('cliente.index');
+        return redirect()->route('cliente.index')->with('success', 'Cliente eliminado exitosamente.');
     }
 }

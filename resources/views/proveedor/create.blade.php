@@ -10,13 +10,11 @@ Create Proveedor
     <main role="main" class="pb-3">
 
 
-        @includeif('partials.errors')
-
-
-        @if(Session::has('success'))
-        {{Session::get('success') }}
-
-        @endif
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 
         <h1>Registrar Proveedor</h1>
         <hr />

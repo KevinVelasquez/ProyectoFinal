@@ -76,7 +76,7 @@ class UsuarioController extends Controller
 
         $user = ModelsUser::create($input);
         $user->assignRole($request->input('roles'));
-        return redirect()->route('usuario.index')->with('success', 'Se registró correctamente');
+        return redirect()->route('usuario.index')->with('success', 'Usuario creado exitosamente');
     }
 
     /**
@@ -147,7 +147,7 @@ class UsuarioController extends Controller
  /*        DB::table('model_has_roles')->where('model_id', $id)->delete();
         $user->assingRole($request->input('roles')); */
         Session::flash('success', 'Se actualizó correctamente');
-        return redirect()->route('usuario.index');
+        return redirect()->route('usuario.index')->with('success', 'Usuario actualizado exitosamente');
     }
 
     /**
@@ -216,7 +216,7 @@ class UsuarioController extends Controller
 
         
 
-        return redirect()->route('VistaPefil')->with('success', 'Perfil actualizado con éxito');
+        return redirect()->route('VistaPefil')->with('success', 'Perfil actualizado exitosamente');
     }
 
     public function destroy($id)
@@ -224,7 +224,7 @@ class UsuarioController extends Controller
 
         DB::table('users')->where('id', $id)->delete();
         return redirect()->route('usuario.index')
-            ->with('success', 'Usuario deleted successfully');
+        ->with('success', 'Usuario eliminado exitosamente');
     }
 
     public function CambioEstado(Request $request)

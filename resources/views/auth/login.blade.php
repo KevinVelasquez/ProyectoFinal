@@ -22,19 +22,19 @@
 
 </head>
 
-<body style="background-image: url('images/fondoLogin.png');background-size: cover;">
+<body style="background-image: url('images/logoEnsayo.jpeg');background-size: cover;">
 
 
     <div class="container-login">
         <div class="row">
-            <div class="col-md-6 login-image">
-                <img src="{{ asset('images/logoFerrum.png') }}" alt="Logo Ferrum">
+            <div class="col-md-6 login-image" >
+                <img src="{{ asset('images/logoFerrum.png') }}" alt="Logo Ferrum" style="width: 70%;margin-left: 8%;">
             </div>
             <div class="col-md-6 login-form">
                 <form method="POST" action="{{ route('login') }}" style="width: 100%;" enctype="multipart/form-data" class="form-sample needs-validation" novalidate>
                     @csrf
                     <div class="form-group">
-                        <label for="email" style="padding-left: 0%;" class="col-md-4 col-form-label text-md-end">{{ __('Correo Electrónico') }}</label>
+                        <label for="email" style="padding-left: 0%;font-size: x-large;" class="col-md-4 col-form-label text-md-end">{{ __('Correo Electrónico') }}</label>
 
                         <input id="email" type="email" style="width: 60%;" s class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" required>
                         @if(session('error'))
@@ -49,7 +49,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="password" style="padding-left: 0%;" class="col-md-4 col-form-label text-md-end">{{ __('Contraseña') }}</label>
+                        <label for="password" style="padding-left: 0%;font-size: x-large;" class="col-md-4 col-form-label text-md-end">{{ __('Contraseña') }}</label>
 
                         <input id="password" type="password" style="width: 60%;" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" required>
                         @error('password')
@@ -61,7 +61,7 @@
                     <div class="form-group form-check" style="padding-left: 4%;margin-bottom: 0%;">
                         <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
-                        <label class="form-check-label" for="remember" style="margin-left: 0%;">
+                        <label class="form-check-label" for="remember" style="margin-left: 0%;font-size:large;">
                             {{ __('Recordarme') }}
                         </label>
                     </div>
@@ -71,7 +71,7 @@
                     <br>
                     <br>
                     @if (Route::has('password.request'))
-                    <a href="{{ route('password.request') }}" title="Recuperar Clave" style="color: black;">
+                    <a href="{{ route('password.request') }}" title="Recuperar Clave" style="color: black;font-size:large;">
                         {{ __('¿Olvidaste la contraseña?') }}
                     </a>
                     @endif
