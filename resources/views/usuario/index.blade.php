@@ -17,6 +17,12 @@ Usuarios
         <p>
             <a class="mdi mdi-account-multiple-plus-outline" id="iconoadd" href="{{ route('usuario.create') }}"></a>
         </p>
+        @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
         @if (session('error'))
         <div class="alert alert-danger" role="alert">
             {{ session('error') }}

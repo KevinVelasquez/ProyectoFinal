@@ -17,6 +17,13 @@ Rol
         <p> 
             <a class="mdi mdi-lock-plus-outline" id="iconoadd" href="{{ route('roles.create') }}" ></a>
         </p>
+        @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+
         @if (session('error'))
             <div class="alert alert-danger" role="alert">
                 {{ session('error') }}
