@@ -13,6 +13,7 @@ use App\Models\Figura;
 use App\Models\Pedido;
 use App\Models\Pago_Clientes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClienteController extends Controller
 {

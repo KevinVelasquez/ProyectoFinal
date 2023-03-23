@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="container mt-5">
-<div class="content-wrapper">
+<div class="content-wrapper" style="width: 45%;margin-left:27%">
     <div class="row">
         <div class="col-sm-6" id="tituloinicial2">
             <h3 style="margin-left: 16%;" class="mb-0 font-weight-bold">Perfil</h3>
@@ -53,21 +53,13 @@
             </div>
         </div>
 
-        <div class="content-wrapper">
-            <div class="row">
-                <div class="col-sm-12" id="tituloinicial2" style="margin-left: 35%;">
-                    <h3 class="mb-0 font-weight-bold">Actualizar Contraseña</h3>
-                </div>
-            </div>
-        </div>
-
         <div class="row">
             <div class="col-sm">
 
             </div>
             <div class="col-sm">
                 <div class="form-group">
-                    <label for="password_actual">Clave Actual</label>
+                    <label for="password_actual">Contraseña Actual</label>
                     <input type="password" name="password_actual" class="form-control @error('password_actual') is-invalid @enderror" >
                     @error('password_actual')
                     <span class="invalid-feedback" role="alert">
@@ -76,7 +68,7 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="new_password ">Nueva Clave</label>
+                    <label for="new_password ">Nueva Contraseña</label>
                     <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" >
                     @error('password')
                     <span class="invalid-feedback" role="alert">
@@ -85,7 +77,7 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="confirm_password">Confirmar Nueva Clave</label>
+                    <label for="confirm_password">Confirmar Nueva Contraseña</label>
                     <input type="password" name="confirm_password" class="form-control @error('confirm_password') is-invalid @enderror" >
                     @error('confirm_password')
                     <span class="invalid-feedback" role="alert">
@@ -94,7 +86,7 @@
                     @enderror
                 </div>
                 <div class="parbotones">
-                    <button type="submit" class="btn btn-primary btn-lg active" id="botons">Actualizar</button>
+                    <button type="submit" class="btn btn-primary btn-lg active" id="botons" style="width: 20%;margin-left: 41%">Actualizar</button>
                 </div>
             </div>
             <div class="col-sm">
