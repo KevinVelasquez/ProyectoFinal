@@ -15,11 +15,6 @@ Mostrar Ordenes de Compra
             </div>
           </div>
     </div>
-    
-    
-   
-    
-
         <table id="factproveedor" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>
@@ -281,6 +276,9 @@ Mostrar Ordenes de Compra
             window.open('/pdf?'+ 'id=' + $("#iddescarga").val());
         })
 
+        const navItems = document.querySelectorAll('.nav-item');
+        console.log(navItems)
+        navItems.classList.remove('active');
 
 </script>
 

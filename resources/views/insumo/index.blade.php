@@ -5,6 +5,8 @@ Insumo
 @endsection
 
 @section('content')
+
+
 <div class="container">
     <main role="main" class="pb-3">
     <div class="content-wrapper">
@@ -17,12 +19,14 @@ Insumo
         <p>
             <a class="mdi mdi-plus-circle-multiple-outline" id="iconoadd" data-toggle="modal" data-target="#crearmodal" ></a>
         </p>
+
+
         @if (session('success'))
     <div class="alert alert-success">
         {{ session('success') }}
     </div>
 @endif
-
+    
 
         @if (session('error'))
             <div class="alert alert-danger" role="alert">
@@ -117,7 +121,7 @@ Insumo
                                     </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer" style="width: 66%">
                             <button type="submit" id="crear-insumo" class="btn btn-primary" style="background-color: #81242E;
                             border-color: #81242E;" >Crear</button>
                             <a class="btn btn-primary" href="{{ route('insumos.index')}}" style="margin: 10px; background-color: #565656;

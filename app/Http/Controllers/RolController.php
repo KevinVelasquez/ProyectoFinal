@@ -57,23 +57,7 @@ class RolController extends Controller
         return redirect()->route('roles.index')->with('success', 'Rol creado exitosamente');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $role = Role::find($id);
@@ -145,7 +129,7 @@ class RolController extends Controller
         }
 
         Role::find($input["ideliminar"])->delete();
-        return redirect()->route('roles.index')->with('success', 'Rol actualizado exitosamente');
+        return redirect()->route('roles.index')->with('success', 'Rol eliminado exitosamente');
         
       
     

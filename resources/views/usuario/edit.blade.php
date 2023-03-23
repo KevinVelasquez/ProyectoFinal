@@ -22,7 +22,7 @@ Update Usuario
                         <div class="form-group col-12">Cédula
                             <label for="cedula"></label>
                             <div class="form-group">
-                                <input type="text" name="cedula" value="{{  isset($user->cedula)?$user->cedula:'' }}" id="cedula" class="form-control" readonly>
+                                <input type="text" name="cedula" value="{{  isset($user->cedula)?$user->cedula:'' }}" id="cedula" class="form-control" >
                             </div>
                             @error('cedula')
                             <span class="invalid-feedback" role="alert">
@@ -90,7 +90,7 @@ Update Usuario
                     </div>
                 </div>
             </div>
-            <div class="box-footer mt20">
+            <div class="box-footer mt20" style="margin-left: 40%">
                 <button type="submit" class="btn btn-primary btn-lg active">Actualizar</button>
                 <a href="{{ route('usuario.index') }}" id="boton-regresar" class="btn btn-primary btn-lg active" type="button">Cancelar</a>
             </div>
@@ -102,6 +102,13 @@ Update Usuario
 </div>
 </div>
 </section>
+<script>
+    $(document).ready(function() {
+        let estado =  {!! $user->estado !!}
+        console.log(estado)
+         $('#estado').val(`${estado}`)
+    })
+    </script>
 <script>
     (function() {
         'use strict'

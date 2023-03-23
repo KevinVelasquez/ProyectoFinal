@@ -60,7 +60,7 @@
             </div>
         </div>
     </div>
-    <div class="box-footer mt20">
+    <div class="box-footer mt20" style="margin-left: 40%">
         <button type="submit" href="{{ route('usuario.index')}}" class="btn btn-primary btn-lg active">Registrar</button>
         <a href="{{ route('usuario.index') }}" id="boton-regresar" class="btn btn-primary btn-lg active" type="button">Cancelar</a>
     </div>

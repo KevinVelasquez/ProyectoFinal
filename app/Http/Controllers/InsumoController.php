@@ -41,10 +41,7 @@ class InsumoController extends Controller
             
                 
             return view('insumo.index', compact('insumos','editarinsumo','insumo'))
-            ->with('i', (request()->input('page', 1) - 1) * $insumos->perPage());
-
-            
-        
+            ->with('i', (request()->input('page', 1) - 1) * $insumos->perPage());    
     }
 
 
@@ -68,7 +65,6 @@ class InsumoController extends Controller
             ]);
         return redirect()->route('insumos.index')
             ->with('success', 'Insumo actualizado exitosamente');
-
     }
 
 
@@ -83,13 +79,13 @@ class InsumoController extends Controller
     ]);
     
 
-    $insumo = Insumo::create([
+    Insumo::create([
         "nombre" => $request->nombre,
         "medidas" => $request->id_medidas
     ]);
-
-    return redirect()->route('insumos.index')
-        ->with('success', 'Insumo registrado exitosamente.');
+    
+    return redirect()->route('insumos.index')->with('success', 'Insumo registrado exitosamente');
+    dd(session()->get('success'));
 }
 
 
@@ -112,6 +108,7 @@ class InsumoController extends Controller
                 }
             }
                 Insumo::find($input["ideliminar"])->delete();
+                
                 return redirect()->route('insumos.index')->with('success', 'Insumo eliminado exitosamente.');
     }
 }
