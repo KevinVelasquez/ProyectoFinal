@@ -16,7 +16,7 @@ class InsumoController extends Controller
     {
         $this->middleware('permission:Insumos');
     }
-   
+
     /**
      * Display a listing of the resource.
      *
@@ -26,89 +26,87 @@ class InsumoController extends Controller
     {
         $insumos = Insumo::paginate();
 
-            $insumo = Insumo::select('insumos.nombre','insumos.medidas','insumos.id','insumos.estado')
-            
-            ->get();
-        
-            $editarinsumo = Insumo::select(
-                "insumos.nombre",
-                "insumos.medidas",
-                "insumos.estado",
-                "insumos.id"
-                
-            )->get();
+        $insumo = Insumo::select('insumos.nombre', 'insumos.medidas', 'insumos.id', 'insumos.estado')
 
-            
-                
-            return view('insumo.index', compact('insumos','editarinsumo','insumo'))
-            ->with('i', (request()->input('page', 1) - 1) * $insumos->perPage());    
+            ->get();
+
+        $editarinsumo = Insumo::select(
+            "insumos.nombre",
+            "insumos.medidas",
+            "insumos.estado",
+            "insumos.id"
+
+        )->get();
+
+
+
+        return view('insumo.index', compact('insumos', 'editarinsumo', 'insumo'))
+            ->with('i', (request()->input('page', 1) - 1) * $insumos->perPage());
     }
 
 
     public function updateInsumos(Request $request)
     {
         $input = $request->all();
-        $validatedData =$request->validate([
-            'nombre' => 'required|unique:insumos,nombre,'.$input["id"],
+        $validatedData = $request->validate([
+            'nombre' => 'required|unique:insumos,nombre,' . $input["id"],
             'id_medidas' => 'required',
         ], [
             'nombre.unique' => 'No se puede crear dos insumos con el mismo nombre',
         ]);
-        
 
-        $actualizar =Insumo::where('id', $input["id"])
+
+        $actualizar = Insumo::where('id', $input["id"])
             ->update([
                 'nombre' => $input["nombre"],
                 'medidas' => $input["id_medidas"],
                 'estado' => $input["id_estado"]
-            
+
             ]);
-        return redirect()->route('insumos.index')
+        return redirect()->route('insumos.index', compact('actualizar', 'validatedData'))
             ->with('success', 'Insumo actualizado exitosamente');
     }
 
 
 
     public function store(Request $request)
-{
-    $validatedData = $request->validate([
-        'nombre' => 'required|unique:insumos,nombre'
-    ], [
-        'nombre.required' => '',
-        'nombre.unique' => 'No se puede crear dos insumos con el mismo nombre'
-    ]);
-    
+    {
+        $validatedData = $request->validate([
+            'nombre' => 'required|unique:insumos,nombre'
+        ], [
+            'nombre.required' => '',
+            'nombre.unique' => 'No se puede crear dos insumos con el mismo nombre'
+        ]);
 
-    Insumo::create([
-        "nombre" => $request->nombre,
-        "medidas" => $request->id_medidas
-    ]);
-    
-    return redirect()->route('insumos.index')->with('success', 'Insumo registrado exitosamente');
-    dd(session()->get('success'));
-}
+        $insumo = Insumo::create([
+            "nombre" => $request->nombre,
+            "medidas" => $request->id_medidas,
+        ]);
+
+        return redirect()->route('insumos.index', compact('insumo', 'validatedData'))
+            ->with('success', 'Insumo creado exitosamente');
+    }
 
 
-   
+
     public function eliminarInsumo(Request $request)
     {
-        
-            $input = $request->all();
-            $insumo = $input["ideliminar"];
 
-            $consultadetalle = Detalle_compra::select(
-                "detalle_compra.id_insumo",
-            )->get();
+        $input = $request->all();
+        $insumo = $input["ideliminar"];
 
-            foreach ($consultadetalle as $valor) {
-               
-                if($insumo==$valor->id_insumo) {
-                    
-                    return redirect()->route('insumos.index')->with('error', 'No se puede eliminar el insumo porque está asociado a una orden de compra');
-                }
+        $consultadetalle = Detalle_compra::select(
+            "detalle_compra.id_insumo",
+        )->get();
+
+        foreach ($consultadetalle as $valor) {
+
+            if ($insumo == $valor->id_insumo) {
+
+                return redirect()->route('insumos.index')->with('error', 'No se puede eliminar el insumo porque está asociado a una orden de compra');
             }
-                Insumo::find($input["ideliminar"])->delete();
-                
-                return redirect()->route('insumos.index')->with('success', 'Insumo eliminado exitosamente.');
+        }
+        Insumo::find($input["ideliminar"])->delete();
+        return redirect()->route('insumos.index')->with('success', 'Insumo eliminado exitosamente.');
     }
 }

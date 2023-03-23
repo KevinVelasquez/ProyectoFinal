@@ -17,7 +17,11 @@ Compra
         <p>
             <a class="mdi mdi-store-plus" id="iconoadd" href="{{ route('compra.create') }}"></a>
         </p>
-
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         <table id="compras" class="table table-striped dt-responsive nowrap table display mowrap" style="width:100%">
             <thead>
                 <tr>
