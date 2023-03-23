@@ -10,8 +10,8 @@ Mostrar Ordenes de Compra
     <main role="main" class="pb-3">
     <div class="content-wrapper">
           <div class="row">
-            <div class="col-sm-6" id="tituloinicial">
-              <h3 class="mb-0 font-weight-bold">Ordenes de compra del Proveedor</h3>
+            <div class="col-sm-6" id="tituloinicial" style="margin-left: 28%">
+              <h3 class="mb-0 font-weight-bold">Órdenes de compra del Proveedor</h3>
             </div>
           </div>
     </div>
@@ -177,7 +177,7 @@ Mostrar Ordenes de Compra
                                             <hr />
                                             <input type="hidden"  id="iddescarga">
                                             <div>
-                                            <a type="button" id="botonDescarga"  class="btn btn-primary " target="_blank"  style="background-color:#81242E;border:#81242E"><i
+                                            <a type="button" id="botonDescarga"  class="btn btn-primary " target="_blank"  style="background-color:#81242E;border:#81242E;color:white"><i
                         class="mdi mdi-download"></i>Descargar</a>
                             
                                             </div>

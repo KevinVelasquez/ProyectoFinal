@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('proveedors', function (Blueprint $table) {
             $table->id();
-            $table->integer('cedula')->unique();  
+            $table->string('cedula')->unique();  
             $table->string('nombre');
             $table->string('telefono');
             $table->string('direccion');

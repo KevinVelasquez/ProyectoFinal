@@ -117,7 +117,7 @@
                                     <li class="nav-item"> <a class="nav-link" href="{{ route('insumos.index') }}">Insumos</a></li>
                                     @endcan
                                     @can('Ordenes-de-Compras')
-                                    <li class="nav-item"> <a class="nav-link" href="{{ route('compra.index') }}">Ordenes de
+                                    <li class="nav-item"> <a class="nav-link" href="{{ route('compra.index') }}">Órdenes de
                                             Compra</a></li>
                                             @endcan
                                 </ul>

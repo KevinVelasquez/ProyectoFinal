@@ -171,19 +171,7 @@ Cliente
         });
     });
 
-    <script>
-    // Espera a que la página se cargue completamente
-    window.addEventListener('DOMContentLoaded', function() {
-        // Obtén el mensaje de éxito de la variable PHP
-        var mensajeExito = '<?php echo isset($mensajeexito) ? $mensajeexito : ""; ?>';
-        // Si hay un mensaje de éxito, agrégalo al div correspondiente
-        if (mensajeExito !== "") {
-            document.getElementById('mensaje-exito').innerHTML = mensajeExito;
-        }
-    });
-</script>
-
-
+    
 
     function verdiseños(id) {
         let listafiguras = [];

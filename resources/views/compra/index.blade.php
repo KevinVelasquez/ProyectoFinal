@@ -10,7 +10,7 @@ Compra
         <div class="content-wrapper">
             <div class="row">
                 <div class="col-sm-6" id="tituloinicial">
-                <h3 class="mb-0 font-weight-bold">Ordenes de Compra</h3>
+                <h3 class="mb-0 font-weight-bold">Órdenes de Compra</h3>
                 </div>
             </div>
         </div>
@@ -242,7 +242,7 @@ Compra
                 <form method="POST" action="{{ route('compras.anularCompra') }}" class="form-sample" role="form" enctype="multipart/form-data">
                     @method('PATCH')
                     @csrf
-                    <div>¿Está seguro que desea anular la órden de compra?</div>
+                    <div>¿Está seguro que desea anular la orden de compra?</div>
                     <input type="hidden" name="idanular" id="idanular" />
                     <input type="hidden" name="anulardato" value="2" />
                     <button type="submit" class="btn btn-primary btn-lg active">Sí</button>
@@ -406,7 +406,7 @@ Compra
         } else if (detalledatos.estado == 0) {
             $('#estadocompradetalle').text(`Estado: Finalizada`)
         } 
-        $('#metodopagocompradetalle').text(`Metodo Pago:  ${detalledatos.nombremetodopago}`)
+        $('#metodopagocompradetalle').text(`Método Pago:  ${detalledatos.nombremetodopago}`)
         $('#totalcompradetalle').text(`${detalledatos.total}`)
         console.log(detalledatos);
 
