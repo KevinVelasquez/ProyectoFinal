@@ -51,25 +51,32 @@ class CompraController extends Controller
             "metodo__pagos.nombre AS nombremetodopago",
         )
             ->join("proveedors", "compra.id_proveedor", "=", "proveedors.id")
-                ->join("metodo__pagos", "compra.id_metodo_pagos", "=", "metodo__pagos.id")
-                ->get();
+            ->join("metodo__pagos", "compra.id_metodo_pagos", "=", "metodo__pagos.id")
+            ->get();
 
         $detallecompra = Detalle_compra::select('detalle_compra.cantidad AS cantidadinsumos', 'detalle_compra.valor_unitario AS precioUnitario', 'insumos.nombre AS nombreinsumo', 'detalle_compra.id_orden_compra AS id')
-        ->join("insumos", "detalle_compra.id_insumo", "=", "insumos.id")
-        ->get();
+            ->join("insumos", "detalle_compra.id_insumo", "=", "insumos.id")
+            ->get();
 
 
-        $detalleabono = PagoProveedore::select('pago_proveedores.fecha AS fechapago','pago_proveedores.id_compra AS idcomprabono','pago_proveedores.abono','pago_proveedores.id AS idabono',
-        "compra.total","compra.id","compra.anulado")
+        $detalleabono = PagoProveedore::select(
+            'pago_proveedores.fecha AS fechapago',
+            'pago_proveedores.id_compra AS idcomprabono',
+            'pago_proveedores.abono',
+            'pago_proveedores.id AS idabono',
+            "compra.total",
+            "compra.id",
+            "compra.anulado"
+        )
             ->leftJoin("compra", "pago_proveedores.id_compra", "=", "compra.id")
             ->where("pago_proveedores.estado", 1)
             ->orderBy("pago_proveedores.fecha", "DESC")
             ->get();
 
         $editarCompra = Compra::all();
-        
 
-        return view('compra.index', compact('compras', 'proveedor', 'insumos', 'metodo__pagos', 'pdf','pago_provedor', 'detalleabono','editarCompra','detallecompra','pedidoproveedor'))
+
+        return view('compra.index', compact('compras', 'proveedor', 'insumos', 'metodo__pagos', 'pdf', 'pago_provedor', 'detalleabono', 'editarCompra', 'detallecompra', 'pedidoproveedor'))
             ->with('i', (request()->input('page', 1) - 1) * $compras->perPage());
     }
 
@@ -81,13 +88,13 @@ class CompraController extends Controller
     public function create()
     {
 
-        $id_proveedor = DB::table('proveedors')->where('estado',1)->get();
-        $insumo = DB::table('insumos')->where('estado',1)->get();
+        $id_proveedor = DB::table('proveedors')->where('estado', 1)->get();
+        $insumo = DB::table('insumos')->where('estado', 1)->get();
         $metodo__pagos = Metodo_Pago::all();
         $compra = new Compra();
         $pagos = PagoProveedore::all();
 
-        return view('compra.create', compact('compra', 'id_proveedor', 'insumo', 'metodo__pagos','pagos'));
+        return view('compra.create', compact('compra', 'id_proveedor', 'insumo', 'metodo__pagos', 'pagos'));
     }
 
     /**
@@ -127,12 +134,14 @@ class CompraController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('compra.index', compact('pago_proveedor', 'compra'))->with('status', '1');
+            return redirect()->route('compra.index', compact('pago_proveedor', 'compra'))->with('success', 'Compra registrada exitosamente.');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->route('compra.index')
                 ->with('status', $e->getMessage());
         }
+
+        return redirect()->route('compra.index')->with('success', 'Compra registrada exitosamente.');
     }
 
     public function calcular_precio($insumos, $cantidades)
@@ -151,7 +160,7 @@ class CompraController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $id )
+    public function show(Request $request, $id)
     {
 
 
@@ -162,14 +171,14 @@ class CompraController extends Controller
         $detalle = Detalle_compra::all();
 
         $detalle = [];
-        if($id != null){
+        if ($id != null) {
             $detalle = Detalle_compra::select("detalle_compra.*")
-            ->where("detalle_compra.id_orden_compra", $id)
-            ->get();
+                ->where("detalle_compra.id_orden_compra", $id)
+                ->get();
         }
-        return view('compra.show', compact('compra', 'proveedor', 'insumo', 'metodo__pagos','detalle'));
+        return view('compra.show', compact('compra', 'proveedor', 'insumo', 'metodo__pagos', 'detalle'));
     }
-    
+
 
     /**
      * Show the form for editing the specified resource.
@@ -177,14 +186,7 @@ class CompraController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        $compra = Compra::find($id);
-        $proveedor = Proveedor::all();
-        $insumo = insumo::all();
-        $metodo__pagos = Metodo_Pago::all();
-        return view('compra.edit', compact('compra', 'proveedor', 'insumo', 'metodo__pagos'));
-    }
+
 
     /**
      * Update the specified resource in storage.
@@ -193,15 +195,7 @@ class CompraController extends Controller
      * @param  Compra $compra
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Compra $compra)
-    {
-        request()->validate(Compra::$rules);
 
-        $compra->update($request->all());
-
-        return redirect()->route('compra.index')
-            ->with('success', 'Compra editada con éxito');
-    }
 
     public function anularCompra(Request $request)
     {
@@ -215,8 +209,9 @@ class CompraController extends Controller
             ->update([
                 'estado' => 2
             ]);
-        return redirect()->route('compra.index')
-            ->with('success', 'Status pedido successfully');
+
+        return redirect()->route('compra.index')->with('success', 'Compra anulada exitosamente.');
+
     }
 
 
@@ -233,11 +228,12 @@ class CompraController extends Controller
             ->with('success', 'Compra deleted successfully');
     }
 
-    public function generarPDF(){
+    public function generarPDF()
+    {
         $id = $_GET["id"];
-        $compra = Compra::select('*')->where('compra.id',$id)->get();
-        $detalle = Detalle_compra::select('*')->where('detalle_compra.id_orden_compra',$id)->get();
-        $pdf = PDF::loadView('compra.pdf', compact('compra','detalle'));
+        $compra = Compra::select('*')->where('compra.id', $id)->get();
+        $detalle = Detalle_compra::select('*')->where('detalle_compra.id_orden_compra', $id)->get();
+        $pdf = PDF::loadView('compra.pdf', compact('compra', 'detalle'));
         return $pdf->stream('compra.pdf');
     }
 

@@ -270,8 +270,8 @@ class PedidoController extends Controller
 
             $metodo_entrega = Metodo_Entrega::all();
 
-        return view('pedido.index', compact('pedidos', 'pedido', 'detallepedido', 'pedidocliente', 'editarpedido','detalleabono','metodo_entrega'))
-            ->with('i', (request()->input('page', 1) - 1) * $pedidos->perPage(),'success', 'Pedido creado exitosamente');
+        return redirect()->route('pedidos.index', compact('pedidos', 'pedido', 'detallepedido', 'pedidocliente', 'editarpedido','detalleabono','metodo_entrega'))
+            ->with('success', 'Pedido creado exitosamente');
             
 
 
