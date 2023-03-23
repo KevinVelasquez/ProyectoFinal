@@ -58,7 +58,7 @@ Route::delete('figuras', [App\Http\Controllers\FiguraController::class, 'elimina
 Route::get('figuras/search', [App\Http\Controllers\FiguraController::class, 'search'])->name('figuras.search');
 Route::resource('figuras', App\Http\Controllers\FiguraController::class)->middleware('auth');
 
-Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.index')->middleware('auth');
+Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.index');
 
 
 

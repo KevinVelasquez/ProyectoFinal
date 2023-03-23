@@ -17,6 +17,18 @@ Rol
         <p> 
             <a class="mdi mdi-lock-plus-outline" id="iconoadd" href="{{ route('roles.create') }}" ></a>
         </p>
+        @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+
+        @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
         <table id="roles" class="table table-striped dt-responsive nowrap table" style="width:100%">
             <thead>
                 <tr>
@@ -43,11 +55,7 @@ Rol
                 @endforeach
             </tbody>
         </table>
-        @if (session('error'))
-            <div class="alert alert-danger" role="alert">
-                {{ session('error') }}
-            </div>
-        @endif
+        
     </main>
 </div>
 

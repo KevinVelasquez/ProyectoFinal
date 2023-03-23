@@ -271,7 +271,8 @@ class PedidoController extends Controller
             $metodo_entrega = Metodo_Entrega::all();
 
         return view('pedido.index', compact('pedidos', 'pedido', 'detallepedido', 'pedidocliente', 'editarpedido','detalleabono','metodo_entrega'))
-            ->with('i', (request()->input('page', 1) - 1) * $pedidos->perPage());
+            ->with('i', (request()->input('page', 1) - 1) * $pedidos->perPage(),'success', 'Pedido creado exitosamente');
+            
 
 
     }
@@ -288,7 +289,7 @@ class PedidoController extends Controller
                 'proceso' => $input["proceso"],
             ]);
         return redirect()->route('pedidos.index')
-            ->with('success', 'Pedido update successfully');
+            ->with('success', 'Pedido actualizado exitosamente');
 
     }
     public function anularPedido(Request $request)
@@ -305,7 +306,7 @@ class PedidoController extends Controller
             ]);
 
         return redirect()->route('pedidos.index')
-            ->with('success', 'Status pedido successfully');
+            ->with('success', 'Pedido anulado exitosamente');
     }
 
     public function validarEstadoPedido($id){
