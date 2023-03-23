@@ -63,7 +63,9 @@ class InsumoController extends Controller
                 'estado' => $input["id_estado"]
 
             ]);
-        return redirect()->route('insumos.index', compact('actualizar', 'validatedData'))
+
+            
+        return redirect()->route('insumo.index', compact('actualizar', 'validatedData'))
             ->with('success', 'Insumo actualizado exitosamente');
     }
 
