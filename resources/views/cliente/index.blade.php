@@ -18,13 +18,11 @@ Cliente
             <a class="mdi mdi-account-plus-outline" id="iconoadd" href="{{ route('cliente.create') }}"></a>
         </p>
 
- 
-
         @if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
         @if (session('error'))
             <div class="alert alert-danger" role="alert">
@@ -170,18 +168,6 @@ Cliente
             }
         });
     });
-
-    <script>
-    // Espera a que la página se cargue completamente
-    window.addEventListener('DOMContentLoaded', function() {
-        // Obtén el mensaje de éxito de la variable PHP
-        var mensajeExito = '<?php echo isset($mensajeexito) ? $mensajeexito : ""; ?>';
-        // Si hay un mensaje de éxito, agrégalo al div correspondiente
-        if (mensajeExito !== "") {
-            document.getElementById('mensaje-exito').innerHTML = mensajeExito;
-        }
-    });
-</script>
 
 
 
