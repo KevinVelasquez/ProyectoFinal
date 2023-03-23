@@ -46,6 +46,8 @@ Auth::routes();
 Route::resource('pedidos', App\Http\Controllers\PedidoController::class);
 Route::put('pedidos', [PedidoController::class, 'updatePedido'])->name('pedidos.updatePedido');
 Route::patch('pedidos', [PedidoController::class, 'anularPedido'])->name('pedidos.anularPedido');
+Route::resource('pedidos', App\Http\Controllers\PedidoController::class)->middleware('auth');
+
 
 Route::get('generate-pdf', [App\Http\Controllers\PdfControllerdos::class, 'generatePDF'])->name('generate-pdf');
 Route::post('pedido', [App\Http\Controllers\PagoClienteController::class,'agregarAbono'])->name('agregarAbono');
@@ -54,9 +56,9 @@ Route::get('abono-pdf', [App\Http\Controllers\PdfControllerdos::class, 'abonoPDF
 
 Route::delete('figuras', [App\Http\Controllers\FiguraController::class, 'eliminarfigura'])->name('figuras.eliminarfigura');
 Route::get('figuras/search', [App\Http\Controllers\FiguraController::class, 'search'])->name('figuras.search');
-Route::resource('figuras', App\Http\Controllers\FiguraController::class);
+Route::resource('figuras', App\Http\Controllers\FiguraController::class)->middleware('auth');
 
-Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.index');
+Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.index')->middleware('auth');
 
 
 
@@ -64,13 +66,14 @@ Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'index
 
 //RUTAS KELY
 //RUTAS CLIENTES
+Route::resource('cliente', App\Http\Controllers\ClienteController::class)->middleware('auth');
 Route::resource('cliente',ClienteController::class)->middleware('auth');
 Route::get('estadocliente',[App\Http\Controllers\ClienteController::class, 'updateStatusCliente'])->name('updateStatusCliente');
 Route::delete('cliente', [App\Http\Controllers\ClienteController::class, 'eliminarCliente'])->name('cliente.eliminarCliente');
 Route::patch('cliente', [ClienteController::class, 'inactivarCliente'])->name('cliente.inactivarCliente');
 
 //RUTAS PROVEEDORES
-
+Route::resource('proveedor', App\Http\Controllers\ProveedorController::class)->middleware('auth');
 Route::resource('proveedor',ProveedorController::class)->middleware('auth');
 Route::get('/detalleproveedor/{id}', [App\Http\Controllers\ProveedorController::class, 'mostrar'])->name('proveedor.mostrar');
 Route::get('pdf',[App\Http\Controllers\PdfControllerdos::class, 'pdfdetallecompra']);
@@ -78,19 +81,19 @@ Route::get('estadoproveedor',[App\Http\Controllers\ProveedorController::class, '
 Route::delete('proveedor', [App\Http\Controllers\ProveedorController::class, 'eliminarProveedor'])->name('proveedor.eliminarProveedor');
 
 // RUTAS CALENDARIO
-Route::resource('calendario',CalendarioController::class);
+Route::resource('calendario', App\Http\Controllers\CalendarioController::class)->middleware('auth');
 
 
 //RUTAS CATHE
 
-Route::resource('insumos', App\Http\Controllers\InsumoController::class);
+Route::resource('insumos', App\Http\Controllers\InsumoController::class)->middleware('auth');
 Route::put('insumos', [App\Http\Controllers\InsumoController::class, 'updateInsumos'])->name('insumos.updateInsumos');
 Route::patch('insumos', [App\Http\Controllers\InsumoController::class, 'anularInsumo'])->name('insumos.anularInsumo');
 Route::delete('insumos', [App\Http\Controllers\InsumoController::class, 'eliminarInsumo'])->name('insumos.eliminarInsumo');
 
 Route::get('productos/search', [App\Http\Controllers\ProductoController::class, 'search'])->name('productos.search');
 Route::delete('productos', [App\Http\Controllers\ProductoController::class, 'eliminarproducto'])->name('productos.eliminarproducto');
-Route::resource('productos', App\Http\Controllers\ProductoController::class);
+Route::resource('productos', App\Http\Controllers\ProductoController::class)->middleware('auth');
 
 Route::delete('roles', [App\Http\Controllers\RolController::class, 'eliminarrol'])->name('roles.eliminarrol');
 
