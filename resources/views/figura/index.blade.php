@@ -21,20 +21,21 @@
                             <p>
                                 <a class="mdi mdi-camera-plus-outline" id="iconoadd" href="{{ route('figuras.create') }}"></a>
                             </p>
-                        <div class="card-body">
-                            <div class="table-responsive">
-
                             @if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                            @endif
 
                             @if (session('error'))
                                 <div class="alert alert-danger" role="alert">
                                 {{ session('error') }}
                                 </div>
                                 @endif
+                        <div class="card-body">
+                            <div class="table-responsive">
+
+
                                 <table class="table table-striped table-hover">
                                     <form action="{{ route('figuras.search') }}" method="GET">
                                         <div class="form-group" id="formsearch">

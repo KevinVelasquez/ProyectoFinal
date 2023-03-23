@@ -20,22 +20,21 @@
                             <a class="mdi mdi-tag-plus-outline " id="iconoadd"
                             href="{{ route('productos.create') }}"></a>
                         </p>
-
-                    <div class="card-body">
-                        <div class="table-responsive">
-
                         @if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
-
-
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         @if (session('error'))
                                 <div class="alert alert-danger" role="alert">
                                 {{ session('error') }}
                                 </div>
                             @endif
+
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+
                             <table class="table table-striped table-hover">
                                 <form action="{{ route('productos.search') }}" method="GET">
                                     <div class="form-group" id="formsearch">
@@ -62,8 +61,8 @@
                                                         aria-hidden="true" class="modal fade"
                                                         id="modalimagen<?php echo $producto->id; ?>">
                                                         <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width: 445px;">
-                                                            <div class="modal-content">
-                                                                <img 
+                                                            <div class="modal-content" >
+                                                                <img
                                                                     src="http://127.0.0.1:8000/storage/images/productos/{{$producto->imagen}}">
                                                             </div>
                                                         </div>
