@@ -84,7 +84,7 @@ Insumo
                     <div class="col-12 grid-margin">
                         <div class="card">
                             <div class="card-body">
-
+                            <div id="mensaje-exito" class="alert alert-success" style="display: none;">Insumo registrado exitosamente</div>
                                 <form method="POST" 
                                action= "{{route('insumos.store')}}"  
                                class="form-sample needs-validation" novalidate
@@ -149,7 +149,7 @@ Insumo
                     <div class="col-12 grid-margin">
                         <div class="card">
                             <div class="card-body">
-
+                            <div id="mensaje-actualizado" class="alert alert-success" style="display: none;">Insumo actualizado exitosamente</div>
                                 <form id="actualizar-form" method="POST" action="{{ route('insumos.updateInsumos') }}" 
                                 class="form-sample needs-validation" novalidate
                                     role="form" enctype="multipart/form-data">
@@ -263,7 +263,11 @@ Insumo
             success: function(response) {
                 // La respuesta del servidor es correcta, cierra el modal
                 $('#crearmodal').modal('hide');
-                location.reload();
+                $('#mensaje-exito').show();
+      setTimeout(function() {
+        $('#crearmodal').modal('hide');
+        window.location.href = "{{ route('insumos.index')}}"
+      }, 2000);
             },
             error: function(xhr) {
                 // La respuesta del servidor contiene un error de validación
@@ -304,7 +308,11 @@ Insumo
             success: function(response) {
                 // La respuesta del servidor es correcta, cierra el modal
                 $('#editarmodal').modal('hide');
-                location.reload();
+                $('#mensaje-actualizado').show();
+      setTimeout(function() {
+        $('#editarmodal').modal('hide');
+        window.location.href = "{{ route('insumos.index')}}"
+      }, 2000);
             },
             error: function(xhr) {
                 // La respuesta del servidor contiene un error de validación
