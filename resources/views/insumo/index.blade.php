@@ -294,7 +294,7 @@ Insumo
             $('#idinsumoeditar').val(`${editardatos.id}`);
             let idinsumo = `${editardatos.id}`;
 
-        }
+        };
 
         $('#actualizar-form').submit(function(event) {
         event.preventDefault(); // Previene la acción predeterminada del formulario

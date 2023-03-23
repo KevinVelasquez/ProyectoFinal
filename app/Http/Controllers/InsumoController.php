@@ -65,8 +65,7 @@ class InsumoController extends Controller
             ]);
 
             
-        return redirect()->route('insumo.index', compact('actualizar', 'validatedData'))
-            ->with('success', 'Insumo actualizado exitosamente');
+        return redirect()->route('insumos.index')->with('success', 'Insumo actualizado exitosamente');
     }
 
 
